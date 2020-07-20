@@ -5,8 +5,7 @@ class Utilisateur {
   String age;
   String numeroDePayement;
   String email;
-  String motDePasse;
-  String id;
+
 
 
   Utilisateur(
@@ -15,9 +14,6 @@ class Utilisateur {
       this.age,
       this.numeroDePayement,
       this.email,
-      this.motDePasse,
-      this.id,
-
     });
 
   Utilisateur.fromMap(Map<String, dynamic> donnees, String id)
@@ -25,9 +21,8 @@ class Utilisateur {
         sexe = donnees["sexe"],
         age = donnees["age"],
         numeroDePayement = donnees["numeroDePayement"],
-        email = donnees["email"],
-        motDePasse = donnees["motDePasse"],
-        id= donnees["id"];
+        email = donnees["email"];
+
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,8 +31,7 @@ class Utilisateur {
     "age":age,
     "numeroDePayement":numeroDePayement,
     "email":email,
-    "motDePasse": motDePasse,
-      "id":id
+
     };
    }
   }
