@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
+
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/Page1.dart';
 
 import 'Design/Panier.dart';
 import 'Design/Panier2.dart';
 import 'Design/Panier3.dart';
+
+import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
+import 'package:premierchoixapp/Pages/page_chargement.dart';
+
+import 'Navigations_pages/all_navigation_page.dart';
+
+
 
 
 void main() => runApp(MyApp());
@@ -32,7 +41,18 @@ class MyApp extends StatelessWidget {
         Panier.id:(context) => Panier(),
         Panier2.id:(context) => Panier2(),
         Panier3.id:(context) => Panier3(),
+
+      initialRoute: PageChargement.id,
+      routes: {
+        Connexion.id:(context) => Connexion(),
+        Inscription.id: (context) => Inscription(),
+        AllNavigationPage.id:(context)=>AllNavigationPage(),
+        ResetPasswd.id:(context)=>ResetPasswd(),
+        Renseignements.id:(context)=>Renseignements(),
+        PageChargement.id:(context)=>PageChargement()
+
       },
     );
   }
 }
+

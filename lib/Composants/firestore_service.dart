@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Models/panier_classe.dart';
+import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/utilisateurs.dart';
 
 class FirestoreService {
   static final FirestoreService _firestoreService = FirestoreService
@@ -10,12 +13,20 @@ class FirestoreService {
   factory FirestoreService() {
     return _firestoreService;
   }
-  /*
+
  Future<void> addUtilisateur(Utilisateur utilisateur, String idDocument) {
     return _db.collection("Utilisateurs").document(idDocument).setData(utilisateur.toMap());
   }
 
-/* Récupération des catégories de la base de données*/
+  Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document){
+    return _db.collection("Utilisateurs").document(document).collection("ProduitsFavoirsUser").add(produit.toMap());
+  }
+
+  Future<void> addPanier(PanierClasse produit, String document, String id){
+    return _db.collection("Utilisateurs").document(document).collection("Panier").document(id).setData(produit.toMap());
+  }
+
+  /* Récupération des catégories de la base de données*/
   Stream<List<Utilisateur>> getUtilisateurs() {
     return _db.collection("Utilisateurs").snapshots().map(
           (snapshot) =>
@@ -24,7 +35,10 @@ class FirestoreService {
           ).toList(),
     );
   }
- /* Fin de la récupération des catégories de la base de données*/ 
+/* Fin de la récupération des catégories de la base de données*/
+
+
+/*
 
 
 
