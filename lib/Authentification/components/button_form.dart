@@ -13,7 +13,7 @@ FlatButton button (Color colorText, Color colorButton, BuildContext context, Str
         height: longueurPerCent(40, context),
         child: Center(child: Text(text, style:TextStyle(
             color: colorText,
-            fontSize: 20.0,
+            fontSize: 17.0,
             fontFamily: 'MonseraBold'),),)
     ),
   ));
