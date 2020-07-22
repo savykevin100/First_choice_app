@@ -1,19 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Composants/calcul.dart';
+import '../Composants/hexadecimal.dart';
 
-import '../Composants/calcul.dart';
-import '../Composants/calcul.dart';
-import '../Composants/calcul.dart';
-import '../Composants/calcul.dart';
-import '../Composants/calcul.dart';
-import '../Composants/calcul.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
-import '../Composants/hexadecimal.dart';
 
 class Page1 extends StatefulWidget {
 static String id="Page1";

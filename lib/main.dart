@@ -15,6 +15,8 @@ import 'Navigations_pages/all_navigation_page.dart';
 
 
 
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -38,11 +40,7 @@ class MyApp extends StatelessWidget {
         Panier.id:(context) => Panier(),
         Panier2.id:(context) => Panier2(),
         Panier3.id:(context) => Panier3(),
-        ResetPasswd.id:(context)=>ResetPasswd(),
-        Renseignements.id:(context)=>Renseignements(),
-        AllNavigationPage.id:(context)=>AllNavigationPage(),
-        PageChargement.id:(context)=>PageChargement(),
-        HomePage.id:(context)=>HomePage()
+
       },
     );
   }
