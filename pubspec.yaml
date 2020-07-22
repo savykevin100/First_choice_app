@@ -35,10 +35,18 @@ dependencies:
   simple_animations: ^2.0.1
   page_transition: ^1.1.5
   fluttertoast: ^4.0.1
-  dropdown_formfield: ^0.1.2
-  curved_navigation_bar: ^0.3.2
+
   email_validator: ^1.0.4
+
   flutter_star_rating: ^0.0.2
+
+  dropdown_formfield: ^0.1.2
+  firebase_messaging: ^6.0.16
+  shared_preferences: ^0.5.8
+  curved_navigation_bar: ^0.3.2
+  badges: ^1.1.1
+
+
 
 
 dev_dependencies:
