@@ -9,6 +9,14 @@ import 'Design/Panier.dart';
 import 'Design/Panier2.dart';
 import 'Design/Panier3.dart';
 
+import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
+import 'package:premierchoixapp/Pages/page_chargement.dart';
+
+import 'Navigations_pages/all_navigation_page.dart';
+
+
+
 
 
 
@@ -35,6 +43,7 @@ class MyApp extends StatelessWidget {
         Panier.id:(context) => Panier(),
         Panier2.id:(context) => Panier2(),
         Panier3.id:(context) => Panier3(),
+
 
 
       },

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 
 
-FlatButton button (Color colorText, Color colorButton, BuildContext context, String text){
-  return FlatButton(onPressed: null, child: Center(
+FlatButton button (Color colorText, Color colorButton, BuildContext context, String text, Function onPressed){
+  return FlatButton(onPressed: onPressed, child: Center(
     child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
