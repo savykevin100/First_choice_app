@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_star_rating/flutter_star_rating.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/composants/calcul.dart';
+import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 
 
@@ -227,7 +227,7 @@ class _Panier2State extends State<Panier2> {
                         child:Row(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(40.0, context)),
+                              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(30.0, context)),
                               child: Text(
                                 "Moyen de payement",
                                 textAlign: TextAlign.left,
@@ -241,7 +241,7 @@ class _Panier2State extends State<Panier2> {
                             Container(
                               width: longueurPerCent(175.0, context),
                               height: largeurPerCent(70, context),
-                              margin: EdgeInsets.only(left: longueurPerCent(23.0, context),right: longueurPerCent(26.0, context)),
+                              margin: EdgeInsets.only(left: longueurPerCent(10.0, context),right: longueurPerCent(10.0, context)),
                               color: HexColor("#FFFFFF"),
                               child: DropDownFormField(
                                 titleText: null,
@@ -297,7 +297,7 @@ class _Panier2State extends State<Panier2> {
                           ),
                           Container(
                             width: largeurPerCent(190.0, context),
-                            margin: EdgeInsets.only(top: longueurPerCent(47.0, context),right:longueurPerCent(0.0, context),left: longueurPerCent(45.0, context) ),
+                            margin: EdgeInsets.only(top: longueurPerCent(47.0, context),right:longueurPerCent(0.0, context),left: longueurPerCent(20.0, context) ),
                             child: Text(
                               "96 18 46 55",
                               textAlign: TextAlign.left,

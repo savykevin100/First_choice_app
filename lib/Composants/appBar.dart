@@ -3,22 +3,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
+import 'package:scroll_app_bar/scroll_app_bar.dart';
 
 
 class AppBarClasse{
   BuildContext context;
   String titre;
+  ScrollController controller = ScrollController();
   /*int nbAjoutPanier;
 
   String currentUserId;*/
 
   ///AppBarClasse.nb({this.titre, this.nbAjoutPanier, this.context});
   /// AppBarClasse({this.titre, this.context, this.currentUserId, });
-   AppBarClasse({this.titre, this.context });
+   AppBarClasse({this.titre, this.context , this.controller});
 
 
   Widget appBarFunction(){
-    return AppBar(
+    return ScrollAppBar(
+      controller: controller,
       title: Text(
         titre,
         style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),

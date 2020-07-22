@@ -101,11 +101,6 @@ class _RenseignementsState extends State<Renseignements> {
                                 borderSide: BorderSide(
                                     width: 1, style: BorderStyle.none)),
                           ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return ("Entrez votre nom complet");
-                              }
-                            },
                             onChanged: (value){
                               nomComplet = value;
                             }
@@ -197,12 +192,6 @@ class _RenseignementsState extends State<Renseignements> {
                                 borderSide: BorderSide(
                                     width: 1, style: BorderStyle.none)),
                           ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return ("Entrer votre date d'anniversaire");
-                              }
-                            },
-
                             onChanged: (value){
                               age = value;
                             }
@@ -227,11 +216,6 @@ class _RenseignementsState extends State<Renseignements> {
                                 borderSide: BorderSide(
                                     width: 1, style: BorderStyle.none)),
                           ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return ("Entrer votre date d'anniversaire");
-                              }
-                            },
                             onChanged: (value){
                               numeroPayement = value;
                             }
@@ -254,12 +238,6 @@ class _RenseignementsState extends State<Renseignements> {
                                 borderSide: BorderSide(
                                     width: 1, style: BorderStyle.none)),
                           ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return ("Entrer votre ville");
-                              }
-                            },
-
                             onChanged: (value){
                               ville = value;
                             }

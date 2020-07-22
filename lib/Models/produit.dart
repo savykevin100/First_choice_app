@@ -9,6 +9,7 @@ class Produit {
   String selectImage;
   int numberImages;
   String id;
+  int numberStar;
 
   Produit(
       {this.nomDuProduit,
@@ -20,6 +21,7 @@ class Produit {
       this.quantite,
       this.selectImage,
       this.id,
+      this.numberStar,
       this.numberImages});
 
   Produit.fromMap(Map<String, dynamic> donnees, String id)
@@ -32,6 +34,7 @@ class Produit {
         quantite = donnees["quantite"],
         selectImage = donnees["selectImage"],
         numberImages = donnees["numberImages"],
+        numberStar= donnees["numberStar"],
          id= donnees["id"];
 
   Map<String, dynamic> toMap() {
@@ -45,6 +48,7 @@ class Produit {
       "quantite": quantite,
       "selectImage": selectImage,
       "numberImages": numberImages,
+      "numberStar": numberStar,
        "id":id
     };
   }
