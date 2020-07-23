@@ -176,7 +176,7 @@ class _PanierState extends State<Panier> {
                         margin: EdgeInsets.only(
                             left: longueurPerCent(30.0, context)),
                         child: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red, size: 20,),
+                          icon: Icon(Icons.delete, color: Colors.red, size: 25,),
                           onPressed: () {},
                         ),
                       ),
@@ -187,7 +187,7 @@ class _PanierState extends State<Panier> {
 
 
 // Deuxieme article
-              SizedBox(height: longueurPerCent(43.0, context),),
+              SizedBox(height: longueurPerCent(20.0, context),),
               Container(
                 margin: EdgeInsets.only(
                   left: longueurPerCent(18.0, context),
@@ -269,7 +269,7 @@ class _PanierState extends State<Panier> {
                               "1.000 F CFA",
                               textAlign: TextAlign.right,
                               style: TextStyle(
-                                color: HexColor("#001C36"),
+                                color: Colors.green,
                                 fontSize: 16,
                                 fontFamily: "MontserratBold",
                                 fontWeight: FontWeight.bold,
@@ -282,7 +282,7 @@ class _PanierState extends State<Panier> {
                         margin: EdgeInsets.only(
                             left: longueurPerCent(30.0, context)),
                         child: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red, size: 20,),
+                          icon: Icon(Icons.delete, color: Colors.red, size: 25,),
                           onPressed: () {},
                         ),
                       ),
@@ -296,11 +296,8 @@ class _PanierState extends State<Panier> {
                   margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
                   height: longueurPerCent(50.0, context),
                   width: largeurPerCent(339.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7.0),
-                    border: Border.all(color: HexColor("#FFC30D")),
-                  ),
                   child: Material(
+                    borderRadius: BorderRadius.circular(7.0),
                     //shadowColor: Colors.greenAccent,
                     color: HexColor("#FFC30D"),
                     child: GestureDetector(

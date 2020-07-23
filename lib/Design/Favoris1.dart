@@ -15,9 +15,27 @@ class _Favoris1State extends State<Favoris1> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
+      appBar: AppBar(
+        backgroundColor: HexColor("#001c36"),
+        title: Text("Favoris", style: TextStyle(color: Colors.white, fontFamily: "MontserratBold"),),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_basket),
+            color: Colors.white,
+            onPressed: (){
+              setState(() {
+                // A toi de jouer
+              });
+            },
+          ),
+        ],
+      ),
+      drawer: Drawer(
+
+      ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).size.height /3.5),
+          SizedBox(height: MediaQuery.of(context).size.height /5),
           Center(
             child: Container(
               //margin: EdgeInsets.only(right: longueurPerCent(148.0, context),left: longueurPerCent(148.0, context)),
@@ -44,28 +62,6 @@ class _Favoris1State extends State<Favoris1> {
             child: Text(
               'AUCUN FAVORIS',
               style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
-            ),
-          ),
-          SizedBox(height:longueurPerCent(40.0, context)),
-          Center(
-            child: Container(
-              margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-              height: longueurPerCent(50.0, context),
-              width: largeurPerCent(339.0, context),
-              child: Material(
-                borderRadius: BorderRadius.circular(7.0),
-                //shadowColor: Colors.greenAccent,
-                color: HexColor("#FFC30D"),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'EXPLORER',
-                      style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
-                    ),
-                  ),
-                ),
-              ),
             ),
           ),
         ],
