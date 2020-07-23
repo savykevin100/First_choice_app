@@ -84,7 +84,7 @@ class _DecisionState extends State<Decision> {
                       child: Center(
                         child: Text(
                           "S'INSCRIRE",
-                          style: TextStyle(color: HexColor("#FFFFFF"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+                          style: TextStyle(color: HexColor("#FFC30D"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
                         ),
                       ),
                     ),

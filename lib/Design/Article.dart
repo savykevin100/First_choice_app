@@ -50,21 +50,21 @@ class _ArticleState extends State<Article> {
             Row(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: longueurPerCent(26.0, context),left: longueurPerCent(9.0, context)),
-                  child: Center(
-                    child: Text(
-                      "Sneek",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: "Montserrat_Light",
-                        fontSize: 20.0,
-                        color: HexColor("#909090"),
-                      ),
+                  width: longueurPerCent(220, context),
+                  margin: EdgeInsets.only(top: longueurPerCent(12.0, context),left: longueurPerCent(9.0, context)),
+                  child: Text(
+                    "Sneekers",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: "Montserrat_Light",
+                      fontSize: 20.0,
+                      color: HexColor("#909090"),
                     ),
                   ),
                 ),
+
                 Container(
-                  margin: EdgeInsets.only(top:longueurPerCent(24.0, context),right: longueurPerCent(8.0, context),left: longueurPerCent(137.0, context),),
+                  margin: EdgeInsets.only(top:longueurPerCent(12.0, context),),
                   height: longueurPerCent(38.0, context),
                   width: largeurPerCent(170.0, context),
                   child: Material(
@@ -86,7 +86,7 @@ class _ArticleState extends State<Article> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: longueurPerCent(8.0, context),left: longueurPerCent(9.0, context),right: longueurPerCent(287.0, context)),
+              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(9.0, context),right: longueurPerCent(287.0, context)),
               child: Text(
                 "5.000 F CFA",
                 textAlign: TextAlign.left,
@@ -164,9 +164,9 @@ class _ArticleState extends State<Article> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: longueurPerCent(9.64, context),top: longueurPerCent(25.62, context),),
+                    margin: EdgeInsets.only(left: longueurPerCent(9.64, context),top: longueurPerCent(20.0, context),),
                     height: longueurPerCent(252.4, context),
-                    width: largeurPerCent(260.43, context),
+                    width: largeurPerCent(288.43, context),
                     child: Card(
                       child: Container(
                         child: Image.asset("assets/images/gadgets-336635_1920.jpg",
@@ -175,7 +175,7 @@ class _ArticleState extends State<Article> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: longueurPerCent(43.17, context),top: longueurPerCent(25.62, context),),
+                    margin: EdgeInsets.only(left: longueurPerCent(43.17, context),top: longueurPerCent(20.0, context),),
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -191,7 +191,7 @@ class _ArticleState extends State<Article> {
                         ),
 
                         Container(
-                          margin: EdgeInsets.only(left: longueurPerCent(.0, context),top: longueurPerCent(29.0, context),),
+                          margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(27.0, context),),
                           height: longueurPerCent(65.19, context),
                           width: largeurPerCent(61.0, context),
                           child: Card(
@@ -203,7 +203,7 @@ class _ArticleState extends State<Article> {
                         ),
 
                         Container(
-                          margin: EdgeInsets.only(left: longueurPerCent(0.0, context),top: longueurPerCent(29.0, context),),
+                          margin: EdgeInsets.only(left: longueurPerCent(0.0, context),top: longueurPerCent(27.0, context),),
                           height: longueurPerCent(65.19, context),
                           width: largeurPerCent(61.0, context),
                           child: Card(
@@ -223,7 +223,7 @@ class _ArticleState extends State<Article> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: longueurPerCent(10.33, context),left: longueurPerCent(15.0, context)),
+                    margin: EdgeInsets.only(top: longueurPerCent(0, context),left: longueurPerCent(15.0, context)),
                     child: Center(
                       child: Text(
                         "Taille:",
@@ -238,7 +238,7 @@ class _ArticleState extends State<Article> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: longueurPerCent(10.33, context),left: longueurPerCent(9.0, context)),
+                    margin: EdgeInsets.only(top: longueurPerCent(0, context),left: longueurPerCent(9.0, context)),
                     child: Center(
                       child: Text(
                         "43",
@@ -253,7 +253,7 @@ class _ArticleState extends State<Article> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: longueurPerCent(10.33, context),left: longueurPerCent(70.0, context)),
+                    margin: EdgeInsets.only(top: longueurPerCent(0, context),left: longueurPerCent(70.0, context)),
                     child: Center(
                       child: Text(
                         "Couleur:",
@@ -268,7 +268,7 @@ class _ArticleState extends State<Article> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: longueurPerCent(10.33, context),left: longueurPerCent(9.0, context)),
+                    margin: EdgeInsets.only(top: longueurPerCent(0, context),left: longueurPerCent(9.0, context)),
                     child: Center(
                       child: Text(
                         "Rouge",
@@ -286,7 +286,22 @@ class _ArticleState extends State<Article> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: longueurPerCent(34.0, context),left: longueurPerCent(0.0, context),right: longueurPerCent(315.0, context)),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child:Column(
+                      children: <Widget>[
+
+                      ],
+                    ),
+
+                  )
+                ],
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.only(top: longueurPerCent(15.0, context),left: longueurPerCent(0.0, context),right: longueurPerCent(315.0, context)),
               child: Center(
                 child: Text(
                   "Descriptif",
@@ -301,12 +316,12 @@ class _ArticleState extends State<Article> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: longueurPerCent(6.0, context),left: longueurPerCent(17.0, context),right: longueurPerCent(30.0, context)),
+              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(17.0, context),right: longueurPerCent(30.0, context)),
               child: Container(
-                height: longueurPerCent(200.0, context),
-                width: largeurPerCent(332.0, context),
+                height: longueurPerCent(40.0, context),
+                width: largeurPerCent(350.0, context),
                 child: Text(
-                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       fontFamily: "Montserrat_Light",
@@ -319,7 +334,7 @@ class _ArticleState extends State<Article> {
             Row(
               children: <Widget>[
                  Container(
-                  margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(20.0, context),),
+                  margin: EdgeInsets.only(top: longueurPerCent(20.0, context),left: longueurPerCent(20.0, context),),
                   height: longueurPerCent(50.0, context),
                   width: largeurPerCent(170.0, context),
 
@@ -340,7 +355,7 @@ class _ArticleState extends State<Article> {
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(30.0, context),),
+                  margin: EdgeInsets.only(top: longueurPerCent(20.0, context),left: longueurPerCent(30.0, context),),
                   height: longueurPerCent(50.0, context),
                   width: largeurPerCent(170.0, context),
                   child: Material(

@@ -14,10 +14,53 @@ class _Notification1State extends State<Notification1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: HexColor("#001c36"),
+        title: Text("Notification", style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_basket),
+            color: Colors.white,
+            onPressed: (){
+              setState(() {
+                // A toi de jouer
+              });
+            },
+          ),
+        ],
+      ),
+      drawer: Drawer(
+
+      ),
       backgroundColor: HexColor("#F5F5F5"),
       body: Column(
         children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).size.height /3.5),
+          SizedBox(
+            height: longueurPerCent(20, context),
+          ),
+          Container(
+              margin: EdgeInsets.symmetric(horizontal: largeurPerCent(20, context)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                color: HexColor("#DDDDDD"),
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Padding(
+                    padding:  EdgeInsets.only(left: largeurPerCent(20, context)),
+                    child: Icon(Icons.search, color: HexColor('#9B9B9B')),
+                  ),
+                  labelText: "Rechercher un produit",
+                  labelStyle: TextStyle(
+                      color: HexColor('#9B9B9B'),
+                      fontSize: 17.0,
+                      fontFamily: 'MonseraLight'),
+                  contentPadding: EdgeInsets.only(top: 10, bottom: 5, left:100),
+
+                ),
+              )),
+          SizedBox(height: MediaQuery.of(context).size.height /5),
           Center(
             child: Container(
               //margin: EdgeInsets.only(right: longueurPerCent(148.0, context),left: longueurPerCent(148.0, context)),
@@ -44,28 +87,6 @@ class _Notification1State extends State<Notification1> {
             child: Text(
               'AUCUNE NOTIFICATION',
               style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
-            ),
-          ),
-          SizedBox(height:longueurPerCent(40.0, context)),
-          Center(
-            child: Container(
-              margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-              height: longueurPerCent(50.0, context),
-              width: largeurPerCent(339.0, context),
-              child: Material(
-                borderRadius: BorderRadius.circular(7.0),
-                //shadowColor: Colors.greenAccent,
-                color: HexColor("#FFC30D"),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Center(
-                    child: Text(
-                      'EXPLORER',
-                      style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
-                    ),
-                  ),
-                ),
-              ),
             ),
           ),
         ],
