@@ -28,7 +28,7 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
           await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
               imagePrincipaleProduit: produit.image1,
               imageSelect: produit.image1,
-              quantite: produit.quantite,
+              quantite: 1,
               etatIconeFavoris: false
           ), Renseignements.emailUser);
           print("L'ajout a été fait avant le onap");
@@ -90,6 +90,9 @@ Widget product_grid_view(){
                                   topRight: Radius.circular(10)),
                               child: Image.network(
                                 produit.image1,
+                                loadingBuilder: (context,child, progress){
+                                  return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                },
                                 fit: BoxFit.cover,
                               )),
                         ),

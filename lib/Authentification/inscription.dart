@@ -10,7 +10,6 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Inscription extends StatefulWidget {
@@ -208,9 +207,9 @@ class _InscriptionState extends State<Inscription> {
   }
 
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
-  void obtenir() async {
+  Future<void> obtenir() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String liste = await sharedPreferences.getString(key);
+    String liste = sharedPreferences.getString(key);
     if (liste != null) {
       setState(() {
         Renseignements.emailUser = liste;
@@ -219,9 +218,9 @@ class _InscriptionState extends State<Inscription> {
   }
   /* Fin de la fonction */
 
-  /** Cette fonction permet d'ajouter les informations*/
+  /* Cette fonction permet d'ajouter les informations*/
 
-  void ajouter(String str) async {
+  Future<void> ajouter(String str) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Renseignements.emailUser=str;
     await sharedPreferences.setString(key, Renseignements.emailUser);

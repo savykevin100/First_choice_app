@@ -1,16 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
-import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Renseignements extends StatefulWidget {
   static final String id = "Renseignement";
@@ -36,9 +31,7 @@ class _RenseignementsState extends State<Renseignements> {
   final _formKey = GlobalKey<FormState>();
   Utilisateur utilisateur;
   bool chargement = false;
-  Firestore _db = Firestore.instance;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
    void initState(){
      super.initState();
@@ -261,19 +254,15 @@ class _RenseignementsState extends State<Renseignements> {
                             numeroPayement,
                             email: widget
                                 .emailAdress,
+                            nbAjoutPanier: 0
                           ),
                           widget.emailAdress);
-
                       await FirestoreService()
                           .addProduitFavorisUser(
                           ProduitsFavorisUser(
                               etatIconeFavoris: false
                           ),
                           widget.emailAdress);
-                      await FirestoreService().addPanier(PanierClasse(
-                          nombreAjout: 0,
-                          description: "AjoutPanierBadge"
-                      ), widget.emailAdress, "AjoutPanierBadge");
                       print(Renseignements.emailUser);
                       Navigator.push(
                           context,

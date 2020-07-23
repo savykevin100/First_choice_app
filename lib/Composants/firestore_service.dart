@@ -38,6 +38,7 @@ class FirestoreService {
   }
 /* Fin de la récupération des catégories de la base de données*/
 
+
 /*Recuperation du produit*/
   Stream<List<Produit>> getProduit() {
     return _db.collection("produit").snapshots().map(
@@ -67,7 +68,6 @@ Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
           ).toList(),
     );
   }
-
 
 
 /* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/

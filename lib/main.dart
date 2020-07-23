@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
+import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/Page1.dart';
+import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:premierchoixapp/test.dart';
-import 'Design/Panier.dart';
 import 'Design/Panier2.dart';
 import 'Design/Panier3.dart';
 import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
@@ -22,12 +23,17 @@ class MyApp extends StatelessWidget {
 
 
   @override
+
+
   Widget build(BuildContext context) {
 
 
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(),
+      theme: ThemeData(
+        primaryColor: HexColor("EFD807"),
+      ),
+      color: HexColor("#001C36"),
       debugShowCheckedModeBanner: false,
       initialRoute: Connexion.id,
       routes: {

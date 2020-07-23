@@ -29,6 +29,7 @@ class _CategoriesState extends State<Categories> {
       appBar: _appBar.appBarFunction(),
       drawer: ProfileSettings(),
       body: ListView(
+        shrinkWrap: true,
         controller: controller,
         children: <Widget>[
           Container(
@@ -72,10 +73,9 @@ class _CategoriesState extends State<Categories> {
                   iconOn: Icons.account_circle,
                   iconOff: Icons.account_circle,
                   textSize: 16.0,
+                  animationDuration: Duration(seconds: 1),
                   onChanged: (bool state) {
-                    setState(() {
-                      val=state;
-                    });
+
                   },
                 ),
                 Padding(
@@ -98,10 +98,17 @@ class _CategoriesState extends State<Categories> {
                   fontFamily: "MonseraBold"),
             ),
           ),
-          (val==false)? product_grid_view():Text("Je suis sur la partie")
         ],
       ),
     );
+  }
+
+  Widget MenFemale(){
+    if(val==true){
+       product_grid_view();
+    } else{
+       Text("Je suis la catégorie");
+    }
   }
 
 /* body:  , */

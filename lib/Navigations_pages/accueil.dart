@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
@@ -25,6 +23,7 @@ class _AccueilState extends State<Accueil> {
   final controller = ScrollController();
   Firestore _db = Firestore.instance;
   List<Map<String, dynamic>> recommandationProducts = [];
+  int nombreAjoutPanier;
 
   Future<void> fecthProductsRecommandation() async {
     await _db.collection("produit").getDocuments().then((value) {
@@ -48,10 +47,10 @@ class _AccueilState extends State<Accueil> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Accueil", context: context, controller: controller);
+        titre: "Accueil", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
     return (recommandationProducts != null)
         ? Scaffold(
-            appBar: _appBar.appBarFunction(),
+            appBar: _appBar.appBarFunctionStream(),
             drawer: ProfileSettings(),
             body: Snap(
               controller: controller.appBar,
@@ -118,6 +117,7 @@ class _AccueilState extends State<Accueil> {
           );
   }
 
+  // ignore: missing_return
   Widget afficherRecommandation() {
     if (recommandationProducts != null) {
       for (int i = 0; i < recommandationProducts.length; i++) {
