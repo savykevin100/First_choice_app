@@ -20,82 +20,80 @@ class _DecisionState extends State<Decision> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              margin:EdgeInsets.only(top:MediaQuery.of(context).size.height/4),
-              child: Center(
-                child: ClipPath(
-                  clipper: BackgroundClipper(),
-                  child:Container(
-                    margin:EdgeInsets.only(),
-                    width: MediaQuery.of(context).size.width ,
-                    height: MediaQuery.of(context).size.height ,
-                    decoration: BoxDecoration(
-                      color: HexColor("#001C36"),
-                    ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            margin:EdgeInsets.only(top:MediaQuery.of(context).size.height/4),
+            child: Center(
+              child: ClipPath(
+                clipper: BackgroundClipper(),
+                child:Container(
+                  margin:EdgeInsets.only(),
+                  width: MediaQuery.of(context).size.width ,
+                  height: MediaQuery.of(context).size.height ,
+                  decoration: BoxDecoration(
+                    color: HexColor("#001C36"),
+                  ),
 
-                    child: Container(
-                       // margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(105.0, context),right: longueurPerCent(105.0, context)),
-                        child:Center(
-                        )
-                    ),
+                  child: Container(
+                     // margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(105.0, context),right: longueurPerCent(105.0, context)),
+                      child:Center(
+                      )
                   ),
                 ),
               ),
             ),
-            Positioned(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height:longueurPerCent(486.4, context)),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-                      height: longueurPerCent(50.0, context),
-                      width: largeurPerCent(339.0, context),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(7.0),
-                        //shadowColor: Colors.greenAccent,
-                        color: HexColor("#FFC30D"),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Center(
-                            child: Text(
-                              'SE CONNECTER',
-                              style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
-                            ),
+          ),
+          Positioned(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height:longueurPerCent(450.4, context)),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
+                    height: longueurPerCent(50.0, context),
+                    width: largeurPerCent(339.0, context),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(7.0),
+                      //shadowColor: Colors.greenAccent,
+                      color: HexColor("#FFC30D"),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Center(
+                          child: Text(
+                            'SE CONNECTER',
+                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height:longueurPerCent(35.0, context)),
-                  Container(
-                    margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-                    height: longueurPerCent(50.0, context),
-                    width: largeurPerCent(339.0, context),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7.0),
-                        border: Border.all(color: HexColor("#FFC30D"))
-                    ),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Center(
-                        child: Text(
-                          "S'INSCRIRE",
-                          style: TextStyle(color: HexColor("#FFC30D"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
-                        ),
+                ),
+                SizedBox(height:longueurPerCent(35.0, context)),
+                Container(
+                  margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
+                  height: longueurPerCent(50.0, context),
+                  width: largeurPerCent(339.0, context),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7.0),
+                      border: Border.all(color: HexColor("#FFC30D"))
+                  ),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Center(
+                      child: Text(
+                        "S'INSCRIRE",
+                        style: TextStyle(color: HexColor("#FFC30D"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
                       ),
                     ),
                   ),
-                  SizedBox(height: longueurPerCent(50.0, context),),
-                  new Container(),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                /*SizedBox(height: longueurPerCent(50.0, context),),
+                new Container(),*/
+              ],
+            ),
+          )
+        ],
       ),
     );
 
