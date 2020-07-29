@@ -46,6 +46,16 @@ dependencies:
   scroll_app_bar: ^1.0.2
   flutter_rating_bar: ^3.0.1+1
   lite_rolling_switch: ^0.1.1
+  curved_navigation_bar: ^0.3.2
+  dropdown_formfield: ^0.1.2
+  intro_slider: ^2.3.1
+  animate_do: ^1.7.2
+  flutter_share_me: ^0.9.1
+  http: ^0.12.2
+  image_picker: ^0.6.7+4
+  path_provider: ^1.6.11
+  screenshot: ^0.2.0
+
 
 
 
