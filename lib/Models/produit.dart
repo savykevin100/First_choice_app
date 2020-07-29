@@ -1,6 +1,6 @@
 class Produit {
   String nomDuProduit;
-  String prix;
+  int prix;
   String description;
   String image1;
   String image2;

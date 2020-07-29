@@ -70,10 +70,6 @@ Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
   }
 
 
-/* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/
-/*Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document){
-    return _db.collection("Utilisateurs").document(document).collection("ProduitsFavoirsUser").add(produit.toMap());
-  }*/
 
   Future<void> addFavoris(Produit produit, String document){
     return _db.collection("Utilisateurs").document(document).collection("Favoris").add(produit.toMap());
@@ -83,7 +79,10 @@ Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
     return _db.collection("Utilisateurs").document(document)
         .collection("Favoris").document(document1).delete();
   }
-
+  Future<void> deletePanier(String document, String document1){
+    return _db.collection("Utilisateurs").document(document)
+        .collection("Panier").document(document1).delete();
+  }
   Stream<List<Produit>> getFavoris(String document) {
     return _db.collection("Utilisateurs").document(document).collection(
         "Favoris").snapshots().map(
@@ -92,6 +91,13 @@ Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
       ).toList(),
     );
   }
+
+
+
+/* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/
+/*Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document){
+    return _db.collection("Utilisateurs").document(document).collection("ProduitsFavoirsUser").add(produit.toMap());
+  }*/
 
   /*Future<void> addPanier(PanierClasse produit, String document, String id){
     return _db.collection("Utilisateurs").document(document).collection("Panier").document(id).setData(produit.toMap());

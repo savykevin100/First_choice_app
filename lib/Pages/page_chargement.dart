@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:premierchoixapp/Authentification/Decision.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 
@@ -22,13 +23,7 @@ class _PageChargementState extends State<PageChargement> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUser().then((user) {
-      if(user!=null) {
-        setState(() {
-          currentUser=true;
-        });
-      }
-    });
+
 
   }
 
@@ -58,8 +53,7 @@ class _PageChargementState extends State<PageChargement> {
    if(currentUser){
       return AllNavigationPage();
     } else {
-      return Connexion();
+      return Decision();
     }
-
   }
 }

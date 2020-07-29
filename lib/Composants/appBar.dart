@@ -8,48 +8,21 @@ import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 
 
-class AppBarClasse{
+class AppBarClasse extends StatefulWidget{
   BuildContext context;
   String titre;
   ScrollController controller = ScrollController();
   int nbAjoutPanier;
-
-
-  ///AppBarClasse.nb({this.titre, this.nbAjoutPanier, this.context});
-  /// AppBarClasse({this.titre, this.context, this.currentUserId, });
    AppBarClasse({this.titre, this.context , this.controller, this.nbAjoutPanier});
 
 
-  Widget appBarFunction(){
-    return ScrollAppBar(
-      controller: controller,
-      title: Text(
-        titre,
-        style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
-      ),
-      backgroundColor: HexColor("#001c36"),
-      /// badgeContent: Text("${nbAjoutPanier}"),
-      actions: <Widget>[
-        Badge(
-          badgeContent: Text(""),
-          toAnimate: true,
-          position: BadgePosition.topRight(top:   0,  right: 0),
-          child: IconButton(
-              icon: Icon(
-                Icons.shopping_basket,
-                color: Colors.white,
-              ),
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Panier()));
-              }),
-        )
 
-      ],
-    );
+
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 
   Widget appBarFunctionStream(){
@@ -66,7 +39,7 @@ class AppBarClasse{
           badgeContent:StreamBuilder(
               stream: FirestoreService().getUtilisateurs(),
               builder: (BuildContext context,
-              AsyncSnapshot<List<Utilisateur>> snapshot) {
+                  AsyncSnapshot<List<Utilisateur>> snapshot) {
                 if(snapshot.hasError || !snapshot.hasData){
                   return Text("");
                 } else {
@@ -78,23 +51,6 @@ class AppBarClasse{
                   return Text("${nbAjoutPanier}");}
               }
           ),
-
-          /*StreamBuilder(
-            stream: FirestoreService().getProduitPanier(Renseignements.emailUser),
-              builder: (BuildContext context,
-              AsyncSnapshot<List<PanierClasse>> snapshot) {
-               if(snapshot.hasError || !snapshot.hasData){
-                 return Text("");
-               } else {
-               for(int i=0; i<snapshot.data.length; i++) {
-                 if(snapshot.data[i].description=="AjoutPanierBadge"){
-                   nbAjoutPanier=snapshot.data[i].nombreAjout;
-                 }
-                }
-               return Text("${nbAjoutPanier}");
-               }
-              }
-          ),*/
           toAnimate: true,
           position: BadgePosition.topRight(top:   0,  right: 0),
           child: IconButton(
@@ -114,7 +70,6 @@ class AppBarClasse{
       ],
     );
   }
-
 
 
 }

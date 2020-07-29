@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -26,12 +28,10 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
          await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
               imagePrincipaleProduit: produit.image1,
               imageSelect: produit.image1,
-              quantite: 1,
               etatIconeFavoris: false
           ), Renseignements.emailUser);
          print("L'ajout a été fait avant le onap");
         }
-        print(snapshot.documents.isEmpty);
 
       });
     } catch (e){
@@ -62,14 +62,14 @@ Widget scrollabe_products_horizontal(BuildContext context){
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, i) {
-                    idProduitsFavorisUser(snapshot.data[i], context);
                     return GestureDetector(
                       onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
+                        idProduitsFavorisUser(snapshot.data[i], context);
+                         Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) =>
+                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
                       },
                       child: Container(
                         width: largeurPerCent(180, context),
@@ -113,7 +113,7 @@ Widget scrollabe_products_horizontal(BuildContext context){
                                         top: longueurPerCent(
                                             10, context)),
                                     child: Text(
-                                      "${snapshot.data[i].prix}",
+                                      "${snapshot.data[i].prix} FCFA",
                                       style: TextStyle(
                                           color:
                                           HexColor("#001C36"),
@@ -157,6 +157,7 @@ Widget scrollabe_products_horizontal(BuildContext context){
                                       size: 10,
                                     ),
                                     itemSize: 20,
+                                    ignoreGestures: true,
                                     onRatingUpdate: (rating) {
                                       print(rating);
                                     },

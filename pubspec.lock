@@ -99,13 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.3"
-  dropdown_formfield:
+  datetime_picker_formfield:
     dependency: "direct main"
     description:
-      name: dropdown_formfield
+      name: datetime_picker_formfield
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "1.0.0"
   email_validator:
     dependency: "direct main"
     description:
@@ -215,7 +215,7 @@ packages:
       name: flutter_staggered_grid_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   flutter_star_rating:
     dependency: "direct main"
     description:
@@ -268,6 +268,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  intro_slider:
+    dependency: "direct main"
+    description:
+      name: intro_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.1"
   js:
     dependency: transitive
     description:
@@ -302,7 +309,7 @@ packages:
       name: page_transition
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.5"
+    version: "1.1.6"
   path:
     dependency: transitive
     description:
@@ -394,6 +401,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  scroll_app_bar:
     dependency: "direct main"
     description:
       name: scroll_app_bar

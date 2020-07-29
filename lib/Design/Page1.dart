@@ -88,7 +88,6 @@ class _Page1State extends State<Page1> with SingleTickerProviderStateMixin{
                       decoration: BoxDecoration(
                         color: HexColor("#001C36"),
                       ),
-
                        child: Container(
                          margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(105.0, context),right: longueurPerCent(105.0, context)),
                            child:Center(

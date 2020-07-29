@@ -4,7 +4,7 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Design/Decision.dart';
+import 'package:premierchoixapp/Authentification/Decision.dart';
 
 
 
@@ -215,5 +215,3 @@ class IntroScreenState extends State<IntroScreen> {
 
   }
 }
-
-

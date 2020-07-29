@@ -54,15 +54,18 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       } else {
         for (int i = 0; i < snapshot.documents.length; i++) {
           if (snapshot.documents[i].data["image1"] == widget.produit.image1) {
-            setState(() {
-              idFavorisProduit = snapshot.documents[i].documentID;
-              print("C'est ${idFavorisProduit}");
-            });
+            if (this.mounted) {
+              setState(() {
+                idFavorisProduit = snapshot.documents[i].documentID;
+              });
+            }
           }
         }
       }
     });
   }
+
+
 
   ///Cette fonction permet d'obtenir les informations qui sont dans la collection ProduitsFavorisUser(ce produit a déjà été ajouté dans la collection
   ///ProduitFavorisUser donc on récupère ce produit pour permettre la selection des images, avoir l'état de l'icone Favoris
@@ -76,14 +79,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       for (int i = 0; i < snapshot.documents.length; i++) {
         if (snapshot.documents[i].data["imagePrincipaleProduit"] ==
             widget.produit.image1) {
-          setState(() {
-            id_produit = snapshot.documents[i].documentID;
-            quantite = snapshot.documents[i].data["quantite"];
-            etatIconeFavoris = snapshot.documents[i].data["etatIconeFavoris"];
-            ajoutPanier = snapshot.documents[i].data["ajoutPanier"];
-          });
-          print(id_produit);
-          print(etatIconeFavoris);
+          if (this.mounted) {
+            setState(() {
+              id_produit = snapshot.documents[i].documentID;
+              quantite = snapshot.documents[i].data["quantite"];
+              etatIconeFavoris = snapshot.documents[i].data["etatIconeFavoris"];
+            });
+          }
         }
       }
     });
@@ -98,36 +100,48 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         .document(Renseignements.emailUser)
         .get()
         .then((value) {
-      setState(() {
-        ajoutPanier = value.data["nbAjoutPanier"];
-        print("c'est ${ajoutPanier}");
-      });
+      if (this.mounted) {
+        setState(() {
+          ajoutPanier = value.data["nbAjoutPanier"];
+        });
+      }
     });
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @override
-  void initState() {
-    getIdProduitFavorisUser();
-    getNombreProduitPanier();
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
     getIdFavoris();
-    super.initState();
+    getIdProduitFavorisUser();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    getNombreProduitPanier();
+
+  }
 
   ScrollController controller = ScrollController();
 
+
+
   @override
   Widget build(BuildContext context) {
+
     AppBarClasse _appBar = AppBarClasse(
         titre: "Article", context: context, controller: controller, nbAjoutPanier: ajoutPanier);
-    return (id_produit != null && etatIconeFavoris != null)
-        ? Scaffold(
+    getIdFavoris();
+    getIdProduitFavorisUser();
+    return  Scaffold(
             key: _scaffoldKey,
             appBar: _appBar.appBarFunctionStream(),
             body: ListView(
               children: <Widget>[
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -140,13 +154,14 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         ),
                         Padding(
                           padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
-                          child: Text(widget.produit.prix,
+                          child: Text( "${widget.produit.prix} FCFA",
                               style: TextStyle(
                                   color: HexColor("#001c36"),
                                   fontFamily: "MonseraBold",
                                   fontSize: 20)),
                         ),
                         RatingBar(
+
                           initialRating:  widget.produit.numberStar.ceilToDouble(),
                           minRating: 1,
                           direction: Axis.horizontal,
@@ -163,7 +178,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             print(rating);
                           },
                         ),
-                        Row(
+                       /* Row(
                           children: <Widget>[
                             IconButton(
                               padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
@@ -224,9 +239,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               ),
                             )
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
+
                     Padding(
                       padding:  EdgeInsets.only(left: largeurPerCent(60, context)),
                       child: GestureDetector(
@@ -262,7 +278,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               if(snapshot.documents.isEmpty){
                                 displaySnackBarNom(context, "Produit ajouté au panier", Colors.green);
                                 setState(() {
-                                  ajoutPanier++;
+                                  ajoutPanier=ajoutPanier+1;
                                   FirestoreService().addPanierSansId(PanierClasse(
                                       nomDuProduit: widget.produit.nomDuProduit,
                                       image1: widget.produit.image1,
@@ -275,7 +291,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                       .document(Renseignements.emailUser)
                                       .updateData({"nbAjoutPanier": ajoutPanier});
                                 });
-                              }
+                              } else displaySnackBarNom(context, "Produit déjà ajouté au panier", Colors.green);
                             });
                           },
                           child: Container(
@@ -300,7 +316,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     ),
                   ],
                 ),
-                apparitionImage(),
+                (id_produit!=null && etatIconeFavoris!=null)? apparitionImage():Center(child: CircularProgressIndicator()),
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
                   padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
@@ -325,35 +341,36 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       ),
                       SizedBox(width: largeurPerCent(90, context),),
                       GestureDetector(
-                          onTap: () async{
-                            getIdFavoris();
-                            if(etatIconeFavoris == false){
-                              setState(() {
-                                displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.green);
-                                print("ajout");
-                                etatIconeFavoris = true;
-                                FirestoreService().addFavoris(widget.produit,widget.currentUserId);
-                                _db
-                                    .collection("Utilisateurs")
-                                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                    .document(id_produit)
-                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
-                              });
-                            } else {
-                              setState(() {
-                                displaySnackBarNom(context, "Produit supprimé des favoris", Colors.green);
-                                print("supprimer");
-                                etatIconeFavoris = false;
-                                _db
-                                    .collection("Utilisateurs")
-                                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                    .document(id_produit)
-                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
-                                FirestoreService().deleteFavoris(widget.currentUserId, idFavorisProduit);
-                              });
+                          onTap: () {
+                            if(id_produit!=null && etatIconeFavoris!=null){
+                              if(etatIconeFavoris == false){
+                                setState(() {
+                                  displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.green);
+                                  print("ajout");
+                                  etatIconeFavoris = true;
+                                  FirestoreService().addFavoris(widget.produit, Renseignements.emailUser);
+                                  _db
+                                      .collection("Utilisateurs")
+                                      .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
+                                      .document(id_produit)
+                                      .updateData({"etatIconeFavoris":etatIconeFavoris});
+                                });
+                              } else {
+                                setState(() {
+                                  displaySnackBarNom(context, "Produit supprimé des favoris", Colors.green);
+                                  print("supprimer");
+                                  etatIconeFavoris = false;
+                                  _db
+                                      .collection("Utilisateurs")
+                                      .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                      .document(id_produit)
+                                      .updateData({"etatIconeFavoris":etatIconeFavoris});
+                                  FirestoreService().deleteFavoris(Renseignements.emailUser, idFavorisProduit);
+                                });
+                              }
                             }
                           },
-                          child: Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)),
+                          child: (id_produit!=null && etatIconeFavoris!=null)?(Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)):CircularProgressIndicator())
                     ],
                   ),
                 ),
@@ -433,8 +450,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                ),
                 SizedBox(height: longueurPerCent(20, context),),
               ],
-            ))
-        : Scaffold(appBar: _appBar.appBarFunction());
+            ));
   }
 
   Stream<List<ProduitsFavorisUser>> getImagesProduct(){

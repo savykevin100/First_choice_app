@@ -6,6 +6,7 @@ class Utilisateur {
   String numeroDePayement;
   String email;
   int nbAjoutPanier;
+  bool role;
 
 
 
@@ -15,7 +16,8 @@ class Utilisateur {
       this.age,
       this.numeroDePayement,
       this.email,
-      this.nbAjoutPanier
+      this.nbAjoutPanier,
+        this.role
     });
 
   Utilisateur.fromMap(Map<String, dynamic> donnees, String id)
@@ -24,7 +26,8 @@ class Utilisateur {
         age = donnees["age"],
         numeroDePayement = donnees["numeroDePayement"],
         email = donnees["email"],
-        nbAjoutPanier = donnees["nbAjoutPanier"];
+        nbAjoutPanier = donnees["nbAjoutPanier"],
+        role = donnees["role"];
 
 
 
@@ -36,6 +39,7 @@ class Utilisateur {
     "numeroDePayement":numeroDePayement,
     "email":email,
       "nbAjoutPanier":nbAjoutPanier,
+      "role":role,
 
     };
    }
