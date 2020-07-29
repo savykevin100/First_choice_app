@@ -18,7 +18,7 @@ import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.
 ///de l'utilisateur pour la selection des images et l'ajout des favoris, cette collection est utilisée pour enregister les
 ///produits sur lesquels ils cliquent ce qui aide permet d'ajouter dans la table le produit avec les informations
 
-void idProduitsFavorisUser(Produit produit, BuildContext context) async{
+ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
   if (Renseignements.emailUser != null) {
     try {
       Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
@@ -28,13 +28,10 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
           await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
               imagePrincipaleProduit: produit.image1,
               imageSelect: produit.image1,
-              quantite: produit.quantite,
               etatIconeFavoris: false
           ), Renseignements.emailUser);
           print("L'ajout a été fait avant le onap");
         }
-        print(snapshot.documents.isEmpty);
-
       });
     } catch (e){
       print(e);
@@ -58,7 +55,7 @@ Widget product_grid_view(){
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
               Produit produit = snapshot.data[index];
-              idProduitsFavorisUser(produit, context);
+              ///idProduitsFavorisUser(produit, context);
               return Container(
                 width: largeurPerCent(150, context),
                 margin: EdgeInsets.only(
@@ -68,6 +65,7 @@ Widget product_grid_view(){
                 ),
                 child: InkWell(
                   onTap: () {
+                    ///idProduitsFavorisUser(produit, context);
                     print(produit.nomDuProduit);
                     Navigator.push(
                         context,
@@ -78,7 +76,6 @@ Widget product_grid_view(){
                   child: Card(
                     elevation: 5.0,
                     child: Column(
-
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
@@ -90,6 +87,9 @@ Widget product_grid_view(){
                                   topRight: Radius.circular(10)),
                               child: Image.network(
                                 produit.image1,
+                                loadingBuilder: (context,child, progress){
+                                  return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                },
                                 fit: BoxFit.cover,
                               )),
                         ),
@@ -105,7 +105,7 @@ Widget product_grid_view(){
                                   top: longueurPerCent(
                                       5, context)),
                               child: Text(
-                                produit.prix,
+                               "${ produit.prix} FCFA",
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
                                     fontSize: 15,
@@ -141,6 +141,7 @@ Widget product_grid_view(){
                               allowHalfRating: true,
                               itemCount: 3,
                               itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              ignoreGestures: true,
                               itemBuilder: (context, _) => Icon(
                                 Icons.star,
                                 color: Colors.amber,

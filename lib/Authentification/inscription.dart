@@ -5,16 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/components/decoration_text_field_container.dart';
+import 'package:premierchoixapp/Authentification/components/firebase_auth_services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Composants/firestore_service.dart';
+
+
+
 
 class Inscription extends StatefulWidget {
   static String id = "inscription";
+
+
 
   @override
   _InscriptionState createState() => _InscriptionState();
@@ -29,6 +37,7 @@ class _InscriptionState extends State<Inscription> {
   Utilisateur utilisateur;
   String key = "email_user";
   final _formKey = GlobalKey<FormState>();
+
 
 
 
@@ -93,10 +102,10 @@ class _InscriptionState extends State<Inscription> {
                         chargement = true;
                       });
                       try {
+                        ///String userId= await widget.auth.signInWithEmailAndPassword(emailAdress, motDePass);
                         final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
                         if(user!=null ) {
                           print("reussie");
-                          ajouter(emailAdress);
                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                             return Renseignements(emailAdress: emailAdress);
                           }));
@@ -208,9 +217,9 @@ class _InscriptionState extends State<Inscription> {
   }
 
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
-  void obtenir() async {
+  Future<void> obtenir() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String liste = await sharedPreferences.getString(key);
+    String liste = sharedPreferences.getString(key);
     if (liste != null) {
       setState(() {
         Renseignements.emailUser = liste;
@@ -219,9 +228,9 @@ class _InscriptionState extends State<Inscription> {
   }
   /* Fin de la fonction */
 
-  /** Cette fonction permet d'ajouter les informations*/
+  /* Cette fonction permet d'ajouter les informations*/
 
-  void ajouter(String str) async {
+  Future<void> ajouter(String str) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Renseignements.emailUser=str;
     await sharedPreferences.setString(key, Renseignements.emailUser);

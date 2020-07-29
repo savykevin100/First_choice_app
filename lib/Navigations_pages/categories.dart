@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
@@ -14,6 +15,7 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   ScrollController controller = ScrollController();
   bool val=false;
+  int ajoutPanier;
 
   @override
   void initState() {
@@ -24,11 +26,12 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Catégories", context: context, controller: controller);
+        titre: "Catégories", context: context, controller: controller, nbAjoutPanier: ajoutPanier);
     return Scaffold(
-      appBar: _appBar.appBarFunction(),
-      drawer: ProfileSettings(),
+      appBar: _appBar.appBarFunctionStream(),
+      drawer:  ProfileSettings(userCurrent: Renseignements.emailUser),
       body: ListView(
+        shrinkWrap: true,
         controller: controller,
         children: <Widget>[
           Container(
@@ -72,10 +75,9 @@ class _CategoriesState extends State<Categories> {
                   iconOn: Icons.account_circle,
                   iconOff: Icons.account_circle,
                   textSize: 16.0,
+                  animationDuration: Duration(seconds: 1),
                   onChanged: (bool state) {
-                    setState(() {
-                      val=state;
-                    });
+
                   },
                 ),
                 Padding(
@@ -98,10 +100,17 @@ class _CategoriesState extends State<Categories> {
                   fontFamily: "MonseraBold"),
             ),
           ),
-          (val==false)? product_grid_view():Text("Je suis sur la partie")
         ],
       ),
     );
+  }
+
+  Widget MenFemale(){
+    if(val==true){
+       product_grid_view();
+    } else{
+       Text("Je suis la catégorie");
+    }
   }
 
 /* body:  , */

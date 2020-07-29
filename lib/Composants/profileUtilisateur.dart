@@ -18,6 +18,8 @@ import 'hexadecimal.dart';
 class ProfileSettings extends StatefulWidget {
   // final Widget creationHeader;
   //  ProfileSettings({this.creationHeader});
+  String userCurrent;
+  ProfileSettings({this.userCurrent});
 
   @override
   _ProfileSettingsState createState() => _ProfileSettingsState();
@@ -27,6 +29,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   final _auth = FirebaseAuth.instance;
   Utilisateur donneesUtilisateurConnecte;
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -34,7 +37,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          creationHeader(),
+          creationHeader(widget.userCurrent),
           drawerItem(
               icon: Icons.home,
               text: "Accueil",
@@ -97,35 +100,35 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     );
   }
 
-  Widget creationHeader() {
-    return UserAccountsDrawerHeader(
-      decoration: BoxDecoration(
-        color: HexColor('#001C36'),
-      ),
-      otherAccountsPictures: <Widget>[],
-      accountName: StreamBuilder(
-          stream:  FirestoreService().getUtilisateurs(),
-          builder: (BuildContext context, AsyncSnapshot<List<Utilisateur>> snapshot) {
-            if(snapshot.hasError || !snapshot.hasData) {
-              return CircularProgressIndicator();
-            } else {
-              for(int i=0; i<snapshot.data.length; i++) {
-                Utilisateur utilisateur = snapshot.data[i];
-                if(utilisateur.email == Renseignements.emailUser) {
-                  donneesUtilisateurConnecte = utilisateur;
+  Widget creationHeader(String currentUser) {
+      return UserAccountsDrawerHeader(
+        decoration: BoxDecoration(
+          color: HexColor('#001C36'),
+        ),
+        otherAccountsPictures: <Widget>[],
+        accountName: StreamBuilder(
+            stream:  FirestoreService().getUtilisateurs(),
+            builder: (BuildContext context, AsyncSnapshot<List<Utilisateur>> snapshot) {
+              if(snapshot.hasError || !snapshot.hasData) {
+                return CircularProgressIndicator();
+              } else {
+                for(int i=0; i<snapshot.data.length; i++) {
+                  Utilisateur utilisateur = snapshot.data[i];
+                  if(utilisateur.email == currentUser) {
+                    donneesUtilisateurConnecte = utilisateur;
+                  }
                 }
-              }
 
-              return Text("${donneesUtilisateurConnecte.nomComplet}",style: TextStyle(fontSize: 20));
+                return Text("${donneesUtilisateurConnecte.nomComplet}",style: TextStyle(fontSize: 20));
+              }
             }
-          }
-      ),
-      accountEmail: Text("${Renseignements.emailUser}", style: TextStyle(fontSize: 15)),
-      currentAccountPicture: CircleAvatar(
-          backgroundImage: AssetImage(
-            "assets/images/user33312571280.png",
-          )),
-    );
+        ),
+        accountEmail: Text(currentUser, style: TextStyle(fontSize: 15)),
+        currentAccountPicture: CircleAvatar(
+            backgroundImage: AssetImage(
+              "assets/images/user33312571280.png",
+            )),
+      );
   }
 
   Widget drawerItem({IconData icon, String text, GestureTapCallback onTap}) {

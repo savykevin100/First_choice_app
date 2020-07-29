@@ -10,10 +10,8 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
-    AppBarClasse _appBar = AppBarClasse(titre: "Chat", context: context);
     return Scaffold(
-      appBar: _appBar.appBarFunction(),
-      drawer: ProfileSettings(),
+      appBar: AppBar(),
       body: Container(
       ),
     );

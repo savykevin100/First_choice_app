@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Pages/elements_vides.dart';
 
 
 class Notifications extends StatefulWidget {
@@ -9,15 +11,19 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-
+ int nombreAjoutPanier;
+ final controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-   AppBarClasse _appBar = AppBarClasse(titre: "Notications", context: context);
+    AppBarClasse _appBar = AppBarClasse(
+        titre: "Notifications", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
     return Scaffold(
-      appBar: _appBar.appBarFunction(),
-      drawer: ProfileSettings(),
+      appBar: _appBar.appBarFunctionStream(),
+      drawer: ProfileSettings(userCurrent:  Renseignements.emailUser),
       body: Container(
+        child:   elementsVides(context, Icons.add_alert, "AUCUNE NOTIFICATION",),
       ),
     );
+
   }
 }

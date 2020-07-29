@@ -1,7 +1,7 @@
 
 class PanierClasse {
   String nomDuProduit;
-  String prix;
+  int prix;
   String description;
   String image1;
   int quantiteCommander;

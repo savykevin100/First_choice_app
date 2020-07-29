@@ -10,9 +10,13 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'components/decoration_text_field_container.dart';
+import 'components/firebase_auth_services.dart';
 
 class Connexion extends StatefulWidget {
   static String id="connexion";
+
+  final BaseAuth auth;
+  Connexion({this.auth});
   @override
   _ConnexionState createState() => _ConnexionState();
 }

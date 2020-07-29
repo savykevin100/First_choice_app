@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
-import 'package:search_widget/search_widget.dart';
 
 class HomePage extends StatefulWidget {
   static String id="HomePage";

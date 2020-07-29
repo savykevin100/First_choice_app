@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:premierchoixapp/Authentification/connexion.dart';
+import 'package:premierchoixapp/Authentification/inscription.dart';
 import '../Composants/calcul.dart';
 import '../Composants/hexadecimal.dart';
 
@@ -36,7 +38,7 @@ class _DecisionState extends State<Decision> {
                   ),
 
                   child: Container(
-                     // margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(105.0, context),right: longueurPerCent(105.0, context)),
+                    // margin: EdgeInsets.only(top: longueurPerCent(40.0, context),left: longueurPerCent(105.0, context),right: longueurPerCent(105.0, context)),
                       child:Center(
                       )
                   ),
@@ -48,21 +50,26 @@ class _DecisionState extends State<Decision> {
             child: Column(
               children: <Widget>[
                 SizedBox(height:longueurPerCent(450.4, context)),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-                    height: longueurPerCent(50.0, context),
-                    width: largeurPerCent(339.0, context),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(7.0),
-                      //shadowColor: Colors.greenAccent,
-                      color: HexColor("#FFC30D"),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Center(
-                          child: Text(
-                            'SE CONNECTER',
-                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, Connexion.id);
+                  },
+                  child: Center(
+                    child: Container(
+                      margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
+                      height: longueurPerCent(50.0, context),
+                      width: largeurPerCent(339.0, context),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(7.0),
+                        //shadowColor: Colors.greenAccent,
+                        color: HexColor("#FFC30D"),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Center(
+                            child: Text(
+                              'SE CONNECTER',
+                              style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+                            ),
                           ),
                         ),
                       ),
@@ -70,16 +77,15 @@ class _DecisionState extends State<Decision> {
                   ),
                 ),
                 SizedBox(height:longueurPerCent(35.0, context)),
-                Container(
-                  margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
-                  height: longueurPerCent(50.0, context),
-                  width: largeurPerCent(339.0, context),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7.0),
-                      border: Border.all(color: HexColor("#FFC30D"))
-                  ),
-                  child: GestureDetector(
-                    onTap: () {},
+                GestureDetector(
+                  child: Container(
+                    margin: EdgeInsets.only(right: longueurPerCent(18.0, context),left: longueurPerCent(18.0, context),),
+                    height: longueurPerCent(50.0, context),
+                    width: largeurPerCent(339.0, context),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7.0),
+                        border: Border.all(color: HexColor("#FFC30D"))
+                    ),
                     child: Center(
                       child: Text(
                         "S'INSCRIRE",
@@ -87,6 +93,9 @@ class _DecisionState extends State<Decision> {
                       ),
                     ),
                   ),
+                  onTap: (){
+                    Navigator.pushNamed(context, Inscription.id);
+                  },
                 ),
                 /*SizedBox(height: longueurPerCent(50.0, context),),
                 new Container(),*/
@@ -131,4 +140,3 @@ class BackgroundClipper extends CustomClipper<Path>{
   }
 
 }
-
