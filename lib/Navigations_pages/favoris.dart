@@ -208,11 +208,14 @@ class _FavorisState extends State<Favoris> {
                                           .document(identifiantDocumentsFavorisUser[i])
                                           .updateData({"etatIconeFavoris":false});
                                        setState(() {
+                                         identifiantDocumentsFavorisUser.removeAt(i);
                                          etatFavoris.removeAt(i);
                                        });
                                       print("Ça marche");
                                       FirestoreService().deleteFavoris(Renseignements.emailUser, idProduitsFavoris[index]);
-                                      idProduitsFavoris.removeAt(index);
+                                      setState(() {
+                                        idProduitsFavoris.removeAt(index);
+                                      });
                                     }
 
                                   }

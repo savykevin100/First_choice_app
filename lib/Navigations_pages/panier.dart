@@ -264,9 +264,11 @@ class _PanierState extends State<Panier> {
                   .height - 60),
               child: button(
                   Colors.white, HexColor("#001C36"), context, "ACHETER", () {
-                Navigator.push(
-                    context, MaterialPageRoute(
-                    builder: (context) => Panier1(total: total,)));
+               if(total==0){
+
+               } else  Navigator.push(
+                   context, MaterialPageRoute(
+                   builder: (context) => Panier1(total: total,)));
               }),
             ),
           )
