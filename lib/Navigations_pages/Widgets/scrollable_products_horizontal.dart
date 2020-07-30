@@ -47,7 +47,7 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
 Widget scrollabe_products_horizontal(BuildContext context){
 
   return Container(
-      height: longueurPerCent(200, context),
+      height: longueurPerCent(220, context),
       child: StreamBuilder(
           stream: FirestoreService().getProduit(),
           builder: (BuildContext context,
@@ -72,11 +72,11 @@ Widget scrollabe_products_horizontal(BuildContext context){
                                      ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
                       },
                       child: Container(
-                        width: largeurPerCent(180, context),
+                        width: largeurPerCent(160, context),
                         margin: EdgeInsets.only(
                             left: largeurPerCent(10, context)),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Card(
                           elevation: 5.0,
@@ -86,7 +86,10 @@ Widget scrollabe_products_horizontal(BuildContext context){
                               Container(
                                 height:
                                 longueurPerCent(120, context),
-                                width: largeurPerCent(180, context),
+                                width: largeurPerCent(160, context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.only(
                                         topLeft:
@@ -142,7 +145,7 @@ Widget scrollabe_products_horizontal(BuildContext context){
                                   padding: EdgeInsets.only(
                                       top:
                                       longueurPerCent(10, context),
-                                      left: largeurPerCent(10, context)
+                                      left: largeurPerCent(4, context)
                                   ),
                                   child: RatingBar(
                                     initialRating: snapshot.data[i].numberStar.ceilToDouble(),

@@ -78,6 +78,11 @@ class _ResetPasswdState extends State<ResetPasswd> {
   }
   Widget email(){
     return TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: "Email",

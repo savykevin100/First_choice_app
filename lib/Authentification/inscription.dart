@@ -44,17 +44,18 @@ class _InscriptionState extends State<Inscription> {
   @override
   Widget build(BuildContext context) {
       return (chargement==true)?Scaffold(
+        backgroundColor: HexColor("#001C36"),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
           child: Column(
             children: <Widget>[
-              Image.asset('assets/images/marketeurLogo.jpeg',
+              Image.asset('assets/images/logo.png',
                 height: 197,
                 width: 278,
               ),
               SizedBox(height: 50.0,),
               SpinKitThreeBounce(
-                color:HexColor('#001C36'),
+                color:HexColor('#FFFFFF'),
                 size: 60,
               )
             ],
@@ -69,8 +70,8 @@ class _InscriptionState extends State<Inscription> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: longueurPerCent(90, context),
-                        left: largeurPerCent(5, context),
-                        right: largeurPerCent(200, context)
+                        left: largeurPerCent(0, context),
+                        right: largeurPerCent(230, context)
                     ),
                     child: Text(
                       "S'inscrire",
@@ -122,7 +123,7 @@ class _InscriptionState extends State<Inscription> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Vous avez un compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18),),
+                      Text("Vous avez un compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18,fontFamily: 'MonseraLight'),),
                       SizedBox(width: largeurPerCent(5, context),),
                       GestureDetector(
                         onTap: () {
@@ -168,6 +169,7 @@ class _InscriptionState extends State<Inscription> {
   }
   Widget password(){
     return  TextFormField(
+      obscureText: true,
       decoration: InputDecoration(
         hintText: "Mot de passe",
         hintStyle: TextStyle(
@@ -194,6 +196,7 @@ class _InscriptionState extends State<Inscription> {
   }
   Widget confirmPassword() {
     return  TextFormField(
+      obscureText: true,
         decoration: InputDecoration(
           hintText: "Confirmation mot de passe",
           hintStyle: TextStyle(
