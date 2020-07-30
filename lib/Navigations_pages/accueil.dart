@@ -20,12 +20,16 @@ class Accueil extends StatefulWidget {
   _AccueilState createState() => _AccueilState();
 }
 
-class _AccueilState extends State<Accueil> {
+class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
   final _auth = FirebaseAuth.instance;
   Firestore _db = Firestore.instance;
   int nombreAjoutPanier;
   FirebaseUser utilisateurConnecte;
+  AnimationController animationController;
+  Animation carouselAnimation;
+
+
 
 
   void getCurrentUser() async {
@@ -43,6 +47,13 @@ class _AccueilState extends State<Accueil> {
   }
 
 
+/* Liste de photos qui contient les images à defiler dans le carousel */
+  int photoIndex = 0;
+  List<String> photos = [
+    'assets/images/gadgets-336635_1920.jpg',
+    'assets/images/make-up-1209798_1920.jpg',
+    'assets/images/sketchbook-156775_1280.png',
+  ];
 
 
   @override
@@ -50,8 +61,51 @@ class _AccueilState extends State<Accueil> {
     // TODO: implement initState
     super.initState();
     getCurrentUser();
+
+
+    animationController =
+        AnimationController(duration: Duration(seconds: 18), vsync: this);
+
+    carouselAnimation =
+    IntTween(begin: 0, end: photos.length - 1).animate(animationController)
+      ..addListener(() {
+        setState(() {
+          photoIndex = carouselAnimation.value;
+        });
+      });
+
+    animationController.repeat();
   }
 
+
+  @override
+
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+  /*Fin de l'initialisation de la page*/
+
+  Widget carousel(){
+    return  Stack(
+      children: <Widget>[
+        Container(
+          height: longueurPerCent(200, context),
+          //margin: EdgeInsets.only(top: longueurPerCent(0, context)),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(photos[photoIndex]),
+                  fit: BoxFit.cover)),
+        ),
+        Positioned(
+          top: longueurPerCent(170.0, context),
+          left: longueurPerCent(160,context),
+          child: SelectedPhoto(
+              photoIndex: photoIndex, numberOfDots: photos.length),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,60 +120,74 @@ class _AccueilState extends State<Accueil> {
            controller: controller.appBar,
            child: ListView(controller: controller, children: <Widget>[
              SizedBox(
-               height: longueurPerCent(20, context),
+               height: longueurPerCent(10, context),
              ),
              Container(
-                 margin: EdgeInsets.symmetric(horizontal: largeurPerCent(20, context)),
+                 margin: EdgeInsets.symmetric(horizontal: largeurPerCent(6, context)),
                  decoration: BoxDecoration(
-                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
                    color: HexColor("#DDDDDD"),
                  ),
                  child: TextFormField(
                    decoration: InputDecoration(
                      border: InputBorder.none,
                      prefixIcon: Padding(
-                       padding:  EdgeInsets.only(left: largeurPerCent(20, context)),
+                       padding:  EdgeInsets.only(left: largeurPerCent(90, context)),
                        child: Icon(Icons.search, color: HexColor('#9B9B9B')),
                      ),
+
                      labelText: "Rechercher un produit",
                      labelStyle: TextStyle(
                          color: HexColor('#9B9B9B'),
                          fontSize: 17.0,
                          fontFamily: 'MonseraLight'),
-                     contentPadding: EdgeInsets.only(top: 10, bottom: 5, left:100),
+                     contentPadding: EdgeInsets.only(top: 10, bottom: 5, ),
 
                    ),
                  )),
+             SizedBox(
+               height: longueurPerCent(10, context),
+             ),
+             Container(
+               width: MediaQuery.of(context).size.width ,
+               height: longueurPerCent(200, context),
+               decoration: BoxDecoration(
+                 color: HexColor("#001C36"),
+               ),
+               child: carousel(),
+             ),
              Padding(
                padding: EdgeInsets.only(
-                   top: longueurPerCent(20, context),
-                   left: largeurPerCent(10, context)),
+                   top: longueurPerCent(30, context),
+                   left: largeurPerCent(13, context)),
                child: Text(
-                 "RECOMMANDÉS",
+                 "PRODUITS RECOMMANDÉS",
                  style: TextStyle(
                      color: HexColor("#001C36"),
-                     fontSize: 22,
+                     fontSize: 20,
                      fontFamily: "MonseraBold"),
                ),
              ),
              SizedBox(
-               height: longueurPerCent(20, context),
+               height: longueurPerCent(16, context),
              ),
              scrollabe_products_horizontal(context),
              Padding(
                padding: EdgeInsets.only(
-                   top: longueurPerCent(20, context),
-                   left: largeurPerCent(10, context)),
+                   top: longueurPerCent(18, context),
+                   left: largeurPerCent(13, context)),
                child: Text(
-                 "DÉCOUVERTES",
+                 "DÉCOUVERTE",
                  style: TextStyle(
                      color: HexColor("#001C36"),
-                     fontSize: 22,
+                     fontSize: 20,
                      fontFamily: "MonseraBold"),
                ),
              ),
-             SizedBox(height: longueurPerCent(20, context),),
-             product_grid_view()
+             SizedBox(height: longueurPerCent(18, context),),
+             product_grid_view(),
+             SizedBox(height: longueurPerCent(18, context),),
+             new Container()
            ]),
          ));
     } else {
@@ -154,3 +222,64 @@ class _AccueilState extends State<Accueil> {
   }
   }
 
+
+class SelectedPhoto extends StatelessWidget {
+  final int numberOfDots;
+  final int photoIndex;
+
+  SelectedPhoto({this.numberOfDots, this.photoIndex});
+
+  Widget _inactivePhoto() {
+    return Center(
+      child: new Container(
+          child: new Padding(
+            padding: const EdgeInsets.only(left: 9.0, right: 9.0),
+            child: Container(
+              height: 12.0,
+              width: 12.0,
+              decoration: BoxDecoration(
+                  color:  HexColor('#ffffff'), borderRadius: BorderRadius.circular(10.0)),
+            ),
+          )),
+    );
+  }
+
+  Widget _activePhoto() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(left: 9.0, right: 9.0),
+        child: Container(
+          height: 12.0,
+          width: 12.0,
+          decoration: BoxDecoration(
+              color:  Colors.yellow,
+              borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.white, spreadRadius: 0.0, blurRadius: 10.0)
+              ]),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildDots() {
+    List<Widget> dots = [];
+
+    for (int i = 0; i < numberOfDots; ++i) {
+      dots.add(i == photoIndex ? _activePhoto() : _inactivePhoto());
+    }
+
+    return dots;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildDots(),
+      ),
+    );
+  }
+}

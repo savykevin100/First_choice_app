@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -48,7 +49,25 @@ class _RenseignementsState extends State<Renseignements> {
 /**/
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return   (chargement==true)?Scaffold(
+      backgroundColor: HexColor("#001C36"),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
+        child: Column(
+          children: <Widget>[
+            Image.asset('assets/images/logo.png',
+              height: 197,
+              width: 278,
+            ),
+            SizedBox(height: 50.0,),
+            SpinKitThreeBounce(
+              color:HexColor('#FFFFFF'),
+              size: 60,
+            )
+          ],
+        ),
+      ),
+    ) : Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
         body: (produits!=null)?SingleChildScrollView(
@@ -61,7 +80,7 @@ class _RenseignementsState extends State<Renseignements> {
                 top: longueurPerCent(80, context),
                 left: largeurPerCent(10, context),
                 right: largeurPerCent(10, context)),
-            height: longueurPerCent(520, context),
+            height: longueurPerCent(600, context),
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,18 +107,23 @@ class _RenseignementsState extends State<Renseignements> {
                           children: <Widget>[
                             TextFormField(
                                 keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                    color: HexColor("#001C36"),
+                                    fontSize: 18,
+                                    fontFamily: "MonseraBold"
+                                ),
                                 decoration: InputDecoration(
-                                  hintText: "NomComplet",
+                                  hintText: "Nom Complet",
                                   hintStyle: TextStyle(
                                       color: HexColor('#919191'),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                   fillColor: Colors.white,
                                   contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 30),
+                                      top: 30, bottom: 5, left: 20),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0)),
+                                          Radius.circular(7.0)),
                                       borderSide: BorderSide(
                                           width: 1, style: BorderStyle.none)),
                                 ),
@@ -113,32 +137,38 @@ class _RenseignementsState extends State<Renseignements> {
                               padding: EdgeInsets.only(
                                   left: largeurPerCent(20, context),
                                   right: largeurPerCent(20, context),
-                                  top: longueurPerCent(10, context)),
+                                  top: longueurPerCent(05, context),
+                              bottom:longueurPerCent(05, context) ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(15.0),
+                                    Radius.circular(7.0),
                                   ),
                                   border: Border.all(
                                       color: HexColor("#919191"), width: 1)),
                               child: DropdownButton(
+
                                 hint: _dropDownValue == null
                                     ? Text(
                                   'Genre',
                                   style: TextStyle(
                                       color: HexColor('#919191'),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                 )
                                     : Text(
                                   _dropDownValue,
                                   style: TextStyle(
                                       color: HexColor("#001C36"),
-                                      fontSize: 20),
+                                      fontSize: 18,
+                                      fontFamily: 'MonseraBold'),
                                 ),
                                 isExpanded: true,
+                                underline: Text(
+                                  ""
+                                ),
                                 iconSize: 30.0,
-                                style: TextStyle(color: HexColor("#001C36")),
-                                items: ['M', 'F'].map(
+                                style: TextStyle(color: HexColor("#919191")),
+                                items: ['Masculin', 'Féminin'].map(
                                       (val) {
                                     return DropdownMenuItem<String>(
                                       value: val,
@@ -160,6 +190,11 @@ class _RenseignementsState extends State<Renseignements> {
                               height: longueurPerCent(20, context),
                             ),
                             DateTimeField(
+                              style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 18,
+                                  fontFamily: "MonseraBold"
+                              ),
                               format: DateFormat("dd-MM-yyyy"),
                               decoration: InputDecoration(
                                 prefixIcon: Padding(
@@ -167,7 +202,7 @@ class _RenseignementsState extends State<Renseignements> {
                                       top: longueurPerCent(5, context),
                                       bottom: longueurPerCent(5, context),
                                       right: largeurPerCent(10, context),
-                                      left: largeurPerCent(10, context)),
+                                      left: largeurPerCent(18, context)),
                                   child: Icon(
                                     Icons.calendar_today,
                                     color: HexColor('#001C36'),
@@ -177,7 +212,7 @@ class _RenseignementsState extends State<Renseignements> {
                                 labelText: "Date d'anniversaire",
                                 labelStyle: TextStyle(
                                     color: HexColor('#919191'),
-                                    fontSize: 17.0,
+                                    fontSize: 18.0,
                                     fontFamily: 'MonseraLight'),
                                 hintText: "10/06/2000",
                                 hintStyle: TextStyle(
@@ -186,7 +221,7 @@ class _RenseignementsState extends State<Renseignements> {
                                     fontFamily: 'MonseraLight'),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(15.0)),
+                                        Radius.circular(7.0)),
                                     borderSide: BorderSide(
                                         width: 1, style: BorderStyle.none)),
                               ),
@@ -211,22 +246,24 @@ class _RenseignementsState extends State<Renseignements> {
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
                             TextFormField(
+                                style: TextStyle(
+                                    color: HexColor("#001C36"),
+                                    fontSize: 18,
+                                    fontFamily: "MonseraBold"
+                                ),
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   hintText: "Numero de Téléphone",
                                   hintStyle: TextStyle(
                                       color: HexColor('#919191'),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                   contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 30),
+                                      top: 30, bottom: 5, left: 24),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0)),
+                                          Radius.circular(7.0)),
                                       borderSide: BorderSide(
                                           width: 1, style: BorderStyle.none)),
                                 ),
@@ -237,18 +274,23 @@ class _RenseignementsState extends State<Renseignements> {
                               height: longueurPerCent(20, context),
                             ),
                             TextFormField(
+                                style: TextStyle(
+                                    color: HexColor("#001C36"),
+                                    fontSize: 18,
+                                    fontFamily: "MonseraBold"
+                                ),
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   hintText: "Ville",
                                   hintStyle: TextStyle(
                                       color: HexColor('#919191'),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                   contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 30),
+                                      top: 30, bottom: 5, left: 24),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0)),
+                                          Radius.circular(7.0)),
                                       borderSide: BorderSide(
                                           width: 1, style: BorderStyle.none)),
                                 ),
@@ -258,7 +300,7 @@ class _RenseignementsState extends State<Renseignements> {
                           ],
                         ))),
                 SizedBox(
-                  height: longueurPerCent(10, context),
+                  height: longueurPerCent(60, context),
                 ),
                 button(
                     Colors.white, HexColor("#001C36"), context, "CONFIRMATION ",

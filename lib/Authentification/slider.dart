@@ -136,7 +136,16 @@ class IntroScreenState extends State<IntroScreen> {
                 ),
                 margin: EdgeInsets.only(top: 20.0),
               ),
-
+              SizedBox(height: 20,),
+              Container(
+                child: GestureDetector(
+                    child: Image.asset(
+                      currentSlide.pathImage,
+                      width: 300.0,
+                      height: 300.0,
+                      fit: BoxFit.contain,
+                    )),
+              ),
               Container(
                 padding: EdgeInsets.only(left: longueurPerCent(50, context),right: longueurPerCent(50, context)),
                 child: Text(
@@ -147,16 +156,6 @@ class IntroScreenState extends State<IntroScreen> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 margin: EdgeInsets.only(top: 40.0),
-              ),
-              SizedBox(height: 20,),
-              Container(
-                child: GestureDetector(
-                    child: Image.asset(
-                      currentSlide.pathImage,
-                      width: 300.0,
-                      height: 300.0,
-                      fit: BoxFit.contain,
-                    )),
               ),
             ],
           ),

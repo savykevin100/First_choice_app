@@ -1,22 +1,24 @@
- import 'package:flutter/material.dart';
-import 'package:premierchoixapp/Authentification/Decision.dart';
-import 'package:premierchoixapp/Authentification/Test_login/root.dart';
+import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
+import 'package:premierchoixapp/Authentification/slider.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/FirstPage.dart';
+
+import 'package:premierchoixapp/Design/Notification2.dart';
 import 'package:premierchoixapp/Design/Page1.dart';
-import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
-import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:premierchoixapp/test.dart';
-import 'Authentification/Test_login/login.dart';
-import 'Authentification/components/firebase_auth_services.dart';
-import 'Composants/hexadecimal.dart';
+import 'Authentification/Decision.dart';
+import 'Authentification/connexion.dart';
+import 'Authentification/renisialisation_passwd.dart';
+import 'Authentification/renseignements.dart';
 import 'Navigations_pages/Pages_article_paniers/Panier1.dart';
-import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Pages/page_chargement.dart';
+import 'Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'Navigations_pages/all_navigation_page.dart';
+import 'Navigations_pages/panier.dart';
+import 'Pages/Favoris1.dart';
+import 'Pages/page_chargement.dart';
+
 
 
 
@@ -33,16 +35,12 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor:  HexColor("#001C36")
-      ),
+      theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-     /// home: RootPage(auth: Auth(),)
-     initialRoute: FirstPage.id,
+      initialRoute: Connexion.id,
       routes: {
         Connexion.id:(context) => Connexion(),
         Inscription.id: (context) => Inscription(),
-        Page1.id: (context) => Page1(),
         Article.id:(context) => Article(),
         Panier.id:(context) => Panier(),
         Panier1.id:(context) => Panier1(),
@@ -53,7 +51,9 @@ class MyApp extends StatelessWidget {
         HomePage.id:(context)=>HomePage(),
         Decision.id:(context)=>Decision(),
         FirstPage.id:(context)=>FirstPage()
+
       },
     );
   }
 }
+

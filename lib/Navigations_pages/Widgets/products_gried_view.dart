@@ -57,11 +57,12 @@ Widget product_grid_view(){
               Produit produit = snapshot.data[index];
               ///idProduitsFavorisUser(produit, context);
               return Container(
-                width: largeurPerCent(150, context),
+                width: largeurPerCent(200, context),
                 margin: EdgeInsets.only(
-                    left: largeurPerCent(10, context)),
+                    left: largeurPerCent(10, context),
+                    right: largeurPerCent(10, context)),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: InkWell(
                   onTap: () {
@@ -133,7 +134,7 @@ Widget product_grid_view(){
                         ),
                         Padding(
                             padding: EdgeInsets.only(
-                                top: longueurPerCent(10, context),left: largeurPerCent(10, context)),
+                                top: longueurPerCent(10, context),left: largeurPerCent(4, context)),
                             child:  RatingBar(
                               initialRating:  produit.numberStar.ceilToDouble(),
                               minRating: 1,
@@ -153,6 +154,8 @@ Widget product_grid_view(){
                               },
                             )
                         ),
+                        SizedBox(height: longueurPerCent(10, context),),
+                        new Container()
                       ],
                     ),
                   ),

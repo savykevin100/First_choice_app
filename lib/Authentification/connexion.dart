@@ -33,19 +33,18 @@ class _ConnexionState extends State<Connexion> {
 
 
     return (chargement==true)?Scaffold(
+      backgroundColor: HexColor("#001C36"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
         child: Column(
           children: <Widget>[
-            Flexible(
-              child: Image.asset('assets/images/marketeur.png',
-                height: 197,
-                width: 278,
-              ),
+            Image.asset('assets/images/logo.png',
+              height: 197,
+              width: 278,
             ),
             SizedBox(height: 50.0,),
             SpinKitThreeBounce(
-              color:HexColor('#001C36'),
+              color:HexColor('#FFFFFF'),
               size: 60,
             )
           ],
@@ -61,8 +60,8 @@ class _ConnexionState extends State<Connexion> {
                 Padding(
                   padding: EdgeInsets.only(
                       top: longueurPerCent(90, context),
-                      left: largeurPerCent(5, context),
-                      right: largeurPerCent(150, context)
+                      left: largeurPerCent(0, context),
+                      right: largeurPerCent(152, context)
                   ),
                   child: Text(
                     "Se connecter ",
@@ -151,16 +150,21 @@ class _ConnexionState extends State<Connexion> {
   }
   Widget email(){
     return TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: "Email",
         hintStyle: TextStyle(
             color: HexColor('#9B9B9B'),
-            fontSize: 17.0,
+            fontSize: 18.0,
             fontFamily: 'MonseraLight'),
         fillColor: Colors.white,
         contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
-        border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(20.0) ),
+        border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
             borderSide: BorderSide(width: 0, style: BorderStyle.none)
         ),
       ),
@@ -176,15 +180,21 @@ class _ConnexionState extends State<Connexion> {
   }
   Widget password(){
     return  TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
+      obscureText: true,
       decoration: InputDecoration(
         hintText: "Mot de passe",
         hintStyle: TextStyle(
             color: HexColor('#9B9B9B'),
-            fontSize: 17.0,
+            fontSize: 18.0,
             fontFamily: 'MonseraLight'),
         fillColor: Colors.white,
         contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
-        border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(20.0) ),
+        border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
             borderSide: BorderSide(width: 0, style: BorderStyle.none)
         ),
       ),
