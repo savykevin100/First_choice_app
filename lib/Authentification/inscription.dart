@@ -144,6 +144,11 @@ class _InscriptionState extends State<Inscription> {
 
   Widget email(){
     return TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           hintText: "Email",
@@ -169,6 +174,11 @@ class _InscriptionState extends State<Inscription> {
   }
   Widget password(){
     return  TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Mot de passe",
@@ -196,6 +206,11 @@ class _InscriptionState extends State<Inscription> {
   }
   Widget confirmPassword() {
     return  TextFormField(
+      style: TextStyle(
+          color: HexColor("#001C36"),
+          fontSize: 18,
+          fontFamily: "MonseraBold"
+      ),
       obscureText: true,
         decoration: InputDecoration(
           hintText: "Confirmation mot de passe",

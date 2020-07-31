@@ -99,7 +99,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
         Positioned(
           top: longueurPerCent(170.0, context),
-          left: longueurPerCent(160,context),
+          left: MediaQuery.of(context).size.width /2.5,
           child: SelectedPhoto(
               photoIndex: photoIndex, numberOfDots: photos.length),
         ),
@@ -110,7 +110,6 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
    if(utilisateurConnecte!=null){
-     print(Renseignements.emailUser);
      AppBarClasse _appBar = AppBarClasse(
          titre: "Accueil", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
      return Scaffold(
