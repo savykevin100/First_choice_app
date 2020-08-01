@@ -104,7 +104,7 @@ Widget product_grid_view(){
                                   left:
                                   largeurPerCent(10, context),
                                   top: longueurPerCent(
-                                      5, context)),
+                                      10, context)),
                               child: Text(
                                "${ produit.prix} FCFA",
                                 style: TextStyle(
@@ -114,7 +114,7 @@ Widget product_grid_view(){
                               )),
                         ),
                         SizedBox(
-                          height: longueurPerCent(10, context),
+                          height: longueurPerCent(5, context),
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(

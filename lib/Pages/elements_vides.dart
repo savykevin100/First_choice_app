@@ -12,19 +12,10 @@ Widget elementsVides(BuildContext context, IconData icon, String text) {
         ),
         SizedBox(height: MediaQuery.of(context).size.height /5),
         Center(
-          child: Container(
+          child: CircleAvatar(
+            radius: 75.0,
+            backgroundColor: HexColor("#001C36"),
             //margin: EdgeInsets.only(right: longueurPerCent(148.0, context),left: longueurPerCent(148.0, context)),
-            width: largeurPerCent(130.0, context),
-            height: longueurPerCent(130.0, context),
-            decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.all(Radius.circular(130.0)),
-                gradient: LinearGradient(
-                    colors: [HexColor("#001C36").withOpacity(0.4), HexColor("#001C36").withOpacity(0.1)],
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight
-                )
-            ),
             child: Icon(
             icon,
               color: Colors.white,
