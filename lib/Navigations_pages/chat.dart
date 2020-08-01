@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+
 
 class Chat extends StatefulWidget {
   @override

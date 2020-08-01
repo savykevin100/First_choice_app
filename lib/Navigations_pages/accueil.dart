@@ -6,10 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
-import 'package:premierchoixapp/Design/FirstPage.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
@@ -147,14 +145,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
              SizedBox(
                height: longueurPerCent(10, context),
              ),
-             Container(
+            /* Container(
                width: MediaQuery.of(context).size.width ,
                height: longueurPerCent(200, context),
                decoration: BoxDecoration(
                  color: HexColor("#001C36"),
                ),
                child: carousel(),
-             ),
+             ),*/
              Padding(
                padding: EdgeInsets.only(
                    top: longueurPerCent(30, context),

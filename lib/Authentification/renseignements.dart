@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/tokens_utilisateurs.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:intl/intl.dart';
@@ -31,12 +31,14 @@ class _RenseignementsState extends State<Renseignements> {
   String sexe = '';
   String age;
   String ville;
+  String tokenUser;
   int i = 0;
   final _formKey = GlobalKey<FormState>();
   Utilisateur utilisateur;
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Map<String, dynamic>> produits=[];
+  final FirebaseMessaging _firebaseMessaging=FirebaseMessaging();
 
 
 
@@ -44,6 +46,12 @@ class _RenseignementsState extends State<Renseignements> {
 
   void initState() {
     super.initState();
+    _firebaseMessaging.getToken().then((token){
+     setState(() {
+       tokenUser=token;
+       print(tokenUser);
+     });
+    });
   }
 
 /**/
@@ -316,12 +324,14 @@ class _RenseignementsState extends State<Renseignements> {
                                   nomComplet: nomComplet,
                                   sexe: sexe,
                                   age: age,
-                                  numeroDePayement: numeroPayement,
+                                  numero: numeroPayement,
                                   email: widget.emailAdress,
                                   nbAjoutPanier: 0,
-                                  role:true
                               ),
                               widget.emailAdress);
+                              await FirestoreService().addToken(Tokens(
+                               token: tokenUser
+                              ));
                           print(Renseignements.emailUser);
                           Navigator.push(
                               context,
@@ -334,7 +344,7 @@ class _RenseignementsState extends State<Renseignements> {
                           print(e);
                         }
                       } else {
-                        print(age);
+                      
                         displaySnackBarNom(context,
                             "Veuillez remplir tous les champs", Colors.red);
                       }

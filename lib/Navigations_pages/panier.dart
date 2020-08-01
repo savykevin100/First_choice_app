@@ -7,7 +7,6 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
@@ -27,6 +26,7 @@ class _PanierState extends State<Panier> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int total = 0;
   List<String> idProduitsPanier = [];
+  List<Map<String, dynamic>> produitsPaniers=[];
   int ajoutPanier;
 
   /// Cette fonction getIdProduit permet de recuperer l'id du produit en vue de pouvoir le supprimer. Donc je récupère tous les ID
@@ -42,6 +42,7 @@ class _PanierState extends State<Panier> {
         if (this.mounted) {
           setState(() {
             idProduitsPanier.add(snapshot.documents[i].documentID);
+            produitsPaniers.add(snapshot.documents[i].data);
           });
         }
       }
@@ -96,8 +97,7 @@ class _PanierState extends State<Panier> {
 
   @override
   Widget build(BuildContext context) {
-    if (idProduitsPanier != null && total != null) {
-      print(idProduitsPanier);
+    if (idProduitsPanier != null && total != null && produitsPaniers!=null) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -235,6 +235,8 @@ class _PanierState extends State<Panier> {
                                                 idProduitsPanier[i]);
                                             setState(() {
                                               total = total - panier.prix;
+                                              idProduitsPanier.removeAt(i);
+                                              produitsPaniers.removeAt(i);
                                             });
                                             _db
                                                 .collection("Utilisateurs")
@@ -266,9 +268,11 @@ class _PanierState extends State<Panier> {
                   Colors.white, HexColor("#001C36"), context, "ACHETER", () {
                if(total==0){
 
-               } else  Navigator.push(
-                   context, MaterialPageRoute(
-                   builder: (context) => Panier1(total: total,)));
+               } else {
+                 Navigator.push(
+                     context, MaterialPageRoute(
+                     builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+               }
               }),
             ),
           )

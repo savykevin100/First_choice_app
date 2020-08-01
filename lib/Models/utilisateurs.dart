@@ -3,10 +3,10 @@ class Utilisateur {
   String nomComplet;
   String sexe;
   String age;
-  String numeroDePayement;
+  String numero;
   String email;
   int nbAjoutPanier;
-  bool role;
+
 
 
 
@@ -14,20 +14,18 @@ class Utilisateur {
       {this.nomComplet,
       this.sexe,
       this.age,
-      this.numeroDePayement,
+      this.numero,
       this.email,
-      this.nbAjoutPanier,
-        this.role
+      this.nbAjoutPanier, 
     });
 
   Utilisateur.fromMap(Map<String, dynamic> donnees, String id)
       : nomComplet = donnees["nomComplet"],
         sexe = donnees["sexe"],
         age = donnees["age"],
-        numeroDePayement = donnees["numeroDePayement"],
+        numero = donnees["numero"],
         email = donnees["email"],
-        nbAjoutPanier = donnees["nbAjoutPanier"],
-        role = donnees["role"];
+        nbAjoutPanier = donnees["nbAjoutPanier"];
 
 
 
@@ -36,11 +34,9 @@ class Utilisateur {
     "nomComplet": nomComplet,
     "sexe":sexe,
     "age":age,
-    "numeroDePayement":numeroDePayement,
+    "numero":numero,
     "email":email,
-      "nbAjoutPanier":nbAjoutPanier,
-      "role":role,
-
+    "nbAjoutPanier":nbAjoutPanier,
     };
    }
   }

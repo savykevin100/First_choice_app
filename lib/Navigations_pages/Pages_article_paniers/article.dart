@@ -25,18 +25,15 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   //  String imageCliquer = widget.produit.image1;
   int index = 1;
   Firestore _db = Firestore.instance;
+  // ignore: non_constant_identifier_names
   String id_produit;
-
   /// Cette variable permet de contenir l'id du produit affiché au niveau de produitFavorisUser
   int quantite;
-
   /// afiiche la quantite du produit que le client
   bool etatIconeFavoris;
-
   /// Variable permettant de changer la couleur de l'icone et la gestion de la couleur
   String idFavorisProduit;
   int ajoutPanier;
-
   /// Variable contenant le nombre de produit ajouter aux favoris à chaque ajout
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -46,7 +43,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   void getIdFavoris() async {
     await _db
         .collection("Utilisateurs")
-        .document(widget.currentUserId)
+        .document(widget.currentUserId) 
         .collection("Favoris")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
@@ -161,7 +158,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                   fontSize: 20)),
                         ),
                         RatingBar(
-
                           initialRating:  widget.produit.numberStar.ceilToDouble(),
                           minRating: 1,
                           direction: Axis.horizontal,
@@ -244,7 +240,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     ),
 
                     Padding(
-                      padding:  EdgeInsets.only(left: largeurPerCent(60, context)),
+                      padding:  EdgeInsets.only(left: largeurPerCent(65, context)),
                       child: GestureDetector(
                         onTap: (){
                           _db .collection("Utilisateurs")

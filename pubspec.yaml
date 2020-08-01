@@ -32,10 +32,9 @@ dependencies:
   cloud_firestore: ^0.13.5
   firebase_storage: ^3.1.5
   flutter_spinkit: ^4.1.2+1
-  simple_animations: ^2.0.1
   page_transition: ^1.1.5
   fluttertoast: ^4.0.1
-
+  curved_navigation_bar: ^0.3.2
   email_validator: ^1.0.4
   flutter_star_rating: ^0.0.2
   firebase_messaging: ^6.0.16
@@ -46,17 +45,13 @@ dependencies:
   scroll_app_bar: ^1.0.2
   flutter_rating_bar: ^3.0.1+1
   lite_rolling_switch: ^0.1.1
-  curved_navigation_bar: ^0.3.2
-  dropdown_formfield: ^0.1.2
-  intro_slider: ^2.3.1
-  animate_do: ^1.7.2
-  flutter_share_me: ^0.9.1
   datetime_picker_formfield: ^1.0.0
-  http: ^0.12.2
-  image_picker: ^0.6.7+4
-  path_provider: ^1.6.11
-  screenshot: ^0.2.0
+  intro_slider: ^2.3.1
+  search_choices: ^1.0.17
+  cupertino_tabbar: ^1.0.1
   esys_flutter_share: ^1.0.2
+
+
 
 
 

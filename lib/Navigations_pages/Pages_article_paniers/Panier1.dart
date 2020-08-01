@@ -8,12 +8,14 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'package:intl/intl.dart';
+import 'package:search_choices/search_choices.dart';
 
 
 class Panier1 extends StatefulWidget {
   static String id='Panier1';
-  int total;
-  Panier1({this.total});
+  List<Map<String, dynamic>> produitsPanier;
+      int total;
+  Panier1({this.total, this.produitsPanier});
   @override
   _Panier1State createState() => _Panier1State();
 }
@@ -26,32 +28,83 @@ class _Panier1State extends State<Panier1> {
   String name;
   String numUser;
   int prixLivraison;
-  String date;
-  String heure;
+  String dateHeureDeLivraison;
   String indication;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  String selectedValueSingleDialog;
+  Map<String, Widget> widgets;
+  List<Map<String, dynamic>> quartiersDb=[];
+  final format = DateFormat("yyyy-MM-dd HH:mm");
+
 
 
 
 
   Future<void> fetchNameNumUser() async {
    await _db.collection("Utilisateurs").document(Renseignements.emailUser).get().then((value){
-        setState(() {
-          name=value.data["nomComplet"];
-          numUser=value.data["numeroDePayement"];
-        });
+       if(this.mounted){
+         setState(() {
+           name=value.data["nomComplet"];
+           numUser=value.data["numero"];
+         });
+       }
     });
   }
+
+  Future<void> fetchZones() async {
+    await _db.collection("Zones").document("Zone").get().then((value){
+      quartiersDb.add(value.data);
+    });
+  }
+
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchNameNumUser();
+    fetchZones();
+    print(widget.produitsPanier.length);
   }
   @override
   Widget build(BuildContext context) {
+    /// Ce wiget est utilisé pour la selection des quartiers
+    widgets = {
+      "Single dialog": SearchChoices.single(
+        items: [
+          "Vodjè",
+          "Gbegamey",
+          "Houeyiho",
+          "Calavi",
+          "Godomey",
+          "Bidossessi",
+        ].map(
+              (val) {
+            return DropdownMenuItem<String>(
+              value: val,
+              child: Text(val),
+            );
+          },
+        ).toList(),
+        value: quartier,
+        underline: Text(""),
+        hint: Text("Selectionnez un quartier", style: TextStyle(color:  HexColor("#909090"), fontSize: 20,  fontFamily: "Regular"),),
+        searchHint: "Quartiers",
+        onChanged: (value) {
+          setState(() {
+            quartier = value;
+          });
+        },
+
+        isExpanded: true,
+      ),
+    };
+    ///////////////////////////////////////////////////////
+
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -78,6 +131,7 @@ class _Panier1State extends State<Panier1> {
                   ),
                 ),
                 SizedBox(height: longueurPerCent(30, context)),
+
                 Center(
                   child: Text(
                   name,
@@ -120,7 +174,7 @@ class _Panier1State extends State<Panier1> {
                     ],
                   ),
                 ),
-
+                SizedBox(height: longueurPerCent(20, context),),
                 SizedBox(height: longueurPerCent(46.0, context),),
                 Container(
                   child:Row(
@@ -140,7 +194,7 @@ class _Panier1State extends State<Panier1> {
                       Container(
                         margin: EdgeInsets.only(top: longueurPerCent(0.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(20.0, context)),
                         width: largeurPerCent(175.0, context),
-                        height: longueurPerCent(50, context),
+                        height: longueurPerCent(40, context),
                         padding: EdgeInsets.only(
                             left: largeurPerCent(20, context),
                             right: largeurPerCent(20, context),
@@ -152,6 +206,7 @@ class _Panier1State extends State<Panier1> {
                             border: Border.all(
                                 color: HexColor("#919191"), width: 1)),
                         child: DropdownButton(
+                          underline: Text(""),
                           hint: _dropDownValue == null
                               ? Text(
                             'Lieu',
@@ -190,85 +245,37 @@ class _Panier1State extends State<Panier1> {
                     ],
                   ),
                 ),
-                SizedBox(height: longueurPerCent(46.0, context),),
+                SizedBox(height: longueurPerCent(16.0, context),),
                  //////////////////////////////////////////////////////////////////////////////////////////////
 
                 ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
                 (lieu=="A domicile")?Column(
                   children: <Widget>[
                     Container(
-                      child:Row(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(top: longueurPerCent(0.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(60.0, context)),
-                            child: Text(
-                              "Quartier",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 20,
-                                fontFamily: "Regular",
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: longueurPerCent(0.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(25.0, context)),
-                            width: largeurPerCent(175.0, context),
-                            height: largeurPerCent(50, context),
-                            padding: EdgeInsets.only(
-                                left: largeurPerCent(20, context),
-                                right: largeurPerCent(20, context),
-                                top: longueurPerCent(0, context)),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15.0),
-                                ),
-                                border: Border.all(
-                                    color: HexColor("#919191"), width: 1)),
-                            child: DropdownButton(
-                              hint: quartier == null
-                                  ? Text(
-                                'Quartier',
-                                style: TextStyle(
-                                    color: HexColor('#919191'),
-                                    fontSize: 17.0,
-                                    fontFamily: 'MonseraLight'),
-                              )
-                                  : Text(
-                                quartier,
-                                style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 17),
-                              ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              style: TextStyle(color: HexColor("#001C36")),
-                              items: [
-                                "Vodjè",
-                                "Gbegamey",
-                                "Houeyiho",
-                                "Calavi",
-                                "Godomey",
-                                "Bidossessi",
-                              ].map(
-                                    (val) {
-                                  return DropdownMenuItem<String>(
-                                    value: val,
-                                    child: Text(val),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (val) {
-                                setState(
-                                      () {
-                                    quartier=val;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-
-                        ],
+                      margin: EdgeInsets.symmetric(horizontal: largeurPerCent(50, context)),
+                      child:Column(
+                        children: widgets
+                            .map((k, v) {
+                          return (MapEntry(
+                              k,
+                              Center(
+                                    child: Container(
+                                      width: 300,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                                      ),
+                                      height: 90,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(""),
+                                          v,
+                                        ],
+                                      ),
+                                    )),
+                              ));
+                        })
+                            .values
+                            .toList(),
                       ),
                     ),
                     Row(
@@ -323,13 +330,17 @@ class _Panier1State extends State<Panier1> {
                   child: Row(
                     children: <Widget>[
                       SizedBox(height: longueurPerCent(70.0, context),),
-
                       Container(
                         height: longueurPerCent(40, context),
                         width: largeurPerCent(300.0, context),
                         margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(50.0, context)),
-                        child: DateTimeField(
-                          format: DateFormat("dd-MM-yyyy"),
+                        child:   DateTimeField(
+                          format: format,
+                          onChanged: (value){
+                           setState(() {
+                             dateHeureDeLivraison=value.toString();
+                           });
+                          },
                           decoration: InputDecoration(
                             prefixIcon: Padding(
                               padding: EdgeInsets.only(
@@ -343,7 +354,7 @@ class _Panier1State extends State<Panier1> {
                                 size: 30.0,
                               ),
                             ),
-                            labelText: "Date de livraison",
+                            labelText: "Date et heure de livraison",
                             labelStyle: TextStyle(
                                 color: HexColor('#919191'),
                                 fontSize: 17.0,
@@ -359,84 +370,30 @@ class _Panier1State extends State<Panier1> {
                                 borderSide: BorderSide(
                                     width: 1, style: BorderStyle.none)),
                           ),
-                          onShowPicker: (context, currentValue) {
-                            return showDatePicker(
+                          onShowPicker: (context, currentValue) async {
+                            final date = await showDatePicker(
                                 context: context,
                                 firstDate: DateTime(1900),
                                 initialDate: currentValue ?? DateTime.now(),
                                 lastDate: DateTime(2100));
+                            if (date != null) {
+                              final time = await showTimePicker(
+                                context: context,
+                                initialTime:
+                                TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                              );
+                              return DateTimeField.combine(date, time);
+                            } else {
+                              return currentValue;
+                            }
+
                           },
-                          onChanged: (value){
-                           setState(() {
-                             if(value.day.toString().length==1 && value.month.toString().length==1){
-                               date = "0${value.day}"+ "-0${value.month}"+"-${value.year}";
-                             } else if(value.day.toString().length!=1 && value.month.toString().length==1){
-                               date = "${value.day}"+ "-0${value.month}"+"-${value.year}";
-                             } else if(value.day.toString().length==1 && value.month.toString().length!=1){
-                               date = "0${value.day}"+ "-${value.month}"+"-${value.year}";
-                             } else  date = "${value.day}"+ "-${value.month}"+"-${value.year}";
-                           });
-                           },
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                      height: longueurPerCent(40, context),
-                      width: largeurPerCent(300.0, context),
-                      margin: EdgeInsets.only(top: longueurPerCent(20.0, context),right: longueurPerCent(0.0, context),left: longueurPerCent(10.0, context)),
-                      child: DateTimeField(
-                        decoration: InputDecoration(
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(
-                                top: longueurPerCent(5, context),
-                                bottom: longueurPerCent(5, context),
-                                right: largeurPerCent(10, context),
-                                left: largeurPerCent(10, context)),
-                            child: Icon(
-                              Icons.access_time,
-                              color: HexColor('#001C36'),
-                              size: 30.0,
-                            ),
-                          ),
-                          labelText: "Heure de livraison",
-                          labelStyle: TextStyle(
-                              color: HexColor('#919191'),
-                              fontSize: 17.0,
-                              fontFamily: 'MonseraLight'),
-                          hintText: "10/06/2000",
-                          hintStyle: TextStyle(
-                              color: HexColor("#001C36"),
-                              fontSize: 17.0,
-                              fontFamily: 'MonseraLight'),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(15.0)),
-                              borderSide: BorderSide(
-                                  width: 1, style: BorderStyle.none)),
-                        ),
-                        format:  DateFormat("HH:mm"),
-                        onShowPicker: (context, currentValue) async {
-                          final time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                        onChanged: (value){
-                          if(value.hour.toString().length==1 && value.minute.toString().length==1){
-                            heure = "0${value.hour}"+ ":0${value.minute}";
-                          } else if(value.hour.toString().length!=1 && value.minute.toString().length==1){
-                            heure = "${value.hour}"+ ":0${value.minute}";
-                          } else if(value.hour.toString().length==1 && value.minute.toString().length!=1){
-                            heure = "0${value.hour}"+ ":${value.minute}";
-                          } else  date = "${value.hour}"+ ":${value.minute}";
-                        },
-                      ),
-                    ),
-
-                SizedBox(height:longueurPerCent(40.0, context)),
+                SizedBox(height:longueurPerCent(60.0, context)),
                 Center(
                   child: button(Colors.white, HexColor("#001C36"), context, 'CONFIRMER', (){
                    checkInformationsComplete(context);
@@ -454,38 +411,29 @@ class _Panier1State extends State<Panier1> {
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
   void checkInformationsComplete(context){
-    if(lieu=='En Agence' && heure!=null && date!=null ) {
+    if(lieu=='En Agence' && dateHeureDeLivraison!=null ) {
      print("Reusssie");
-      _db.collection("Zones").getDocuments().then((value){
-        for(int i=0; i<value.documents.length;i++){
-          if(value.documents[i].data.containsValue("Houeyiho")){
-            setState(() {
-              prixLivraison=value.documents[i].data["prix"];
-              print(value.documents[i].data["prix"]);
-            });
-          }
-        }
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Panier2(prixLivraison: prixLivraison, total: widget.total, nomComplet: name, telephone: numUser, lieuDeLivraison: lieu,dateDeLivraison: date, heureDeLivraison: heure,indication: indication, quartier: quartier,)));
+     setState(() {
+       prixLivraison=0;
+     });
+         Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Panier2(prixLivraison: prixLivraison, total: widget.total, nomComplet: name, telephone: numUser, lieuDeLivraison: lieu,dateHeureDeLivraison: dateHeureDeLivraison, produitsCommander: widget.produitsPanier,)));
         print(widget.total);
-      });
-    } else if(lieu=="A domicile" && date!=null && heure!=null && indication!=null && quartier!=null) {
+        print(prixLivraison);
+    } else if(lieu=="A domicile" && CupertinoDatePickerMode.date!=null && indication!=null && quartier!=null) {
       _db.collection("Zones").getDocuments().then((value){
         for(int i=0; i<value.documents.length;i++){
           if(value.documents[i].data.containsValue(quartier)){
             setState(() {
               prixLivraison=value.documents[i].data["prix"];
-              print(value.documents[i].data["prix"]);
             });
           }
         }
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Panier2(prixLivraison: prixLivraison, total: widget.total, nomComplet: name, telephone: numUser, lieuDeLivraison: lieu,dateDeLivraison: date, heureDeLivraison: heure,indication: indication, quartier: quartier,)));
-        print(widget.total);
+            context, MaterialPageRoute(builder: (context) => Panier2(prixLivraison: prixLivraison, total: widget.total, nomComplet: name, telephone: numUser, lieuDeLivraison: lieu,dateHeureDeLivraison: dateHeureDeLivraison, indication: indication, quartier: quartier,  produitsCommander: widget.produitsPanier,)));
       });
     } else {
-      print(date);
-      print(heure);
+      print(dateHeureDeLivraison);
       displaySnackBarNom(context, "Veuillez remplir tous les champs ", Colors.red);
     }
 

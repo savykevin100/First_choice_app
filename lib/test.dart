@@ -1,185 +1,360 @@
-import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:scroll_app_bar/scroll_app_bar.dart';
 
-class HomePage extends StatefulWidget {
-  static String id="HomePage";
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+import 'package:cupertino_tabbar/cupertino_tabbar.dart' as CupertinoTabBar;
 
-class _HomePageState extends State<HomePage> {
-  final controller = ScrollController();
 
-  bool notification;
-
-  @override
-  void initState() {
-    super.initState();
-    notification = false;
-  }
-
+class HomePage extends StatelessWidget {
+  static String id="homepage";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: ScrollAppBar(
-          controller: controller, // Note the controller here
-          title: Text("App Bar"),
-          actions: [
-            IconButton(
-              icon: Icon(
-                notification ? Icons.notifications : Icons.notifications_off,
-              ),
-              onPressed: () {
-                setState(() => notification = !notification);
+      title: 'Cupertino Tab Bar Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: MyHomePage(title: 'Cupertino Tab Bar Demo'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int cupertinoTabBarIValue = 0;
+
+  int cupertinoTabBarIValueGetter() => cupertinoTabBarIValue;
+  int cupertinoTabBarIIValue = 1;
+
+  int cupertinoTabBarIIValueGetter() => cupertinoTabBarIIValue;
+  int cupertinoTabBarIIIValue = 3;
+
+  int cupertinoTabBarIIIValueGetter() => cupertinoTabBarIIIValue;
+  int cupertinoTabBarIVValue = 2;
+
+  int cupertinoTabBarIVValueGetter() => cupertinoTabBarIVValue;
+  int cupertinoTabBarVValue = 0;
+
+  int cupertinoTabBarVValueGetter() => cupertinoTabBarVValue;
+  int cupertinoTabBarVIValue = 0;
+
+  int cupertinoTabBarVIValueGetter() => cupertinoTabBarVIValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFFF2F2F7),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF9F9F9),
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              constraints: const BoxConstraints.expand(height: 20.0),
+            ),
+            CupertinoTabBar.CupertinoTabBar(
+              const Color(0xFF3c4245),
+              const Color(0xFF719192),
+              [
+                const Text(
+                  "HOMMES",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "FEMMES",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              cupertinoTabBarIIValueGetter,
+                  (int index) {
+                setState(() {
+                  cupertinoTabBarIIValue = index;
+                });
               },
+              useSeparators: true,
+            ),
+            Container(
+              constraints: const BoxConstraints.expand(height: 20.0),
+            ),
+            CupertinoTabBar.CupertinoTabBar(
+              const Color(0xFFd4d7dd),
+              const Color(0xFFf7f7f7),
+              [
+                const Text(
+                  "Home",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Play",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Share",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Settings",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              cupertinoTabBarIIIValueGetter,
+                  (int index) {
+                setState(() {
+                  cupertinoTabBarIIIValue = index;
+                });
+              },
+              horizontalPadding: 5,
+            ),
+            Container(
+              constraints: const BoxConstraints.expand(height: 20.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: CupertinoTabBar.CupertinoTabBar(
+                cupertinoTabBarIVValue == 0
+                    ? const Color(0xFF943855)
+                    : cupertinoTabBarIVValue == 1
+                    ? const Color(0xFF207561)
+                    : cupertinoTabBarIVValue == 2
+                    ? const Color(0xFFf0dd92)
+                    : const Color(0xFF4f81c7),
+                cupertinoTabBarIVValue == 0
+                    ? const Color(0xFFeb7070)
+                    : cupertinoTabBarIVValue == 1
+                    ? const Color(0xFF589167)
+                    : cupertinoTabBarIVValue == 2
+                    ? const Color(0xFFffffc5)
+                    : const Color(0xFF64c4ed),
+                [
+                  Text(
+                    "A",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "BC",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "DEFG",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "HIJKLM",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+                cupertinoTabBarIVValueGetter,
+                    (int index) {
+                  setState(() {
+                    cupertinoTabBarIVValue = index;
+                  });
+                },
+                useSeparators: true,
+              ),
+            ),
+            Container(
+              constraints: const BoxConstraints.expand(height: 20.0),
+            ),
+            CupertinoTabBar.CupertinoTabBar(
+              Colors.transparent,
+              const Color(0xFFe9e5dd),
+              [
+                const Text(
+                  "Tab 1",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75 * 1.5,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Tab 2",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75 * 1.5,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  "Tab 3",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.75 * 1.5,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "SFProRounded",
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              cupertinoTabBarVValueGetter,
+                  (int index) {
+                setState(() {
+                  cupertinoTabBarVValue = index;
+                });
+              },
+              useSeparators: true,
+            ),
+            Container(
+              constraints: const BoxConstraints.expand(height: 20.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: CupertinoTabBar.CupertinoTabBar(
+                cupertinoTabBarIVValue == 0
+                    ? const Color(0xFF943855)
+                    : cupertinoTabBarIVValue == 1
+                    ? const Color(0xFF207561)
+                    : cupertinoTabBarIVValue == 2
+                    ? const Color(0xFFf0dd92)
+                    : const Color(0xFF4f81c7),
+                cupertinoTabBarIVValue == 0
+                    ? const Color(0xFFeb7070)
+                    : cupertinoTabBarIVValue == 1
+                    ? const Color(0xFF589167)
+                    : cupertinoTabBarIVValue == 2
+                    ? const Color(0xFFffffc5)
+                    : const Color(0xFF64c4ed),
+                [
+                  Text(
+                    "A",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "BC",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "DEFG",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "HIJKLM",
+                    style: TextStyle(
+                      color: cupertinoTabBarIVValue == 2 ? Colors.black : Colors
+                          .white,
+                      fontSize: 18.75,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "SFProRounded",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+                cupertinoTabBarIVValueGetter,
+                    (int index) {
+                  setState(() {
+                    cupertinoTabBarIVValue = index;
+                  });
+                },
+                horizontalPadding: 2.5,
+                useSeparators: true,
+                expand: true,
+              ),
             ),
           ],
         ),
-        body: Snap(
-          controller: controller.appBar,
-          child: ListView.builder(
-            controller: controller, // Controller is also here
-            itemBuilder: _listBuildItem,
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-
-  Widget _listBuildItem(BuildContext context, int index) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 50),
-      color: Color(Random().nextInt(0xffffffff)),
-      child: Center(child: Text("$index")),
-    );
-  }
-}
-
-class LeaderBoard {
-  LeaderBoard(this.username, this.score);
-
-  final String username;
-  final double score;
-}
-
-class SelectedItemWidget extends StatelessWidget {
-  const SelectedItemWidget(this.selectedItem, this.deleteSelectedItem);
-
-  final LeaderBoard selectedItem;
-  final VoidCallback deleteSelectedItem;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 2,
-        horizontal: 4,
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 8,
-                bottom: 8,
-              ),
-              child: Text(
-                selectedItem.username,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.delete_outline, size: 22),
-            color: Colors.grey[700],
-            onPressed: deleteSelectedItem,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MyTextField extends StatelessWidget {
-  const MyTextField(this.controller, this.focusNode);
-
-  final TextEditingController controller;
-  final FocusNode focusNode;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-        decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0x4437474F),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Theme.of(context).primaryColor),
-          ),
-          suffixIcon: Icon(Icons.search),
-          border: InputBorder.none,
-          hintText: "Search here...",
-          contentPadding: const EdgeInsets.only(
-            left: 16,
-            right: 20,
-            top: 14,
-            bottom: 14,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class NoItemsFound extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Icon(
-          Icons.folder_open,
-          size: 24,
-          color: Colors.grey[900].withOpacity(0.7),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          "No Items Found",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[900].withOpacity(0.7),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PopupListItemWidget extends StatelessWidget {
-  const PopupListItemWidget(this.item);
-
-  final LeaderBoard item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      child: Text(
-        item.username,
-        style: const TextStyle(fontSize: 16),
       ),
     );
   }

@@ -1,20 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Design/FirstPage.dart';
-import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/accueil.dart';
 import 'package:premierchoixapp/Navigations_pages/categories.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/favoris.dart';
 import 'package:premierchoixapp/Navigations_pages/notifications.dart';
-import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 
 
 class AllNavigationPage extends StatefulWidget {

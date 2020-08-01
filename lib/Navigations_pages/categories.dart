@@ -53,7 +53,6 @@ class _CategoriesState extends State<Categories> {
                       fontSize: 17.0,
                       fontFamily: 'MonseraLight'),
                   contentPadding: EdgeInsets.only(top: 10, bottom: 5, left:100),
-
                 ),
               )),
           Center(
@@ -77,7 +76,7 @@ class _CategoriesState extends State<Categories> {
                   textSize: 16.0,
                   animationDuration: Duration(seconds: 1),
                   onChanged: (bool state) {
-
+                   val = state;
                   },
                 ),
                 Padding(
@@ -85,7 +84,7 @@ class _CategoriesState extends State<Categories> {
                   child: Text("FEMMES", style: TextStyle(color: Colors.pink, fontFamily: "MonseraBold", fontSize: 20),),
                 ),
               ],
-            ),
+            ),  
           ),
           SizedBox(height: longueurPerCent(30, context),),
           Padding(
@@ -100,16 +99,17 @@ class _CategoriesState extends State<Categories> {
                   fontFamily: "MonseraBold"),
             ),
           ),
+        product_grid_view()
         ],
       ),
     );
   }
 
-  Widget MenFemale(){
+  Widget menFemale(){
     if(val==true){
-       product_grid_view();
+      product_grid_view();
     } else{
-       Text("Je suis la catégorie");
+
     }
   }
 

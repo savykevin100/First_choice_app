@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/tokens_utilisateurs.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 
 class FirestoreService {
@@ -26,6 +28,26 @@ class FirestoreService {
   Future<void> addPanier(PanierClasse produit, String document, String id){
     return _db.collection("Utilisateurs").document(document).collection("Panier").document(id).setData(produit.toMap());
   }
+
+  ///Ici on ajoute la commande de l'utilisateur dans ces commandes persos
+  Future<void> addCommande(Commandes commande, String document,){
+    return _db.collection("Utilisateurs").document(document).collection("Commandes").add(commande.toMap());
+  }
+  ///Fin de la fonction
+
+
+  /// Ici on ajoute la commande de l'utilisateur chez l'admin
+  Future<void> addCommandeToAdmin(Commandes commande, String document,){
+    return _db.collection("Commandes").add(commande.toMap());
+  }
+  ///Fin de la fonction
+
+
+
+  Future<void> addToken(Tokens tokens){
+    return _db.collection("Tokens").add(tokens.toMap());
+  }
+
 
   /* Récupération des catégories de la base de données*/
   Stream<List<Utilisateur>> getUtilisateurs() {

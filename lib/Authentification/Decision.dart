@@ -63,13 +63,10 @@ class _DecisionState extends State<Decision> {
                         borderRadius: BorderRadius.circular(7.0),
                         //shadowColor: Colors.greenAccent,
                         color: HexColor("#FFC30D"),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Center(
-                            child: Text(
-                              'SE CONNECTER',
-                              style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
-                            ),
+                        child: Center(
+                          child: Text(
+                            'SE CONNECTER',
+                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
                           ),
                         ),
                       ),

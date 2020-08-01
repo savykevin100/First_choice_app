@@ -1,4 +1,5 @@
 
+
 class PanierClasse {
   String nomDuProduit;
   int prix;
@@ -7,6 +8,7 @@ class PanierClasse {
   int quantiteCommander;
   String id;
   int nombreAjout;
+
 
   PanierClasse(
       {this.nomDuProduit,

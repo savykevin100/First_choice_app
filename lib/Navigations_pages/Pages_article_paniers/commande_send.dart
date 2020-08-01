@@ -13,18 +13,20 @@ class _CommandeSendState extends State<CommandeSend> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: longueurPerCent(300, context),),
-            Text("Commande envoyée", style: TextStyle(color: Colors.green, fontSize: 30),),
-            SizedBox(height: longueurPerCent(10, context),),
-            Icon(Icons.done_outline, color: Colors.green, size: 30,),
-            SizedBox(height: longueurPerCent(100, context),),
-            button(Colors.white, HexColor('#001C36'), context, "REVENIR À L'ACCUEIL", (){
-              Navigator.pushNamed(context, AllNavigationPage.id);
-            })
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: longueurPerCent(300, context),),
+              Text("Commande envoyée", style: TextStyle(color: Colors.green, fontSize: 30),),
+              SizedBox(height: longueurPerCent(10, context),),
+              Icon(Icons.done_outline, color: Colors.green, size: 30,),
+              SizedBox(height: longueurPerCent(100, context),),
+              button(Colors.white, HexColor('#001C36'), context, "REVENIR À L'ACCUEIL", (){
+                Navigator.pushNamed(context, AllNavigationPage.id);
+              })
+            ],
+          ),
         ),
       ),
     );

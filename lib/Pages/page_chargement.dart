@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/Decision.dart';
-import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 
 class PageChargement extends StatefulWidget {
