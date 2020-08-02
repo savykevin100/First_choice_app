@@ -147,109 +147,109 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               children: <Widget>[
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
-                      flex:1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-                            child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
-                          ),
-                          Padding(
-                            padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
-                            child: Text( "${widget.produit.prix} FCFA",
-                                style: TextStyle(
-                                    color: HexColor("#001c36"),
-                                    fontFamily: "MonseraBold",
-                                    fontSize: 20)),
-                          ),
-                          Padding(
-                            padding:  EdgeInsets.only(left: largeurPerCent(5, context), bottom: longueurPerCent(5, context)),
-                            child: RatingBar(
-                              initialRating:  widget.produit.numberStar.ceilToDouble(),
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 3,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 10,
-                              ),
-                              itemSize: 20,
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
+                              child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
                             ),
-                          ),
-                         SizedBox(height: 10,)
-                         /* Row(
-                            children: <Widget>[
-                              IconButton(
-                                padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                                onPressed: (){
-                                  if(quantite>1){
-                                    setState(() {
-                                      print("moins");
-                                      quantite = quantite-1;
-                                      _db
-                                          .collection("Utilisateurs")
-                                          .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                          .document(id_produit)
-                                          .updateData({"quantite": quantite});
-
-                                    });
-                                  }
+                            Padding(
+                              padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
+                              child: Text( "${widget.produit.prix} FCFA",
+                                  style: TextStyle(
+                                      color: HexColor("#001c36"),
+                                      fontFamily: "MonseraBold",
+                                      fontSize: 20)),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(left: largeurPerCent(5, context), bottom: longueurPerCent(5, context)),
+                              child: RatingBar(
+                                initialRating:  widget.produit.numberStar.ceilToDouble(),
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 3,
+                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 10,
+                                ),
+                                itemSize: 20,
+                                onRatingUpdate: (rating) {
+                                  print(rating);
                                 },
-                                icon: Icon(Icons.remove, color: HexColor("#001C36"),
-                                  size: 20,),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(2.0, context)),
-                                child: Center(
-                                  child:  Text(
-                                    "${quantite}",
-                                    style: TextStyle(
-                                        color: HexColor("#959595"),
-                                        fontFamily: "Light",
-                                        fontSize: 20),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(12.0, context),),
-                                height: longueurPerCent(31.0, context),
-                                width: largeurPerCent(38.0, context),
-                                child: Material(
-                                  borderRadius: BorderRadius.circular(13.0),
-                                  color: HexColor("#001c36"),
-                                  child: IconButton(
-                                    padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                                    onPressed: (){
-                                      if(quantite<widget.produit.quantite){
-                                        setState(() {
-                                          print("plus");
-                                          quantite = quantite+1;
-                                          _db
-                                              .collection("Utilisateurs")
-                                              .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                              .document(id_produit)
-                                              .updateData({"quantite": quantite});
+                            ),
+                           SizedBox(height: 10,)
+                           /* Row(
+                              children: <Widget>[
+                                IconButton(
+                                  padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
+                                  onPressed: (){
+                                    if(quantite>1){
+                                      setState(() {
+                                        print("moins");
+                                        quantite = quantite-1;
+                                        _db
+                                            .collection("Utilisateurs")
+                                            .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                            .document(id_produit)
+                                            .updateData({"quantite": quantite});
 
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(Icons.add, color: HexColor("#FFFFFF"),size: 20,),
+                                      });
+                                    }
+                                  },
+                                  icon: Icon(Icons.remove, color: HexColor("#001C36"),
+                                    size: 20,),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(2.0, context)),
+                                  child: Center(
+                                    child:  Text(
+                                      "${quantite}",
+                                      style: TextStyle(
+                                          color: HexColor("#959595"),
+                                          fontFamily: "Light",
+                                          fontSize: 20),
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),*/
-                        ],
+                                Container(
+                                  margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(12.0, context),),
+                                  height: longueurPerCent(31.0, context),
+                                  width: largeurPerCent(38.0, context),
+                                  child: Material(
+                                    borderRadius: BorderRadius.circular(13.0),
+                                    color: HexColor("#001c36"),
+                                    child: IconButton(
+                                      padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
+                                      onPressed: (){
+                                        if(quantite<widget.produit.quantite){
+                                          setState(() {
+                                            print("plus");
+                                            quantite = quantite+1;
+                                            _db
+                                                .collection("Utilisateurs")
+                                                .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                                .document(id_produit)
+                                                .updateData({"quantite": quantite});
+
+                                          });
+                                        }
+                                      },
+                                      icon: Icon(Icons.add, color: HexColor("#FFFFFF"),size: 20,),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),*/
+                          ],
+                        ),
                       ),
                     ),
 
@@ -302,30 +302,27 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               } else displaySnackBarNom(context, "Produit déjà ajouté au panier", Colors.green);
                             });
                           },
-                          child: Expanded(
-                            flex:1,
-                            child: Column(
-                             children: <Widget>[
-                                Container(
-                                 height: longueurPerCent(38, context),
-                                 width: largeurPerCent(180, context),
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(7),
-                                   color: HexColor("#001C36"),
-                                 ),
-                                 child: Center(
-                                   child: Text(
-                                     "AJOUTER AU PANIER",
-                                     style: TextStyle(
-                                         color: Colors.white,
-                                         fontFamily: "MonseraBold",
-                                         fontSize: 11),
-                                   ),
+                          child: Column(
+                           children: <Widget>[
+                              Container(
+                               height: longueurPerCent(38, context),
+                               width: largeurPerCent(180, context),
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(7),
+                                 color: HexColor("#001C36"),
+                               ),
+                               child: Center(
+                                 child: Text(
+                                   "AJOUTER AU PANIER",
+                                   style: TextStyle(
+                                       color: Colors.white,
+                                       fontFamily: "MonseraBold",
+                                       fontSize: 11),
                                  ),
                                ),
-                               Container(height: longueurPerCent(40, context),)
-                             ],
-                            ),
+                             ),
+                             Container(height: longueurPerCent(40, context),)
+                           ],
                           ),
                         ),
                       ),
