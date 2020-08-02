@@ -5,9 +5,7 @@ class PanierClasse {
   int prix;
   String description;
   String image1;
-  int quantiteCommander;
   String id;
-  int nombreAjout;
 
 
   PanierClasse(
@@ -15,9 +13,7 @@ class PanierClasse {
         this.prix,
         this.description,
         this.image1,
-        this.quantiteCommander,
         this.id,
-        this.nombreAjout
     });
 
   PanierClasse.fromMap(Map<String, dynamic> donnees, String id)
@@ -25,8 +21,6 @@ class PanierClasse {
         prix = donnees["prix"],
         description = donnees["description"],
         image1 = donnees["image1"],
-         quantiteCommander = donnees["quantiteCommander"],
-        nombreAjout= donnees["nombreAjout"],
         id= donnees["id"];
 
   Map<String, dynamic> toMap() {
@@ -35,8 +29,6 @@ class PanierClasse {
       "prix": prix,
       "description": description,
       "image1": image1,
-      "quantiteCommander":quantiteCommander,
-      "nombreAjout":nombreAjout,
       "id":id
     };
  }

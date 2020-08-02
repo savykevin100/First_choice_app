@@ -11,6 +11,8 @@ import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 
+import 'Panier1.dart';
+
 class ArticleSansTaille extends StatefulWidget {
   Produit produit;
   String currentUserId;
@@ -147,7 +149,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       children: <Widget>[
                         Padding(
                           padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-                          child: Text("Sneekers", style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
+                          child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
                         ),
                         Padding(
                           padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
@@ -174,6 +176,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             print(rating);
                           },
                         ),
+                       SizedBox(height: 10,)
                        /* Row(
                           children: <Widget>[
                             IconButton(
@@ -240,7 +243,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     ),
 
                     Padding(
-                      padding:  EdgeInsets.only(left: largeurPerCent(65, context)),
+                      padding:  EdgeInsets.only(left: largeurPerCent(30, context)),
                       child: GestureDetector(
                         onTap: (){
                           _db .collection("Utilisateurs")
@@ -255,7 +258,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                     image1: widget.produit.image1,
                                     prix: widget.produit.prix,
                                     description: widget.produit.description,
-                                    quantiteCommander: quantite
                                 ), widget.currentUserId, );
                                 _db
                                     .collection("Utilisateurs")
@@ -280,7 +282,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                       image1: widget.produit.image1,
                                       prix: widget.produit.prix,
                                       description: widget.produit.description,
-                                      quantiteCommander: quantite
                                   ), widget.currentUserId, );
                                   _db
                                       .collection("Utilisateurs")
@@ -396,10 +397,11 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                    SizedBox(width: largeurPerCent(20, context),),
                    InkWell(
                      onTap: () {
-                       // Navigator.push(context,
-                       //     MaterialPageRoute(builder: (context) => Commander(
-                       //       produit: widget.produit,
-                       //     )));
+                       Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                               builder: (context) =>
+                                   Panier1(total: widget.produit.prix, unSeulProduit: widget.produit,)));
                      },
                      child: Container(
                        height: longueurPerCent(37, context),
@@ -414,16 +416,14 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                            style: TextStyle(
                                color: Colors.white,
                                fontFamily: "MonseraBold",
-                               fontSize: 13),
+                               fontSize: 15),
                          ),
                        ),
                      ),
                    ),
                    SizedBox(width: largeurPerCent(20, context),),
                    InkWell(
-                     onTap: () {
-                       // FlutterShareFile.shareImage(widget.produit.image, "image");
-                     },
+
                      child: Container(
                        height: longueurPerCent(37, context),
                        width: largeurPerCent(180, context),
@@ -437,7 +437,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                            style: TextStyle(
                                color: HexColor('#001C36'),
                                fontFamily: "MonseraBold",
-                               fontSize: 13),
+                               fontSize: 15),
                          ),
                        ),
                      ),

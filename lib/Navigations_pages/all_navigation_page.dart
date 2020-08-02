@@ -74,24 +74,27 @@ class _AllNavigationPageState extends State<AllNavigationPage> {
             });
           },
         ),
-        bottomNavigationBar: CurvedNavigationBar(
-            backgroundColor:Colors.white.withOpacity(0.9),
-            index: 0,
-            items: <Widget>[
-              /* */
-              Icon(Icons.home, size: 30, color: Colors.white),
-              Icon(Icons.favorite, size: 30, color: Colors.white),
-              Icon(Icons.apps, size: 30, color: Colors.white),
-              Icon(Icons.chat_bubble, size: 30, color: Colors.white),
-              Icon(Icons.notifications, size: 30, color: Colors.white),
-            ],
-            onTap: (index) {
-              setState(() {
-                pageController.jumpToPage(index);
-              });
-            },
-            buttonBackgroundColor:HexColor("#001C36"),
-            color: HexColor("#001C36")),
+        bottomNavigationBar:Container(
+          child:  CurvedNavigationBar(
+
+              backgroundColor:Colors.white.withOpacity(0.9),
+              index: 0,
+              items: <Widget>[
+                /* */
+                Icon(Icons.home, size: 30, color: Colors.white),
+                Icon(Icons.favorite, size: 30, color: Colors.white),
+                Icon(Icons.apps, size: 30, color: Colors.white),
+                Icon(Icons.chat_bubble, size: 30, color: Colors.white),
+                Icon(Icons.notifications, size: 30, color: Colors.white),
+              ],
+              onTap: (index) {
+                setState(() {
+                  pageController.jumpToPage(index);
+                });
+              },
+              buttonBackgroundColor:HexColor("#001C36"),
+              color: HexColor("#001C36")),
+        )
       );
 
   }

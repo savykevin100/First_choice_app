@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
@@ -14,18 +11,7 @@ class UserProfil extends StatefulWidget{
 }
 
 class _UserProfilState extends State<UserProfil>{
-  Map<String, dynamic> donneesUtilisateurConnecte;
-  void recuperationInfosUser(){
-    Firestore _db = Firestore.instance;
-    _db.collection("Utilisateurs").getDocuments().then((QuerySnapshot snapshot) {
-      if(snapshot.documents.isNotEmpty){
-        for(int i=0; i<snapshot.documents.length; i++) {
-          if(snapshot.documents[i].data["email"]== Renseignements.emailUser) {
-            donneesUtilisateurConnecte = snapshot.documents[i].data;
-          }
-      }
-    }});
-  }
+
   @override
   void initState() {
     super.initState();
@@ -150,7 +136,7 @@ class _UserProfilState extends State<UserProfil>{
                         ),
                         SizedBox(height: 24.0),
                         Text(
-                        donneesUtilisateurConnecte["nomComplet"],
+                       "SAVY Kevin",
                           style:TextStyle(
                             fontSize: 23.0,
                             fontWeight: FontWeight.bold,
@@ -161,7 +147,7 @@ class _UserProfilState extends State<UserProfil>{
 
                         SizedBox(height: longueurPerCent(10.0, context)),
                         Text(
-                          Renseignements.emailUser,
+                          "savykevin100@gmail.com",
                           style:TextStyle(
                             fontSize: 17.0,
                             fontFamily: 'Montserrat_Light',
@@ -212,7 +198,7 @@ class _UserProfilState extends State<UserProfil>{
                                       height: longueurPerCent(19.0, context),
                                       width: largeurPerCent(300, context),
                                       child: Text(
-                                        "Nom"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " +  donneesUtilisateurConnecte["nomComplet"],
+                                        "Nom"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " +  "SAVY Kevin",
                                         style: TextStyle(
                                           color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
                                         ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
@@ -72,8 +73,28 @@ class FirestoreService {
   }
 
 
+  Stream<List<InfoCategories>> getCategories() {
+    return _db.collection("Catégories").snapshots().map(
+          (snapshot) =>
+          snapshot.documents.map(
+                (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
+          ).toList(),
+    );
+  }
 
-Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
+  /*Récupération des sous_categories*/
+  Stream<List<InfoCategories>> getSousCategories() {
+    return _db.collection("sous-categories").snapshots().map(
+          (snapshot) =>
+          snapshot.documents.map(
+                (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
+          ).toList(),
+    );
+  }
+
+  /*Fin de la récupération*/
+
+  Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
     return _db.collection("Utilisateurs").document(id).collection("ProduitsFavoirsUser").snapshots().map(
           (snapshot) =>
           snapshot.documents.map(

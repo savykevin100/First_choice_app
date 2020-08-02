@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Models/produit.dart';
 
 class Commandes {
   String nomComplet;
@@ -14,6 +14,7 @@ class Commandes {
   List<Map<String, dynamic>> produitsCommander;
   bool livrer;
   String created;
+  Produit unSeulProduit;
 
   Commandes(
       {this.nomComplet,
@@ -28,6 +29,7 @@ class Commandes {
       this.produitsCommander,
       this.lieuDeLivraison,
       this.livrer,
+      this.unSeulProduit,
       this.created});
 
   Commandes.fromMap(Map<String, dynamic> donnees, String id)
@@ -43,6 +45,7 @@ class Commandes {
         lieuDeLivraison = donnees["lieuDeLivraison"],
         livrer = donnees["livrer"],
         created = donnees["created"],
+        unSeulProduit = donnees["unSeulProduit"],
         numeroDePayement = donnees["numeroDePayement"];
 
   Map<String, dynamic> toMap() {
@@ -59,6 +62,7 @@ class Commandes {
       "produitsCommander": produitsCommander,
       "lieuDeLivraison": lieuDeLivraison,
       "livrer": livrer,
+      "unSeulProduit": unSeulProduit,
       "created": created,
     };
   }

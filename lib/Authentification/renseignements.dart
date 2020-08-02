@@ -54,7 +54,6 @@ class _RenseignementsState extends State<Renseignements> {
     });
   }
 
-/**/
   @override
   Widget build(BuildContext context) {
     return   (chargement==true)?Scaffold(
