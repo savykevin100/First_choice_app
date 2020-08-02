@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -144,106 +149,112 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-                          child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
-                          child: Text( "${widget.produit.prix} FCFA",
-                              style: TextStyle(
-                                  color: HexColor("#001c36"),
-                                  fontFamily: "MonseraBold",
-                                  fontSize: 20)),
-                        ),
-                        RatingBar(
-                          initialRating:  widget.produit.numberStar.ceilToDouble(),
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 3,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 10,
+                    Expanded(
+                      flex:1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
+                            child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
                           ),
-                          itemSize: 20,
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        ),
-                       SizedBox(height: 10,)
-                       /* Row(
-                          children: <Widget>[
-                            IconButton(
-                              padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                              onPressed: (){
-                                if(quantite>1){
-                                  setState(() {
-                                    print("moins");
-                                    quantite = quantite-1;
-                                    _db
-                                        .collection("Utilisateurs")
-                                        .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                        .document(id_produit)
-                                        .updateData({"quantite": quantite});
-
-                                  });
-                                }
+                          Padding(
+                            padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
+                            child: Text( "${widget.produit.prix} FCFA",
+                                style: TextStyle(
+                                    color: HexColor("#001c36"),
+                                    fontFamily: "MonseraBold",
+                                    fontSize: 20)),
+                          ),
+                          Padding(
+                            padding:  EdgeInsets.only(left: largeurPerCent(5, context), bottom: longueurPerCent(5, context)),
+                            child: RatingBar(
+                              initialRating:  widget.produit.numberStar.ceilToDouble(),
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 3,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 10,
+                              ),
+                              itemSize: 20,
+                              onRatingUpdate: (rating) {
+                                print(rating);
                               },
-                              icon: Icon(Icons.remove, color: HexColor("#001C36"),
-                                size: 20,),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(2.0, context)),
-                              child: Center(
-                                child:  Text(
-                                  "${quantite}",
-                                  style: TextStyle(
-                                      color: HexColor("#959595"),
-                                      fontFamily: "Light",
-                                      fontSize: 20),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(12.0, context),),
-                              height: longueurPerCent(31.0, context),
-                              width: largeurPerCent(38.0, context),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(13.0),
-                                color: HexColor("#001c36"),
-                                child: IconButton(
-                                  padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                                  onPressed: (){
-                                    if(quantite<widget.produit.quantite){
-                                      setState(() {
-                                        print("plus");
-                                        quantite = quantite+1;
-                                        _db
-                                            .collection("Utilisateurs")
-                                            .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                            .document(id_produit)
-                                            .updateData({"quantite": quantite});
+                          ),
+                         SizedBox(height: 10,)
+                         /* Row(
+                            children: <Widget>[
+                              IconButton(
+                                padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
+                                onPressed: (){
+                                  if(quantite>1){
+                                    setState(() {
+                                      print("moins");
+                                      quantite = quantite-1;
+                                      _db
+                                          .collection("Utilisateurs")
+                                          .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                          .document(id_produit)
+                                          .updateData({"quantite": quantite});
 
-                                      });
-                                    }
-                                  },
-                                  icon: Icon(Icons.add, color: HexColor("#FFFFFF"),size: 20,),
+                                    });
+                                  }
+                                },
+                                icon: Icon(Icons.remove, color: HexColor("#001C36"),
+                                  size: 20,),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(2.0, context)),
+                                child: Center(
+                                  child:  Text(
+                                    "${quantite}",
+                                    style: TextStyle(
+                                        color: HexColor("#959595"),
+                                        fontFamily: "Light",
+                                        fontSize: 20),
+                                  ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),*/
-                      ],
+                              Container(
+                                margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(12.0, context),),
+                                height: longueurPerCent(31.0, context),
+                                width: largeurPerCent(38.0, context),
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(13.0),
+                                  color: HexColor("#001c36"),
+                                  child: IconButton(
+                                    padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
+                                    onPressed: (){
+                                      if(quantite<widget.produit.quantite){
+                                        setState(() {
+                                          print("plus");
+                                          quantite = quantite+1;
+                                          _db
+                                              .collection("Utilisateurs")
+                                              .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                              .document(id_produit)
+                                              .updateData({"quantite": quantite});
+
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(Icons.add, color: HexColor("#FFFFFF"),size: 20,),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),*/
+                        ],
+                      ),
                     ),
 
                     Padding(
-                      padding:  EdgeInsets.only(left: largeurPerCent(30, context)),
+                      padding:  EdgeInsets.only(right: largeurPerCent(17, context)),
                       child: GestureDetector(
                         onTap: (){
                           _db .collection("Utilisateurs")
@@ -291,21 +302,29 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               } else displaySnackBarNom(context, "Produit déjà ajouté au panier", Colors.green);
                             });
                           },
-                          child: Container(
-                            height: longueurPerCent(37, context),
-                            width: largeurPerCent(200, context),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: HexColor("#001C36"),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "AJOUTER AU PANIER",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "MonseraBold",
-                                    fontSize: 13),
-                              ),
+                          child: Expanded(
+                            flex:1,
+                            child: Column(
+                             children: <Widget>[
+                                Container(
+                                 height: longueurPerCent(38, context),
+                                 width: largeurPerCent(180, context),
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(7),
+                                   color: HexColor("#001C36"),
+                                 ),
+                                 child: Center(
+                                   child: Text(
+                                     "AJOUTER AU PANIER",
+                                     style: TextStyle(
+                                         color: Colors.white,
+                                         fontFamily: "MonseraBold",
+                                         fontSize: 11),
+                                   ),
+                                 ),
+                               ),
+                               Container(height: longueurPerCent(40, context),)
+                             ],
                             ),
                           ),
                         ),
@@ -323,7 +342,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text("Taille", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
+                          Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
                           SizedBox(width: largeurPerCent(20, context),),
                           Text("4.3", style: TextStyle(color: HexColor("#001c36"), fontSize: 15) )
                         ],
@@ -403,41 +422,49 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                builder: (context) =>
                                    Panier1(total: widget.produit.prix, unSeulProduit: widget.produit,)));
                      },
-                     child: Container(
-                       height: longueurPerCent(37, context),
-                       width: largeurPerCent(180, context),
-                       decoration: BoxDecoration(
-                           color: HexColor('#001C36'),
-                           border: Border.all(color: HexColor('#001C36'), width: 1),
-                           borderRadius: BorderRadius.circular(10)),
-                       child: Center(
-                         child: Text(
-                           "ACHETER",
-                           style: TextStyle(
-                               color: Colors.white,
-                               fontFamily: "MonseraBold",
-                               fontSize: 15),
+                     child: Padding(
+                       padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
+                       child: Container(
+                         height: longueurPerCent(37, context),
+                         width: largeurPerCent(160, context),
+                         decoration: BoxDecoration(
+                             color: HexColor('#FFC30D'),
+                             border: Border.all(color: HexColor('#FFC30D'), width: 1),
+                             borderRadius: BorderRadius.circular(7)),
+                         child: Center(
+                           child: Text(
+                             "ACHETER",
+
+                             style: TextStyle(
+                                 color: HexColor('#001C36'),
+                                 fontFamily: "MonseraBold",
+                                 fontWeight: FontWeight.bold,
+                                 fontSize: 11),
+                           ),
                          ),
                        ),
                      ),
                    ),
                    SizedBox(width: largeurPerCent(20, context),),
                    InkWell(
-
-                     child: Container(
-                       height: longueurPerCent(37, context),
-                       width: largeurPerCent(180, context),
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(10),
-                         color: Colors.yellow,
-                       ),
-                       child: Center(
-                         child: Text(
-                           "RECOMMANDER",
-                           style: TextStyle(
-                               color: HexColor('#001C36'),
-                               fontFamily: "MonseraBold",
-                               fontSize: 15),
+                     onTap: () async => await _shareImageFromUrl(),
+                     child: Padding(
+                       padding:  EdgeInsets.only(left: largeurPerCent(15, context)),
+                       child: Container(
+                         height: longueurPerCent(38, context),
+                         width: largeurPerCent(160, context),
+                         decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(7),
+                           color: HexColor('#001C36'),
+                         ),
+                         child: Center(
+                           child: Text(
+                             "RECOMMANDER",
+                             style: TextStyle(
+                                 color: HexColor('#FFFFFF'),
+                                 fontFamily: "MonseraBold",
+                                 fontSize: 11),
+                           ),
                          ),
                        ),
                      ),
@@ -465,7 +492,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       width: largeurPerCent(83, context),
       decoration: BoxDecoration(
           border: Border.all(
-              width: largeurPerCent(2, context),
+              width: largeurPerCent(1, context),
               color: HexColor("#707070")),),
       child: Center(child: Text("Pas d'image"),),
     );
@@ -499,7 +526,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(83, context),
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: largeurPerCent(2, context),
+                      width: largeurPerCent(1, context),
                       color: HexColor("#707070")),
                   image: DecorationImage(
                       image: NetworkImage(widget.produit.image1),
@@ -524,7 +551,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(83, context),
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: largeurPerCent(2, context),
+                      width: largeurPerCent(1, context),
                       color: HexColor("#707070")),
                   image: DecorationImage(
                       image: NetworkImage(widget.produit.image2),
@@ -555,7 +582,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(83, context),
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: largeurPerCent(2, context),
+                      width: largeurPerCent(1, context),
                       color: HexColor("#707070")),
                   image: DecorationImage(
                       image: NetworkImage(widget.produit.image1),
@@ -580,7 +607,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(83, context),
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: largeurPerCent(2, context),
+                      width: largeurPerCent(1, context),
                       color: HexColor("#707070")),
                   image: DecorationImage(
                       image: NetworkImage(widget.produit.image2),
@@ -605,7 +632,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(83, context),
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: largeurPerCent(2, context),
+                      width: largeurPerCent(1, context),
                       color: HexColor("#707070")),
                   image: DecorationImage(
                       image: NetworkImage(widget.produit.image3),
@@ -657,298 +684,18 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
   }
 
-  /*Container(
-              child: Stack(children: <Widget>[
-                Positioned(
-                    top: longueurPerCent(20, context),
-                    left: largeurPerCent(10, context),
-                    child: Text(widget.produit.nomDuProduit,
-                        style: TextStyle(
-                            color: HexColor("#909090"),
-                            fontFamily: "MonseraLight",
-                            fontSize: 20))),
-                Positioned(
-                    top: longueurPerCent(50, context),
-                    left: largeurPerCent(10, context),
-                    child: Text(widget.produit.prix,
-                        style: TextStyle(
-                            color: HexColor("#001c36"),
-                            fontFamily: "MonseraBold",
-                            fontSize: 20))),
-                Positioned(
-                    top: longueurPerCent(80, context),
-                    left: largeurPerCent(10, context),
-                    child: Text("Quantité",
-                        style: TextStyle(
-                            color: HexColor("#909090"),
-                            fontFamily: "MonseraRegular",
-                            fontSize: 15))),
-                Positioned(
-                  top: longueurPerCent(65, context),
-                  left: largeurPerCent(80, context),
-                  child: IconButton(
-                    onPressed: () {
-                      if (quantite > 1) {
-                        setState(() {
-                          print("moins");
-                          quantite = quantite - 1;
-                          _db
-                              .collection("Utilisateurs")
-                              .document(widget.currentUserId)
-                              .collection("ProduitsFavoirsUser")
-                              .document(id_produit)
-                              .updateData({"quantite": quantite});
-                        });
-                      }
-                    },
-                    icon: Icon(
-                      Icons.remove,
-                      color: HexColor("#959595"),
-                      size: 20,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: longueurPerCent(65, context),
-                  left: largeurPerCent(110, context),
-                  child: FlatButton(
-                    onPressed: null,
-                    child: Text(
-                      "${quantite}",
-                      style: TextStyle(
-                          color: HexColor("#959595"),
-                          fontFamily: "Light",
-                          fontSize: 20),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: longueurPerCent(65, context),
-                  left: largeurPerCent(180, context),
-                  child: IconButton(
-                    onPressed: () {
-                      if (quantite < widget.produit.quantite) {
-                        setState(() {
-                          print("plus");
-                          quantite = quantite + 1;
-                          _db
-                              .collection("Utilisateurs")
-                              .document(widget.currentUserId)
-                              .collection("ProduitsFavoirsUser")
-                              .document(id_produit)
-                              .updateData({"quantite": quantite});
-                        });
-                      }
-                    },
-                    icon: Icon(
-                      Icons.add,
-                      color: HexColor("#959595"),
-                      size: 20,
-                    ),
-                  ),
-                ),
+  Future<void> _shareImageFromUrl() async {
+    try {
+      var request = await HttpClient().getUrl(Uri.parse(
+          widget.produit.image1));
+      var response = await request.close();
+      Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+      await Share.file('ESYS AMLOG', 'amlog.jpg', bytes, 'image/jpg', text: 'My optional text.');
+    } catch (e) {
+      print('error: $e');
+    }
+  }
 
-                Positioned(
-                  top: longueurPerCent(20, context),
-                  right: largeurPerCent(10, context),
-                  child: InkWell(
-                    onTap: () {
-                      // FlutterShareFile.shareImage(widget.produit.image, "image");
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        _db
-                            .collection("Utilisateurs")
-                            .document(widget.currentUserId)
-                            .collection("Panier")
-                            .where("image1", isEqualTo: widget.produit.image1)
-                            .getDocuments()
-                            .then((QuerySnapshot snapshot) {
-                          if (snapshot.documents.isEmpty) {
-                            displaySnackBarNom(context,
-                                "Produit ajouté au panier", Colors.green);
-                            setState(() {
-                              ajoutPanier++;
-                              FirestoreService().addPanierSansId(
-                                PanierClasse(
-                                    nomDuProduit: widget.produit.nomDuProduit,
-                                    image1: widget.produit.image1,
-                                    prix: widget.produit.prix,
-                                    description: widget.produit.description,
-                                    quantiteCommander: quantite),
-                                widget.currentUserId,
-                              );
-                              _db
-                                  .collection("Utilisateurs")
-                                  .document(widget.currentUserId)
-                                  .collection("Panier")
-                                  .document("AjoutPanierBadge")
-                                  .updateData({"nombreAjout": ajoutPanier});
-                            });
-                          }
-                        });
-                      },
-                      child: Container(
-                        height: longueurPerCent(37, context),
-                        width: largeurPerCent(200, context),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: HexColor("#FFC30D"),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "AJOUTER AU PANIER",
-                            style: TextStyle(
-                                color: HexColor('#001C36'),
-                                fontFamily: "MonseraBold",
-                                fontSize: 13),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                /// Partie icone favoris
-                Positioned(
-                    top: longueurPerCent(70, context),
-                    right: largeurPerCent(20, context),
-                    child: GestureDetector(
-                        onTap: () async {
-                          getIdFavoris();
-                          if (etatIconeFavoris == false) {
-                            setState(() {
-                              displaySnackBarNom(context,
-                                  "Produit ajouté aux favoris", Colors.green);
-                              print("ajout");
-                              etatIconeFavoris = true;
-                              FirestoreService().addFavoris(
-                                  widget.produit, widget.currentUserId);
-                              _db
-                                  .collection("Utilisateurs")
-                                  .document(widget.currentUserId)
-                                  .collection("ProduitsFavoirsUser")
-                                  .document(id_produit)
-                                  .updateData(
-                                      {"etatIconeFavoris": etatIconeFavoris});
-                            });
-                          } else {
-                            setState(() {
-                              displaySnackBarNom(context,
-                                  "Produit supprimé des favoris", Colors.green);
-                              print("supprimer");
-                              etatIconeFavoris = false;
-                              _db
-                                  .collection("Utilisateurs")
-                                  .document(widget.currentUserId)
-                                  .collection("ProduitsFavoirsUser")
-                                  .document(id_produit)
-                                  .updateData(
-                                      {"etatIconeFavoris": etatIconeFavoris});
-                              FirestoreService().deleteFavoris(
-                                  widget.currentUserId, idFavorisProduit);
-                            });
-                          }
-                        },
-                        child: Icon(
-                          (etatIconeFavoris == false)
-                              ? Icons.favorite_border
-                              : Icons.favorite,
-                          color: Colors.red,
-                          size: 30,
-                        ))),
-
-                /// Fin partie icone favoris
-                imageApparition(),
-                Positioned(
-                    top: longueurPerCent(390, context),
-                    left: largeurPerCent(20, context),
-                    child: Text("Couleur",
-                        style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontFamily: "MonseraRegular",
-                            fontSize: 18))),
-                Positioned(
-                    top: longueurPerCent(390, context),
-                    right: largeurPerCent(150, context),
-                    child: Text("Taille",
-                        style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontFamily: "MonseraRegular",
-                            fontSize: 18))),
-                Positioned(
-                    top: longueurPerCent(410, context),
-                    left: largeurPerCent(5, context),
-                    right: largeurPerCent(5, context),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30))),
-                        child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              "${widget.produit.description}",
-                              style: TextStyle(
-                                  fontFamily: "MonseraLight", fontSize: 15),
-                            )))),
-                Positioned(
-                  top: longueurPerCent(570, context),
-                  left: largeurPerCent(20, context),
-                  child: InkWell(
-                    onTap: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Commander(
-                      //       produit: widget.produit,
-                      //     )));
-                    },
-                    child: Container(
-                      height: longueurPerCent(37, context),
-                      width: largeurPerCent(180, context),
-                      decoration: BoxDecoration(
-                          color: HexColor('#001C36'),
-                          border:
-                              Border.all(color: HexColor('#001C36'), width: 1),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          "ACHETER",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "MonseraBold",
-                              fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: longueurPerCent(570, context),
-                  right: largeurPerCent(20, context),
-                  child: InkWell(
-                    onTap: () {
-                      // FlutterShareFile.shareImage(widget.produit.image, "image");
-                    },
-                    child: Container(
-                      height: longueurPerCent(37, context),
-                      width: largeurPerCent(180, context),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.yellow,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "RECOMMANDER",
-                          style: TextStyle(
-                              color: HexColor('#001C36'),
-                              fontFamily: "MonseraBold",
-                              fontSize: 13),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
-            )*/
 
   /// BAR D'AJOUT OU DE SUPPRESSION EN BAS
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
