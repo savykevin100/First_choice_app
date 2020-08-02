@@ -112,9 +112,9 @@ class _PanierState extends State<Panier> {
                     } else {
                       return Padding(
                         padding: EdgeInsets.only(
-                            left: largeurPerCent(50, context)),
+                            left: largeurPerCent(30, context)),
                         child: Text(
-                          " TOTAL :    ${total} FCFA", style: TextStyle(
+                          " TOTAL :    ${total} FCFA",textAlign: TextAlign.center, style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontFamily: "MonseraBold"),),
@@ -156,97 +156,129 @@ class _PanierState extends State<Panier> {
                                 PanierClasse panier = snapshot.data[i];
                                 return Container(
                                   margin: EdgeInsets.only(
-                                    top: longueurPerCent(10, context),
+                                    top: longueurPerCent(18, context),
+                                    left:longueurPerCent(18,context),
+                                    right:longueurPerCent(18,context),
                                   ),
-                                  decoration: BoxDecoration(
+                                  height: longueurPerCent(100, context),
+                                  child: Material(
                                     borderRadius: BorderRadius.circular(7.0),
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Center(
-                                        child: Container(
+                                    elevation: 4,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                            top: longueurPerCent(10, context),
+                                            bottom: longueurPerCent(10, context),
+                                            left:longueurPerCent(10,context),
+                                          ),
                                           height: longueurPerCent(
-                                              100.0, context),
-                                          width: largeurPerCent(100.0, context),
+                                              100, context),
+                                          width: largeurPerCent(80, context),
                                           child: Image.network(
                                             panier.image1,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: largeurPerCent(
-                                                  50, context)),
-                                          child: ConstrainedBox(
-                                            constraints: BoxConstraints(
-                                                maxWidth: 150
-                                            ),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(
-                                                  "${panier.nomDuProduit} ",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: HexColor(
-                                                          "#909090"),
-                                                      fontSize: 18,
-                                                      fontFamily: "Regular"),
-                                                ),
-                                                SizedBox(
-                                                  height: longueurPerCent(
-                                                      4.0, context),
-                                                ),
-                                                Text(
-                                                  "Rouge - 43",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    color: HexColor("#001C36"),
-                                                    fontSize: 12,
-                                                    fontFamily: "MontserratBold",
-                                                    fontWeight: FontWeight.bold,
+                                        Expanded(
+                                          child: Container(
+                                            margin:EdgeInsets.only(top: longueurPerCent(13, context),
+                                            left: longueurPerCent(10, context)),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  SizedBox(height: longueurPerCent(0, context),),
+                                                  Text(
+                                                    "${panier.nomDuProduit} ",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        color: HexColor(
+                                                            "#909090"),
+                                                        fontSize: 18,
+                                                        fontFamily: "Regular"),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: longueurPerCent(
-                                                      4.0, context),
-                                                ),
-                                                Text(
-                                                  '${panier.prix} FCFA',
+                                                  SizedBox(
+                                                    height: longueurPerCent(
+                                                        4.0, context),
+                                                  ),
+                                                  Text(
+                                                    "Rouge - 43",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color: HexColor("#001C36"),
+                                                      fontSize: 12,
+                                                      fontFamily: "MontserratBold",
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: longueurPerCent(
+                                                        15.0, context),
+                                                  ),
+                                                  Text(
+                                                    '${panier.prix} FCFA',
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                      color: HexColor("#001C36"),
+                                                      fontSize: 16,
+                                                      fontFamily: "MontserratBold",
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                          ),
+                                        ),
+                                        Column(
+                                          children: <Widget>[
+                                            SizedBox(height: longueurPerCent(18, context),),
+                                            Container(
+                                              margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                              child: IconButton(icon: Icon(
+                                                Icons.delete, color: Colors.red,),
+                                                  onPressed: () {
+                                                    FirestoreService().deletePanier(
+                                                        Renseignements.emailUser,
+                                                        idProduitsPanier[i]);
+                                                    setState(() {
+                                                      total = total - panier.prix;
+                                                      idProduitsPanier.removeAt(i);
+                                                      produitsPaniers.removeAt(i);
+                                                    });
+                                                    _db
+                                                        .collection("Utilisateurs")
+                                                        .document(
+                                                        Renseignements.emailUser)
+                                                        .updateData({
+                                                      "nbAjoutPanier": ajoutPanier--
+                                                    });
+                                                  }),
+                                            ),
+                                            SizedBox(height: longueurPerCent(5, context),),
+                                            Container(
+                                              height: longueurPerCent(20, context),
+                                              width: largeurPerCent(100, context),
+                                              margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                              color: HexColor("#001C36"),
+                                              child: Center(
+                                                child: Text(
+                                                  "SUR MESURE",
                                                   textAlign: TextAlign.right,
                                                   style: TextStyle(
-                                                    color: HexColor("#001C36"),
-                                                    fontSize: 16,
-                                                    fontFamily: "MontserratBold",
-                                                    fontWeight: FontWeight.bold,
+                                                      color: HexColor("#FFFFFF"),
+                                                      fontSize: 9.0,
+                                                      fontFamily: "MontserratBold",
+                                                      fontWeight: FontWeight.bold
+
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          )
-                                      ),
-                                      IconButton(icon: Icon(
-                                        Icons.delete, color: Colors.red,),
-                                          onPressed: () {
-                                            FirestoreService().deletePanier(
-                                                Renseignements.emailUser,
-                                                idProduitsPanier[i]);
-                                            setState(() {
-                                              total = total - panier.prix;
-                                              idProduitsPanier.removeAt(i);
-                                              produitsPaniers.removeAt(i);
-                                            });
-                                            _db
-                                                .collection("Utilisateurs")
-                                                .document(
-                                                Renseignements.emailUser)
-                                                .updateData({
-                                              "nbAjoutPanier": ajoutPanier--
-                                            });
-                                          })
-                                    ],
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 );
                               });
@@ -265,7 +297,7 @@ class _PanierState extends State<Panier> {
                   .size
                   .height - 60),
               child: button(
-                  Colors.white, HexColor("#001C36"), context, "ACHETER", () {
+                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () {
                if(total==0){
 
                } else {
