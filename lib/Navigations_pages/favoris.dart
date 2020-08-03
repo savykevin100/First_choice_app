@@ -198,7 +198,7 @@ class _FavorisState extends State<Favoris> {
                                     },
                                   ),
                                 ),
-                                SizedBox(width: largeurPerCent(40, context),),
+                                SizedBox(width: largeurPerCent(30, context),),
                                 IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
                                   for(int i=0; i<etatFavoris.length; i++){
                                     if(produit.image1==etatFavoris[i]) {

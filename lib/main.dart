@@ -4,7 +4,6 @@ import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/FirstPage.dart';
-import 'package:premierchoixapp/test.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
 import 'Authentification/renisialisation_passwd.dart';
@@ -30,7 +29,6 @@ class MyApp extends StatelessWidget {
         accentColor: HexColor("#001C36"),
         splashColor: HexColor("#001C36"),
         colorScheme: ColorScheme.light(primary: HexColor("#001C36")),
-        buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: FirstPage.id,
@@ -46,7 +44,6 @@ class MyApp extends StatelessWidget {
         PageChargement.id: (context) => PageChargement(),
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
-        HomePage.id: (context) => HomePage()
       },
     );
   }

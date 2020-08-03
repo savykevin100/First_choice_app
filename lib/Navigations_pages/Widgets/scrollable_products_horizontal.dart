@@ -26,7 +26,8 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
          await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
               imagePrincipaleProduit: produit.image1,
               imageSelect: produit.image1,
-              etatIconeFavoris: false
+              etatIconeFavoris: false,
+             etatSurMesure: false
           ), Renseignements.emailUser);
          print("L'ajout a été fait avant le onap");
         }

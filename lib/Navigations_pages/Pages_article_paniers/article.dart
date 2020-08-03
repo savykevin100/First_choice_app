@@ -43,6 +43,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   int ajoutPanier;
   /// Variable contenant le nombre de produit ajouter aux favoris à chaque ajout
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool etatSurMesure=false;
+  bool isSwitch=false;
 
   /*****************************************************************************************/
 
@@ -88,6 +90,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               id_produit = snapshot.documents[i].documentID;
               quantite = snapshot.documents[i].data["quantite"];
               etatIconeFavoris = snapshot.documents[i].data["etatIconeFavoris"];
+             /// etatSurMesure = snapshot.documents[i].data["etatSurMesure"];
             });
           }
         }
@@ -145,7 +148,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             appBar: _appBar.appBarFunctionStream(),
             body: ListView(
               children: <Widget>[
-
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -186,75 +188,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               ),
                             ),
                            SizedBox(height: 10,)
-                           /* Row(
-                              children: <Widget>[
-                                IconButton(
-                                  padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                                  onPressed: (){
-                                    if(quantite>1){
-                                      setState(() {
-                                        print("moins");
-                                        quantite = quantite-1;
-                                        _db
-                                            .collection("Utilisateurs")
-                                            .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                            .document(id_produit)
-                                            .updateData({"quantite": quantite});
-
-                                      });
-                                    }
-                                  },
-                                  icon: Icon(Icons.remove, color: HexColor("#001C36"),
-                                    size: 20,),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(2.0, context)),
-                                  child: Center(
-                                    child:  Text(
-                                      "${quantite}",
-                                      style: TextStyle(
-                                          color: HexColor("#959595"),
-                                          fontFamily: "Light",
-                                          fontSize: 20),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(12.0, context),),
-                                  height: longueurPerCent(31.0, context),
-                                  width: largeurPerCent(38.0, context),
-                                  child: Material(
-                                    borderRadius: BorderRadius.circular(13.0),
-                                    color: HexColor("#001c36"),
-                                    child: IconButton(
-                                      padding: EdgeInsets.only(top: longueurPerCent(0.0, context),left: longueurPerCent(0.0, context),),
-                                      onPressed: (){
-                                        if(quantite<widget.produit.quantite){
-                                          setState(() {
-                                            print("plus");
-                                            quantite = quantite+1;
-                                            _db
-                                                .collection("Utilisateurs")
-                                                .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                                .document(id_produit)
-                                                .updateData({"quantite": quantite});
-
-                                          });
-                                        }
-                                      },
-                                      icon: Icon(Icons.add, color: HexColor("#FFFFFF"),size: 20,),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),*/
                           ],
                         ),
                       ),
                     ),
 
                     Padding(
-                      padding:  EdgeInsets.only(right: largeurPerCent(17, context)),
+                      padding:  EdgeInsets.only(right: largeurPerCent(17, context), bottom:  longueurPerCent(40, context)),
                       child: GestureDetector(
                         onTap: (){
                           _db .collection("Utilisateurs")
@@ -268,6 +208,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                     nomDuProduit: widget.produit.nomDuProduit,
                                     image1: widget.produit.image1,
                                     prix: widget.produit.prix,
+                                    etatSurMesure: etatSurMesure,
                                     description: widget.produit.description,
                                 ), widget.currentUserId, );
                                 _db
@@ -292,6 +233,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                       nomDuProduit: widget.produit.nomDuProduit,
                                       image1: widget.produit.image1,
                                       prix: widget.produit.prix,
+                                      etatSurMesure: etatSurMesure,
                                       description: widget.produit.description,
                                   ), widget.currentUserId, );
                                   _db
@@ -321,7 +263,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                  ),
                                ),
                              ),
-                             Container(height: longueurPerCent(40, context),)
                            ],
                           ),
                         ),
@@ -387,7 +328,24 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     ],
                   ),
                 ),
-                SizedBox(height: longueurPerCent(30, context),),
+                (etatSurMesure!=null)? Padding(padding: EdgeInsets.only(left: largeurPerCent(0, context)), child: Row(
+                  children: <Widget>[
+                    Checkbox(value: isSwitch, onChanged: (bool value){
+                      setState(() {
+                        isSwitch=value;
+                        etatSurMesure=value;
+                        _db
+                            .collection("Utilisateurs")
+                            .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                            .document(id_produit)
+                            .updateData({"etatSurMesure":etatSurMesure});
+                      });
+                      print(etatSurMesure);
+                    }),
+                    Text("Voulez-vous du sur-mesure", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline),)
+                  ],
+                ),):Text(""),
+                SizedBox(height: longueurPerCent(10, context),),
                 Padding(
                   padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
                   child: Text("Descriptif",
@@ -431,7 +389,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                          child: Center(
                            child: Text(
                              "ACHETER",
-
                              style: TextStyle(
                                  color: HexColor('#001C36'),
                                  fontFamily: "MonseraBold",

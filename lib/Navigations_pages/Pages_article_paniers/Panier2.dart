@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/commande_send.dart';
 
@@ -308,7 +305,7 @@ class _Panier2State extends State<Panier2> {
                         chargement = true;
                       });
                       try {
-                        FirestoreService().addCommande(
+                       /* FirestoreService().addCommande(
                             Commandes(
                                 nomComplet: widget.nomComplet,
                                 telephone: widget.telephone,
@@ -343,7 +340,7 @@ class _Panier2State extends State<Panier2> {
                                 lieuDeLivraison: widget.lieuDeLivraison,
                                 created: DateTime.now().toString(),
                                 livrer: false),
-                            Renseignements.emailUser);
+                            Renseignements.emailUser);*/
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -351,6 +348,7 @@ class _Panier2State extends State<Panier2> {
                       } catch (e) {
                         print(e);
                       }
+
                       setState(() {
                         chargement = true;
                       });

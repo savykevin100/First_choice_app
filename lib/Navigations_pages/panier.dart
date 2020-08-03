@@ -23,7 +23,6 @@ class _PanierState extends State<Panier> {
   Firestore _db = Firestore.instance;
   int quantiteProduitDisponible;
   var idDocument;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int total = 0;
   List<String> idProduitsPanier = [];
   List<Map<String, dynamic>> produitsPaniers=[];
@@ -98,6 +97,7 @@ class _PanierState extends State<Panier> {
   @override
   Widget build(BuildContext context) {
     if (idProduitsPanier != null && total != null && produitsPaniers!=null) {
+      print(produitsPaniers);
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -230,52 +230,56 @@ class _PanierState extends State<Panier> {
                                               )
                                           ),
                                         ),
-                                        Column(
-                                          children: <Widget>[
-                                            SizedBox(height: longueurPerCent(18, context),),
-                                            Container(
-                                              margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                              child: IconButton(icon: Icon(
-                                                Icons.delete, color: Colors.red,),
-                                                  onPressed: () {
-                                                    FirestoreService().deletePanier(
-                                                        Renseignements.emailUser,
-                                                        idProduitsPanier[i]);
-                                                    setState(() {
-                                                      total = total - panier.prix;
-                                                      idProduitsPanier.removeAt(i);
-                                                      produitsPaniers.removeAt(i);
-                                                    });
-                                                    _db
-                                                        .collection("Utilisateurs")
-                                                        .document(
-                                                        Renseignements.emailUser)
-                                                        .updateData({
-                                                      "nbAjoutPanier": ajoutPanier--
-                                                    });
-                                                  }),
-                                            ),
-                                            SizedBox(height: longueurPerCent(5, context),),
-                                            Container(
-                                              height: longueurPerCent(20, context),
-                                              width: largeurPerCent(100, context),
-                                              margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                              color: HexColor("#001C36"),
-                                              child: Center(
-                                                child: Text(
-                                                  "SUR MESURE",
-                                                  textAlign: TextAlign.right,
-                                                  style: TextStyle(
-                                                      color: HexColor("#FFFFFF"),
-                                                      fontSize: 9.0,
-                                                      fontFamily: "MontserratBold",
-                                                      fontWeight: FontWeight.bold
+                                        Expanded(
+                                          child: Container(
+                                            child: Column(
+                                              children: <Widget>[
+                                                SizedBox(height: longueurPerCent(18, context),),
+                                                Container(
+                                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                                  child: IconButton(icon: Icon(
+                                                    Icons.delete, color: Colors.red,),
+                                                      onPressed: () {
+                                                        FirestoreService().deletePanier(
+                                                            Renseignements.emailUser,
+                                                            idProduitsPanier[i]);
+                                                        setState(() {
+                                                          total = total - panier.prix;
+                                                          idProduitsPanier.removeAt(i);
+                                                          produitsPaniers.removeAt(i);
+                                                        });
+                                                        _db
+                                                            .collection("Utilisateurs")
+                                                            .document(
+                                                            Renseignements.emailUser)
+                                                            .updateData({
+                                                          "nbAjoutPanier": ajoutPanier--
+                                                        });
+                                                      }),
+                                                ),
+                                                SizedBox(height: longueurPerCent(5, context),),
+                                                (panier.etatSurMesure==false)?Text(""): Container(
+                                                  height: longueurPerCent(20, context),
+                                                  width: largeurPerCent(100, context),
+                                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                                  color: HexColor("#001C36"),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "SUR MESURE",
+                                                      textAlign: TextAlign.right,
+                                                      style: TextStyle(
+                                                          color: HexColor("#FFFFFF"),
+                                                          fontSize: 9.0,
+                                                          fontFamily: "MontserratBold",
+                                                          fontWeight: FontWeight.bold
 
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         )
                                       ],
                                     ),
@@ -301,6 +305,7 @@ class _PanierState extends State<Panier> {
                if(total==0){
 
                } else {
+                 ///_showDialog();
                  Navigator.push(
                      context, MaterialPageRoute(
                      builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
@@ -320,6 +325,39 @@ class _PanierState extends State<Panier> {
         body: Center(child: CircularProgressIndicator(),),
       );
     }
+  }
+
+
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Confirmez-vos mensurations?"),
+          content: new Text("Vous n'avez pas encore entré vous mensurations, veuillez-allez au niveau de votre "
+              "profil pour entrer vos mensurations"
+              ""),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
 

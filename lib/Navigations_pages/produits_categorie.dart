@@ -4,6 +4,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 
 
+// ignore: must_be_immutable
 class ProduitsCategorie extends StatefulWidget {
   String titreCategorie;
   ProduitsCategorie(this.titreCategorie);

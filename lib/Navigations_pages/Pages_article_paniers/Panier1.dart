@@ -123,21 +123,16 @@ class _Panier1State extends State<Panier1> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(37.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(0.0, context)),
-                        child: Center(
-                          child: Text(
-                            "INFORMATIONS DE LA COMMANDE",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#001C36"),
-                                fontSize: 20.0,
-                                fontFamily: "MonseraBold",
-                                fontWeight: FontWeight.bold),
-                          ),
+                      SizedBox(height: longueurPerCent(40, context),),
+                      Center(
+                        child: Text(
+                          "INFORMATIONS DE LA COMMANDE",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 20.0,
+                              fontFamily: "MonseraBold",
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(height: longueurPerCent(30, context)),

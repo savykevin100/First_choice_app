@@ -28,7 +28,8 @@ import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.
           await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
               imagePrincipaleProduit: produit.image1,
               imageSelect: produit.image1,
-              etatIconeFavoris: false
+              etatIconeFavoris: false,
+              etatSurMesure: false
           ), Renseignements.emailUser);
           print("L'ajout a été fait avant le onap");
         }

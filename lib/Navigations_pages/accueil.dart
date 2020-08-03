@@ -59,7 +59,11 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     getCurrentUser();
-
+    Firestore.instance.collection("Utilisateurs").document().collection("Panier").getDocuments().then((value) {
+      for(int i=0; i<value.documents.length; i++){
+        print(value.documents[i].data);
+      }
+    });
 
     animationController =
         AnimationController(duration: Duration(seconds: 18), vsync: this);
@@ -174,7 +178,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                    top: longueurPerCent(18, context),
                    left: largeurPerCent(13, context)),
                child: Text(
-                 "DÉCOUVERTE",
+                 "DÉCOUVERTES",
                  style: TextStyle(
                      color: HexColor("#001C36"),
                      fontSize: 20,
