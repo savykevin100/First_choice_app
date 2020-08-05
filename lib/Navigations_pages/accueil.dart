@@ -147,16 +147,16 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                    ),
                  )),
              SizedBox(
-               height: longueurPerCent(10, context),
+              height: longueurPerCent(10, context),
              ),
-            /* Container(
+             Container(
                width: MediaQuery.of(context).size.width ,
                height: longueurPerCent(200, context),
                decoration: BoxDecoration(
                  color: HexColor("#001C36"),
                ),
                child: carousel(),
-             ),*/
+             ),
              Padding(
                padding: EdgeInsets.only(
                    top: longueurPerCent(30, context),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
@@ -92,10 +93,15 @@ class _Panier1State extends State<Panier1> {
         ).toList(),
         value: quartier,
         underline: Text(""),
-        hint: Text(
-          "Selectionnez un quartier",
-          style: TextStyle(
-              color: HexColor("#909090"), fontSize: 20, fontFamily: "Regular"),
+        hint: Center(
+          child: Container(
+            color: Colors.blue,
+            child: Text(
+              "Selectionnez un quartier",
+              style: TextStyle(
+                  color: HexColor("#909090"), fontSize: 18, fontFamily: "Regular"),
+            ),
+          ),
         ),
         searchHint: "Quartiers",
         onChanged: (value) {
@@ -130,7 +136,7 @@ class _Panier1State extends State<Panier1> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: HexColor("#001C36"),
-                              fontSize: 20.0,
+                              fontSize: 19.0,
                               fontFamily: "MonseraBold",
                               fontWeight: FontWeight.bold),
                         ),
@@ -143,7 +149,7 @@ class _Panier1State extends State<Panier1> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: HexColor("#001C36"),
-                              fontSize: 20.0,
+                              fontSize: 19.0,
                               fontFamily: "MonseraLight",
                               fontWeight: FontWeight.bold),
                         ),
@@ -164,7 +170,7 @@ class _Panier1State extends State<Panier1> {
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#909090"),
-                                  fontSize: 20.0,
+                                  fontSize: 19.0,
                                   fontFamily: "Regular",
                                 ),
                               ),
@@ -179,7 +185,7 @@ class _Panier1State extends State<Panier1> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 20.0,
+                                    fontSize: 19.0,
                                     fontFamily: "MonseraLight",
                                     fontWeight: FontWeight.bold),
                               ),
@@ -187,11 +193,9 @@ class _Panier1State extends State<Panier1> {
                           ],
                         ),
                       ),
+
                       SizedBox(
-                        height: longueurPerCent(20, context),
-                      ),
-                      SizedBox(
-                        height: longueurPerCent(46.0, context),
+                        height: longueurPerCent(66.0, context),
                       ),
                       Container(
                         child: Row(
@@ -201,30 +205,15 @@ class _Panier1State extends State<Panier1> {
                                   top: longueurPerCent(0.0, context),
                                   right: longueurPerCent(0.0, context),
                                   left: longueurPerCent(35.0, context)),
-                              child: Text(
-                                "Lieu de livraison",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#909090"),
-                                  fontSize: 20,
-                                  fontFamily: "Regular",
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                  top: longueurPerCent(0.0, context),
-                                  right: longueurPerCent(0.0, context),
-                                  left: longueurPerCent(20.0, context)),
-                              width: largeurPerCent(175.0, context),
+                              width: largeurPerCent(330.0, context),
                               height: longueurPerCent(40, context),
                               padding: EdgeInsets.only(
-                                  left: largeurPerCent(20, context),
+                                  left: largeurPerCent(10, context),
                                   right: largeurPerCent(20, context),
                                   top: longueurPerCent(0, context)),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(15.0),
+                                    Radius.circular(7.0),
                                   ),
                                   border: Border.all(
                                       color: HexColor("#919191"), width: 1)),
@@ -232,21 +221,21 @@ class _Panier1State extends State<Panier1> {
                                 underline: Text(""),
                                 hint: _dropDownValue == null
                                     ? Text(
-                                        'Lieu',
+                                        'Lieu de Livraison',
                                         style: TextStyle(
                                             color: HexColor('#919191'),
-                                            fontSize: 17.0,
+                                            fontSize: 18.0,
                                             fontFamily: 'MonseraLight'),
                                       )
                                     : Text(
                                         _dropDownValue,
                                         style: TextStyle(
                                             color: HexColor("#001C36"),
-                                            fontSize: 20),
+                                            fontSize: 18),
                                       ),
                                 isExpanded: true,
                                 iconSize: 30.0,
-                                style: TextStyle(color: HexColor("#001C36")),
+                                style: TextStyle(color: HexColor("#919191")),
                                 items: ['En Agence', 'A domicile'].map(
                                   (val) {
                                     return DropdownMenuItem<String>(
@@ -269,7 +258,7 @@ class _Panier1State extends State<Panier1> {
                         ),
                       ),
                       SizedBox(
-                        height: longueurPerCent(16.0, context),
+                        height: longueurPerCent(20.0, context),
                       ),
                       //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -278,85 +267,87 @@ class _Panier1State extends State<Panier1> {
                           ? Column(
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: largeurPerCent(50, context)),
-                                  child: Column(
-                                    children: widgets
-                                        .map((k, v) {
-                                          return (MapEntry(
-                                            k,
-                                            Center(
-                                                child: Container(
-                                              width: 300,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10)),
-                                              ),
-                                              height: 90,
-                                              child: Column(
-                                                children: <Widget>[
-                                                  Text(""),
-                                                  v,
-                                                ],
-                                              ),
-                                            )),
-                                          ));
-                                        })
-                                        .values
-                                        .toList(),
+                                  margin: EdgeInsets.only(left: 45,right: 50),
+                                  height: 50,
+                                  child: DropdownSearch<String>(
+                                    mode: Mode.BOTTOM_SHEET,
+                                    maxHeight: 300,
+                                    items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
+                                    onChanged:  (value) {
+                                      print(quartier);
+                                      quartier= value;
+                                    },
+                                    hint: "Sélectionner un quartier",
+                                    showClearButton: true,
+                                    showSearchBox: true,
+                                    searchBoxDecoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      contentPadding: EdgeInsets.only(left: 100),
+                                      hintText:"Rechercher un quartier",
+                                      hintStyle: TextStyle(
+                                          color: HexColor('#919191'),
+                                          fontSize: 18.0,
+                                          fontFamily: 'MonseraLight'),
+                                    ),
+                                    popupTitle: Container(
+                                      height: longueurPerCent(50, context),
+                                      decoration: BoxDecoration(
+                                        color: HexColor("#001C36"),
+
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Quartier',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    popupShape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(24),
+                                        topRight: Radius.circular(24),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: longueurPerCent(50.0, context),
+                                SizedBox(
+                                  height: longueurPerCent(20.0, context),
+                                ),
+                                //Ajouter le textField ici
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: longueurPerCent(0.0, context),
+                                      right: longueurPerCent(6.0, context)),
+                                  width: largeurPerCent(330, context),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      hintText: "Indication",
+                                      hintStyle: TextStyle(
+                                          color: HexColor('#919191'),
+                                          fontSize: 18.0,
+                                          fontFamily: 'MonseraLight'),
+                                      fillColor: Colors.white,
+                                      contentPadding: EdgeInsets.only(
+                                          top: 30, bottom: 5, left: 15),
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(7.0)),
+                                          borderSide: BorderSide(
+                                              width: 1,
+                                              style: BorderStyle.none)),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: longueurPerCent(0.0, context),
-                                          right: longueurPerCent(0.0, context),
-                                          left: longueurPerCent(33.0, context)),
-                                      child: Text(
-                                        "Indication",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: HexColor("#909090"),
-                                          fontSize: 20,
-                                          fontFamily: "Regular",
-                                        ),
-                                      ),
-                                    ),
-
-                                    //Ajouter le textField ici
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: longueurPerCent(14.0, context),
-                                          left: longueurPerCent(30.0, context)),
-                                      height: longueurPerCent(76.0, context),
-                                      width: largeurPerCent(229, context),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: null,
-                                          hintStyle: TextStyle(
-                                              color: HexColor('#919191'),
-                                              fontSize: 17.0,
-                                              fontFamily: 'MonseraLight'),
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsets.only(
-                                              top: 30, bottom: 5, left: 30),
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0)),
-                                              borderSide: BorderSide(
-                                                  width: 1,
-                                                  style: BorderStyle.none)),
-                                        ),
-                                        onChanged: (value) {
-                                          indication = value;
-                                        },
-                                      ),
-                                    )
-                                  ],
+                                    onChanged: (value) {
+                                      indication = value;
+                                    },
+                                  ),
                                 ),
                               ],
                             )
@@ -370,10 +361,10 @@ class _Panier1State extends State<Panier1> {
                             ),
                             Container(
                               height: longueurPerCent(40, context),
-                              width: largeurPerCent(300.0, context),
+                              width: largeurPerCent(330.0, context),
                               margin: EdgeInsets.only(
                                   top: longueurPerCent(0.0, context),
-                                  left: longueurPerCent(50.0, context)),
+                                  left: longueurPerCent(35.0, context)),
                               child: DateTimeField(
                                 format: format,
                                 onChanged: (value) {
@@ -387,7 +378,7 @@ class _Panier1State extends State<Panier1> {
                                         top: longueurPerCent(5, context),
                                         bottom: longueurPerCent(5, context),
                                         right: largeurPerCent(10, context),
-                                        left: largeurPerCent(10, context)),
+                                        left: largeurPerCent(12, context)),
                                     child: Icon(
                                       Icons.calendar_today,
                                       color: HexColor('#001C36'),
@@ -397,16 +388,16 @@ class _Panier1State extends State<Panier1> {
                                   labelText: "Date et heure de livraison",
                                   labelStyle: TextStyle(
                                       color: HexColor('#919191'),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                   hintText: "10/06/2000",
                                   hintStyle: TextStyle(
                                       color: HexColor("#001C36"),
-                                      fontSize: 17.0,
+                                      fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0)),
+                                          Radius.circular(7.0)),
                                       borderSide: BorderSide(
                                           width: 1, style: BorderStyle.none)),
                                 ),

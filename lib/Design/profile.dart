@@ -44,14 +44,10 @@ class _UserProfilState extends State<UserProfil>{
                                  ),
                                )
                            ),
-                           Container(
-                             width: largeurPerCent(140.0, context),
-                             height: longueurPerCent(30.0, context),
-                             child: Center(
-                               child: Text(
-                                 "Mon compte",
-                                 style: TextStyle(color: Colors.white, fontFamily: "MontserratBold",fontSize: 24.0,fontWeight: FontWeight.bold),
-                               ),
+                           Center(
+                             child: Text(
+                               "Mon compte",
+                               style: TextStyle(color: Colors.white, fontFamily: "MontserratBold",fontSize: 24.0,fontWeight: FontWeight.bold),
                              ),
                            ),
                            Container(
