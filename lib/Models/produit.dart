@@ -5,11 +5,12 @@ class Produit {
   String image1;
   String image2;
   String image3;
-  int quantite;
   String selectImage;
   int numberImages;
   String id;
   int numberStar;
+  bool surMesure;
+  String taille;
 
   Produit(
       {this.nomDuProduit,
@@ -18,24 +19,26 @@ class Produit {
       this.image1,
       this.image2,
       this.image3,
-      this.quantite,
       this.selectImage,
       this.id,
       this.numberStar,
+      this.surMesure,
+      this.taille,
       this.numberImages});
 
   Produit.fromMap(Map<String, dynamic> donnees, String id)
       : nomDuProduit = donnees["nomDuProduit"],
         prix = donnees["prix"],
-        description = donnees["description"],
+        description = donnees["description                                                                                                                                                                                                                                                                                                                                                                                "],
         image1 = donnees["image1"],
         image2 = donnees["image2"],
         image3 = donnees["image3"],
-        quantite = donnees["quantite"],
         selectImage = donnees["selectImage"],
         numberImages = donnees["numberImages"],
-        numberStar= donnees["numberStar"],
-         id= donnees["id"];
+        numberStar = donnees["numberStar"],
+        taille = donnees["taille"],
+        surMesure = donnees["surMesure"],
+        id = donnees["id"];
 
   Map<String, dynamic> toMap() {
     return {
@@ -45,11 +48,12 @@ class Produit {
       "image1": image1,
       "image2": image2,
       "image3": image3,
-      "quantite": quantite,
       "selectImage": selectImage,
       "numberImages": numberImages,
       "numberStar": numberStar,
-       "id":id
+      "surMesure": surMesure,
+      "taille": taille,
+      "id": id
     };
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
@@ -112,7 +113,25 @@ class FirestoreService {
     );
   }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+  Stream<List<Produit>> getProduitFemmes() {
+    return _db.collection("Femmes").document("CHAUSSURES").collection("Produits").snapshots().map(
+          (snapshot) =>
+          snapshot.documents.map(
+                (doc) => Produit.fromMap(doc.data, doc.documentID),
+          ).toList(),
+    );
+  }
 
+  Stream<List<Produit>> getProduitFemmes1() {
+    return _db.collection("Femmes").document("CHAUSSURES").collection("Produits").snapshots().map(
+          (snapshot) =>
+          snapshot.documents.map(
+                (doc) => Produit.fromMap(doc.data, doc.documentID),
+          ).toList(),
+    );
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
   Future<void> addFavoris(Produit produit, String document){
     return _db.collection("Utilisateurs").document(document).collection("Favoris").add(produit.toMap());

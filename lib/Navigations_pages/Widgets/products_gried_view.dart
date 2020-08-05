@@ -44,7 +44,7 @@ import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.
 
 Widget product_grid_view(){
   return  StreamBuilder(
-      stream: FirestoreService().getProduit(),
+      stream: FirestoreService().getProduitFemmes(),
       builder: (BuildContext context,
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData) {
@@ -67,7 +67,7 @@ Widget product_grid_view(){
                 ),
                 child: InkWell(
                   onTap: () {
-                    ///idProduitsFavorisUser(produit, context);
+                    idProduitsFavorisUser(produit, context);
                     print(produit.nomDuProduit);
                     Navigator.push(
                         context,
