@@ -26,6 +26,8 @@ class Panier1 extends StatefulWidget {
 
 class _Panier1State extends State<Panier1> {
   String lieu;
+  String moyenDePayement;
+  String _dropDownValue2;
   String quartier;
   String _dropDownValue;
   Firestore _db = Firestore.instance;
@@ -325,7 +327,7 @@ class _Panier1State extends State<Panier1> {
                                 Container(
                                   margin: EdgeInsets.only(
                                       bottom: longueurPerCent(0.0, context),
-                                      right: longueurPerCent(6.0, context)),
+                                      right: longueurPerCent(0.0, context)),
                                   width: largeurPerCent(330, context),
                                   child: TextFormField(
                                     decoration: InputDecoration(
@@ -364,7 +366,7 @@ class _Panier1State extends State<Panier1> {
                               width: largeurPerCent(330.0, context),
                               margin: EdgeInsets.only(
                                   top: longueurPerCent(0.0, context),
-                                  left: longueurPerCent(35.0, context)),
+                                  left: longueurPerCent(38.0, context)),
                               child: DateTimeField(
                                 format: format,
                                 onChanged: (value) {
@@ -378,7 +380,7 @@ class _Panier1State extends State<Panier1> {
                                         top: longueurPerCent(5, context),
                                         bottom: longueurPerCent(5, context),
                                         right: largeurPerCent(10, context),
-                                        left: largeurPerCent(12, context)),
+                                        left: largeurPerCent(10, context)),
                                     child: Icon(
                                       Icons.calendar_today,
                                       color: HexColor('#001C36'),
@@ -422,6 +424,61 @@ class _Panier1State extends State<Panier1> {
                               ),
                             ),
                           ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: longueurPerCent(0.0, context),
+                            right: longueurPerCent(0.0, context),
+                            left: longueurPerCent(0.0, context)),
+                        width: largeurPerCent(330.0, context),
+                        height: longueurPerCent(40, context),
+                        padding: EdgeInsets.only(
+                            left: largeurPerCent(10, context),
+                            right: largeurPerCent(20, context),
+                            top: longueurPerCent(0, context)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(7.0),
+                            ),
+                            border: Border.all(
+                                color: HexColor("#919191"), width: 1)),
+                        child: DropdownButton(
+                          underline: Text(""),
+                          hint: _dropDownValue2 == null
+                              ? Text(
+                            'Payement',
+                            style: TextStyle(
+                                color: HexColor('#919191'),
+                                fontSize: 17.0,
+                                fontFamily: 'MonseraLight'),
+                          )
+                              : Text(
+                            _dropDownValue2,
+                            style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 16),
+                          ),
+                          isExpanded: true,
+                          iconSize: 30.0,
+                          style: TextStyle(color: HexColor("#001C36")),
+                          items:
+                          ['Mobile Money', 'Moov Money', 'En espèce'].map(
+                                (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                                  () {
+                                _dropDownValue2 = val;
+                                moyenDePayement = _dropDownValue2;
+                              },
+                            );
+                          },
                         ),
                       ),
                       SizedBox(height: longueurPerCent(60.0, context)),
