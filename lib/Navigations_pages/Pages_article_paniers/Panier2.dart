@@ -37,6 +37,9 @@ class Panier2 extends StatefulWidget {
 }
 
 class _Panier2State extends State<Panier2> {
+  TextEditingController _textFieldController = TextEditingController();
+  bool _isEnabled = true;
+
   String moyenDePayement;
   String _dropDownValue2;
   String numeroDePayement;
@@ -64,117 +67,226 @@ class _Panier2State extends State<Panier2> {
           ),
           body: Center(
             child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(0.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(30.0, context)),
-                        child: Text(
-                          "SOUS TOTAL",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#909090"),
-                              fontSize: 18,
-                              fontFamily: "Montserrat_Light"),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: largeurPerCent(90, context)),
-                        child: Text(
-                          "${widget.total} FCFA",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: longueurPerCent(0.0, context),
+                          right: longueurPerCent(0.0, context),
+                          left: longueurPerCent(30.0, context)),
+                      child: Text(
+                        "Adresse de Livraison",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
                             color: HexColor("#909090"),
-                            fontSize: 16,
-                            fontFamily: "MontserratBold",
-                            fontWeight: FontWeight.bold,
-                          ),
+                            fontSize: 18,
+                            fontFamily: "Montserrat_Light"),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: longueurPerCent(20.0, context),
+                          right: longueurPerCent(0.0, context),
+                          left: longueurPerCent(25.0, context)),
+                      child: Text(
+                        " Vodjè von avant pharmacie Ste Foi" + ",",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontSize: 18,
+                          fontFamily: "MontserratBold",
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(20.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(30.0, context)),
-                        child: Text(
-                          "LIVRAISON",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#909090"),
-                              fontSize: 18,
-                              fontFamily: "Montserrat_Light"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: longueurPerCent(0.0, context),
+                          right: longueurPerCent(0.0, context),
+                          left: longueurPerCent(25.0, context)),
+                      child: Text(
+                        " Cotonou",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontSize: 18,
+                          fontFamily: "MontserratBold",
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        width: largeurPerCent(190.0, context),
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(20.0, context),
-                            left: longueurPerCent(0.0, context)),
-                        child: Text(
-                          "${widget.prixLivraison}  FCFA",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
+                    ),
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      height: longueurPerCent(10, context),
+                      width: largeurPerCent(MediaQuery.of(context).size.width, context),
+                      color: HexColor("#F5F5F5"),
+                    ),
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: longueurPerCent(0.0, context),
+                          right: longueurPerCent(0.0, context),
+                          left: longueurPerCent(30.0, context)),
+                      child: Text(
+                        "Moyen de payement",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
                             color: HexColor("#909090"),
-                            fontSize: 16,
-                            fontFamily: "MontserratBold",
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                            fontSize: 18,
+                            fontFamily: "Montserrat_Light"),
                       ),
-                    ],
+                    ),
+                    SizedBox(height: longueurPerCent(15, context),),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: longueurPerCent(20, context),
+                    right: longueurPerCent(20, context),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(20.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(40.0, context)),
-                        child: Text(
-                          "TOTAL",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#909090"),
-                              fontSize: 18,
-                              fontFamily: "MontserratBold",
-                              fontWeight: FontWeight.bold),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(7.0),
+                    ),color: HexColor("F5F5F5"),),
+                  child: TextField(
+                    controller: _textFieldController,
+                    //Set this field to enable or disable (true or flase)
+                    enabled: !_isEnabled,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: "MonseraBold"
+                    ),
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(
+                            top: longueurPerCent(5, context),
+                            bottom: longueurPerCent(5, context),
+                            right: largeurPerCent(10, context),
+                            left: largeurPerCent(10, context)),
+                        child: Card(
+                          child: Container(
+                            height: longueurPerCent(40, context),
+                              child: Image.asset("assets/images/images-03.png")),
                         ),
                       ),
-                      Container(
-                        width: largeurPerCent(190.0, context),
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(20.0, context),
-                            right: longueurPerCent(25.0, context),
-                            left: longueurPerCent(20.0, context)),
-                        child: Text(
-                          "${widget.total} FCFA",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.only(
+                            top: longueurPerCent(5, context),
+                            bottom: longueurPerCent(5, context),
+                            right: largeurPerCent(10, context),
+                            left: largeurPerCent(10, context)),
+                        child: Container(
+                          child: Icon(
+                            Icons.check_circle,
                             color: HexColor("#001C36"),
-                            fontSize: 16,
-                            fontFamily: "MontserratBold",
-                            fontWeight: FontWeight.bold,
+                            size: 30,
                           ),
                         ),
                       ),
-                    ],
+                      hintText: "Espèce",
+                      hintStyle: TextStyle(
+                          color: HexColor('#9B9B9B'),
+                          fontSize: 18.0,
+                          fontFamily: 'MonseraLight'),
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
+                      border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
+                          borderSide: BorderSide(width: 0, style: BorderStyle.none)
+                      ),
+                    ),
+                    onChanged: (value){
+                    },
+
                   ),
-                  SizedBox(
-                    height: longueurPerCent(25, context),
-                  ),
-                  Container(
-                    child: Row(
+                ),
+
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: longueurPerCent(20, context),
+                        right: longueurPerCent(20, context),
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(7.0),
+                        ),color: HexColor("F5F5F5"),),
+                      child: TextFormField(
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: "MonseraBold"
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Numéro Mobile Money",
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.only(
+                                top: longueurPerCent(5, context),
+                                bottom: longueurPerCent(5, context),
+                                right: largeurPerCent(10, context),
+                                left: largeurPerCent(10, context)),
+                            child: Card(
+                              child: Container(
+                                  height: longueurPerCent(40, context),
+                                  child: Image.asset("assets/images/new-logo-mtn-momo1.jpg")),
+                            ),
+                          ),
+                          suffixIcon: Padding(
+                            padding: EdgeInsets.only(
+                                top: longueurPerCent(5, context),
+                                bottom: longueurPerCent(5, context),
+                                right: largeurPerCent(10, context),
+                                left: largeurPerCent(10, context)),
+                            child: Container(
+                              child: Icon(
+                                Icons.check_circle,
+                                color: HexColor("#001C36"),
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                          hintStyle: TextStyle(
+                              color: HexColor('#9B9B9B'),
+                              fontSize: 18.0,
+                              fontFamily: 'MonseraLight'),
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
+                          border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
+                              borderSide: BorderSide(width: 0, style: BorderStyle.none)
+                          ),
+                        ),
+                        onChanged: (value){
+                        },
+                        validator: (String value) {
+
+                        },
+                      ),
+                    ),
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      height: longueurPerCent(10, context),
+                      width: largeurPerCent(MediaQuery.of(context).size.width, context),
+                      color: HexColor("#F5F5F5"),
+                    ),
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: longueurPerCent(0.0, context),
+                          right: longueurPerCent(0.0, context),
+                          left: longueurPerCent(30.0, context)),
+                      child: Text(
+                        "Résumé",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontSize: 18,
+                          fontFamily: "MontserratBold",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Row(
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(
@@ -182,182 +294,235 @@ class _Panier2State extends State<Panier2> {
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(30.0, context)),
                           child: Text(
-                            "Moyen DePayement",
+                            "SOUS TOTAL",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
-                                fontSize: 16,
-                                fontFamily: "MontserratBold",
-                                fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontFamily: "Montserrat_Light"),
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(20.0, context)),
-                          width: largeurPerCent(180.0, context),
-                          height: longueurPerCent(40, context),
-                          padding: EdgeInsets.only(
-                              left: largeurPerCent(20, context),
-                              right: largeurPerCent(20, context),
-                              top: longueurPerCent(0, context)),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(left: largeurPerCent(0, context)),
+                              child: Text(
+                                "${widget.total}",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#909090"),
+                                  fontSize: 16,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              border: Border.all(
-                                  color: HexColor("#919191"), width: 1)),
-                          child: DropdownButton(
-                            underline: Text(""),
-                            hint: _dropDownValue2 == null
-                                ? Text(
-                                    'Payement',
-                                    style: TextStyle(
-                                        color: HexColor('#919191'),
-                                        fontSize: 17.0,
-                                        fontFamily: 'MonseraLight'),
-                                  )
-                                : Text(
-                                    _dropDownValue2,
-                                    style: TextStyle(
-                                        color: HexColor("#001C36"),
-                                        fontSize: 16),
-                                  ),
-                            isExpanded: true,
-                            iconSize: 30.0,
-                            style: TextStyle(color: HexColor("#001C36")),
-                            items:
-                                ['Mobile Money', 'Moov Money', 'En espèce'].map(
-                              (val) {
-                                return DropdownMenuItem<String>(
-                                  value: val,
-                                  child: Text(val),
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (val) {
-                              setState(
-                                () {
-                                  _dropDownValue2 = val;
-                                  moyenDePayement = _dropDownValue2;
-                                },
-                              );
-                            },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Text(
+                              " FCFA",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 16,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(30.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(50.0, context)),
-                        child: Text(
-                          "Numéro:",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#909090"),
-                              fontSize: 18,
-                              fontFamily: "MontserratBold",
-                              fontWeight: FontWeight.bold),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(30.0, context)),
+                          child: Text(
+                            "LIVRAISON",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 18,
+                                fontFamily: "Montserrat_Light"),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: largeurPerCent(190.0, context),
-                        margin: EdgeInsets.only(
-                            top: longueurPerCent(30.0, context),
-                            right: longueurPerCent(0.0, context),
-                            left: longueurPerCent(30.0, context)),
-                        child: TextFormField(
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              hintText: "61831183",
-                              hintStyle: TextStyle(
-                                  color: HexColor('#919191'),
-                                  fontSize: 17.0,
-                                  fontFamily: 'MonseraLight'),
-                              fillColor: Colors.white,
-                              contentPadding:
-                                  EdgeInsets.only(top: 10, bottom: 5, left: 30),
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0)),
-                                  borderSide: BorderSide(
-                                      width: 1, style: BorderStyle.none)),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                top: longueurPerCent(0.0, context),
+                                right: longueurPerCent(0.0, context),
+                                left: longueurPerCent(30.0, context)),
+                            child: Text(
+                              "${widget.prixLivraison}",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 16,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            onChanged: (value) {
-                              setState(() {
-                                numeroDePayement = value;
-                              });
-                            }),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: longueurPerCent(100.62, context)),
-                  button(HexColor("#FFFFFF"), HexColor("#001C36"), context,
-                      'COMMANDER', () {
-                    if (numeroDePayement != null && moyenDePayement != null) {
-                      setState(() {
-                        chargement = true;
-                      });
-                      try {
-                       /* FirestoreService().addCommande(
-                            Commandes(
-                                nomComplet: widget.nomComplet,
-                                telephone: widget.telephone,
-                                quartier: widget.quartier,
-                                indication: widget.indication,
-                                dateHeureDeLivraison:
-                                    widget.dateHeureDeLivraison,
-                                total: widget.total,
-                                moyenDePayement: moyenDePayement,
-                                numeroDePayement: numeroDePayement,
-                                produitsCommander: widget.produitsCommander,
-                                prixLivraison: widget.prixLivraison,
-                                lieuDeLivraison: widget.lieuDeLivraison,
-                                livrer: false,
-                                unSeulProduit: widget.unSeulProduit,
-                                created: DateTime.now().toString()),
-                            Renseignements.emailUser);
-                        FirestoreService().addCommandeToAdmin(
-                            Commandes(
-                                nomComplet: widget.nomComplet,
-                                telephone: widget.telephone,
-                                quartier: widget.quartier,
-                                indication: widget.indication,
-                                dateHeureDeLivraison:
-                                    widget.dateHeureDeLivraison,
-                                total: widget.total,
-                                unSeulProduit: widget.unSeulProduit,
-                                moyenDePayement: moyenDePayement,
-                                numeroDePayement: numeroDePayement,
-                                produitsCommander: widget.produitsCommander,
-                                prixLivraison: widget.prixLivraison,
-                                lieuDeLivraison: widget.lieuDeLivraison,
-                                created: DateTime.now().toString(),
-                                livrer: false),
-                            Renseignements.emailUser);*/
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CommandeSend()));
-                      } catch (e) {
-                        print(e);
-                      }
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                top: longueurPerCent(0.0, context),
+                                right: longueurPerCent(0.0, context),
+                                left: longueurPerCent(2.0, context)),
+                            child: Text(
+                              " FCFA",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 16,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
-                      setState(() {
-                        chargement = true;
-                      });
-                    } else {
-                      displaySnackBarNom(context,
-                          "Veuillez remplir tous les champs", Colors.red);
-                    }
-                  }),
-                ],
+                    SizedBox(height: longueurPerCent(20, context),),
+                    Container(
+                      margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(10, context)),
+                      height: longueurPerCent(5, context),
+                      color: HexColor("#F5F5F5"),
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(30.0, context)),
+                          child: Text(
+                            "TOTAL",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 18,
+                                fontFamily: "Montserrat_Light",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: Container(
+                            child: Text(
+                              "${widget.total}",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 17,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                top: longueurPerCent(0.0, context),
+                                right: longueurPerCent(0.0, context),
+                                left: longueurPerCent(3.0, context)),
+                            child: Text(
+                              " FCFA",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 17,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: longueurPerCent(25, context),
+                    ),
+                    SizedBox(height: longueurPerCent(20, context)),
+                    button(HexColor("#FFFFFF"), HexColor("#001C36"), context,
+                        'COMMANDER', () {
+                      if (numeroDePayement != null && moyenDePayement != null) {
+                        setState(() {
+                          chargement = true;
+                        });
+                        try {
+                         /* FirestoreService().addCommande(
+                              Commandes(
+                                  nomComplet: widget.nomComplet,
+                                  telephone: widget.telephone,
+                                  quartier: widget.quartier,
+                                  indication: widget.indication,
+                                  dateHeureDeLivraison:
+                                      widget.dateHeureDeLivraison,
+                                  total: widget.total,
+                                  moyenDePayement: moyenDePayement,
+                                  numeroDePayement: numeroDePayement,
+                                  produitsCommander: widget.produitsCommander,
+                                  prixLivraison: widget.prixLivraison,
+                                  lieuDeLivraison: widget.lieuDeLivraison,
+                                  livrer: false,
+                                  unSeulProduit: widget.unSeulProduit,
+                                  created: DateTime.now().toString()),
+                              Renseignements.emailUser);
+                          FirestoreService().addCommandeToAdmin(
+                              Commandes(
+                                  nomComplet: widget.nomComplet,
+                                  telephone: widget.telephone,
+                                  quartier: widget.quartier,
+                                  indication: widget.indication,
+                                  dateHeureDeLivraison:
+                                      widget.dateHeureDeLivraison,
+                                  total: widget.total,
+                                  unSeulProduit: widget.unSeulProduit,
+                                  moyenDePayement: moyenDePayement,
+                                  numeroDePayement: numeroDePayement,
+                                  produitsCommander: widget.produitsCommander,
+                                  prixLivraison: widget.prixLivraison,
+                                  lieuDeLivraison: widget.lieuDeLivraison,
+                                  created: DateTime.now().toString(),
+                                  livrer: false),
+                              Renseignements.emailUser);*/
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CommandeSend()));
+                        } catch (e) {
+                          print(e);
+                        }
+
+                        setState(() {
+                          chargement = true;
+                        });
+                      } else {
+                        displaySnackBarNom(context,
+                            "Veuillez remplir tous les champs", Colors.red);
+                      }
+                    }),
+                    Container(height: longueurPerCent(40, context),)
+                  ],
+                ),
               ),
             ),
           ));

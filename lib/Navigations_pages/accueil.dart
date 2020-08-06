@@ -169,6 +169,86 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+   if(utilisateurConnecte!=null){
+     AppBarClasse _appBar = AppBarClasse(
+         titre: "Accueil", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
+     return Scaffold(
+         appBar: _appBar.appBarFunctionStream(),
+         drawer: ProfileSettings(userCurrent: utilisateurConnecte.email,),
+         body: Snap(
+           controller: controller.appBar,
+           child: ListView(controller: controller, children: <Widget>[
+             SizedBox(
+               height: longueurPerCent(10, context),
+             ),
+             Container(
+                 margin: EdgeInsets.symmetric(horizontal: largeurPerCent(6, context)),
+                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                   color: HexColor("#DDDDDD"),
+                 ),
+                 child: TextFormField(
+                   decoration: InputDecoration(
+                     border: InputBorder.none,
+                     prefixIcon: Padding(
+                       padding:  EdgeInsets.only(left: largeurPerCent(90, context)),
+                       child: Icon(Icons.search, color: HexColor('#9B9B9B')),
+                     ),
+
+                     labelText: "Rechercher un produit",
+                     labelStyle: TextStyle(
+                         color: HexColor('#9B9B9B'),
+                         fontSize: 17.0,
+                         fontFamily: 'MonseraLight'),
+                     contentPadding: EdgeInsets.only(top: 10, bottom: 5, ),
+
+                   ),
+                 )),
+             SizedBox(
+              height: longueurPerCent(10, context),
+             ),
+             Container(
+               width: MediaQuery.of(context).size.width ,
+               height: longueurPerCent(200, context),
+               decoration: BoxDecoration(
+                 color: HexColor("#001C36"),
+               ),
+               child: carousel(),
+             ),
+             Padding(
+               padding: EdgeInsets.only(
+                   top: longueurPerCent(30, context),
+                   left: largeurPerCent(13, context)),
+               child: Text(
+                 "PRODUITS RECOMMANDÉS",
+                 style: TextStyle(
+                     color: HexColor("#001C36"),
+                     fontSize: 20,
+                     fontFamily: "MonseraBold"),
+               ),
+             ),
+             SizedBox(
+               height: longueurPerCent(16, context),
+             ),
+             scrollabe_products_horizontal(context),
+             Padding(
+               padding: EdgeInsets.only(
+                   top: longueurPerCent(18, context),
+                   left: largeurPerCent(13, context)),
+               child: Text(
+                 "DÉCOUVERTES",
+                 style: TextStyle(
+                     color: HexColor("#001C36"),
+                     fontSize: 20,
+                     fontFamily: "MonseraBold"),
+               ),
+             ),
+             SizedBox(height: longueurPerCent(18, context),),
+             product_grid_view(),
+             SizedBox(height: longueurPerCent(18, context),),
+             new Container()
+           ]),
+         ));
     if (utilisateurConnecte != null && produitsRecommander != null) {
       AppBarClasse _appBar = AppBarClasse(
           titre: "Accueil",

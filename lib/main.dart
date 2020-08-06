@@ -3,6 +3,7 @@ import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
+import 'package:premierchoixapp/Design/Dropdowntest.dart';
 import 'package:premierchoixapp/Design/FirstPage.dart';
 import 'package:premierchoixapp/test.dart';
 import 'Authentification/Decision.dart';
