@@ -100,6 +100,7 @@ class _FavorisState extends State<Favoris> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, index) {
                   Produit produit = snapshot.data[index];
+
                   return Container(
                     width: largeurPerCent(150, context),
                     margin: EdgeInsets.only(
@@ -114,7 +115,19 @@ class _FavorisState extends State<Favoris> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ArticleSansTaille(produit, Renseignements.emailUser)));
+                                    ArticleSansTaille({
+                                      "nomDuProduit": produit.nomDuProduit,
+                                      "prix": produit.prix,
+                                      "description": produit.description,
+                                      "image1":produit.image1,
+                                      "image2":produit.image2,
+                                      "image3":produit.image3,
+                                      "selectImage":produit.selectImage,
+                                      "numberImages":produit.numberImages,
+                                      "numberStar":produit.numberStar,
+                                      "surMesure":produit.surMesure,
+                                      "taille":produit.taille
+                                    }, Renseignements.emailUser)));
                       },
                       child: Card(
                         elevation: 5.0,

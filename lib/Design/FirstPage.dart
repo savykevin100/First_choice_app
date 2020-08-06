@@ -21,6 +21,7 @@ class _FirstPageState extends State<FirstPage> {
 
   Future<FirebaseUser> getUser() async {
     return await FirebaseAuth.instance.currentUser();
+
   }
 
 
@@ -29,39 +30,6 @@ class _FirstPageState extends State<FirstPage> {
   List<Map<String, dynamic>> produits=[];
   List<Map<String, dynamic>> produitsFavorisUsers=[];
   String utilisateurConnecte;
-
-
-
-
-
-
-  Future<void> obtenirLesProduits() async{
-    await Firestore.instance.collection("produit").getDocuments().then((value){
-      for(int i=0; i<value.documents.length; i++){
-         produits.add(value.documents[i].data);
-      }
-    });
-  }
-  void idProduitsFavorisUser(List<Map<String, dynamic>> produit) async{
-      try {
-        for(int i=0;i<produit.length;i++){
-          Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
-          .where("imagePrincipaleProduit", isEqualTo: produit[i]["image1"]).getDocuments().then((QuerySnapshot snapshot){
-           /* if(snapshot.documents.isEmpty){
-              FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
-                  imagePrincipaleProduit: produit[i]["image1"],
-                  imageSelect: produit[i]["image1"],
-                  etatIconeFavoris: false
-              ), Renseignements.emailUser);
-            }*/
-          });
-        }
-      } catch (e){
-        print(e);
-      }
-  }
-
-
 
 
   @override
@@ -73,20 +41,6 @@ class _FirstPageState extends State<FirstPage> {
        setState(() {
          currentUser=true;
          utilisateurConnecte=value.email;
-         /// Récupération des produits dans la variable produits qui est une liste de map
-        /// obtenirLesProduits();
-         /////////////////
-         ///Récupération des produits dans produitsFavorisUsers
-       /*  Firestore.instance.collection("Utilisateurs").document(value.email).collection("ProduitsFavoirsUser").getDocuments().then((value){
-           for(int i=0; i<value.documents.length; i++){
-             produitsFavorisUsers.add(value.documents[i].data);
-           }
-         });*/
-         /////////////
-         ///Ajout des produits dans produitsFavorisUser; si le produit existe déjà dans produitsFavorisUsers n'ajoute rien dans le cas contraire
-         ///ajoute le produit qui n'est pas dans produitsFavorisUser
-
-         ////////////
        });
       }
     });

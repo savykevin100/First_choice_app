@@ -64,11 +64,11 @@ Widget scrollabe_products_horizontal(BuildContext context){
                     return GestureDetector(
                       onTap: (){
                         idProduitsFavorisUser(snapshot.data[i], context);
-                         Navigator.push(
+                        /* Navigator.push(
                              context,
                              MaterialPageRoute(
                                  builder: (context) =>
-                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
+                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));*/
                       },
                       child: Container(
                         width: largeurPerCent(160, context),

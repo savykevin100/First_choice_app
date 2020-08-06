@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 
 
+
 class AppBarClasse extends StatefulWidget{
   BuildContext context;
   String titre;
@@ -24,6 +25,8 @@ class AppBarClasse extends StatefulWidget{
     // TODO: implement createState
     throw UnimplementedError();
   }
+
+
 
   Widget appBarFunctionStream(){
     return ScrollAppBar(
@@ -54,7 +57,7 @@ class AppBarClasse extends StatefulWidget{
           toAnimate: true,
           position: BadgePosition.topRight(top:   0,  right: 0),
           child: IconButton(
-              icon: Icon(
+              icon: Icon( 
                 Icons.shopping_basket,
                 color: Colors.white,
               ),

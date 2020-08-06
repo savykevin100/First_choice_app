@@ -96,7 +96,7 @@ class _CategoriesState extends State<Categories> {
                       val=state;
                     },
                     onTap: (){
-                      if(nombre==1)setState(() {
+                      if(nombre==0)setState(() {
                         nombre++;
                       });
                       else setState(() {
@@ -134,10 +134,10 @@ class _CategoriesState extends State<Categories> {
               ),
             ),
             SizedBox(height: longueurPerCent(5, context)),
-              (nombre==1)?Padding(
+              (nombre==0)?Padding(
               padding:EdgeInsets.symmetric(horizontal: 10),
               child: StreamBuilder(
-                  stream: FirestoreService().getCategories(),
+                  stream: FirestoreService().getCategoriesFemmes(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<InfoCategories>> snapshot) {
                     if (snapshot.hasError || !snapshot.hasData) {
@@ -174,7 +174,7 @@ class _CategoriesState extends State<Categories> {
                                       constraints: BoxConstraints(
                                           maxWidth: 300
                                       ),
-                                      child: Text(categories.nomCategorie, style: TextStyle(color: Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                      child: Text(categories.nomCategorie, style: TextStyle(color: HexColor("#001C36"), fontSize: 22,fontFamily: "MonseraBold"),)),
                                 ),
                               ),
                             ),

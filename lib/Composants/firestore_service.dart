@@ -74,8 +74,8 @@ class FirestoreService {
   }
 
 
-  Stream<List<InfoCategories>> getCategories() {
-    return _db.collection("Catégories").snapshots().map(
+  Stream<List<InfoCategories>> getCategoriesFemmes() {
+    return _db.collection("Femmes").snapshots().map(
           (snapshot) =>
           snapshot.documents.map(
                 (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
@@ -145,6 +145,22 @@ class FirestoreService {
     return _db.collection("Utilisateurs").document(document)
         .collection("Panier").document(document1).delete();
   }
+
+  Future<void> addPanierSansId(PanierClasse produit, String document){
+    return _db.collection("Utilisateurs").document(document).collection("Panier").add(produit.toMap());
+  }
+
+  /// Cette fonction permettra de refuser à l'utilisateur d'ajouter des produits déjà ajouté dans le panier d'un autre utilisateur chez lui
+  Future<void> produitsIndisponibles(PanierClasse produit){
+    return _db.collection("ProduitsIndisponibles").add(produit.toMap());
+  }
+
+  Future<void> deleteProduitsIndisponibles( String document1){
+    return _db.collection("ProduitsIndisponibles").document(document1).delete();
+  }
+
+
+  /// Fin de la fonction
   Stream<List<Produit>> getFavoris(String document) {
     return _db.collection("Utilisateurs").document(document).collection(
         "Favoris").snapshots().map(
@@ -166,9 +182,7 @@ class FirestoreService {
   }*/
 
 
-  Future<void> addPanierSansId(PanierClasse produit, String document){
-    return _db.collection("Utilisateurs").document(document).collection("Panier").add(produit.toMap());
-  }
+
   /*
   Stream<List<Produit>> getProduits(String titreCategorie) {
     return _db.collection(titreCategorie).snapshots().map(

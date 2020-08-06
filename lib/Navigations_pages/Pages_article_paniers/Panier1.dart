@@ -131,7 +131,9 @@ class _Panier1State extends State<Panier1> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: longueurPerCent(40, context),),
+                      SizedBox(
+                        height: longueurPerCent(40, context),
+                      ),
                       Center(
                         child: Text(
                           "INFORMATIONS DE LA COMMANDE",
@@ -276,8 +278,7 @@ class _Panier1State extends State<Panier1> {
                                     maxHeight: 300,
                                     items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
                                     onChanged:  (value) {
-                                      print(quartier);
-                                      quartier= value;
+                                        quartier= value;
                                     },
                                     hint: "Sélectionner un quartier",
                                     showClearButton: true,
@@ -526,8 +527,6 @@ class _Panier1State extends State<Panier1> {
                     produitsCommander: widget.produitsPanier,
                     unSeulProduit: widget.unSeulProduit,
                   )));
-      print(widget.total);
-      print(prixLivraison);
     } else if (lieu == "A domicile" &&
         CupertinoDatePickerMode.date != null &&
         indication != null &&
@@ -554,8 +553,10 @@ class _Panier1State extends State<Panier1> {
                       indication: indication,
                       quartier: quartier,
                       produitsCommander: widget.produitsPanier,
-                  unSeulProduit: widget.unSeulProduit,
+                      unSeulProduit: widget.unSeulProduit,
                     )));
+        print(widget.total);
+        print(prixLivraison);
       });
     } else {
       print(dateHeureDeLivraison);

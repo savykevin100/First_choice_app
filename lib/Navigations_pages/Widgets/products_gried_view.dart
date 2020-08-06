@@ -69,11 +69,11 @@ Widget product_grid_view(){
                   onTap: () {
                     idProduitsFavorisUser(produit, context);
                     print(produit.nomDuProduit);
-                    Navigator.push(
+                   /* Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                ArticleSansTaille(produit, Renseignements.emailUser)));
+                                ArticleSansTaille(produit, Renseignements.emailUser)));*/
                   },
                   child: Card(
                     elevation: 5.0,

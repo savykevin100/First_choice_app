@@ -26,7 +26,10 @@ class _PanierState extends State<Panier> {
   int total = 0;
   List<String> idProduitsPanier = [];
   List<Map<String, dynamic>> produitsPaniers=[];
+  List<String> idProduitsIndisponibles = [];
+  List<Map<String, dynamic>> produitsIndisponibles=[];
   int ajoutPanier;
+
 
   /// Cette fonction getIdProduit permet de recuperer l'id du produit en vue de pouvoir le supprimer. Donc je récupère tous les ID
   /// dans la variable idProduitsPanier et au moment de la suppression je supprimer le produit qui est à l'index i
@@ -42,6 +45,20 @@ class _PanierState extends State<Panier> {
           setState(() {
             idProduitsPanier.add(snapshot.documents[i].documentID);
             produitsPaniers.add(snapshot.documents[i].data);
+          });
+        }
+      }
+    });
+
+    await _db
+        .collection("ProduitsIndisponibles")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      for (int i = 0; i < snapshot.documents.length; i++) {
+        if (this.mounted) {
+          setState(() {
+            idProduitsIndisponibles.add(snapshot.documents[i].documentID);
+            produitsIndisponibles.add(snapshot.documents[i].data);
           });
         }
       }
@@ -96,8 +113,7 @@ class _PanierState extends State<Panier> {
 
   @override
   Widget build(BuildContext context) {
-    if (idProduitsPanier != null && total != null && produitsPaniers!=null) {
-      print(produitsPaniers);
+    if (idProduitsPanier != null && total != null && produitsPaniers!=null && produitsIndisponibles!=null && idProduitsIndisponibles!=null) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -203,7 +219,7 @@ class _PanierState extends State<Panier> {
                                                         4.0, context),
                                                   ),
                                                   Text(
-                                                    "Rouge - 43",
+                                                    "${panier.taille}",
                                                     textAlign: TextAlign.left,
                                                     style: TextStyle(
                                                       color: HexColor("#001C36"),
@@ -243,6 +259,12 @@ class _PanierState extends State<Panier> {
                                                         FirestoreService().deletePanier(
                                                             Renseignements.emailUser,
                                                             idProduitsPanier[i]);
+                                                        _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:panier.image1)
+                                                            .getDocuments().then((QuerySnapshot snapshot){
+                                                          if(snapshot.documents.isNotEmpty){
+                                                            FirestoreService().deleteProduitsIndisponibles(snapshot.documents.first.documentID);
+                                                          }
+                                                        });
                                                         setState(() {
                                                           total = total - panier.prix;
                                                           idProduitsPanier.removeAt(i);
@@ -305,7 +327,7 @@ class _PanierState extends State<Panier> {
                if(total==0){
 
                } else {
-                 ///_showDialog();
+                 print(total);
                  Navigator.push(
                      context, MaterialPageRoute(
                      builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));

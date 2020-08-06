@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         PageChargement.id: (context) => PageChargement(),
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
-        HomePage.id: (context) => HomePage(),
+        HomePage.id: (context) => HomePage()
       },
     );
   }

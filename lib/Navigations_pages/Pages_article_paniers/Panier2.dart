@@ -50,7 +50,6 @@ class _Panier2State extends State<Panier2> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.total = widget.total + widget.prixLivraison;
   }
 
   @override
@@ -228,7 +227,7 @@ class _Panier2State extends State<Panier2> {
                             child: Card(
                               child: Container(
                                   height: longueurPerCent(40, context),
-                                  child: Image.asset("assets/images/new-logo-mtn-momo1.jpg")),
+                                  child: Image.asset("assets/images/new_logo_mtn_momo1.jpg")),
                             ),
                           ),
                           suffixIcon: Padding(
