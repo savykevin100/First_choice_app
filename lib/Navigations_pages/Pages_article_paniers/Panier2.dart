@@ -91,7 +91,7 @@ class _Panier2State extends State<Panier2> {
                       margin: EdgeInsets.only(
                           top: longueurPerCent(20.0, context),
                           right: longueurPerCent(0.0, context),
-                          left: longueurPerCent(30.0, context)),
+                          left: longueurPerCent(25.0, context)),
                       child: Text(
                         " Vodjè von avant pharmacie Ste Foi" + ",",
                         textAlign: TextAlign.left,
@@ -107,7 +107,7 @@ class _Panier2State extends State<Panier2> {
                       margin: EdgeInsets.only(
                           top: longueurPerCent(0.0, context),
                           right: longueurPerCent(0.0, context),
-                          left: longueurPerCent(30.0, context)),
+                          left: longueurPerCent(25.0, context)),
                       child: Text(
                         " Cotonou",
                         textAlign: TextAlign.left,
@@ -140,7 +140,7 @@ class _Panier2State extends State<Panier2> {
                             fontFamily: "Montserrat_Light"),
                       ),
                     ),
-                    SizedBox(height: longueurPerCent(20, context),),
+                    SizedBox(height: longueurPerCent(15, context),),
                 Container(
                   margin: EdgeInsets.only(
                     left: longueurPerCent(20, context),
@@ -167,7 +167,7 @@ class _Panier2State extends State<Panier2> {
                             left: largeurPerCent(10, context)),
                         child: Card(
                           child: Container(
-                            height: longueurPerCent(30, context),
+                            height: longueurPerCent(40, context),
                               child: Image.asset("assets/images/images-03.png")),
                         ),
                       ),
@@ -202,7 +202,7 @@ class _Panier2State extends State<Panier2> {
                   ),
                 ),
 
-                    SizedBox(height: longueurPerCent(20, context),),
+                    SizedBox(height: longueurPerCent(10, context),),
                     Container(
                       margin: EdgeInsets.only(
                         left: longueurPerCent(20, context),
@@ -227,8 +227,8 @@ class _Panier2State extends State<Panier2> {
                                 left: largeurPerCent(10, context)),
                             child: Card(
                               child: Container(
-                                  height: longueurPerCent(30, context),
-                                  child: Image.asset("assets/images/images-03.png")),
+                                  height: longueurPerCent(40, context),
+                                  child: Image.asset("assets/images/new-logo-mtn-momo1.jpg")),
                             ),
                           ),
                           suffixIcon: Padding(
@@ -268,7 +268,7 @@ class _Panier2State extends State<Panier2> {
                       width: largeurPerCent(MediaQuery.of(context).size.width, context),
                       color: HexColor("#F5F5F5"),
                     ),
-                    SizedBox(height: longueurPerCent(30, context),),
+                    SizedBox(height: longueurPerCent(20, context),),
                     Container(
                       margin: EdgeInsets.only(
                           top: longueurPerCent(0.0, context),
@@ -460,7 +460,7 @@ class _Panier2State extends State<Panier2> {
                     SizedBox(
                       height: longueurPerCent(25, context),
                     ),
-                    SizedBox(height: longueurPerCent(30.62, context)),
+                    SizedBox(height: longueurPerCent(20, context)),
                     button(HexColor("#FFFFFF"), HexColor("#001C36"), context,
                         'COMMANDER', () {
                       if (numeroDePayement != null && moyenDePayement != null) {
@@ -520,6 +520,7 @@ class _Panier2State extends State<Panier2> {
                             "Veuillez remplir tous les champs", Colors.red);
                       }
                     }),
+                    Container(height: longueurPerCent(40, context),)
                   ],
                 ),
               ),

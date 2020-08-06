@@ -57,10 +57,10 @@ class _UserProfilState extends State<UserProfil>{
                              ),
                            ),
                            Container(
-                               margin: EdgeInsets.only(left:longueurPerCent(100.0, context),top: longueurPerCent(5, context)),
+                               margin: EdgeInsets.only(left:longueurPerCent(130.0, context),top: longueurPerCent(0, context)),
                              child: Center(
                                child: IconButton(
-                                 icon: Icon(Icons.search),
+                                 icon: Icon(Icons.favorite_border),
                                  color: Colors.white,
                                  onPressed: (){
                                    setState(() {

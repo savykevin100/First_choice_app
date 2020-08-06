@@ -103,7 +103,7 @@ class _FavorisState extends State<Favoris> {
                   return Container(
                     width: largeurPerCent(150, context),
                     margin: EdgeInsets.only(
-                        left: largeurPerCent(10, context), top: longueurPerCent(20, context)),
+                        left: largeurPerCent(0, context), top: longueurPerCent(20, context)),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                     ),
