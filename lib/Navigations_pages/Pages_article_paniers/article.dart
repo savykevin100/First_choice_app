@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,14 +14,15 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-
 import 'Panier1.dart';
 
 class ArticleSansTaille extends StatefulWidget {
   Produit produit;
   String currentUserId;
 
+
   ArticleSansTaille(this.produit, this.currentUserId);
+
 
   @override
   _ArticleSansTailleState createState() => _ArticleSansTailleState();
@@ -30,6 +30,7 @@ class ArticleSansTaille extends StatefulWidget {
 
 class _ArticleSansTailleState extends State<ArticleSansTaille> {
   //  String imageCliquer = widget.produit.image1;
+
   int index = 1;
   Firestore _db = Firestore.instance;
   // ignore: non_constant_identifier_names
@@ -45,6 +46,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool etatSurMesure=false;
   bool isSwitch=false;
+  Map<String, dynamic> produitMap;
+
 
   /*****************************************************************************************/
 
@@ -129,7 +132,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   void initState() {
     super.initState();
     getNombreProduitPanier();
-
+    produitMap = {"prix": widget.produit.prix, "nomDuProduit":widget.produit.nomDuProduit, "description": widget.produit.description, "image1": widget.produit.image1, "selectImage": widget.produit.selectImage, "numberImages":widget.produit.numberImages,
+      "surMesure":widget.produit.surMesure, "taille":widget.produit.taille
+    };
+    print(produitMap);
   }
 
   ScrollController controller = ScrollController();
@@ -328,6 +334,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     ],
                   ),
                 ),
+                (produitMap["surMesure"]==true)?
                 (etatSurMesure!=null)? Padding(padding: EdgeInsets.only(left: largeurPerCent(0, context)), child: Row(
                   children: <Widget>[
                     Checkbox(value: isSwitch, onChanged: (bool value){
@@ -344,7 +351,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     }),
                     Text("Voulez-vous du sur-mesure", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline),)
                   ],
-                ),):Text(""),
+                ),):Text(""):Text(""),
                 SizedBox(height: longueurPerCent(10, context),),
                 Padding(
                   padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),

@@ -343,7 +343,7 @@ class _RenseignementsState extends State<Renseignements> {
                           print(e);
                         }
                       } else {
-                      
+
                         displaySnackBarNom(context,
                             "Veuillez remplir tous les champs", Colors.red);
                       }
@@ -352,6 +352,26 @@ class _RenseignementsState extends State<Renseignements> {
             ),
           ),
         ):CircularProgressIndicator()
+    );
+  }
+
+  Future<void> _ackAlert(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Not in stock'),
+          content: const Text('This item is no longer available'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

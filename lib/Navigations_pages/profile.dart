@@ -266,6 +266,7 @@ class _UserProfilState extends State<UserProfil>{
   }
 }
 
+// ignore: camel_case_types
 class getClipper extends CustomClipper<Path>{
   @override
   Path getClip(Size size){
