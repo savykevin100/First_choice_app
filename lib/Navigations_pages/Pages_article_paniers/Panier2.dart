@@ -19,7 +19,7 @@ class Panier2 extends StatefulWidget {
   int prixLivraison;
   Produit unSeulProduit;
   List<Map<String, dynamic>> produitsCommander;
-
+ String moyenDePayement;
   Panier2(
       {this.unSeulProduit,
       this.prixLivraison,
@@ -30,6 +30,7 @@ class Panier2 extends StatefulWidget {
       this.quartier,
       this.indication,
       this.dateHeureDeLivraison,
+      this.moyenDePayement,
       this.produitsCommander});
 
   @override
@@ -38,10 +39,12 @@ class Panier2 extends StatefulWidget {
 
 class _Panier2State extends State<Panier2> {
   TextEditingController _textFieldController = TextEditingController();
-  bool _isEnabled = true;
+  TextEditingController _textFieldControllerNumero = TextEditingController();
 
-  String moyenDePayement;
-  String _dropDownValue2;
+  bool _isEnabled = true;
+  bool _isEnabledPayement = true;
+
+
   String numeroDePayement;
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -50,6 +53,15 @@ class _Panier2State extends State<Panier2> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(widget.moyenDePayement=="Mobile Money"){
+      setState(() {
+        _isEnabledPayement=false;
+      });
+    } else {
+      setState(() {
+        numeroDePayement="61861183";
+      });
+    }
   }
 
   @override
@@ -72,37 +84,76 @@ class _Panier2State extends State<Panier2> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: longueurPerCent(20, context),),
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: longueurPerCent(0.0, context),
-                          right: longueurPerCent(0.0, context),
-                          left: longueurPerCent(30.0, context)),
-                      child: Text(
-                        "Adresse de Livraison",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: HexColor("#909090"),
-                            fontSize: 18,
-                            fontFamily: "Montserrat_Light"),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: longueurPerCent(20.0, context),
-                          right: longueurPerCent(0.0, context),
-                          left: longueurPerCent(25.0, context)),
-                      child: Text(
-                        " Vodjè von avant pharmacie Ste Foi" + ",",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: HexColor("#001C36"),
-                          fontSize: 18,
-                          fontFamily: "MontserratBold",
-                          fontWeight: FontWeight.bold,
+                    (widget.lieuDeLivraison=="A domicile")? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(30.0, context)),
+                          child: Text(
+                            "Adresse de Livraison",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 18,
+                                fontFamily: "Montserrat_Light"),
+                          ),
                         ),
-                      ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(20.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(25.0, context)),
+                          child: Text(
+                            widget.quartier + ", " + widget.indication,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 18,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ):Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(30.0, context)),
+                          child: Text(
+                            "Adresse de l'entreprise",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 18,
+                                fontFamily: "Montserrat_Light"),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(10.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(25.0, context)),
+                          child: Text(
+                           "Joncquet en face de la pharmacie. Immeuble à étage, 2ème étage.",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 18,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
+                  /*  Container(
                       margin: EdgeInsets.only(
                           top: longueurPerCent(0.0, context),
                           right: longueurPerCent(0.0, context),
@@ -117,7 +168,7 @@ class _Panier2State extends State<Panier2> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
+                    ),*/
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
                       height: longueurPerCent(10, context),
@@ -140,7 +191,7 @@ class _Panier2State extends State<Panier2> {
                       ),
                     ),
                     SizedBox(height: longueurPerCent(15, context),),
-                Container(
+                 Container(
                   margin: EdgeInsets.only(
                     left: longueurPerCent(20, context),
                     right: longueurPerCent(20, context),
@@ -170,7 +221,7 @@ class _Panier2State extends State<Panier2> {
                               child: Image.asset("assets/images/images-03.png")),
                         ),
                       ),
-                      suffixIcon: Padding(
+                      suffixIcon: (widget.moyenDePayement!="Mobile Money")?Padding(
                         padding: EdgeInsets.only(
                             top: longueurPerCent(5, context),
                             bottom: longueurPerCent(5, context),
@@ -183,7 +234,7 @@ class _Panier2State extends State<Panier2> {
                             size: 30,
                           ),
                         ),
-                      ),
+                      ):Text(""),
                       hintText: "Espèce",
                       hintStyle: TextStyle(
                           color: HexColor('#9B9B9B'),
@@ -196,6 +247,7 @@ class _Panier2State extends State<Panier2> {
                       ),
                     ),
                     onChanged: (value){
+
                     },
 
                   ),
@@ -212,6 +264,9 @@ class _Panier2State extends State<Panier2> {
                           Radius.circular(7.0),
                         ),color: HexColor("F5F5F5"),),
                       child: TextFormField(
+                        controller: _textFieldControllerNumero,
+                        //Set this field to enable or disable (true or flase)
+                        enabled: !_isEnabledPayement,
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: "MonseraBold"
@@ -230,7 +285,7 @@ class _Panier2State extends State<Panier2> {
                                   child: Image.asset("assets/images/new_logo_mtn_momo1.jpg")),
                             ),
                           ),
-                          suffixIcon: Padding(
+                          suffixIcon: (widget.moyenDePayement=="Mobile Money")?Padding(
                             padding: EdgeInsets.only(
                                 top: longueurPerCent(5, context),
                                 bottom: longueurPerCent(5, context),
@@ -243,7 +298,7 @@ class _Panier2State extends State<Panier2> {
                                 size: 30,
                               ),
                             ),
-                          ),
+                          ):Text(""),
                           hintStyle: TextStyle(
                               color: HexColor('#9B9B9B'),
                               fontSize: 18.0,
@@ -255,9 +310,9 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         onChanged: (value){
-                        },
-                        validator: (String value) {
-
+                          setState(() {
+                            numeroDePayement=value;
+                          });
                         },
                       ),
                     ),
@@ -302,7 +357,7 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         Expanded(
-                          flex: 9,
+                          flex: 8,
                           child: Container(
                             child: Padding(
                               padding:
@@ -355,7 +410,7 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         Expanded(
-                          flex: 9,
+                          flex: 8,
                           child: Container(
                             margin: EdgeInsets.only(
                                 top: longueurPerCent(0.0, context),
@@ -462,12 +517,10 @@ class _Panier2State extends State<Panier2> {
                     SizedBox(height: longueurPerCent(20, context)),
                     button(HexColor("#FFFFFF"), HexColor("#001C36"), context,
                         'COMMANDER', () {
-                      if (numeroDePayement != null && moyenDePayement != null) {
-                        setState(() {
-                          chargement = true;
-                        });
-                        try {
-                         /* FirestoreService().addCommande(
+                      if(widget.moyenDePayement=="Mobile Money"){
+                        if ( numeroDePayement.length==8 ) {
+                          try {
+                            /* FirestoreService().addCommande(
                               Commandes(
                                   nomComplet: widget.nomComplet,
                                   telephone: widget.telephone,
@@ -492,7 +545,57 @@ class _Panier2State extends State<Panier2> {
                                   quartier: widget.quartier,
                                   indication: widget.indication,
                                   dateHeureDeLivraison:
+                                  widget.dateHeureDeLivraison,
+                                  total: widget.total,
+                                  unSeulProduit: widget.unSeulProduit,
+                                  moyenDePayement: moyenDePayement,
+                                  numeroDePayement: numeroDePayement,
+                                  produitsCommander: widget.produitsCommander,
+                                  prixLivraison: widget.prixLivraison,
+                                  lieuDeLivraison: widget.lieuDeLivraison,
+                                  created: DateTime.now().toString(),
+                                  livrer: false),
+                              Renseignements.emailUser);*/
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CommandeSend()));
+                          } catch (e) {
+                            print(e);
+                          }
+
+                        } else {
+                          displaySnackBarNom(context,
+                              "Veuillez entrer votre numéro de payement", Colors.red);
+                        }
+                      } else {
+                        try {
+                          /* FirestoreService().addCommande(
+                              Commandes(
+                                  nomComplet: widget.nomComplet,
+                                  telephone: widget.telephone,
+                                  quartier: widget.quartier,
+                                  indication: widget.indication,
+                                  dateHeureDeLivraison:
                                       widget.dateHeureDeLivraison,
+                                  total: widget.total,
+                                  moyenDePayement: moyenDePayement,
+                                  numeroDePayement: numeroDePayement,
+                                  produitsCommander: widget.produitsCommander,
+                                  prixLivraison: widget.prixLivraison,
+                                  lieuDeLivraison: widget.lieuDeLivraison,
+                                  livrer: false,
+                                  unSeulProduit: widget.unSeulProduit,
+                                  created: DateTime.now().toString()),
+                              Renseignements.emailUser);
+                          FirestoreService().addCommandeToAdmin(
+                              Commandes(
+                                  nomComplet: widget.nomComplet,
+                                  telephone: widget.telephone,
+                                  quartier: widget.quartier,
+                                  indication: widget.indication,
+                                  dateHeureDeLivraison:
+                                  widget.dateHeureDeLivraison,
                                   total: widget.total,
                                   unSeulProduit: widget.unSeulProduit,
                                   moyenDePayement: moyenDePayement,
@@ -510,14 +613,8 @@ class _Panier2State extends State<Panier2> {
                         } catch (e) {
                           print(e);
                         }
-
-                        setState(() {
-                          chargement = true;
-                        });
-                      } else {
-                        displaySnackBarNom(context,
-                            "Veuillez remplir tous les champs", Colors.red);
                       }
+
                     }),
                     Container(height: longueurPerCent(40, context),)
                   ],

@@ -12,6 +12,7 @@ import 'Authentification/renisialisation_passwd.dart';
 import 'Authentification/renseignements.dart';
 import 'Composants/hexadecimal.dart';
 import 'Navigations_pages/Pages_article_paniers/Panier1.dart';
+import 'Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'Navigations_pages/all_navigation_page.dart';
 import 'Navigations_pages/panier.dart';
 import 'Pages/page_chargement.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         splashColor: HexColor("#001C36"),
         colorScheme: ColorScheme.light(primary: HexColor("#001C36")),
       ),
-      debugShowCheckedModeBanner: false,
+
       initialRoute: FirstPage.id,
       routes: {
         Connexion.id: (context) => Connexion(),
@@ -46,7 +48,8 @@ class MyApp extends StatelessWidget {
         PageChargement.id: (context) => PageChargement(),
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
-        HomePage.id: (context) => HomePage()
+        HomePage.id: (context) => HomePage(),
+        DetailsCommandes.id: (context) => DetailsCommandes(),
       },
     );
   }
