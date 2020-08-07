@@ -198,8 +198,8 @@ class _PanierState extends State<Panier> {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            margin:EdgeInsets.only(top: longueurPerCent(13, context),
-                                            left: longueurPerCent(10, context)),
+                                              margin:EdgeInsets.only(top: longueurPerCent(13, context),
+                                                  left: longueurPerCent(10, context)),
                                               child: Column(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.start,

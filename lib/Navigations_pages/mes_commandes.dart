@@ -20,10 +20,9 @@ class _MesCommandesState extends State<MesCommandes> {
           children: <Widget>[
             SizedBox(height: longueurPerCent(20, context)),
                 Container(
-                  height: longueurPerCent(180.0, context),
                   width: largeurPerCent(360.0, context),
                   child: Material(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(7),
                     color: Colors.white,
                     elevation: 7.0,
                     child: Column(
@@ -31,7 +30,7 @@ class _MesCommandesState extends State<MesCommandes> {
                         Container(
                           width: largeurPerCent(360.0, context),
                           child: Material(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                             color: HexColor("#FFC30D"),
                             child: Padding(
                               padding: EdgeInsets.all(longueurPerCent(10, context)),
@@ -62,20 +61,18 @@ class _MesCommandesState extends State<MesCommandes> {
                           ),
                         ),
                         Expanded(
-                          flex: 8,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(right: largeurPerCent(10, context)),
-                              child: Text(
-                                "2",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 16,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          flex: 7,
+                          child: Padding(
+                            padding:
+                            EdgeInsets.only(right: largeurPerCent(10, context)),
+                            child: Text(
+                              "2",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 16,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -104,7 +101,7 @@ class _MesCommandesState extends State<MesCommandes> {
                           child: Container(
                             child: Padding(
                               padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
+                              EdgeInsets.only(right: longueurPerCent(10, context)),
                               child: Text(
                                 "32.500",
                                 textAlign: TextAlign.right,
@@ -120,18 +117,16 @@ class _MesCommandesState extends State<MesCommandes> {
                         ),
                         Expanded(
                           flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 15,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: Padding(
+                            padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                            child: Text(
+                              " FCFA",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 15,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -156,20 +151,18 @@ class _MesCommandesState extends State<MesCommandes> {
                           ),
                         ),
                         Expanded(
-                          flex: 9,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(right: longueurPerCent(12, context)),
-                              child: Text(
-                                "En cours",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 17,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          flex: 7,
+                          child: Padding(
+                            padding:
+                            EdgeInsets.only(right: longueurPerCent(12, context)),
+                            child: Text(
+                              "En cours",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 17,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -178,19 +171,18 @@ class _MesCommandesState extends State<MesCommandes> {
                     ),
                     SizedBox(height:longueurPerCent(10.0, context)),
                     Container(
-                      margin: EdgeInsets.only(left: longueurPerCent(195, context)),
+                      margin: EdgeInsets.only(left: longueurPerCent(195, context),bottom: longueurPerCent(10, context)),
                       padding: EdgeInsets.only(right: longueurPerCent(16.0, context),left: longueurPerCent(16.0, context),top: largeurPerCent(6.0, context),),
                       height: longueurPerCent(40.0, context),
                       width: largeurPerCent(160.0, context),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(3.0),
-                        //shadowColor: Colors.greenAccent,
-                        color: HexColor("#001C36"),
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, DetailsCommandes.id);
-                          },
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, DetailsCommandes.id);
+                        },
+                        child: Material(
+                          borderRadius: BorderRadius.circular(3.0),
+                          color: HexColor("#001C36"),
+                          elevation: 7.0,
                           child: Center(
                             child: Text(
                               'VOIR',

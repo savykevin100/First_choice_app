@@ -96,23 +96,23 @@ class _Panier2State extends State<Panier2> {
                             "Adresse de Livraison",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                color: HexColor("#909090"),
+                                color: HexColor("#001C36"),
                                 fontSize: 18,
-                                fontFamily: "Montserrat_Light"),
+                                fontFamily: "MonseraBold"),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.only(
                               top: longueurPerCent(20.0, context),
                               right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(25.0, context)),
+                              left: longueurPerCent(30.0, context)),
                           child: Text(
                             widget.quartier + ", " + widget.indication,
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                              color: HexColor("#001C36"),
+                              color: HexColor("#909090"),
                               fontSize: 18,
-                              fontFamily: "MontserratBold",
+                              fontFamily: "Montserrat_Light",
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -144,7 +144,7 @@ class _Panier2State extends State<Panier2> {
                            "Joncquet en face de la pharmacie. Immeuble à étage, 2ème étage.",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                              color: HexColor("#001C36"),
+                              color: HexColor("#909090"),
                               fontSize: 18,
                               fontFamily: "MontserratBold",
                               fontWeight: FontWeight.bold,
@@ -171,9 +171,16 @@ class _Panier2State extends State<Panier2> {
                     ),*/
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
-                      height: longueurPerCent(10, context),
+                      decoration: new BoxDecoration(
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 0.1,
+                          ),
+                        ],
+                      ),
+                      height: longueurPerCent(5, context),
                       width: largeurPerCent(MediaQuery.of(context).size.width, context),
-                      color: HexColor("#F5F5F5"),
                     ),
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
@@ -185,9 +192,9 @@ class _Panier2State extends State<Panier2> {
                         "Moyen de payement",
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            color: HexColor("#909090"),
+                            color: HexColor("#001C36"),
                             fontSize: 18,
-                            fontFamily: "Montserrat_Light"),
+                            fontFamily: "MonseraBold"),
                       ),
                     ),
                     SizedBox(height: longueurPerCent(15, context),),
@@ -206,7 +213,7 @@ class _Panier2State extends State<Panier2> {
                     enabled: !_isEnabled,
                     style: TextStyle(
                         fontSize: 18,
-                        fontFamily: "MonseraBold"
+                          fontFamily: "MonseraBold"
                     ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
@@ -237,9 +244,9 @@ class _Panier2State extends State<Panier2> {
                       ):Text(""),
                       hintText: "Espèce",
                       hintStyle: TextStyle(
-                          color: HexColor('#9B9B9B'),
-                          fontSize: 18.0,
-                          fontFamily: 'MonseraLight'),
+                          color:  HexColor("#909090"),
+                          fontSize: 16.0,
+                          fontFamily: 'MonseraBold'),
                       fillColor: Colors.white,
                       contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
                       border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
@@ -248,7 +255,7 @@ class _Panier2State extends State<Panier2> {
                     ),
                     onChanged: (value){
 
-                    },
+                    }
 
                   ),
                 ),
@@ -268,7 +275,8 @@ class _Panier2State extends State<Panier2> {
                         //Set this field to enable or disable (true or flase)
                         enabled: !_isEnabledPayement,
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
+                            color: HexColor("#909090"),
                             fontFamily: "MonseraBold"
                         ),
                         decoration: InputDecoration(
@@ -278,7 +286,7 @@ class _Panier2State extends State<Panier2> {
                                 top: longueurPerCent(5, context),
                                 bottom: longueurPerCent(5, context),
                                 right: largeurPerCent(10, context),
-                                left: largeurPerCent(10, context)),
+                                left: largeurPerCent(17, context)),
                             child: Card(
                               child: Container(
                                   height: longueurPerCent(40, context),
@@ -300,8 +308,8 @@ class _Panier2State extends State<Panier2> {
                             ),
                           ):Text(""),
                           hintStyle: TextStyle(
-                              color: HexColor('#9B9B9B'),
-                              fontSize: 18.0,
+                              color: Colors.red,
+                              fontSize: 15.0,
                               fontFamily: 'MonseraLight'),
                           fillColor: Colors.white,
                           contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
@@ -318,9 +326,16 @@ class _Panier2State extends State<Panier2> {
                     ),
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
-                      height: longueurPerCent(10, context),
+                      decoration: new BoxDecoration(
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 0.1,
+                          ),
+                        ],
+                      ),
+                      height: longueurPerCent(5, context),
                       width: largeurPerCent(MediaQuery.of(context).size.width, context),
-                      color: HexColor("#F5F5F5"),
                     ),
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
@@ -334,8 +349,7 @@ class _Panier2State extends State<Panier2> {
                         style: TextStyle(
                           color: HexColor("#001C36"),
                           fontSize: 18,
-                          fontFamily: "MontserratBold",
-                          fontWeight: FontWeight.bold,
+                          fontFamily: "MonseraBold",
                         ),
                       ),
                     ),
@@ -357,36 +371,32 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         Expanded(
-                          flex: 8,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: largeurPerCent(0, context)),
-                              child: Text(
-                                "${widget.total}",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#909090"),
-                                  fontSize: 16,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
+                          flex: 7,
+                          child: Padding(
+                            padding:
+                            EdgeInsets.only(left: largeurPerCent(0, context)),
                             child: Text(
-                              " FCFA",
-                              textAlign: TextAlign.left,
+                              "${widget.total}",
+                              textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: HexColor("#909090"),
                                 fontSize: 16,
                                 fontFamily: "MontserratBold",
                                 fontWeight: FontWeight.bold,
                               ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            " FCFA",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: HexColor("#909090"),
+                              fontSize: 16,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -410,21 +420,15 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         Expanded(
-                          flex: 8,
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                top: longueurPerCent(0.0, context),
-                                right: longueurPerCent(0.0, context),
-                                left: longueurPerCent(30.0, context)),
-                            child: Text(
-                              "${widget.prixLivraison}",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 16,
-                                fontFamily: "MontserratBold",
-                                fontWeight: FontWeight.bold,
-                              ),
+                          flex: 7,
+                          child: Text(
+                            "${widget.prixLivraison}",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: HexColor("#909090"),
+                              fontSize: 16,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -452,9 +456,16 @@ class _Panier2State extends State<Panier2> {
 
                     SizedBox(height: longueurPerCent(20, context),),
                     Container(
+                      decoration: new BoxDecoration(
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 0.1,
+                          ),
+                        ],
+                      ),
                       margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(10, context)),
-                      height: longueurPerCent(5, context),
-                      color: HexColor("#F5F5F5"),
+                      height: longueurPerCent(1, context),
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
@@ -476,17 +487,15 @@ class _Panier2State extends State<Panier2> {
                           ),
                         ),
                         Expanded(
-                          flex: 10,
-                          child: Container(
-                            child: Text(
-                              "${widget.total}",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: HexColor("#001C36"),
-                                fontSize: 17,
-                                fontFamily: "MontserratBold",
-                                fontWeight: FontWeight.bold,
-                              ),
+                          flex: 8,
+                          child: Text(
+                            "${widget.total}",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 17,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),

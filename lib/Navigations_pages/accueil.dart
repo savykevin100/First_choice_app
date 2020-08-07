@@ -177,7 +177,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
         Positioned(
           top: longueurPerCent(170.0, context),
-          left: MediaQuery.of(context).size.width / 2.5,
+          left: longueurPerCent(MediaQuery.of(context).size.width*0.33, context),
           child: SelectedPhoto(
               photoIndex: photoIndex, numberOfDots: photos.length),
         ),
