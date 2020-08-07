@@ -42,6 +42,7 @@ class _Panier1State extends State<Panier1> {
   Map<String, Widget> widgets;
   List<Map<String, dynamic>> quartiersDb = [];
   final format = DateFormat("yyyy-MM-dd HH:mm");
+  int stopSommeLivraisonRetour=0;
 
   Future<void> fetchNameNumUser() async {
     await _db
@@ -261,10 +262,8 @@ class _Panier1State extends State<Panier1> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: longueurPerCent(20.0, context),
-                      ),
                       //////////////////////////////////////////////////////////////////////////////////////////////
+                      SizedBox(height: longueurPerCent(20, context)),
 
                       ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
                       (lieu == "A domicile")
@@ -464,7 +463,7 @@ class _Panier1State extends State<Panier1> {
                           iconSize: 30.0,
                           style: TextStyle(color: HexColor("#001C36")),
                           items:
-                          ['Mobile Money', 'Moov Money', 'En espèce'].map(
+                          ['Mobile Money' ,'En espèce'].map(
                                 (val) {
                               return DropdownMenuItem<String>(
                                 value: val,
@@ -509,7 +508,7 @@ class _Panier1State extends State<Panier1> {
   }
 
   void checkInformationsComplete(context) {
-    if (lieu == 'En Agence' && dateHeureDeLivraison != null) {
+    if (lieu == 'En Agence' && dateHeureDeLivraison != null && moyenDePayement!=null) {
       print("Reusssie");
       setState(() {
         prixLivraison = 0;
@@ -522,6 +521,7 @@ class _Panier1State extends State<Panier1> {
                     total: widget.total,
                     nomComplet: name,
                     telephone: numUser,
+                      moyenDePayement: moyenDePayement,
                     lieuDeLivraison: lieu,
                     dateHeureDeLivraison: dateHeureDeLivraison,
                     produitsCommander: widget.produitsPanier,
@@ -530,14 +530,18 @@ class _Panier1State extends State<Panier1> {
     } else if (lieu == "A domicile" &&
         CupertinoDatePickerMode.date != null &&
         indication != null &&
-        quartier != null) {
+        quartier != null && moyenDePayement!=null) {
       _db.collection("Zones").getDocuments().then((value) {
         for (int i = 0; i < value.documents.length; i++) {
           if (value.documents[i].data.containsValue(quartier)) {
-            setState(() {
-              prixLivraison = value.documents[i].data["prix"];
-              widget.total = widget.total + prixLivraison;
-            });
+            if(stopSommeLivraisonRetour==0){
+              setState(() {
+                prixLivraison = value.documents[i].data["prix"];
+                stopSommeLivraisonRetour++;
+              });
+            } else {
+
+            }
           }
         }
         Navigator.push(
@@ -549,8 +553,9 @@ class _Panier1State extends State<Panier1> {
                       nomComplet: name,
                       telephone: numUser,
                       lieuDeLivraison: lieu,
-                      dateHeureDeLivraison: dateHeureDeLivraison,
-                      indication: indication,
+                       moyenDePayement: moyenDePayement,
+                       dateHeureDeLivraison: dateHeureDeLivraison,
+                       indication: indication,
                       quartier: quartier,
                       produitsCommander: widget.produitsPanier,
                       unSeulProduit: widget.unSeulProduit,
@@ -559,8 +564,7 @@ class _Panier1State extends State<Panier1> {
         print(prixLivraison);
       });
     } else {
-      print(dateHeureDeLivraison);
-      displaySnackBarNom(
+        displaySnackBarNom(
           context, "Veuillez remplir tous les champs ", Colors.red);
     }
   }
