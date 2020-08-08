@@ -163,8 +163,8 @@ class _FavorisState extends State<Favoris> {
                                   child: Text(
                                     "${ produit.prix} FCFA",
                                     style: TextStyle(
-                                        color: HexColor("#001C36"),
-                                        fontSize: 15,
+                                        color: HexColor("#00CC7b"),
+                                        fontSize: 16.5,
                                         fontFamily: "MonseraBold"),
                                   )),
                             ),
@@ -212,27 +212,30 @@ class _FavorisState extends State<Favoris> {
                                   ),
                                 ),
                                 SizedBox(width: largeurPerCent(30, context),),
-                                IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
-                                  for(int i=0; i<etatFavoris.length; i++){
-                                    if(produit.image1==etatFavoris[i]) {
-                                      _db
-                                          .collection("Utilisateurs")
-                                          .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
-                                          .document(identifiantDocumentsFavorisUser[i])
-                                          .updateData({"etatIconeFavoris":false});
-                                       setState(() {
-                                         identifiantDocumentsFavorisUser.removeAt(i);
-                                         etatFavoris.removeAt(i);
-                                       });
-                                      print("Ça marche");
-                                      FirestoreService().deleteFavoris(Renseignements.emailUser, idProduitsFavoris[index]);
-                                      setState(() {
-                                        idProduitsFavoris.removeAt(index);
-                                      });
-                                    }
+                                Padding(
+                                  padding: EdgeInsets.only(left: longueurPerCent(35, context)),
+                                    child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
+                                      for(int i=0; i<etatFavoris.length; i++){
+                                        if(produit.image1==etatFavoris[i]) {
+                                          _db
+                                              .collection("Utilisateurs")
+                                              .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
+                                              .document(identifiantDocumentsFavorisUser[i])
+                                              .updateData({"etatIconeFavoris":false});
+                                          setState(() {
+                                            identifiantDocumentsFavorisUser.removeAt(i);
+                                            etatFavoris.removeAt(i);
+                                          });
+                                          print("Ça marche");
+                                          FirestoreService().deleteFavoris(Renseignements.emailUser, idProduitsFavoris[index]);
+                                          setState(() {
+                                            idProduitsFavoris.removeAt(index);
+                                          });
+                                        }
 
-                                  }
-                                })
+                                      }
+                                    })
+                                ),
                               ],
                             ),
                           ],

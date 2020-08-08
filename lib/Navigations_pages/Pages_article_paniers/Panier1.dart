@@ -137,7 +137,7 @@ class _Panier1State extends State<Panier1> {
                       ),
                       Center(
                         child: Text(
-                          "INFORMATIONS DE LA COMMANDE",
+                          "INFORMATION DE LA COMMANDE",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: HexColor("#001C36"),
@@ -146,7 +146,7 @@ class _Panier1State extends State<Panier1> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      SizedBox(height: longueurPerCent(30, context)),
+                      SizedBox(height: longueurPerCent(20, context)),
 
                       Center(
                         child: Text(
@@ -154,7 +154,7 @@ class _Panier1State extends State<Panier1> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: HexColor("#001C36"),
-                              fontSize: 19.0,
+                              fontSize: 17.0,
                               fontFamily: "MonseraLight",
                               fontWeight: FontWeight.bold),
                         ),
@@ -168,7 +168,7 @@ class _Panier1State extends State<Panier1> {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: HexColor("#001C36"),
-                                  fontSize: 19.0,
+                                  fontSize: 17.0,
                                   fontFamily: "MonseraLight",
                                   fontWeight: FontWeight.bold),
                             ),
@@ -431,7 +431,7 @@ class _Panier1State extends State<Panier1> {
                                     isExpanded: true,
                                     iconSize: 30.0,
                                     items:
-                                    ['Mobile Money' ,'En espèce'].map(
+                                    ['Mobile Money' ,' Espèce'].map(
                                           (val) {
                                         return DropdownMenuItem<String>(
                                           value: val,

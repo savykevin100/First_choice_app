@@ -211,7 +211,7 @@ class _PanierState extends State<Panier> {
                                                     style: TextStyle(
                                                         color: HexColor(
                                                             "#909090"),
-                                                        fontSize: 18,
+                                                        fontSize: 15,
                                                         fontFamily: "Regular"),
                                                   ),
                                                   SizedBox(
@@ -236,7 +236,7 @@ class _PanierState extends State<Panier> {
                                                     '${panier.prix} FCFA',
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(
-                                                      color: HexColor("#001C36"),
+                                                      color: HexColor("#00CC7b"),
                                                       fontSize: 16,
                                                       fontFamily: "MontserratBold",
                                                       fontWeight: FontWeight.bold,
@@ -250,9 +250,29 @@ class _PanierState extends State<Panier> {
                                           child: Container(
                                             child: Column(
                                               children: <Widget>[
-                                                SizedBox(height: longueurPerCent(18, context),),
-                                                Container(
+                                                SizedBox(height: longueurPerCent(10, context),),
+                                                (panier.etatSurMesure==false)?Text(""): Container(
+                                                  height: longueurPerCent(20, context),
+                                                  width: largeurPerCent(100, context),
                                                   margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                                  color: HexColor("#001C36"),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "A RETOUCHER",
+                                                      textAlign: TextAlign.right,
+                                                      style: TextStyle(
+                                                          color: HexColor("#FFFFFF"),
+                                                          fontSize: 9.0,
+                                                          fontFamily: "MontserratBold",
+                                                          fontWeight: FontWeight.bold
+
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: longueurPerCent(30, context),),
+                                                Container(
+                                                  margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
                                                     Icons.delete, color: Colors.red,),
                                                       onPressed: () {
@@ -278,26 +298,6 @@ class _PanierState extends State<Panier> {
                                                           "nbAjoutPanier": ajoutPanier--
                                                         });
                                                       }),
-                                                ),
-                                                SizedBox(height: longueurPerCent(5, context),),
-                                                (panier.etatSurMesure==false)?Text(""): Container(
-                                                  height: longueurPerCent(20, context),
-                                                  width: largeurPerCent(100, context),
-                                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                                  color: HexColor("#001C36"),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "SUR MESURE",
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          color: HexColor("#FFFFFF"),
-                                                          fontSize: 9.0,
-                                                          fontFamily: "MontserratBold",
-                                                          fontWeight: FontWeight.bold
-
-                                                      ),
-                                                    ),
-                                                  ),
                                                 ),
                                               ],
                                             ),

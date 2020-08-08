@@ -217,7 +217,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     '5000 FCFA',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
-                                      color: HexColor("#001C36"),
+                                      color: HexColor("#00CC7b"),
                                       fontSize: 15,
                                       fontFamily: "MontserratBold",
                                       fontWeight: FontWeight.bold,
@@ -317,7 +317,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     '5000 FCFA',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
-                                      color: HexColor("#001C36"),
+                                      color: HexColor("#00CC7b"),
                                       fontSize: 15,
                                       fontFamily: "MontserratBold",
                                       fontWeight: FontWeight.bold,
