@@ -57,7 +57,7 @@ class _UserProfilState extends State<UserProfil>{
                              ),
                            ),
                            Container(
-                               margin: EdgeInsets.only(left:longueurPerCent(130.0, context),top: longueurPerCent(0, context)),
+                               margin: EdgeInsets.only(left:longueurPerCent(120.0, context),top: longueurPerCent(0, context)),
                              child: Center(
                                child: IconButton(
                                  icon: Icon(Icons.favorite_border),
@@ -90,12 +90,9 @@ class _UserProfilState extends State<UserProfil>{
                         Stack(
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(right: longueurPerCent(148.0, context),left: longueurPerCent(148.0, context)),
-                              width: largeurPerCent(95.0, context),
-                              height: longueurPerCent(95.0, context),
                               child: CircleAvatar(
                                 backgroundImage: AssetImage("assets/images/user33312571280.png"),
-                                radius: 79,
+                                radius: 70,
                               ),
                             ),
                           ],
