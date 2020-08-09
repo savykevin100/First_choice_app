@@ -194,6 +194,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             controller: controller,
             nbAjoutPanier: nombreAjoutPanier);
         return Scaffold(
+          backgroundColor: HexColor("#F5F5F5"),
             appBar: _appBar.appBarFunctionStream(),
             drawer: ProfileSettings(
               userCurrent: utilisateurConnecte.email,
@@ -249,7 +250,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                       top: longueurPerCent(30, context),
                       left: largeurPerCent(13, context)),
                   child: Text(
-                    "PRODUITS RECOMMANDÉS",
+                    "Produits recommandés",
                     style: TextStyle(
                         color: HexColor("#001C36"),
                         fontSize: 20,
@@ -279,11 +280,11 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                             Renseignements.emailUser)));
                           },
                           child: Container(
-                            width: largeurPerCent(180, context),
+                            width: largeurPerCent(160, context),
                             margin: EdgeInsets.only(
                                 left: largeurPerCent(10, context)),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(7),
                             ),
                             child: Card(
                               elevation: 5.0,
@@ -295,14 +296,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                     longueurPerCent(120, context),
                                     width: largeurPerCent(160, context),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(7),
                                     ),
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.only(
                                             topLeft:
-                                            Radius.circular(10),
+                                            Radius.circular(7),
                                             topRight:
-                                            Radius.circular(10)),
+                                            Radius.circular(7)),
                                         child: Image.network(
                                           produitsRecommander[i]["image1"],
                                           fit: BoxFit.cover,
@@ -395,7 +396,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                       top: longueurPerCent(18, context),
                       left: largeurPerCent(13, context)),
                   child: Text(
-                    "DÉCOUVERTES",
+                    "Découverte",
                     style: TextStyle(
                         color: HexColor("#001C36"),
                         fontSize: 20,

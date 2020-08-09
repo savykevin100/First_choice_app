@@ -153,6 +153,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     getIdFavoris();
     getIdProduitFavorisUser();
     return  Scaffold(
+      backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
         body: ListView(

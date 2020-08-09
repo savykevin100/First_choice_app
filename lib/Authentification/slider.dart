@@ -33,11 +33,11 @@ class IntroScreenState extends State<IntroScreen> {
 
     slides.add(
       new Slide(
-        title: "ACHAT",
+        title: "Achat - Livraison",
         styleTitle:
         TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
         description:
-        "Commander vos produits et faites vous livrez",
+        "Commandez vos produits et faites-vous livrez",
         styleDescription:
         TextStyle(color: HexColor("#909090"), fontSize: 18.0, fontFamily: 'Regular'),
         pathImage: "assets/images/images-03.png",
@@ -45,7 +45,7 @@ class IntroScreenState extends State<IntroScreen> {
     );
     slides.add(
       new Slide(
-        title: "SUR MESURE",
+        title: "Retourche sur mesure",
         styleTitle:
         TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
         description: "Faites retoucher vos achats sur mesure",
@@ -57,11 +57,11 @@ class IntroScreenState extends State<IntroScreen> {
     );
     slides.add(
       new Slide(
-        title: "PARTAGE",
+        title: "Partage",
         styleTitle:
         TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
         description:
-        "Recommander un produit à un ami",
+        "Recommandez un produit à un ami",
         styleDescription:
         TextStyle(color:HexColor("#909090"), fontSize: 18.0,  fontFamily: 'Regular'),
         pathImage: "assets/images/images-02.png",
@@ -147,7 +147,7 @@ class IntroScreenState extends State<IntroScreen> {
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(left: longueurPerCent(50, context),right: longueurPerCent(50, context)),
+                padding: EdgeInsets.only(left: longueurPerCent(70, context),right: longueurPerCent(70, context)),
                 child: Text(
                   currentSlide.description,
                   style: currentSlide.styleDescription,
