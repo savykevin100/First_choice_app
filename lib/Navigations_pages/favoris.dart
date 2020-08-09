@@ -191,7 +191,7 @@ class _FavorisState extends State<Favoris> {
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: longueurPerCent(10, context),left: largeurPerCent(10, context)),
+                                      top: longueurPerCent(10, context),left: largeurPerCent(5, context)),
                                   child:  RatingBar(
                                     initialRating:  produit.numberStar.ceilToDouble(),
                                     minRating: 1,
@@ -213,7 +213,7 @@ class _FavorisState extends State<Favoris> {
                                 ),
                                 SizedBox(width: largeurPerCent(30, context),),
                                 Padding(
-                                  padding: EdgeInsets.only(left: longueurPerCent(35, context)),
+                                  padding: EdgeInsets.only(left: longueurPerCent(20, context)),
                                     child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
                                       for(int i=0; i<etatFavoris.length; i++){
                                         if(produit.image1==etatFavoris[i]) {

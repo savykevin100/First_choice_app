@@ -260,7 +260,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                   height: longueurPerCent(16, context),
                 ),
                 Container(
-                  height: longueurPerCent(210, context),
+                  height: longueurPerCent(220, context),
                   child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -279,7 +279,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                             Renseignements.emailUser)));
                           },
                           child: Container(
-                            width: largeurPerCent(160, context),
+                            width: largeurPerCent(180, context),
                             margin: EdgeInsets.only(
                                 left: largeurPerCent(10, context)),
                             decoration: BoxDecoration(

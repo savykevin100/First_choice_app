@@ -36,7 +36,7 @@ class _MesCommandesState extends State<MesCommandes> {
                               padding: EdgeInsets.all(longueurPerCent(10, context)),
                               child: Text(
                                 "Commande n°1",
-                                style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 20.0, fontWeight: FontWeight.bold ),
+                                style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
                               ),
                             ),
                           ),
@@ -56,7 +56,7 @@ class _MesCommandesState extends State<MesCommandes> {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 color: HexColor("#909090"),
-                                fontSize: 15,
+                                fontSize: 12,
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
@@ -64,13 +64,13 @@ class _MesCommandesState extends State<MesCommandes> {
                           flex: 7,
                           child: Padding(
                             padding:
-                            EdgeInsets.only(right: largeurPerCent(10, context)),
+                            EdgeInsets.only(right: largeurPerCent(12, context)),
                             child: Text(
                               "2",
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: HexColor("#001C36"),
-                                fontSize: 16,
+                                fontSize: 12,
                                 fontFamily: "MontserratBold",
                                 fontWeight: FontWeight.bold,
                               ),
@@ -88,43 +88,39 @@ class _MesCommandesState extends State<MesCommandes> {
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(10.0, context)),
                           child: Text(
-                            "Prix total",
+                            "Prix total         ",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
-                                fontSize: 15,
+                                fontSize: 12,
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
                         Expanded(
-                          flex: 9,
+                          flex: 5,
                           child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(right: longueurPerCent(10, context)),
-                              child: Text(
-                                "32.500",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 15,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            child: Text(
+                              "32.500",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 12,
+                                fontFamily: "MontserratBold",
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Padding(
-                            padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                            padding:  EdgeInsets.only(right: longueurPerCent(12, context)),
                             child: Text(
                               " FCFA",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: HexColor("#001C36"),
-                                fontSize: 15,
+                                fontSize: 12,
                                 fontFamily: "MontserratBold",
                                 fontWeight: FontWeight.bold,
                               ),
@@ -146,7 +142,7 @@ class _MesCommandesState extends State<MesCommandes> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
-                                fontSize: 15,
+                                fontSize: 12,
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
@@ -160,7 +156,7 @@ class _MesCommandesState extends State<MesCommandes> {
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 color: Colors.red,
-                                fontSize: 17,
+                                fontSize: 14,
                                 fontFamily: "MontserratBold",
                                 fontWeight: FontWeight.bold,
                               ),
@@ -171,10 +167,9 @@ class _MesCommandesState extends State<MesCommandes> {
                     ),
                     SizedBox(height:longueurPerCent(10.0, context)),
                     Container(
-                      margin: EdgeInsets.only(left: longueurPerCent(195, context),bottom: longueurPerCent(10, context)),
-                      padding: EdgeInsets.only(right: longueurPerCent(16.0, context),left: longueurPerCent(16.0, context),top: largeurPerCent(6.0, context),),
-                      height: longueurPerCent(40.0, context),
-                      width: largeurPerCent(160.0, context),
+                      margin: EdgeInsets.only(bottom: longueurPerCent(10, context)),
+                      height: longueurPerCent(30.0, context),
+                      width: largeurPerCent(100.0, context),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, DetailsCommandes.id);

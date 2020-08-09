@@ -186,63 +186,57 @@ class _Panier1State extends State<Panier1> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: <Widget>[
-                                  Center(
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          left: longueurPerCent(0.0, context),),
-                                      width: largeurPerCent(347.0, context),
-                                      height: longueurPerCent(40, context),
-                                      padding: EdgeInsets.only(
-                                          left: largeurPerCent(10, context),
-                                          right: largeurPerCent(20, context),
-                                          top: longueurPerCent(0, context)),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(7.0),
-                                          ),
-                                          border: Border.all(
-                                              color: HexColor("#919191"), width: 0)),
-                                      child: DropdownButton(
-                                        underline: Text(""),
-                                        hint: _dropDownValue == null
-                                            ? Text(
-                                                'Lieu de Livraison',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16.0,
-                                                    fontFamily: 'MonseraLight'),
-                                              )
-                                            : Text(
-                                                _dropDownValue,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16),
-                                              ),
-                                        isExpanded: true,
-                                        iconSize: 30.0,
-                                        style: TextStyle(color: HexColor("#919191")),
-                                        items: ['En Agence', 'A domicile'].map(
-                                          (val) {
-                                            return DropdownMenuItem<String>(
-                                              value: val,
-                                              child: Text(val),
-                                            );
-                                          },
-                                        ).toList(),
-                                        onChanged: (val) {
-                                          setState(
-                                            () {
-                                              _dropDownValue = val;
-                                              lieu = _dropDownValue;
-                                            },
-                                          );
-                                        },
+                              Center(
+                                child: Container(
+                                  width: largeurPerCent(347.0, context),
+                                  height: longueurPerCent(40, context),
+                                  padding: EdgeInsets.only(
+                                      left: largeurPerCent(10, context),
+                                      right: largeurPerCent(20, context),
+                                      top: longueurPerCent(0, context)),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(7.0),
                                       ),
-                                    ),
+                                      border: Border.all(
+                                          color: Colors.grey, width: 1)),
+                                  child: DropdownButton(
+                                    underline: Text(""),
+                                    hint: _dropDownValue == null
+                                        ? Text(
+                                            'Lieu de Livraison',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16.0,
+                                                fontFamily: 'MonseraLight'),
+                                          )
+                                        : Text(
+                                            _dropDownValue,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16),
+                                          ),
+                                    isExpanded: true,
+                                    iconSize: 30.0,
+                                    style: TextStyle(color: HexColor("#919191")),
+                                    items: ['En Agence', 'A domicile'].map(
+                                      (val) {
+                                        return DropdownMenuItem<String>(
+                                          value: val,
+                                          child: Text(val),
+                                        );
+                                      },
+                                    ).toList(),
+                                    onChanged: (val) {
+                                      setState(
+                                        () {
+                                          _dropDownValue = val;
+                                          lieu = _dropDownValue;
+                                        },
+                                      );
+                                    },
                                   ),
-                                ],
+                                ),
                               ),
                               SizedBox(height: longueurPerCent(20, context)),
 
@@ -412,7 +406,7 @@ class _Panier1State extends State<Panier1> {
                                         Radius.circular(7.0),
                                       ),
                                       border: Border.all(
-                                          color: HexColor("#919191"), width: 1)),
+                                          color: Colors.grey, width: 1)),
                                   child: DropdownButton(
                                     underline: Text(""),
                                     hint: _dropDownValue2 == null
