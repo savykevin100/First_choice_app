@@ -24,13 +24,10 @@ class _AllNavigationPageState extends State<AllNavigationPage> {
   PageController pageController;
   String email;
   int page = 0;
+  int bottomSelectedIndex = 0;
+  int index = 0;
   FirebaseUser utilisateurConnecte;
   final _auth = FirebaseAuth.instance;
-
-
-
-
-
 
 
 /*Obtention des élements de l'utilisateur connecté */
@@ -44,6 +41,13 @@ class _AllNavigationPageState extends State<AllNavigationPage> {
       print(e);
     }
   }
+
+  void  pageChanged ( index  ) {
+    setState (() {
+      bottomSelectedIndex = index;
+    });
+  }
+
 /*Fin de la fonction */
 
 
@@ -55,54 +59,50 @@ class _AllNavigationPageState extends State<AllNavigationPage> {
     getCurrentUser();
   }
 
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: PageView(
-          controller: pageController,
-          children: <Widget>[
-            Accueil(),
-            Favoris(),
-            Categories(),
-            Chat(),
-            Notifications(),
-          ],
-          onPageChanged: (int index) {
-            setState(() {
-              pageController.jumpToPage(index);
-            });
-          },
-        ),
-        bottomNavigationBar:Container(
-          child:  CurvedNavigationBar(
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+      backgroundColor: Colors.white,
+      body: PageView(
+        controller: pageController,
+        children: <Widget>[
+          Accueil(),
+          Favoris(),
+          Categories(),
+          Chat(),
+          Notifications(),
+        ],
+        onPageChanged: (int index) {
+          pageChanged(index);
+        },
+      ),
+      bottomNavigationBar: Container(
+        child: CurvedNavigationBar(
 
-              backgroundColor:Colors.white.withOpacity(0.9),
-              index: 0,
-              items: <Widget>[
-                /* */
-                Icon(Icons.home, size: 30, color: Colors.white),
-                Icon(Icons.favorite, size: 30, color: Colors.white),
-                Icon(Icons.apps, size: 30, color: Colors.white),
-                Icon(Icons.chat_bubble, size: 30, color: Colors.white),
-                Icon(Icons.notifications, size: 30, color: Colors.white),
-              ],
-              onTap: (index) {
-                setState(() {
-                  pageController.jumpToPage(index);
-                });
-              },
-              buttonBackgroundColor:HexColor("#001C36"),
-              color: HexColor("#001C36")),
-        )
-      );
+            backgroundColor: Colors.white.withOpacity(0.9),
+            index: bottomSelectedIndex,
+            items: <Widget>[
+              /* */
+              Icon(Icons.home, size: 30, color: Colors.white),
+              Icon(Icons.favorite, size: 30, color: Colors.white),
+              Icon(Icons.apps, size: 30, color: Colors.white),
+              Icon(Icons.chat_bubble, size: 30, color: Colors.white),
+              Icon(Icons.notifications, size: 30, color: Colors.white),
+            ],
+            onTap: (index) {
+              setState(() {
+                pageController.jumpToPage(index);
+              });
+            },
+            buttonBackgroundColor: HexColor("#001C36"),
+            color: HexColor("#001C36")),
+      )
+  );
+}
 
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
-  }
-
+@override
+void dispose() {
+  super.dispose();
+  pageController.dispose();
+}
 }

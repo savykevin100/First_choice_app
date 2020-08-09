@@ -20,10 +20,9 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
           children: <Widget>[
             SizedBox(height: longueurPerCent(20, context)),
             Container(
-              height: longueurPerCent(170.0, context),
               width: largeurPerCent(360.0, context),
               child: Material(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(7.0),
                 color: Colors.white,
                 elevation: 7.0,
                 child: Column(
@@ -31,7 +30,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Container(
                       width: largeurPerCent(360.0, context),
                       child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                         color: HexColor("#FFC30D"),
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
@@ -42,8 +41,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         ),
                       ),
                     ),
-
-
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
                       children: <Widget>[
@@ -109,6 +106,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         Container(
                           margin: EdgeInsets.only(
                               top: longueurPerCent(0.0, context),
+                              bottom: longueurPerCent(10.0, context),
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(100.0, context)),
                           child: Text(
@@ -120,19 +118,17 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
-                        Container(
-                          child: Padding(
-                            padding:
-                            EdgeInsets.only(left: largeurPerCent(10, context)),
-                            child: Text(
-                              "69063800",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: HexColor("#001C36"),
-                                fontSize: 15,
-                                fontFamily: "MontserratBold",
-                                fontWeight: FontWeight.bold,
-                              ),
+                        Padding(
+                          padding:
+                          EdgeInsets.only(left: longueurPerCent(10, context),bottom:longueurPerCent(10,context) ),
+                          child: Text(
+                            "69063800",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 15,
+                              fontFamily: "MontserratBold",
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -146,7 +142,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
             Container(
               width: largeurPerCent(360.0, context),
               child: Material(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(7.0),
                 color: Colors.white,
                 elevation: 7.0,
                 child: Column(
@@ -154,7 +150,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Container(
                       width: largeurPerCent(360.0, context),
                       child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                         color: HexColor("#FFC30D"),
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
@@ -196,7 +192,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     style: TextStyle(
                                         color: HexColor(
                                             "#909090"),
-                                        fontSize: 18,
+                                        fontSize: 17,
                                         fontFamily: "Regular"),
                                   ),
                                   SizedBox(
@@ -221,8 +217,8 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     '5000 FCFA',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
-                                      color: HexColor("#001C36"),
-                                      fontSize: 16,
+                                      color: HexColor("#00CC7b"),
+                                      fontSize: 15,
                                       fontFamily: "MontserratBold",
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -296,7 +292,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     style: TextStyle(
                                         color: HexColor(
                                             "#909090"),
-                                        fontSize: 18,
+                                        fontSize: 17,
                                         fontFamily: "Regular"),
                                   ),
                                   SizedBox(
@@ -321,8 +317,8 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                     '5000 FCFA',
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
-                                      color: HexColor("#001C36"),
-                                      fontSize: 16,
+                                      color: HexColor("#00CC7b"),
+                                      fontSize: 15,
                                       fontFamily: "MontserratBold",
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -374,7 +370,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
             Container(
               width: largeurPerCent(360.0, context),
               child: Material(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(7.0),
                 color: Colors.white,
                 elevation: 7.0,
                 child: Column(
@@ -382,7 +378,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Container(
                       width: largeurPerCent(360.0, context),
                       child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                         color: HexColor("#FFC30D"),
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
@@ -393,8 +389,62 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         ),
                       ),
                     ),
-
-
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Sous total      ",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 15,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(left: longueurPerCent(0, context)),
+                              child: Text(
+                                "10.000  ",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 15,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                              child: Text(
+                                " FCFA",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 15,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
                       children: <Widget>[
@@ -413,13 +463,13 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           ),
                         ),
                         Expanded(
-                          flex: 6,
+                          flex: 5,
                           child: Container(
                             child: Padding(
                               padding:
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
-                                "500",
+                                "500 ",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
@@ -461,7 +511,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(10.0, context)),
                           child: Text(
-                            "Sur mesure    ",
+                            "Sur mesure   ",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
@@ -470,13 +520,13 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           ),
                         ),
                         Expanded(
-                          flex: 7,
+                          flex: 6,
                           child: Container(
                             child: Padding(
                               padding:
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
-                                "500",
+                                "500   ",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
@@ -517,7 +567,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(10.0, context)),
                           child: Text(
-                            "Total   ",
+                            "Total  ",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
@@ -526,7 +576,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           ),
                         ),
                         Expanded(
-                          flex: 9,
+                          flex: 8,
                           child: Container(
                             child: Padding(
                               padding:
@@ -574,7 +624,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
             Container(
               width: largeurPerCent(360.0, context),
               child: Material(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(7),
                 color: Colors.white,
                 elevation: 7.0,
                 child: Column(
@@ -582,7 +632,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Container(
                       width: largeurPerCent(360.0, context),
                       child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                         color: HexColor("#FFC30D"),
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
@@ -621,7 +671,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
             Container(
               width: largeurPerCent(360.0, context),
               child: Material(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(7),
                 color: Colors.white,
                 elevation: 7.0,
                 child: Column(
@@ -629,7 +679,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Container(
                       width: largeurPerCent(360.0, context),
                       child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                         color: HexColor("#FFC30D"),
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),

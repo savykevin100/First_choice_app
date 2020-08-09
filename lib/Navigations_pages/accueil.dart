@@ -177,7 +177,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
         Positioned(
           top: longueurPerCent(170.0, context),
-          left: MediaQuery.of(context).size.width / 2.5,
+          left: longueurPerCent(MediaQuery.of(context).size.width*0.33, context),
           child: SelectedPhoto(
               photoIndex: photoIndex, numberOfDots: photos.length),
         ),
@@ -189,7 +189,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
       if (utilisateurConnecte != null && produitsRecommander != null && tousLesProduits != null) {
         AppBarClasse _appBar = AppBarClasse(
-            titre: "Accueil",
+            titre: "Premier Choix",
             context: context,
             controller: controller,
             nbAjoutPanier: nombreAjoutPanier);
@@ -260,7 +260,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                   height: longueurPerCent(16, context),
                 ),
                 Container(
-                  height: longueurPerCent(220, context),
+                  height: longueurPerCent(210, context),
                   child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -331,8 +331,8 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                           "${produitsRecommander[i]["prix"]} FCFA",
                                           style: TextStyle(
                                               color:
-                                              HexColor("#001C36"),
-                                              fontSize: 15,
+                                              HexColor("#00CC7b"),
+                                              fontSize: 16.5,
                                               fontFamily:
                                               "MonseraBold"),
                                         )),
@@ -466,8 +466,8 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                     child: Text(
                                       "${tousLesProduits[index]["prix"]} FCFA",
                                       style: TextStyle(
-                                          color: HexColor("#001C36"),
-                                          fontSize: 15,
+                                          color: HexColor("#00CC7b"),
+                                          fontSize: 16.5,
                                           fontFamily: "MonseraBold"),
                                     )),
                               ),

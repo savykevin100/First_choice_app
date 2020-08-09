@@ -5,6 +5,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/Dropdowntest.dart';
 import 'package:premierchoixapp/Design/FirstPage.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: HexColor("#001C36"),
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
       initialRoute: FirstPage.id,
       routes: {
         Connexion.id: (context) => Connexion(),
+        DetailsCommandes.id: (context) => DetailsCommandes(),
         Inscription.id: (context) => Inscription(),
         Article.id: (context) => Article(),
         Panier.id: (context) => Panier(),

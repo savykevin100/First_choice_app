@@ -172,7 +172,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                           padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
                           child: Text( "${widget.produitMap["prix"]} FCFA",
                               style: TextStyle(
-                                  color: HexColor("#001c36"),
+                                  color: HexColor("#00CC7b"),
                                   fontFamily: "MonseraBold",
                                   fontSize: 20)),
                         ),
@@ -302,7 +302,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     children: <Widget>[
                       Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
                       SizedBox(width: largeurPerCent(20, context),),
-                      Text("${widget.produitMap["taille"]}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15) )
+                      Text("${widget.produitMap["taille"]}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
                     ],
                   ),
                   SizedBox(width: largeurPerCent(200, context),),
@@ -355,7 +355,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   });
                   print(etatSurMesure);
                 }),
-                Text("Voulez-vous du sur-mesure", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline),)
+                Text("Faire une retouche", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline,color: Colors.red),)
               ],
             ),):Text(""):Text(""),
             SizedBox(height: longueurPerCent(10, context),),
