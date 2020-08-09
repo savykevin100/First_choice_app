@@ -35,7 +35,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
                           child: Text(
-                            "Détails de facturation",
+                            "Info Client",
                             style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
                           ),
                         ),
@@ -150,7 +150,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
                           child: Text(
-                            "Articles",
+                            "Produits",
                             style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
                           ),
                         ),
@@ -357,6 +357,249 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                       height: 1,
                     ),
                     Container(height: longueurPerCent(10, context),)
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: longueurPerCent(20, context),),
+            Container(
+              width: largeurPerCent(360.0, context),
+              child: Material(
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+                elevation: 7.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: largeurPerCent(360.0, context),
+                      child: Material(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
+                        color: HexColor("#FFC30D"),
+                        child: Padding(
+                          padding: EdgeInsets.all(longueurPerCent(10, context)),
+                          child: Text(
+                            "Sur Mesure",
+                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Prix total",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(left: longueurPerCent(0, context)),
+                              child: Text(
+                                "32.500",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                              child: Text(
+                                " FCFA",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Prix total",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(left: longueurPerCent(0, context)),
+                              child: Text(
+                                "32.500",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                              child: Text(
+                                " FCFA",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Prix total",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(left: longueurPerCent(0, context)),
+                              child: Text(
+                                "32.500",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
+                              child: Text(
+                                " FCFA",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(height: longueurPerCent(10, context),),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: longueurPerCent(20, context),),
+            Container(
+              width: largeurPerCent(360.0, context),
+              child: Material(
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+                elevation: 7.0,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: largeurPerCent(360.0, context),
+                      child: Material(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
+                        color: HexColor("#FFC30D"),
+                        child: Padding(
+                          padding: EdgeInsets.all(longueurPerCent(10, context)),
+                          child: Text(
+                            "Moyen de Paiement",
+                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Mobile Money",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(height: longueurPerCent(10, context),),
                   ],
                 ),
               ),
@@ -611,249 +854,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     ),
                     Container(height: longueurPerCent(10, context),),
 
-                  ],
-                ),
-              ),
-            ),
-            Container(height: longueurPerCent(20, context),),
-            Container(
-              width: largeurPerCent(360.0, context),
-              child: Material(
-                borderRadius: BorderRadius.circular(7),
-                color: Colors.white,
-                elevation: 7.0,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: largeurPerCent(360.0, context),
-                      child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                        color: HexColor("#FFC30D"),
-                        child: Padding(
-                          padding: EdgeInsets.all(longueurPerCent(10, context)),
-                          child: Text(
-                            "Moyen de Paiement",
-                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: longueurPerCent(10, context),),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(10.0, context)),
-                          child: Text(
-                            "Mobile Money",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(height: longueurPerCent(10, context),),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: longueurPerCent(20, context),),
-            Container(
-              width: largeurPerCent(360.0, context),
-              child: Material(
-                borderRadius: BorderRadius.circular(7),
-                color: Colors.white,
-                elevation: 7.0,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: largeurPerCent(360.0, context),
-                      child: Material(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                        color: HexColor("#FFC30D"),
-                        child: Padding(
-                          padding: EdgeInsets.all(longueurPerCent(10, context)),
-                          child: Text(
-                            "Sur Mesure",
-                            style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: longueurPerCent(10, context),),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(10.0, context)),
-                          child: Text(
-                            "Prix total",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 9,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "32.500",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: longueurPerCent(10, context),),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(10.0, context)),
-                          child: Text(
-                            "Prix total",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 9,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "32.500",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: longueurPerCent(10, context),),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(10.0, context)),
-                          child: Text(
-                            "Prix total",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 9,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "32.500",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(height: longueurPerCent(10, context),),
                   ],
                 ),
               ),

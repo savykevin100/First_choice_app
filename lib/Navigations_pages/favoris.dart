@@ -82,6 +82,7 @@ class _FavorisState extends State<Favoris> {
         controller: controller,
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
+      backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
       drawer: ProfileSettings(userCurrent: Renseignements.emailUser),
       body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? StreamBuilder(
@@ -102,7 +103,7 @@ class _FavorisState extends State<Favoris> {
                   Produit produit = snapshot.data[index];
 
                   return Container(
-                    width: largeurPerCent(150, context),
+                    width: largeurPerCent(130, context),
                     margin: EdgeInsets.only(
                         left: largeurPerCent(0, context), top: longueurPerCent(20, context)),
                     decoration: BoxDecoration(
@@ -135,7 +136,7 @@ class _FavorisState extends State<Favoris> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              height: longueurPerCent(150, context),
+                              //height: longueurPerCent(100, context),
                               width: largeurPerCent(200, context),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.only(

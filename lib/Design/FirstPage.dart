@@ -66,7 +66,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HexColor("#001C36"),
+      backgroundColor: HexColor("#001C37"),
       body: new Stack(
         children: <Widget>[
           Container(
@@ -78,7 +78,7 @@ class _FirstPageState extends State<FirstPage> {
                   margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
                   height: longueurPerCent(227.5, context),
                   width: MediaQuery.of(context).size.width,
-                  child: Image.asset("assets/images/1erchoix01.png",
+                  child: Image.asset("assets/images/logo.png",
                     fit: BoxFit.cover,),
                 ),
                 SizedBox(height: longueurPerCent(50, context),),

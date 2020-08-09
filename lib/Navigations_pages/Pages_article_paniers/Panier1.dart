@@ -358,7 +358,7 @@ class _Panier1State extends State<Panier1> {
                                               ),
                                             ),
                                             labelText: null,
-                                            hintText: "10/06/2000",
+                                            hintText: "Date et heure de Livraison",
                                             contentPadding: EdgeInsets.only(top: longueurPerCent(10, context)),
                                             hintStyle: TextStyle(
                                               fontSize: 16.0,

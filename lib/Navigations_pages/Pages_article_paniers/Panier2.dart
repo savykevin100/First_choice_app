@@ -675,7 +675,7 @@ class _Panier2State extends State<Panier2> {
                     ),
                   ),
                   Expanded(
-                   flex: 1,
+                   flex: 3,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -708,13 +708,10 @@ class _Panier2State extends State<Panier2> {
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
+                            SizedBox(height: longueurPerCent(10, context),),
                             Container(
                               margin: EdgeInsets.only(left: longueurPerCent(20, context),right: longueurPerCent(20, context),bottom: longueurPerCent(10.0, context)),
                               width: longueurPerCent(400, context),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: HexColor("#001C36")
-                                  )
-                              ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
