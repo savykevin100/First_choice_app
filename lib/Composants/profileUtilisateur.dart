@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
+import 'package:premierchoixapp/Design/Notification2.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
@@ -55,7 +56,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text: "Notifications",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Panier()));
+                    context, MaterialPageRoute(builder: (context) => Notification2()));
               }),
           drawerItem(
               icon: Icons.chat_bubble,
