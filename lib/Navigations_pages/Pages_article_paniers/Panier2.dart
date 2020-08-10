@@ -83,7 +83,7 @@ class _Panier2State extends State<Panier2> {
               child: Column(
                 children: <Widget>[
                   Container(
-                   height: longueurPerCent(350, context),
+                   height: MediaQuery.of(context).size.height/2,
                     color:  HexColor("#F5F5F5"),
                     child: SingleChildScrollView(
                       child: Column(
@@ -463,7 +463,7 @@ class _Panier2State extends State<Panier2> {
                                                     children: <Widget>[
                                                       SizedBox(height: longueurPerCent(2, context),),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           "Chemise ",
                                                           textAlign: TextAlign.left,
@@ -479,7 +479,7 @@ class _Panier2State extends State<Panier2> {
                                                             2.0, context),
                                                       ),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           "XXL",
                                                           textAlign: TextAlign.left,
@@ -496,7 +496,7 @@ class _Panier2State extends State<Panier2> {
                                                             4.0, context),
                                                       ),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           '5000 FCFA',
                                                           textAlign: TextAlign.right,
@@ -580,7 +580,7 @@ class _Panier2State extends State<Panier2> {
                                                     children: <Widget>[
                                                       SizedBox(height: longueurPerCent(2, context),),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           "Chemise ",
                                                           textAlign: TextAlign.left,
@@ -596,7 +596,7 @@ class _Panier2State extends State<Panier2> {
                                                             2.0, context),
                                                       ),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           "XXL",
                                                           textAlign: TextAlign.left,
@@ -613,7 +613,7 @@ class _Panier2State extends State<Panier2> {
                                                             4.0, context),
                                                       ),
                                                       Padding(
-                                                        padding:  EdgeInsets.only(left: longueurPerCent(5, context)),
+                                                        padding:  EdgeInsets.only(left: longueurPerCent(10, context)),
                                                         child: Text(
                                                           '5000 FCFA',
                                                           textAlign: TextAlign.right,

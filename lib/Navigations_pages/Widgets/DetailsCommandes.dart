@@ -48,7 +48,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           margin: EdgeInsets.only(
                               top: longueurPerCent(0.0, context),
                               right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(40.0, context)),
+                              left: longueurPerCent(10.0, context)),
                           child: Text(
                             "Nom Complet:",
                             textAlign: TextAlign.right,
@@ -80,21 +80,44 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                       ],
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
-                    Container(
-                      width: largeurPerCent(300, context),
-                      margin: EdgeInsets.only(
-                          top: longueurPerCent(0.0, context),
-                          right: longueurPerCent(0.0, context),
-                          left: longueurPerCent(5.0, context)),
-                      child: Text(
-                        "Adresse de livraison:" + "  " +"Vodjè von avant pharmacie",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: HexColor("#909090"),
-                            fontSize: 12,
-                            fontFamily: "MonseraBold"),
-                      ),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: longueurPerCent(0.0, context),
+                              right: longueurPerCent(0.0, context),
+                              left: longueurPerCent(10.0, context)),
+                          child: Text(
+                            "Adresse de Livraison:",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                              EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
+                              child: Text(
+                                "Vodje von avant pharmacie sainte foi 4eme maison a gauche",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
                       children: <Widget>[
@@ -103,7 +126,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               top: longueurPerCent(0.0, context),
                               bottom: longueurPerCent(10.0, context),
                               right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(100.0, context)),
+                              left: longueurPerCent(10.0, context)),
                           child: Text(
                             "Contacts:",
                             textAlign: TextAlign.right,
@@ -795,6 +818,11 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(height: longueurPerCent(10, context),),
+                    Divider(
+                      color: Colors.grey,
+                      height: 1,
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
