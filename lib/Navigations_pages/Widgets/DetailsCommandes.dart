@@ -4,6 +4,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
 class DetailsCommandes extends StatefulWidget {
   static String id="DetailsCommande";
+  Map<String, dynamic> commande;
+  DetailsCommandes({this.commande});
   @override
   _DetailsCommandesState createState() => _DetailsCommandesState();
 }
@@ -65,7 +67,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
                               child: Text(
-                                "HOUEGBELO Jean de Dieu Amour",
+                                widget.commande["nomComplet"],
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
@@ -140,7 +142,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           padding:
                           EdgeInsets.only(left: longueurPerCent(10, context),bottom:longueurPerCent(10,context) ),
                           child: Text(
-                            "69063800",
+                            widget.commande["telephone"],
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: HexColor("#001C36"),
@@ -646,7 +648,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                           child: Text(
                             "Total",
                         style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
-              ),
+                          ),
                         ),
                       ),
                     ),

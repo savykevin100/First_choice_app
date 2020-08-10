@@ -170,6 +170,14 @@ class FirestoreService {
     );
   }
 
+  Stream<List<Commandes>> getCommandes(String id) {
+    return _db.collection("Utilisateurs").document(id).collection("Commandes").snapshots().map(
+          (snapshot) =>
+          snapshot.documents.map(
+                (doc) => Commandes.fromMap(doc.data, doc.documentID),
+          ).toList(),
+    );
+  }
 
 
 /* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/

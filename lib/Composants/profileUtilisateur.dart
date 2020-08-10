@@ -15,6 +15,7 @@ import 'package:premierchoixapp/Navigations_pages/profile.dart';
 
 import 'hexadecimal.dart';
 
+// ignore: must_be_immutable
 class ProfileSettings extends StatefulWidget {
   // final Widget creationHeader;
   //  ProfileSettings({this.creationHeader});
