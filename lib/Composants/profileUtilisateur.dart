@@ -40,31 +40,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         children: <Widget>[
           creationHeader(widget.userCurrent),
           drawerItem(
+              icon: Icons.person,
+              text: "Mon compte",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => UserProfil()));
+              }),
+          drawerItem(
               icon: Icons.home,
               text: "Accueil",
               onTap: () {
                 Navigator.pushNamed(context, AllNavigationPage.id);
-              }),
-          drawerItem(
-              icon: Icons.favorite,
-              text: "Favoris",
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Favoris()));
-              }),
-          drawerItem(
-              icon: Icons.notifications,
-              text: "Notifications",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Notification2()));
-              }),
-          drawerItem(
-              icon: Icons.chat_bubble,
-              text: "Chat",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Chat()));
               }),
           drawerItem(
               icon: Icons.shopping_basket,
@@ -74,7 +60,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
               }),
           drawerItem(
-              icon: Icons.person,
+              icon: Icons.logout,
               text: "Deconnexion",
               onTap: () async {
                 await _auth.signOut();
@@ -82,13 +68,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 Navigator.pushNamed(context, Connexion.id);
               }),
           Divider(),
-          drawerItem(
-              icon: Icons.settings,
-              text: "Profil",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => UserProfil()));
-              }),
+
           drawerItem(
               icon: Icons.info,
               text: "À propos",

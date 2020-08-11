@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -700,9 +701,6 @@ class _Panier2State extends State<Panier2> {
                                   right: longueurPerCent(20, context),
                                   bottom: longueurPerCent(10.0, context)),
                               width: longueurPerCent(400, context),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: HexColor("#001C36"))),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -993,6 +991,7 @@ class _Panier2State extends State<Panier2> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CommandeSend()));
+                                    Firestore.instance.collection('Utilisateurs').document(Renseignements.emailUser).collection("Panier").document().delete();
                                   } catch (e) {
                                     print(e);
                                   }
@@ -1045,6 +1044,13 @@ class _Panier2State extends State<Panier2> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               CommandeSend()));
+
+                                  /*Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser).collection("Panier").getDocuments().then((value) {
+                                    for(int i=0; i<value.documents.length; i++){
+                                      Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser)
+                                          .collection("Panier").document(value.documents[i].documentID).delete();
+                                    }
+                                  });*/
                                 } catch (e) {
                                   print(e);
                                 }

@@ -49,7 +49,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
       print(e);
     }
   }
-    
+
   void idProduitsFavorisUser1(Map<String, dynamic> produit, BuildContext context) async {
     if (Renseignements.emailUser != null) {
       try {
@@ -85,6 +85,22 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     'assets/images/sketchbook-156775_1280.png',
   ];
 
+  void fetchProducts(String nomCategorie, String nomSousCategorie){
+    Firestore.instance
+        .collection(nomCategorie)
+        .document(nomSousCategorie)
+        .collection("Produits")
+        .getDocuments()
+        .then((value) {
+      for (int i = 0; i < value.documents.length; i++) {
+        if (value.documents[i].data["numberStar"] == 3) {
+          produitsRecommander.add(value.documents[i].data);
+        }
+        tousLesProduits.add(value.documents[i].data);
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -102,59 +118,17 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
       });
 
     animationController.repeat();
+    fetchProducts("Femmes", "CHAUSSURES");
+    fetchProducts("Femmes", "JEANS");
+    fetchProducts("Femmes", "ACCESSOIRES");
+    fetchProducts("Femmes", "T-SHIRT");
 
-    Firestore.instance
-        .collection("Femmes")
-        .document("CHAUSSURES")
-        .collection("Produits")
-        .getDocuments()
-        .then((value) {
-      for (int i = 0; i < value.documents.length; i++) {
-        if (value.documents[i].data["numberStar"] == 3) {
-          produitsRecommander.add(value.documents[i].data);
-        }
-        tousLesProduits.add(value.documents[i].data);
-      }
-    });
-    Firestore.instance
-        .collection("Femmes")
-        .document("JEANS")
-        .collection("Produits")
-        .getDocuments()
-        .then((value) {
-      for (int i = 0; i < value.documents.length; i++) {
-        if (value.documents[i].data["numberStar"] == 3) {
-          produitsRecommander.add(value.documents[i].data);
-        }
-        tousLesProduits.add(value.documents[i].data);
-      }
-    });
-    Firestore.instance
-        .collection("Femmes")
-        .document("ACCESSOIRES")
-        .collection("Produits")
-        .getDocuments()
-        .then((value) {
-      for (int i = 0; i < value.documents.length; i++) {
-        if (value.documents[i].data["numberStar"] == 3) {
-          produitsRecommander.add(value.documents[i].data);
-        }
-        tousLesProduits.add(value.documents[i].data);
-      }
-    });
-    Firestore.instance
-        .collection("Femmes")
-        .document("T-SHIRT")
-        .collection("Produits")
-        .getDocuments()
-        .then((value) {
-      for (int i = 0; i < value.documents.length; i++) {
-        if (value.documents[i].data["numberStar"] == 3) {
-          produitsRecommander.add(value.documents[i].data);
-        }
-        tousLesProduits.add(value.documents[i].data);
-      }
-    });
+    fetchProducts("Hommes", "CHAUSSURES");
+    fetchProducts("Hommes", "JEANS");
+    fetchProducts("Hommes", "ACCESSOIRES");
+    fetchProducts("Hommes", "  T-SHIRT");
+    fetchProducts("Hommes", "PULLS&JACKETS");
+    fetchProducts("Hommes", "CHEMISES");
   }
 
   @override
@@ -261,8 +235,9 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 height: longueurPerCent(16, context),
               ),
               Container(
-                height: longueurPerCent(255, context),
+                height: longueurPerCent(220, context),
                 child: ListView.builder(
+
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: produitsRecommander.length,
@@ -396,7 +371,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                     top: longueurPerCent(18, context),
                     left: largeurPerCent(13, context)),
                 child: Text(
-                  "Découverte",
+                  "Découvrir",
                   style: TextStyle(
                       color: HexColor("#001C36"),
                       fontSize: 20,

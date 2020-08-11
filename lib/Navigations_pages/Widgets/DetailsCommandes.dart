@@ -5,12 +5,20 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 class DetailsCommandes extends StatefulWidget {
   static String id="DetailsCommande";
   Map<String, dynamic> commande;
-  DetailsCommandes({this.commande});
+  int longueur;
+  DetailsCommandes({this.commande, this.longueur});
   @override
   _DetailsCommandesState createState() => _DetailsCommandesState();
 }
 
 class _DetailsCommandesState extends State<DetailsCommandes> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.commande);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,13 +106,13 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
-                        Expanded(
+                       Expanded(
                           flex: 8,
                           child: Container(
                             child: Padding(
                               padding:
                               EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
-                              child: Text(
+                              child:  (widget.commande["lieuDeLivraison"]=="En Agence")? Text(
                                 "Vodje von avant pharmacie sainte foi 4eme maison a gauche",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -113,7 +121,18 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                   fontFamily: "MontserratBold",
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
+                              ):Text(
+                                widget.commande["quartier"] +
+                                    ", " +
+                                    widget.commande["indication"],
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
                             ),
                           ),
                         ),
@@ -181,206 +200,117 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: longueurPerCent(10, context),
-                            bottom: longueurPerCent(10, context),
-                            left:longueurPerCent(10,context),
-                          ),
-                          height: longueurPerCent(
-                              60, context),
-                          width: largeurPerCent(80, context),
-                          child: Image.asset(
-                            "assets/images/logo.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                              margin:EdgeInsets.only(top: longueurPerCent(8, context),
-                                  left: longueurPerCent(10, context)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: longueurPerCent(0, context),),
-                                  Text(
-                                    "Chassure Cool ",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: HexColor(
-                                            "#909090"),
-                                        fontSize: 15,
-                                        fontFamily: "Regular"),
-                                  ),
-                                  SizedBox(
-                                    height: longueurPerCent(
-                                        4.0, context),
-                                  ),
-                                  Text(
-                                    "XX",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: HexColor("#001C36"),
-                                      fontSize: 12,
-                                      fontFamily: "MontserratBold",
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: longueurPerCent(
-                                        5.0, context),
-                                  ),
-                                  Text(
-                                    '5000 FCFA',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: HexColor("#00CC7b"),
-                                      fontSize: 15,
-                                      fontFamily: "MontserratBold",
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(height: longueurPerCent(5, context),),
-                                Container(
-                                  height: longueurPerCent(20, context),
-                                  width: largeurPerCent(100, context),
-                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                  color: HexColor("#001C36"),
-                                  child: Center(
-                                    child: Text(
-                                      "SUR MESURE",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: HexColor("#FFFFFF"),
-                                          fontSize: 9.0,
-                                          fontFamily: "MontserratBold",
-                                          fontWeight: FontWeight.bold
+                   ListView.builder(
+                       shrinkWrap: true,
+                       physics: NeverScrollableScrollPhysics(),
+                       itemCount: widget.longueur,
+                       itemBuilder: (context, i){
+                         return Column(
+                           children: [
+                             Row(
+                               children: [
+                                 Container(
+                                   margin: EdgeInsets.only(
+                                     top: longueurPerCent(10, context),
+                                     bottom: longueurPerCent(10, context),
+                                     left:longueurPerCent(10,context),
+                                   ),
+                                   height: longueurPerCent(
+                                       60, context),
+                                   width: largeurPerCent(80, context),
+                                   child: Image.asset(
+                                     widget.commande["produitsCommander"][i]["image1"],
+                                     fit: BoxFit.cover,
+                                   ),
+                                 ),
+                                 Expanded(
+                                   child: Container(
+                                       margin:EdgeInsets.only(top: longueurPerCent(8, context),
+                                           left: longueurPerCent(10, context)),
+                                       child: Column(
+                                         mainAxisAlignment: MainAxisAlignment.start,
+                                         crossAxisAlignment: CrossAxisAlignment.start,
+                                         children: <Widget>[
+                                           SizedBox(height: longueurPerCent(0, context),),
+                                           Text(
+                                             widget.commande["produitsCommander"][i]["nomDuProduit"],
+                                             textAlign: TextAlign.left,
+                                             style: TextStyle(
+                                                 color: HexColor(
+                                                     "#909090"),
+                                                 fontSize: 15,
+                                                 fontFamily: "Regular"),
+                                           ),
+                                           SizedBox(
+                                             height: longueurPerCent(
+                                                 4.0, context),
+                                           ),
+                                           Text(
+                                             widget.commande["produitsCommander"][i]["taille"],
+                                             textAlign: TextAlign.left,
+                                             style: TextStyle(
+                                               color: HexColor("#001C36"),
+                                               fontSize: 12,
+                                               fontFamily: "MontserratBold",
+                                               fontWeight: FontWeight.bold,
+                                             ),
+                                           ),
+                                           SizedBox(
+                                             height: longueurPerCent(
+                                                 8.0, context),
+                                           ),
+                                           Text(
+                                             "${widget.commande["produitsCommander"][i]["prix"]}",
+                                             textAlign: TextAlign.right,
+                                             style: TextStyle(
+                                               color: HexColor("#00CC7b"),
+                                               fontSize: 15,
+                                               fontFamily: "MontserratBold",
+                                               fontWeight: FontWeight.bold,
+                                             ),
+                                           ),
+                                         ],
+                                       )
+                                   ),
+                                 ),
+                                 (widget.commande["produitsCommander"][i]["etatSurMesure"]==true)?
+                                 Expanded(
+                                   child: Container(
+                                     child: Column(
+                                       children: <Widget>[
+                                         SizedBox(height: longueurPerCent(5, context),),
+                                         Container(
+                                           height: longueurPerCent(20, context),
+                                           width: largeurPerCent(100, context),
+                                           margin: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                           color: HexColor("#001C36"),
+                                           child: Center(
+                                             child: Text(
+                                               "SUR MESURE",
+                                               textAlign: TextAlign.right,
+                                               style: TextStyle(
+                                                   color: HexColor("#FFFFFF"),
+                                                   fontSize: 9.0,
+                                                   fontFamily: "MontserratBold",
+                                                   fontWeight: FontWeight.bold
 
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                     Divider(
-                      color: Colors.grey,
-                      height: 1,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: longueurPerCent(10, context),
-                            bottom: longueurPerCent(10, context),
-                            left:longueurPerCent(10,context),
-                          ),
-                          height: longueurPerCent(
-                              60, context),
-                          width: largeurPerCent(80, context),
-                          child: Image.asset(
-                            "assets/images/logo.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                              margin:EdgeInsets.only(top: longueurPerCent(8, context),
-                                  left: longueurPerCent(10, context)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: longueurPerCent(0, context),),
-                                  Text(
-                                    "Chassure Cool ",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: HexColor(
-                                            "#909090"),
-                                        fontSize: 15,
-                                        fontFamily: "Regular"),
-                                  ),
-                                  SizedBox(
-                                    height: longueurPerCent(
-                                        4.0, context),
-                                  ),
-                                  Text(
-                                    "XX",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: HexColor("#001C36"),
-                                      fontSize: 12,
-                                      fontFamily: "MontserratBold",
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: longueurPerCent(
-                                        8.0, context),
-                                  ),
-                                  Text(
-                                    '5000 FCFA',
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: HexColor("#00CC7b"),
-                                      fontSize: 15,
-                                      fontFamily: "MontserratBold",
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(height: longueurPerCent(5, context),),
-                                Container(
-                                  height: longueurPerCent(20, context),
-                                  width: largeurPerCent(100, context),
-                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                  color: HexColor("#001C36"),
-                                  child: Center(
-                                    child: Text(
-                                      "SUR MESURE",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: HexColor("#FFFFFF"),
-                                          fontSize: 9.0,
-                                          fontFamily: "MontserratBold",
-                                          fontWeight: FontWeight.bold
-
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      height: 1,
-                    ),
+                                               ),
+                                             ),
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                   ),
+                                 ):Text("")
+                               ],
+                             ),
+                             Divider(
+                               color: Colors.grey,
+                               height: 1,
+                             ),
+                           ],
+                         );
+                       }),
                     Container(height: longueurPerCent(10, context),)
                   ],
                 ),
@@ -613,14 +543,21 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               top: longueurPerCent(0.0, context),
                               right: longueurPerCent(0.0, context),
                               left: longueurPerCent(10.0, context)),
-                          child: Text(
+                          child: (widget.commande["moyenDePayement"]=="Mobile Money")?Text(
                             "Mobile Money",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: HexColor("#909090"),
                                 fontSize: 12,
                                 fontFamily: "MonseraBold"),
-                          ),
+                          ):Text(
+                            "Espèce",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: HexColor("#909090"),
+                                fontSize: 12,
+                                fontFamily: "MonseraBold"),
+                          )
                         ),
                       ],
                     ),
@@ -676,7 +613,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
-                                "10.000  ",
+                                "${widget.commande["total"]} ",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
@@ -732,7 +669,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
-                                "500",
+                                "${widget.commande["prixLivraison"]} ",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
@@ -850,7 +787,8 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
-                                "11000",
+                                "${widget.commande["sousTotal"]} ",
+
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),

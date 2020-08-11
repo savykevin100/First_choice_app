@@ -27,7 +27,7 @@ List<Map<String, dynamic>> commandes=[];
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       for (int i = 0; i < snapshot.documents.length; i++) {
-        print(snapshot.documents[i].data);
+        print(snapshot.documents.length);
          setState(() {
            commandes.add(snapshot.documents[i].data);
          });
@@ -210,7 +210,7 @@ List<Map<String, dynamic>> commandes=[];
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                                    return DetailsCommandes(commande:commandes[i]);
+                                    return DetailsCommandes(commande:commandes[i], longueur: commandes[i]["produitsCommander"].length);
                                   }));
                                 },
                                 child: Material(

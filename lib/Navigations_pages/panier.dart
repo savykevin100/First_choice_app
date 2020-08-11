@@ -267,7 +267,7 @@ class _PanierState extends State<Panier> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(height: longueurPerCent(30, context),),
+                                                SizedBox(height: longueurPerCent(20, context),),
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
