@@ -154,7 +154,7 @@ class _CategoriesState extends State<Categories> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                         ProduitsCategorie(categories.nomCategorie)));
+                                         ProduitsCategorie(categories.nomCategorie, "Femmes")));
                             },
                             child: Container(
                               height: 180,
@@ -208,7 +208,7 @@ class _CategoriesState extends State<Categories> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProduitsCategorie(categories.nomCategorie)));
+                                            ProduitsCategorie(categories.nomCategorie, "Hommes")));
                               },
                               child: Container(
                                 height: 180,

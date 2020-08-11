@@ -301,7 +301,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     children: <Widget>[
                       Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
                       SizedBox(width: largeurPerCent(20, context),),
-                      Text("${widget.produitMap["taille"]}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
+                      Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
                     ],
                   ),
                   SizedBox(width: largeurPerCent(200, context),),
