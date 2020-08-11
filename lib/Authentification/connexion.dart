@@ -27,6 +27,7 @@ class _ConnexionState extends State<Connexion> {
   String emailAdresse='';
   String motDePasse='';
   bool chargement = false;
+  bool r=false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -104,24 +105,16 @@ class _ConnexionState extends State<Connexion> {
                 SizedBox(height: longueurPerCent(50, context),),
                 button(HexColor("#001C36"), HexColor('#FFC30D'), context, "SE CONNECTER",  () async{
                   if(_formKey.currentState.validate()) {
-                    setState(() {
-                      chargement = true;
-                    });
                     try{
                       final user = await _auth.signInWithEmailAndPassword(email: emailAdresse , password: motDePasse);
-                      if(user!=null) {
-
-                        setState(() {
-                          Renseignements.emailUser = emailAdresse;
-                          Navigator.pushNamed(context,AllNavigationPage.id);
-                        });
+                      if(user!=null){
+                        Navigator.pushNamed(context,AllNavigationPage.id);
                       }
-
-                      setState(() {
-                        chargement = false;
-                      });
                     } catch (e) {
                       print(e);
+                      if(e.toString()=="PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)")
+                      displaySnackBarNom(context, "Mot de passe incorrect", Colors.white);
+                      else  displaySnackBarNom(context, "Aucun email ne correspond à l'email entré", Colors.white);
                     }
                   }
                 }),
@@ -148,6 +141,8 @@ class _ConnexionState extends State<Connexion> {
         )
     );
   }
+
+
   Widget email(){
     return TextFormField(
       style: TextStyle(

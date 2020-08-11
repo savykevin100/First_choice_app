@@ -3,7 +3,6 @@ import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
-import 'package:premierchoixapp/Design/Dropdowntest.dart';
 import 'package:premierchoixapp/Design/FirstPage.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
@@ -36,7 +35,6 @@ class MyApp extends StatelessWidget {
         splashColor: HexColor("#001C36"),
         colorScheme: ColorScheme.light(primary: HexColor("#001C36")),
       ),
-
       initialRoute: FirstPage.id,
       routes: {
         Connexion.id: (context) => Connexion(),

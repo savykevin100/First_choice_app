@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Navigations_pages/favoris.dart';
 import 'package:premierchoixapp/Navigations_pages/notifications.dart';
 
 
+// ignore: must_be_immutable
 class AllNavigationPage extends StatefulWidget {
   static String id = 'all_navigation_pages';
   List<Map<String, dynamic>> produits=[];

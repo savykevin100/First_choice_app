@@ -96,14 +96,15 @@ class _InscriptionState extends State<Inscription> {
                   SizedBox(height: longueurPerCent(50, context),),
                   button(HexColor("#001C36"), HexColor('#FFC30D'), context, "S'INSCRIRE", () async{
                     if(_formKey.currentState.validate()) {
-                      setState(() {
-                        chargement = true;
-                      });
+                     popup();
                       try {
-                        ///String userId= await widget.auth.signInWithEmailAndPassword(emailAdress, motDePass);
                         final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
                         if(user!=null ) {
+                          _auth.currentUser().then((value) {
+                            value.sendEmailVerification();
+                          });
                           print("reussie");
+                          Navigator.pushNamed(context, Connexion.id);
                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                             return Renseignements(emailAdress: emailAdress);
                           }));
@@ -138,6 +139,23 @@ class _InscriptionState extends State<Inscription> {
             ),
           ));
   }
+
+  Widget popup() {
+    showDialog(context: context, builder: (builder) {
+      return AlertDialog(
+        content:  Center(
+          child: Column(
+            children: [
+              Text("Veuillez consulter votre mail pour vérification de votre email, sans la confirmation de votre mail vous ne pourrez pas vous connecter"),
+             Padding(padding: EdgeInsets.only(top: longueurPerCent(20, context))),
+              Container( child:  Center(child: CircularProgressIndicator()) ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
 
   Widget email(){
     return TextFormField(

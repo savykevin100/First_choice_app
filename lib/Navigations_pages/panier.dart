@@ -66,7 +66,6 @@ class _PanierState extends State<Panier> {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-
   /// Cette fonction permet de récuperer le nombre d'ajout panier qui se trouve dans les variables de l'utilisateur. Cette variable est récupérée pour
   /// que quand tous les produits sont supprimés du panier le nombre de produits dans le panier soit mise à jour
   void getNombreProduitPanier() {
@@ -84,7 +83,6 @@ class _PanierState extends State<Panier> {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-
   /// Cette fonction permet de faire la somme des prix de tous les produits présents dans le panier
   void sumPrice() {
     _db.collection("Utilisateurs").document(Renseignements.emailUser)
@@ -101,7 +99,6 @@ class _PanierState extends State<Panier> {
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
   @override
   void initState() {
@@ -270,7 +267,7 @@ class _PanierState extends State<Panier> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(height: longueurPerCent(30, context),),
+                                                SizedBox(height: longueurPerCent(20, context),),
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
@@ -324,14 +321,14 @@ class _PanierState extends State<Panier> {
                   .height - 60),
               child: button(
                   HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () {
-               if(total==0){
+                if(total==0){
 
-               } else {
-                 print(total);
-                 Navigator.push(
-                     context, MaterialPageRoute(
-                     builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
-               }
+                } else {
+                  print(total);
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                }
               }),
             ),
           )

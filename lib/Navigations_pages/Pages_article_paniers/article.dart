@@ -14,8 +14,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'Panier1.dart';
 
+// ignore: must_be_immutable
 class ArticleSansTaille extends StatefulWidget {
   Produit produit;
   String currentUserId;
@@ -56,7 +56,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   void getIdFavoris() async {
     await _db
         .collection("Utilisateurs")
-        .document(widget.currentUserId) 
+        .document(widget.currentUserId)
         .collection("Favoris")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
@@ -88,13 +88,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         .then((QuerySnapshot snapshot) {
       for (int i = 0; i < snapshot.documents.length; i++) {
         if (snapshot.documents[i].data["imagePrincipaleProduit"] ==
-           widget.produitMap["image1"]) {
+            widget.produitMap["image1"]) {
           if (this.mounted) {
             setState(() {
               id_produit = snapshot.documents[i].documentID;
               quantite = snapshot.documents[i].data["quantite"];
               etatIconeFavoris = snapshot.documents[i].data["etatIconeFavoris"];
-             /// etatSurMesure = snapshot.documents[i].data["etatSurMesure"];
+              /// etatSurMesure = snapshot.documents[i].data["etatSurMesure"];
             });
           }
         }
@@ -103,7 +103,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   }
 
   ///////////////////////////////////////////////////// fin de la fonction/////////////////////////////////////////////////////////////////////
-
   /// Cette permet de permet de recuperer le nombre de produit ajouter dans le panier et l'incrémenter si l'utilisateur clique sur le bouton Ajouter au panier
   void getNombreProduitPanier() {
     _db
@@ -120,7 +119,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -236,7 +234,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         } else displaySnackBarNom(context, "Ce produit est indisponible pour le moment", Colors.white);
                       });
                     },
-                   /*onTap: (){
+                    /*onTap: (){
                       _db .collection("Utilisateurs")
                           .document(widget.currentUserId).collection("Panier").where("image1", isEqualTo:widget.produitMap["image1"])
                           .getDocuments().then((QuerySnapshot snapshot){
@@ -385,11 +383,11 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 SizedBox(width: largeurPerCent(20, context),),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    /*Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Panier1(total: widget.produitMap["prix"], unSeulProduit: widget.produit,)));
+                                Panier1(total: widget.produitMap["prix"]));*/
                   },
                   child: Padding(
                     padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
@@ -466,6 +464,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     );
   }
 
+  // ignore: missing_return
   Widget affichageImagesSecondaires(){
     if(widget.produit.numberImages==1){
       return Column(
@@ -533,6 +532,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
           notImage()
         ],
       );
+    // ignore: unrelated_type_equality_checks
     } else if(widget.produit==3 && widget.produit!=null){
       return Column(
         children: <Widget>[

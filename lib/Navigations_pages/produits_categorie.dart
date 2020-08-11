@@ -8,8 +8,6 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
-
 import 'Pages_article_paniers/article.dart';
 
 

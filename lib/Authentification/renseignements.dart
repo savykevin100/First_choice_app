@@ -355,25 +355,7 @@ class _RenseignementsState extends State<Renseignements> {
     );
   }
 
-  Future<void> _ackAlert(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Not in stock'),
-          content: const Text('This item is no longer available'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(

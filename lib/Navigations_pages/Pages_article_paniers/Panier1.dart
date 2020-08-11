@@ -7,18 +7,17 @@ import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'package:intl/intl.dart';
 import 'package:search_choices/search_choices.dart';
 
+// ignore: must_be_immutable
 class Panier1 extends StatefulWidget {
   static String id = 'Panier1';
   List<Map<String, dynamic>> produitsPanier;
   int total;
-  Produit unSeulProduit;
 
-  Panier1({this.total, this.produitsPanier, this.unSeulProduit});
+  Panier1({this.total, this.produitsPanier});
 
   @override
   _Panier1State createState() => _Panier1State();
@@ -338,7 +337,7 @@ class _Panier1State extends State<Panier1> {
                                     Center(
                                       child: Container(
                                         height: longueurPerCent(40, context),
-                                        width: largeurPerCent(347.0, context),
+                                        width: largeurPerCent(337.0, context),
                                         child: DateTimeField(
                                           format: format,
                                           onChanged: (value) {
@@ -358,7 +357,7 @@ class _Panier1State extends State<Panier1> {
                                               ),
                                             ),
                                             labelText: null,
-                                            hintText: "Date et heure de Livraison",
+                                            hintText: "Date et heure de livraison",
                                             contentPadding: EdgeInsets.only(top: longueurPerCent(10, context)),
                                             hintStyle: TextStyle(
                                               fontSize: 16.0,
@@ -489,17 +488,17 @@ class _Panier1State extends State<Panier1> {
                     total: widget.total,
                     nomComplet: name,
                     telephone: numUser,
-                      moyenDePayement: moyenDePayement,
+                    moyenDePayement: moyenDePayement,
                     lieuDeLivraison: lieu,
                     dateHeureDeLivraison: dateHeureDeLivraison,
                     produitsCommander: widget.produitsPanier,
-                    unSeulProduit: widget.unSeulProduit,
                   )));
     } else if (lieu == "A domicile" &&
         CupertinoDatePickerMode.date != null &&
         indication != null &&
         quartier != null && moyenDePayement!=null) {
       _db.collection("Zones").getDocuments().then((value) {
+        /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
         for (int i = 0; i < value.documents.length; i++) {
           if (value.documents[i].data.containsValue(quartier)) {
             if(stopSommeLivraisonRetour==0){
@@ -512,6 +511,7 @@ class _Panier1State extends State<Panier1> {
             }
           }
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -526,7 +526,6 @@ class _Panier1State extends State<Panier1> {
                        indication: indication,
                       quartier: quartier,
                       produitsCommander: widget.produitsPanier,
-                      unSeulProduit: widget.unSeulProduit,
                     )));
         print(widget.total);
         print(prixLivraison);

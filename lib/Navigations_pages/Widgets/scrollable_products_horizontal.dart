@@ -7,7 +7,6 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 
 
 /***************************************************************************************************/
@@ -43,6 +42,7 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async{
 
 
 /*Fin de la fonction*/
+// ignore: non_constant_identifier_names
 Widget scrollabe_products_horizontal(BuildContext context){
 
   return Container(

@@ -137,7 +137,7 @@ class _CategoriesState extends State<Categories> {
               (nombre==0)?Padding(
               padding:EdgeInsets.symmetric(horizontal: 10),
               child: StreamBuilder(
-                  stream: FirestoreService().getCategoriesFemmes(),
+                  stream: FirestoreService().getCategoriesHF("Femmes"),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<InfoCategories>> snapshot) {
                     if (snapshot.hasError || !snapshot.hasData) {
@@ -174,7 +174,7 @@ class _CategoriesState extends State<Categories> {
                                       constraints: BoxConstraints(
                                           maxWidth: 300
                                       ),
-                                      child: Text(categories.nomCategorie, style: TextStyle(color: HexColor("#001C36"), fontSize: 22,fontFamily: "MonseraBold"),)),
+                                      child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 22,fontFamily: "MonseraBold"),)),
                                 ),
                               ),
                             ),
@@ -191,7 +191,7 @@ class _CategoriesState extends State<Categories> {
             ):Padding(
                 padding:EdgeInsets.symmetric(horizontal: 10),
                 child: StreamBuilder(
-                    stream: FirestoreService().getSousCategories(),
+                    stream: FirestoreService().getCategoriesHF("Hommes"),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<InfoCategories>> snapshot) {
                       if (snapshot.hasError || !snapshot.hasData) {

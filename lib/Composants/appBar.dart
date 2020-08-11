@@ -9,6 +9,7 @@ import 'package:scroll_app_bar/scroll_app_bar.dart';
 
 
 
+// ignore: must_be_immutable
 class AppBarClasse extends StatefulWidget{
   BuildContext context;
   String titre;
@@ -24,6 +25,7 @@ class AppBarClasse extends StatefulWidget{
   State<StatefulWidget> createState() {
     // TODO: implement createState
     throw UnimplementedError();
+
   }
 
 
@@ -51,7 +53,7 @@ class AppBarClasse extends StatefulWidget{
                       nbAjoutPanier=snapshot.data[i].nbAjoutPanier;
                     }
                   }
-                  return Text("${nbAjoutPanier}");}
+                  return Text("$nbAjoutPanier");}
               }
           ),
           toAnimate: true,

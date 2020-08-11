@@ -1,4 +1,3 @@
-import 'package:premierchoixapp/Models/produit.dart';
 
 class Commandes {
   String nomComplet;
@@ -14,7 +13,7 @@ class Commandes {
   List<Map<String, dynamic>> produitsCommander;
   bool livrer;
   String created;
-  Produit unSeulProduit;
+  int sousTotal;
 
   Commandes(
       {this.nomComplet,
@@ -28,8 +27,8 @@ class Commandes {
       this.numeroDePayement,
       this.produitsCommander,
       this.lieuDeLivraison,
-      this.livrer,
-      this.unSeulProduit,
+        this.sousTotal,
+        this.livrer,
       this.created});
 
   Commandes.fromMap(Map<String, dynamic> donnees, String id)
@@ -45,8 +44,8 @@ class Commandes {
         lieuDeLivraison = donnees["lieuDeLivraison"],
         livrer = donnees["livrer"],
         created = donnees["created"],
-        unSeulProduit = donnees["unSeulProduit"],
-        numeroDePayement = donnees["numeroDePayement"];
+        sousTotal = donnees["sousTotal"],
+      numeroDePayement = donnees["numeroDePayement"];
 
   Map<String, dynamic> toMap() {
     return {
@@ -62,8 +61,8 @@ class Commandes {
       "produitsCommander": produitsCommander,
       "lieuDeLivraison": lieuDeLivraison,
       "livrer": livrer,
-      "unSeulProduit": unSeulProduit,
       "created": created,
+      "sousTotal": sousTotal,
     };
   }
 }

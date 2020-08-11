@@ -249,7 +249,6 @@ class _FavorisState extends State<Favoris> {
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
               );
             }
           }):Center(child: CircularProgressIndicator(),)
