@@ -64,9 +64,15 @@ List<Map<String, dynamic>> commandes=[];
                                 color: HexColor("#FFC30D"),
                                 child: Padding(
                                   padding: EdgeInsets.all(longueurPerCent(10, context)),
-                                  child: Text(
-                                    "Commande n°1",
-                                    style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Commande n°1",
+                                        style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
+                                      ),
+                                      Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
+                                    ],
                                   ),
                                 ),
                               ),
