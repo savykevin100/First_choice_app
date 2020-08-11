@@ -14,8 +14,9 @@ import 'Pages_article_paniers/article.dart';
 // ignore: must_be_immutable
 class ProduitsCategorie extends StatefulWidget {
   String titreCategorie;
+  String genre;
 
-  ProduitsCategorie(this.titreCategorie);
+  ProduitsCategorie(this.titreCategorie, this.genre);
 
   @override
   _ProduitsCategorieState createState() => _ProduitsCategorieState();
@@ -62,7 +63,7 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
     // TODO: implement initState
     super.initState();
     Firestore.instance
-        .collection("Femmes")
+        .collection(widget.genre)
         .document(widget.titreCategorie)
         .collection("Produits")
         .getDocuments()

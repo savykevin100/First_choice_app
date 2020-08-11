@@ -563,7 +563,7 @@ class _Panier2State extends State<Panier2> {
                                                                         context),
                                                                   ),
                                                                   Text(
-                                                                    widget.produitsCommander[i]["taille"],
+                                                                    "${widget.produitsCommander[i]["taille"]}",
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,

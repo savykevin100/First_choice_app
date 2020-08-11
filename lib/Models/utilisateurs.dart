@@ -10,13 +10,14 @@ class Utilisateur {
 
 
 
+
   Utilisateur(
       {this.nomComplet,
       this.sexe,
       this.age,
       this.numero,
       this.email,
-      this.nbAjoutPanier, 
+      this.nbAjoutPanier,
     });
 
   Utilisateur.fromMap(Map<String, dynamic> donnees, String id)
