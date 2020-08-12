@@ -246,7 +246,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                                  4.0, context),
                                            ),
                                            Text(
-                                             widget.commande["produitsCommander"][i]["taille"],
+                                             "${widget.commande["produitsCommander"][i]["taille"]}",
                                              textAlign: TextAlign.left,
                                              style: TextStyle(
                                                color: HexColor("#001C36"),

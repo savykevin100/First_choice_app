@@ -50,6 +50,11 @@ class _Panier2State extends State<Panier2> {
   bool _isEnabledPayement = true;
   bool _isEnabled = true;
 
+  Firestore _db=Firestore.instance;
+  List<String> idProduitsPanier=[];
+
+
+
   int totalPlusLivraison;
   String numeroDePayement;
   bool chargement = false;
@@ -71,11 +76,33 @@ class _Panier2State extends State<Panier2> {
     setState(() {
       totalPlusLivraison = widget.total + widget.prixLivraison;
     });
+    getIdProduit();
   }
+
+  /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
+  /// quand la commande a été lancé
+  Future<void> getIdProduit() async {
+    await _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .collection("Panier")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      for (int i = 0; i < snapshot.documents.length; i++) {
+        if (this.mounted) {
+          setState(() {
+            idProduitsPanier.add(snapshot.documents[i].documentID);
+          });
+        }
+      }
+    });
+  }
+  ///         fin de la fonction                  ////////
 
   @override
   Widget build(BuildContext context) {
-    if (chargement == false) {
+    if (chargement == false && idProduitsPanier!=null) {
+      print(idProduitsPanier.length);
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           key: _scaffoldKey,
@@ -930,7 +957,7 @@ class _Panier2State extends State<Panier2> {
                                             style: TextStyle(
                                               color: HexColor("#001C36"),
                                               fontSize: 17,
-                                              fontFamily: "MontserratBold",
+                                              fontFamily: "MontserratBold",       
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -949,52 +976,7 @@ class _Panier2State extends State<Panier2> {
                                 context, 'COMMANDER', () {
                               if (widget.moyenDePayement == "Mobile Money") {
                                 if (numeroDePayement.length == 8) {
-                                  try {
-                                     FirestoreService().addCommande(
-                                Commandes(
-                                    nomComplet: widget.nomComplet,
-                                    telephone: widget.telephone,
-                                    quartier: widget.quartier,
-                                    indication: widget.indication,
-                                    dateHeureDeLivraison:
-                                    widget.dateHeureDeLivraison,
-                                    total: widget.total,
-                                    sousTotal: totalPlusLivraison,
-                                    moyenDePayement: widget.moyenDePayement,
-                                    numeroDePayement: numeroDePayement,
-                                    produitsCommander: widget.produitsCommander,
-                                    prixLivraison: widget.prixLivraison,
-                                    lieuDeLivraison: widget.lieuDeLivraison,
-                                    livrer: false,
-                                    created: DateTime.now().toString()),
-                                Renseignements.emailUser);
-                            FirestoreService().addCommandeToAdmin(
-                                Commandes(
-                                    nomComplet: widget.nomComplet,
-                                    telephone: widget.telephone,
-                                    quartier: widget.quartier,
-                                    indication: widget.indication,
-                                    dateHeureDeLivraison:
-                                    widget.dateHeureDeLivraison,
-                                    total: widget.total,
-                                    sousTotal: totalPlusLivraison,
-                                    moyenDePayement: widget.moyenDePayement,
-                                    numeroDePayement: numeroDePayement,
-                                    produitsCommander: widget.produitsCommander,
-                                    prixLivraison: widget.prixLivraison,
-                                    lieuDeLivraison: widget.lieuDeLivraison,
-                                    created: DateTime.now().toString(),
-                                    livrer: false),
-                                Renseignements.emailUser);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CommandeSend()));
-                                    Firestore.instance.collection('Utilisateurs').document(Renseignements.emailUser).collection("Panier").document().delete();
-                                  } catch (e) {
-                                    print(e);
-                                  }
+                                  commandAction();
                                 } else {
                                   displaySnackBarNom(
                                       context,
@@ -1002,58 +984,7 @@ class _Panier2State extends State<Panier2> {
                                       Colors.red);
                                 }
                               } else {
-                                try {
-                                   FirestoreService().addCommande(
-                                Commandes(
-                                    nomComplet: widget.nomComplet,
-                                    telephone: widget.telephone,
-                                    quartier: widget.quartier,
-                                    indication: widget.indication,
-                                    dateHeureDeLivraison:
-                                        widget.dateHeureDeLivraison,
-                                    total: widget.total,
-                                    sousTotal: totalPlusLivraison,
-                                    moyenDePayement: widget.moyenDePayement,
-                                    numeroDePayement: numeroDePayement,
-                                    produitsCommander: widget.produitsCommander,
-                                    prixLivraison: widget.prixLivraison,
-                                    lieuDeLivraison: widget.lieuDeLivraison,
-                                    livrer: false,
-                                    created: DateTime.now().toString()),
-                                Renseignements.emailUser);
-                            FirestoreService().addCommandeToAdmin(
-                                Commandes(
-                                    nomComplet: widget.nomComplet,
-                                    telephone: widget.telephone,
-                                    quartier: widget.quartier,
-                                    indication: widget.indication,
-                                    dateHeureDeLivraison:
-                                    widget.dateHeureDeLivraison,
-                                    total: widget.total,
-                                   sousTotal: totalPlusLivraison,
-                                    moyenDePayement: widget.moyenDePayement,
-                                    numeroDePayement: numeroDePayement,
-                                    produitsCommander: widget.produitsCommander,
-                                    prixLivraison: widget.prixLivraison,
-                                    lieuDeLivraison: widget.lieuDeLivraison,
-                                    created: DateTime.now().toString(),
-                                    livrer: false),
-                                Renseignements.emailUser);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CommandeSend()));
-
-                                  /*Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser).collection("Panier").getDocuments().then((value) {
-                                    for(int i=0; i<value.documents.length; i++){
-                                      Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser)
-                                          .collection("Panier").document(value.documents[i].documentID).delete();
-                                    }
-                                  });*/
-                                } catch (e) {
-                                  print(e);
-                                }
+                               commandAction();
                               }
                             }),
                             Container(
@@ -1093,6 +1024,66 @@ class _Panier2State extends State<Panier2> {
       );
     }
   }
+
+
+  void commandAction(){
+    /// ---       Cette boucle permet de parcourir les identifiants du panier et de le renitialiser     --- ///
+    for (int i=0; i<idProduitsPanier.length; i++){
+      Firestore.instance.collection('Utilisateurs').document(Renseignements.emailUser).collection("Panier").document(idProduitsPanier[i]).delete();
+    }
+    ///Fin de la boucle ///
+    try {
+      FirestoreService().addCommande(
+          Commandes(
+              nomComplet: widget.nomComplet,
+              telephone: widget.telephone,
+              quartier: widget.quartier,
+              indication: widget.indication,
+              dateHeureDeLivraison:
+              widget.dateHeureDeLivraison,
+              total: widget.total,
+              sousTotal: totalPlusLivraison,
+              moyenDePayement: widget.moyenDePayement,
+              numeroDePayement: numeroDePayement,
+              produitsCommander: widget.produitsCommander,
+              prixLivraison: widget.prixLivraison,
+              lieuDeLivraison: widget.lieuDeLivraison,
+              livrer: false,
+              created: DateTime.now().toString()),
+          Renseignements.emailUser);
+      FirestoreService().addCommandeToAdmin(
+          Commandes(
+              nomComplet: widget.nomComplet,
+              telephone: widget.telephone,
+              quartier: widget.quartier,
+              indication: widget.indication,
+              dateHeureDeLivraison:
+              widget.dateHeureDeLivraison,
+              total: widget.total,
+              sousTotal: totalPlusLivraison,
+              moyenDePayement: widget.moyenDePayement,
+              numeroDePayement: numeroDePayement,
+              produitsCommander: widget.produitsCommander,
+              prixLivraison: widget.prixLivraison,
+              lieuDeLivraison: widget.lieuDeLivraison,
+              created: DateTime.now().toString(),
+              livrer: false),
+          Renseignements.emailUser);
+
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  CommandeSend()));
+
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(
