@@ -44,18 +44,18 @@ class _CategoriesState extends State<Categories> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: largeurPerCent(20, context),
-                    vertical: longueurPerCent(20, context)),
+                margin: EdgeInsets.only(
+                    left: largeurPerCent(6, context),right: largeurPerCent(6, context),top: longueurPerCent(10, context),bottom: longueurPerCent(20, context)),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(7.0)),
                   color: HexColor("#DDDDDD"),
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: largeurPerCent(20, context)),
+                      padding:
+                      EdgeInsets.only(left: largeurPerCent(90, context)),
                       child: Icon(Icons.search, color: HexColor('#9B9B9B')),
                     ),
                     labelText: "Rechercher un produit",
@@ -63,8 +63,10 @@ class _CategoriesState extends State<Categories> {
                         color: HexColor('#9B9B9B'),
                         fontSize: 17.0,
                         fontFamily: 'MonseraLight'),
-                    contentPadding:
-                        EdgeInsets.only(top: 10, bottom: 5, left: 100),
+                    contentPadding: EdgeInsets.only(
+                      top: 10,
+                      bottom: 5,
+                    ),
                   ),
                 )),
             Center(
@@ -78,7 +80,7 @@ class _CategoriesState extends State<Categories> {
                       style: TextStyle(
                           color: HexColor("#FFC30D"),
                           fontFamily: "MonseraBold",
-                          fontSize: 20),
+                          fontSize: 18),
                     ),
                   ),
                   LiteRollingSwitch(
@@ -111,7 +113,7 @@ class _CategoriesState extends State<Categories> {
                       style: TextStyle(
                           color: Colors.pink,
                           fontFamily: "MonseraBold",
-                          fontSize: 20),
+                          fontSize: 18),
                     ),
                   ),
                 ],
@@ -129,7 +131,7 @@ class _CategoriesState extends State<Categories> {
                 "Catégories",
                 style: TextStyle(
                     color: HexColor("#001C36"),
-                    fontSize: 22,
+                    fontSize: 20,
                     fontFamily: "MonseraBold"),
               ),
             ),
@@ -156,27 +158,48 @@ class _CategoriesState extends State<Categories> {
                                       builder: (context) =>
                                          ProduitsCategorie(categories.nomCategorie, "Femmes")));
                             },
-                            child: Container(
-                              height: 180,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image:NetworkImage(categories.imagePath,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image:NetworkImage(categories.imagePath,
+                                        ),
+                                        fit: BoxFit.cover
                                     ),
-                                    fit: BoxFit.cover
+                                  ),
                                 ),
-                              ),
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                          maxWidth: 300
-                                      ),
-                                      child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 22,fontFamily: "MonseraBold"),)),
+                                Container(
+                                  height: 180.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      gradient: LinearGradient(
+                                          begin: FractionalOffset.topCenter,
+                                          end: FractionalOffset.bottomCenter,
+                                          colors: [
+                                            Colors.grey.withOpacity(0.0),
+                                            Colors.black.withOpacity(0.8),
+                                          ],
+                                          stops: [
+                                            0.0,
+                                            1.0
+                                          ])),
                                 ),
-                              ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 140),
+                                    child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth: 300
+                                        ),
+                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
@@ -210,26 +233,48 @@ class _CategoriesState extends State<Categories> {
                                         builder: (context) =>
                                             ProduitsCategorie(categories.nomCategorie, "Hommes")));
                               },
-                              child: Container(
-                                height: 180,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      image:NetworkImage(categories.imagePath),
-                                      fit: BoxFit.cover
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 180,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image:NetworkImage(categories.imagePath,
+                                          ),
+                                          fit: BoxFit.cover
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                            maxWidth: 300
-                                        ),
-                                          child: Text(categories.nomCategorie, style: TextStyle(color: Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                  Container(
+                                    height: 180.0,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        gradient: LinearGradient(
+                                            begin: FractionalOffset.topCenter,
+                                            end: FractionalOffset.bottomCenter,
+                                            colors: [
+                                              Colors.grey.withOpacity(0.0),
+                                              Colors.black.withOpacity(0.8),
+                                            ],
+                                            stops: [
+                                              0.0,
+                                              1.0
+                                            ])),
                                   ),
-                                ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 140),
+                                      child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxWidth: 300
+                                          ),
+                                          child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
                           },
