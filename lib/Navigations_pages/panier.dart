@@ -273,9 +273,20 @@ class _PanierState extends State<Panier> {
                                                   child: IconButton(icon: Icon(
                                                     Icons.delete, color: Colors.red,),
                                                       onPressed: () {
+                                                    setState(() {
+                                                      ajoutPanier--;
+                                                    });
+                                                    print(ajoutPanier);
                                                         FirestoreService().deletePanier(
                                                             Renseignements.emailUser,
                                                             idProduitsPanier[i]);
+                                                            _db
+                                                                .collection("Utilisateurs")
+                                                                .document(
+                                                                Renseignements.emailUser)
+                                                                .updateData({
+                                                                "nbAjoutPanier": ajoutPanier
+                                                            });
                                                         _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:panier.image1)
                                                             .getDocuments().then((QuerySnapshot snapshot){
                                                           if(snapshot.documents.isNotEmpty){
@@ -287,13 +298,7 @@ class _PanierState extends State<Panier> {
                                                           idProduitsPanier.removeAt(i);
                                                           produitsPaniers.removeAt(i);
                                                         });
-                                                        _db
-                                                            .collection("Utilisateurs")
-                                                            .document(
-                                                            Renseignements.emailUser)
-                                                            .updateData({
-                                                          "nbAjoutPanier": ajoutPanier--
-                                                        });
+
                                                       }),
                                                 ),
                                               ],
@@ -324,7 +329,17 @@ class _PanierState extends State<Panier> {
                 if(total==0){
 
                 } else {
-                  print(total);
+                 for(int i=0; i<idProduitsPanier.length; i++){
+                   for(int j=0; j<produitsIndisponibles.length; j++){
+                     if(produitsPaniers[i]["image1"]==produitsIndisponibles[i]["image1"]){
+                       /// ---       Cette boucle permet de parcourir les identifiants du panier et de le renitialiser     --- ///
+                       for (int i=0; i<idProduitsPanier.length; i++){
+                         Firestore.instance.collection('Utilisateurs').document(Renseignements.emailUser).collection("Panier").document(idProduitsPanier[i]).delete();
+                       }
+                       ///Fin de la boucle ///
+                     }
+                   }
+                 }
                   Navigator.push(
                       context, MaterialPageRoute(
                       builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
