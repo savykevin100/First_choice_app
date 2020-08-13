@@ -14,6 +14,9 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:full_screen_image/full_screen_image.dart';
+import 'package:photo_view/photo_view.dart';
+
 
 // ignore: must_be_immutable
 class ArticleSansTaille extends StatefulWidget {
@@ -32,6 +35,8 @@ class ArticleSansTaille extends StatefulWidget {
 
 class _ArticleSansTailleState extends State<ArticleSansTaille> {
   //  String imageCliquer =widget.produitMap["image1"];
+
+
 
   int index = 1;
   Firestore _db = Firestore.instance;
@@ -208,7 +213,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:widget.produitMap["image1"])
                           .getDocuments().then((QuerySnapshot snapshot){
                         if(snapshot.documents.isEmpty){
-                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.green);
+                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.white);
                           setState(() {
                             ajoutPanier=ajoutPanier+1;
                             FirestoreService().produitsIndisponibles(PanierClasse(
@@ -415,7 +420,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 InkWell(
                   onTap: () async => await _shareImageFromUrl(),
                   child: Padding(
-                    padding:  EdgeInsets.only(left: largeurPerCent(15, context)),
+                    padding:  EdgeInsets.only(left: largeurPerCent(15, context),right: largeurPerCent(10, context),),
                     child: Container(
                       height: longueurPerCent(38, context),
                       width: largeurPerCent(160, context),
@@ -464,6 +469,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     );
   }
 
+
   // ignore: missing_return
   Widget affichageImagesSecondaires(){
     if(widget.produit.numberImages==1){
@@ -490,18 +496,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 print(widget.produit.selectImage);
               });
             },
-            child: Container(
-              height: longueurPerCent(70, context),
-              width: largeurPerCent(83, context),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: largeurPerCent(1, context),
-                      color: HexColor("#707070")),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.produit.image1),
-                      fit: BoxFit.cover)),
+
+              child: Container(
+                height: longueurPerCent(70, context),
+                width: largeurPerCent(83, context),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: largeurPerCent(1, context),
+                        color: HexColor("#707070")),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.produit.image1),
+                        fit: BoxFit.cover)),
+              ),
             ),
-          ),
           SizedBox(height: longueurPerCent(20, context),),
 
           GestureDetector(
@@ -633,14 +640,25 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   for (int i = 0; i < snapshot.data.length; i++) {
                     if (widget.produitMap["image1"] == snapshot.data[i].imagePrincipaleProduit) {
                       ProduitsFavorisUser produit = snapshot.data[i];
-                      return Container(
-                        height: longueurPerCent(253, context),
-                        width: largeurPerCent(262, context),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(produit.imageSelect, ),
-                                fit: BoxFit.cover)),
+                      return Hero(
+                        tag: "customBackground",
+                        child: Container(
+                          height: longueurPerCent(253, context),
+                          width: largeurPerCent(262, context),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(produit.imageSelect, ),
+                                  fit: BoxFit.cover)),
+                          child:GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(produit.imageSelect) ,),),);
+                            },
+
+                          ) ,
+
+                        ),
                       );
+
                     }
                   }
                   return null;
@@ -968,6 +986,39 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
           ]);
     }
+  }
+}
+class HeroPhotoViewRouteWrapper extends StatelessWidget {
+   HeroPhotoViewRouteWrapper({
+    this.imageProvider,
+    this.loadingBuilder,
+    this.backgroundDecoration,
+    this.minScale,
+    this.maxScale,
+  });
+
+  final ImageProvider imageProvider;
+  final LoadingBuilder loadingBuilder;
+  final Decoration backgroundDecoration;
+  final dynamic minScale;
+  final dynamic maxScale;
+  Produit produit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints.expand(
+        height: MediaQuery.of(context).size.height,
+      ),
+      child: PhotoView(
+        imageProvider: imageProvider,
+        loadingBuilder: loadingBuilder,
+        backgroundDecoration: backgroundDecoration,
+        minScale: minScale,
+        maxScale: maxScale,
+        heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+      ),
+    );
   }
 }
 

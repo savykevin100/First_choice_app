@@ -337,7 +337,7 @@ class _Panier1State extends State<Panier1> {
                                     Center(
                                       child: Container(
                                         height: longueurPerCent(40, context),
-                                        width: largeurPerCent(337.0, context),
+                                        width: largeurPerCent(336.0, context),
                                         child: DateTimeField(
                                           format: format,
                                           onChanged: (value) {

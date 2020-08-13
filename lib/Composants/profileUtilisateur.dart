@@ -53,14 +53,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 Navigator.pushNamed(context, AllNavigationPage.id);
               }),
           drawerItem(
-              icon: Icons.shopping_basket,
+              icon: Icons.local_grocery_store,
               text: "Mes commandes",
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
               }),
           drawerItem(
-              icon: Icons.logout,
+              icon: Icons.person,
               text: "Deconnexion",
               onTap: () async {
                 await _auth.signOut();
@@ -106,9 +106,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         ),
         accountEmail: Text(currentUser, style: TextStyle(fontSize: 15)),
         currentAccountPicture: CircleAvatar(
-            backgroundImage: AssetImage(
-              "assets/images/user33312571280.png",
-            )),
+            backgroundColor: Colors.white,
+        child: Center(
+          child: Text(
+            "H",
+            style: TextStyle(color: HexColor("#001c36"), fontSize: 50,fontWeight: FontWeight.bold),
+          ),
+        ),),
       );
   }
 
@@ -136,3 +140,5 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     );
   }
 }
+
+

@@ -74,7 +74,7 @@ class _UserProfilState extends State<UserProfil>{
                                margin: EdgeInsets.only(left: longueurPerCent(0.0, context)),
                                child: Center(
                                  child: IconButton(
-                                   icon: Icon(Icons.shopping_basket),
+                                   icon: Icon(Icons.local_grocery_store),
                                    color: Colors.white,
                                    onPressed: (){
                                      setState(() {

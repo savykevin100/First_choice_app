@@ -191,7 +191,7 @@ class _CategoriesState extends State<Categories> {
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: 140),
+                                    padding: EdgeInsets.only(top: 140,bottom: longueurPerCent(10, context)),
                                     child: ConstrainedBox(
                                         constraints: BoxConstraints(
                                             maxWidth: 300
@@ -266,7 +266,7 @@ class _CategoriesState extends State<Categories> {
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Padding(
-                                      padding: EdgeInsets.only(top: 140),
+                                      padding: EdgeInsets.only(top: 140,bottom: longueurPerCent(10, context)),
                                       child: ConstrainedBox(
                                           constraints: BoxConstraints(
                                               maxWidth: 300

@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         primaryColor: HexColor("#001C36"),
         brightness: Brightness.light,
         accentColor: HexColor("#001C36"),
-        splashColor: HexColor("#001C36"),
         colorScheme: ColorScheme.light(primary: HexColor("#001C36")),
       ),
       initialRoute: FirstPage.id,

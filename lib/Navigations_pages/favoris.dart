@@ -214,7 +214,7 @@ class _FavorisState extends State<Favoris> {
                                 ),
                                 SizedBox(width: largeurPerCent(30, context),),
                                 Padding(
-                                  padding: EdgeInsets.only(left: longueurPerCent(20, context)),
+                                  padding: EdgeInsets.only(left: longueurPerCent(20, context),right: longueurPerCent(10, context)),
                                     child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
                                       for(int i=0; i<etatFavoris.length; i++){
                                         if(produit.image1==etatFavoris[i]) {
