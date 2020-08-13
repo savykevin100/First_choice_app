@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
+import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 
@@ -18,10 +19,11 @@ class _NotificationsState extends State<Notifications> {
     AppBarClasse _appBar = AppBarClasse(
         titre: "Notifications", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
     return Scaffold(
+      backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
       drawer: ProfileSettings(userCurrent:  Renseignements.emailUser),
       body: Container(
-        child:   elementsVides(context, Icons.add_alert, "AUCUNE NOTIFICATION",),
+        child:   elementsVides(context, Icons.add_alert, " aucune notification",),
       ),
     );
 

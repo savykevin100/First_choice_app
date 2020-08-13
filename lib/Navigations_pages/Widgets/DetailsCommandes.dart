@@ -333,7 +333,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                         child: Padding(
                           padding: EdgeInsets.all(longueurPerCent(10, context)),
                           child: Text(
-                            "Sur Mesure",
+                            "Mensurations",
                             style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
                           ),
                         ),

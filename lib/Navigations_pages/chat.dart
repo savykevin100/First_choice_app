@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
 import 'Widgets/DetailsCommandes.dart';
 
@@ -25,12 +27,11 @@ class _ChatState extends State<Chat> {
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer: Drawer(),
+      drawer:  ProfileSettings(userCurrent:  Renseignements.emailUser),
       body: Container(
         height: MediaQuery.of(context).size.height/1.5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Center(
               child: Text(
@@ -107,7 +108,7 @@ class _ChatState extends State<Chat> {
                     child: Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(left: longueurPerCent(0, context)),
+                          margin: EdgeInsets.only(left: longueurPerCent(5, context)),
                           child: Image.asset("assets/images/7d6d999657b076cd4d101b5b93535103.png",
                             width: largeurPerCent(60, context),),
                         ),

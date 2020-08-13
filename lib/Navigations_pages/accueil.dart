@@ -255,7 +255,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                           Renseignements.emailUser)));
                         },
                         child: Container(
-                          width: largeurPerCent(160, context),
+                          width: largeurPerCent(180, context),
                           margin: EdgeInsets.only(
                               left: largeurPerCent(10, context)),
                           decoration: BoxDecoration(
@@ -269,7 +269,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                 Container(
                                   height:
                                   longueurPerCent(120, context),
-                                  width: largeurPerCent(160, context),
+                                  width: largeurPerCent(180, context),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7),
                                   ),
@@ -335,7 +335,8 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                     padding: EdgeInsets.only(
                                         top:
                                         longueurPerCent(10, context),
-                                        left: largeurPerCent(4, context)
+                                        left: largeurPerCent(4, context),
+                                      bottom:longueurPerCent(10, context)
                                     ),
                                     child: RatingBar(
                                       initialRating: produitsRecommander[i]["numberStar"]

@@ -49,7 +49,6 @@ List<Map<String, dynamic>> commandes=[];
                   itemBuilder: (context, i){
                     return  Container(
                       margin: EdgeInsets.only(bottom: longueurPerCent(20, context)),
-                      height: longueurPerCent(160, context),
                       width: largeurPerCent(360.0, context),
                       child: Material(
                         borderRadius: BorderRadius.circular(7),
@@ -58,7 +57,7 @@ List<Map<String, dynamic>> commandes=[];
                         child: Column(
                           children: <Widget>[
                             Container(
-                              width: largeurPerCent(360.0, context),
+                              width: MediaQuery.of(context).size.width,
                               child: Material(
                                 borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                 color: HexColor("#FFC30D"),
@@ -122,7 +121,7 @@ List<Map<String, dynamic>> commandes=[];
                                       right: longueurPerCent(0.0, context),
                                       left: longueurPerCent(10.0, context)),
                                   child: Text(
-                                    "Total",
+                                    "Total        ",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: HexColor("#909090"),
@@ -148,7 +147,7 @@ List<Map<String, dynamic>> commandes=[];
                                 Expanded(
                                   flex: 1,
                                   child: Padding(
-                                    padding:  EdgeInsets.only(right: longueurPerCent(12, context)),
+                                    padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
                                     child: Text(
                                       " FCFA",
                                       textAlign: TextAlign.left,
@@ -211,8 +210,8 @@ List<Map<String, dynamic>> commandes=[];
                             SizedBox(height:longueurPerCent(20.0, context)),
                             Container(
                               margin: EdgeInsets.only(bottom: longueurPerCent(10, context), ),
-                              height: longueurPerCent(20.0, context),
-                              width: largeurPerCent(70.0, context),
+                              height: longueurPerCent(30.0, context),
+                              width: largeurPerCent(100.0, context),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
