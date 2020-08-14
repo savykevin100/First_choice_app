@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
+// ignore: must_be_immutable
 class DetailsCommandes extends StatefulWidget {
   static String id="DetailsCommande";
   Map<String, dynamic> commande;
@@ -113,7 +114,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
                               child:  (widget.commande["lieuDeLivraison"]=="En Agence")? Text(
-                                "Vodje von avant pharmacie sainte foi 4eme maison a gauche",
+                                "Jonquet en face pharmacie. Immeuble blanc, 2ème étage.",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),

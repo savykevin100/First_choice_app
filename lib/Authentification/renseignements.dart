@@ -326,6 +326,7 @@ class _RenseignementsState extends State<Renseignements> {
                                   numero: numeroPayement,
                                   email: widget.emailAdress,
                                   nbAjoutPanier: 0,
+                                  orderNumber: 0
                               ),
                               widget.emailAdress);
                               await FirestoreService().addToken(Tokens(

@@ -127,7 +127,7 @@ class _PanierState extends State<Panier> {
                         padding: EdgeInsets.only(
                             left: largeurPerCent(30, context)),
                         child: Text(
-                          " TOTAL :    ${total} FCFA",textAlign: TextAlign.center, style: TextStyle(
+                          " TOTAL :    $total FCFA",textAlign: TextAlign.center, style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontFamily: "MonseraBold"),),
@@ -329,7 +329,6 @@ class _PanierState extends State<Panier> {
                 if(total==0){
 
                 } else {
-
                   Navigator.push(
                       context, MaterialPageRoute(
                       builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
@@ -349,40 +348,4 @@ class _PanierState extends State<Panier> {
         body: Center(child: CircularProgressIndicator(),),
       );
     }
-  }
-
-
-
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Confirmez-vos mensurations?"),
-          content: new Text("Vous n'avez pas encore entré vous mensurations, veuillez-allez au niveau de votre "
-              "profil pour entrer vos mensurations"
-              ""),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
-}
+}}

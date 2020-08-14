@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 
 class MesCommandes extends StatefulWidget {
@@ -20,17 +18,18 @@ List<Map<String, dynamic>> commandes=[];
     // TODO: implement initState
     super.initState();
     print(Renseignements.emailUser);
-     Firestore.instance
+    Firestore.instance
         .collection("Utilisateurs")
         .document(Renseignements.emailUser)
         .collection("Commandes")
+        .orderBy("created")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       for (int i = 0; i < snapshot.documents.length; i++) {
         print(snapshot.documents.length);
-         setState(() {
-           commandes.add(snapshot.documents[i].data);
-         });
+        setState(() {
+          commandes.add(snapshot.documents[i].data);
+        });
       }
     });
 
@@ -67,7 +66,7 @@ List<Map<String, dynamic>> commandes=[];
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Commande n°1",
+                                        "Commande n°" + "${commandes[i]["numberOrder"]}",
                                         style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 19.0, fontWeight: FontWeight.bold ),
                                       ),
                                       Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)

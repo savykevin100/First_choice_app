@@ -6,7 +6,6 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
-import 'Widgets/DetailsCommandes.dart';
 
 
 class Chat extends StatefulWidget {

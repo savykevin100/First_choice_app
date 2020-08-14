@@ -11,13 +11,10 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
-import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages_article_paniers/article.dart';
-import 'Widgets/scrollable_products_horizontal.dart';
 
 class Accueil extends StatefulWidget {
   @override
@@ -27,7 +24,6 @@ class Accueil extends StatefulWidget {
 class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
   final _auth = FirebaseAuth.instance;
-  Firestore _db = Firestore.instance;
   int nombreAjoutPanier;
   FirebaseUser utilisateurConnecte;
   AnimationController animationController;

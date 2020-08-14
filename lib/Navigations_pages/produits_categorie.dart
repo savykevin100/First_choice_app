@@ -216,9 +216,7 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
           )
         ],
       ),
-    )
-    :Scaffold(
-     appBar: _appBar.appBarFunctionStream(),
+    ) :Scaffold(
      body: Center(child: CircularProgressIndicator(),)
     );
   }

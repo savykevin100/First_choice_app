@@ -138,6 +138,7 @@ class _FavorisState extends State<Favoris> {
                             Container(
                               //height: longueurPerCent(100, context),
                               width: largeurPerCent(200, context),
+                              height: longueurPerCent(200, context),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
@@ -212,7 +213,7 @@ class _FavorisState extends State<Favoris> {
                                     },
                                   ),
                                 ),
-                                SizedBox(width: largeurPerCent(30, context),),
+                                SizedBox(width: largeurPerCent(10, context),),
                                 Padding(
                                   padding: EdgeInsets.only(left: longueurPerCent(20, context),right: longueurPerCent(10, context)),
                                     child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
