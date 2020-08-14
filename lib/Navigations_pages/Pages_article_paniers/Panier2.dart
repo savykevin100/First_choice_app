@@ -52,6 +52,7 @@ class _Panier2State extends State<Panier2> {
 
   Firestore _db=Firestore.instance;
   List<String> idProduitsPanier=[];
+  int numberOrder;
 
 
 
@@ -77,6 +78,7 @@ class _Panier2State extends State<Panier2> {
       totalPlusLivraison = widget.total + widget.prixLivraison;
     });
     getIdProduit();
+    getNumberOrder();
   }
 
   /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
@@ -98,6 +100,21 @@ class _Panier2State extends State<Panier2> {
     });
   }
   ///         fin de la fonction                  ////////
+  ///
+
+  Future<void> getNumberOrder() async{
+    await     _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+          numberOrder = value.data["orderNumber"];
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1019,6 +1036,7 @@ class _Panier2State extends State<Panier2> {
                 size: 60,
               )
             ],
+
           ),
         ),
       );
@@ -1027,6 +1045,24 @@ class _Panier2State extends State<Panier2> {
 
 
   void commandAction(){
+    setState(() {
+      numberOrder=numberOrder+1;
+    });
+    _db
+        .collection("Utilisateurs")
+        .document(
+        Renseignements.emailUser)
+        .updateData({
+      "nbAjoutPanier": 0
+    });
+
+    _db
+        .collection("Utilisateurs")
+        .document(
+        Renseignements.emailUser)
+        .updateData({
+      "orderNumber": numberOrder
+    });
     /// ---       Cette boucle permet de parcourir les identifiants du panier et de le renitialiser     --- ///
     for (int i=0; i<idProduitsPanier.length; i++){
       Firestore.instance.collection('Utilisateurs').document(Renseignements.emailUser).collection("Panier").document(idProduitsPanier[i]).delete();
@@ -1048,6 +1084,7 @@ class _Panier2State extends State<Panier2> {
               produitsCommander: widget.produitsCommander,
               prixLivraison: widget.prixLivraison,
               lieuDeLivraison: widget.lieuDeLivraison,
+              numberOrder: numberOrder,
               livrer: false,
               created: DateTime.now().toString()),
           Renseignements.emailUser);
@@ -1067,6 +1104,7 @@ class _Panier2State extends State<Panier2> {
               prixLivraison: widget.prixLivraison,
               lieuDeLivraison: widget.lieuDeLivraison,
               created: DateTime.now().toString(),
+              numberOrder: numberOrder,
               livrer: false),
           Renseignements.emailUser);
 

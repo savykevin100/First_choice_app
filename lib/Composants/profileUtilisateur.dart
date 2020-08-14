@@ -4,13 +4,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
-import 'package:premierchoixapp/Design/Notification2.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
-import 'package:premierchoixapp/Navigations_pages/favoris.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
-import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:premierchoixapp/Navigations_pages/profile.dart';
 
 import 'hexadecimal.dart';
@@ -29,6 +26,7 @@ class ProfileSettings extends StatefulWidget {
 class _ProfileSettingsState extends State<ProfileSettings> {
   final _auth = FirebaseAuth.instance;
   Utilisateur donneesUtilisateurConnecte;
+  var firstLetter;
 
 
   @override
@@ -97,6 +95,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   Utilisateur utilisateur = snapshot.data[i];
                   if(utilisateur.email == currentUser) {
                     donneesUtilisateurConnecte = utilisateur;
+                    firstLetter=donneesUtilisateurConnecte.nomComplet[0];
                   }
                 }
 
@@ -109,7 +108,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             backgroundColor: Colors.white,
         child: Center(
           child: Text(
-            "H",
+            "$firstLetter",
             style: TextStyle(color: HexColor("#001c36"), fontSize: 50,fontWeight: FontWeight.bold),
           ),
         ),),

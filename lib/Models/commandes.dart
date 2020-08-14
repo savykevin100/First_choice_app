@@ -14,7 +14,7 @@ class Commandes {
   bool livrer;
   String created;
   int sousTotal;
-
+  int numberOrder;
   Commandes(
       {this.nomComplet,
       this.telephone,
@@ -29,6 +29,7 @@ class Commandes {
       this.lieuDeLivraison,
         this.sousTotal,
         this.livrer,
+        this.numberOrder,
       this.created});
 
   Commandes.fromMap(Map<String, dynamic> donnees, String id)
@@ -45,7 +46,8 @@ class Commandes {
         livrer = donnees["livrer"],
         created = donnees["created"],
         sousTotal = donnees["sousTotal"],
-      numeroDePayement = donnees["numeroDePayement"];
+      numeroDePayement = donnees["numeroDePayement"],
+        numberOrder = donnees["numberOrder"];
 
   Map<String, dynamic> toMap() {
     return {
@@ -63,6 +65,7 @@ class Commandes {
       "livrer": livrer,
       "created": created,
       "sousTotal": sousTotal,
+      "numberOrder": numberOrder,
     };
   }
 }

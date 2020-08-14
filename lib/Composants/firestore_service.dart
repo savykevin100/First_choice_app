@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';

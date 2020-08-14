@@ -14,8 +14,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:photo_view/photo_view.dart';
+import 'Panier1.dart';
 
 
 // ignore: must_be_immutable
@@ -53,6 +53,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool etatSurMesure=false;
   bool isSwitch=false;
+  bool chargement=false;
 
 
   /*****************************************************************************************/
@@ -156,7 +157,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     getIdFavoris();
     getIdProduitFavorisUser();
     return  Scaffold(
-      backgroundColor: HexColor("#F5F5F5"),
+        backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
         body: ListView(
@@ -239,36 +240,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         } else displaySnackBarNom(context, "Ce produit est indisponible pour le moment", Colors.white);
                       });
                     },
-                    /*onTap: (){
-                      _db .collection("Utilisateurs")
-                          .document(widget.currentUserId).collection("Panier").where("image1", isEqualTo:widget.produitMap["image1"])
-                          .getDocuments().then((QuerySnapshot snapshot){
-                        if(snapshot.documents.isEmpty){
-                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.green);
-                          setState(() {
-                            ajoutPanier=ajoutPanier+1;
-                            FirestoreService().produitsIndisponibles(PanierClasse(
-                              nomDuProduit:widget.produitMap["nomDuProduit"],
-                              image1:widget.produitMap["image1"],
-                              prix: widget.produitMap["prix"],
-                              etatSurMesure: etatSurMesure,
-                              description: widget.produitMap["description"],
-                            ));
-                            FirestoreService().addPanierSansId(PanierClasse(
-                              nomDuProduit:widget.produitMap["nomDuProduit"],
-                              image1:widget.produitMap["image1"],
-                              prix: widget.produitMap["prix"],
-                              etatSurMesure: etatSurMesure,
-                              description: widget.produitMap["description"],
-                            ), widget.currentUserId, );
-                            _db
-                                .collection("Utilisateurs")
-                                .document(Renseignements.emailUser)
-                                .updateData({"nbAjoutPanier": ajoutPanier});
-                          });
-                        } else displaySnackBarNom(context, "Produit déjà ajouté au panier", Colors.green);
-                      });
-                    },*/
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -306,7 +277,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     children: <Widget>[
                       Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
                       SizedBox(width: largeurPerCent(20, context),),
-                      Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
+                      (widget.produit.taille!=null)?Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold)):
+                      Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
+
                     ],
                   ),
                   SizedBox(width: largeurPerCent(200, context),),
@@ -388,11 +361,11 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 SizedBox(width: largeurPerCent(20, context),),
                 InkWell(
                   onTap: () {
-                    /*Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Panier1(total: widget.produitMap["prix"]));*/
+                                Panier1(total: widget.produitMap["prix"], produitsPanier: [widget.produitMap],)));
                   },
                   child: Padding(
                     padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
@@ -429,17 +402,17 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         color: HexColor('#001C36'),
                       ),
                       child: Center(
-                        child: Text(
+                        child: (chargement==false)?Text(
                           "RECOMMANDER",
                           style: TextStyle(
                               color: HexColor('#FFFFFF'),
                               fontFamily: "MonseraBold",
                               fontSize: 11),
-                        ),
+                        ):CircularProgressIndicator(backgroundColor: Colors.white,)
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
             SizedBox(height: longueurPerCent(20, context),),
@@ -673,11 +646,17 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
   Future<void> _shareImageFromUrl() async {
     try {
+      setState(() {
+        chargement=true;
+      });
       var request = await HttpClient().getUrl(Uri.parse(
           widget.produitMap["image1"]));
       var response = await request.close();
       Uint8List bytes = await consolidateHttpClientResponseBytes(response);
       await Share.file('ESYS AMLOG', 'amlog.jpg', bytes, 'image/jpg', text: 'My optional text.');
+      setState(() {
+        chargement=false;
+      });
     } catch (e) {
       print('error: $e');
     }
@@ -988,6 +967,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     }
   }
 }
+// ignore: must_be_immutable
 class HeroPhotoViewRouteWrapper extends StatelessWidget {
    HeroPhotoViewRouteWrapper({
     this.imageProvider,
