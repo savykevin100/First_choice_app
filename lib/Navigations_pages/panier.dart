@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
 
 class Panier extends StatefulWidget {
   static String id = 'Panier';
@@ -22,13 +26,17 @@ class _PanierState extends State<Panier> {
   bool value;
   Firestore _db = Firestore.instance;
   int quantiteProduitDisponible;
-  var idDocument;
   int total = 0;
   List<String> idProduitsPanier = [];
   List<Map<String, dynamic>> produitsPaniers=[];
   List<String> idProduitsIndisponibles = [];
   List<Map<String, dynamic>> produitsIndisponibles=[];
   int ajoutPanier;
+  int chargementProduitsIndisponible=0;
+
+
+
+
 
 
   /// Cette fonction getIdProduit permet de recuperer l'id du produit en vue de pouvoir le supprimer. Donc je récupère tous les ID
@@ -43,8 +51,22 @@ class _PanierState extends State<Panier> {
       for (int i = 0; i < snapshot.documents.length; i++) {
         if (this.mounted) {
           setState(() {
+            // Ici on parcourt les produits qui sont dans la table ProduitsIndisponibles et on vérifie si un des produits dans le panier
+            // se trouve cette dernière table
+             _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
+                .getDocuments().then((QuerySnapshot snapshot){
+              if(snapshot.documents.isNotEmpty){
+                setState(() {
+                  print("Il y a un produit dans le panier qui est déjà commandé ");
+                  print(snapshot.documents[0].data["nomDuProduit"]);
+                  produitsIndisponibles.add(snapshot.documents[0].data);
+                });
+              }
+            });
+             // Fin de la vérification
             idProduitsPanier.add(snapshot.documents[i].documentID);
             produitsPaniers.add(snapshot.documents[i].data);
+
           });
         }
       }
@@ -110,7 +132,7 @@ class _PanierState extends State<Panier> {
 
   @override
   Widget build(BuildContext context) {
-    if (idProduitsPanier != null && total != null && produitsPaniers!=null && produitsIndisponibles!=null && idProduitsIndisponibles!=null) {
+    if (idProduitsPanier != null && total != null && produitsPaniers!=null && produitsIndisponibles!=null && idProduitsIndisponibles!=null  ) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -320,7 +342,7 @@ class _PanierState extends State<Panier> {
           floatingActionButton:Center(
             child: Container(
               margin: EdgeInsets.only(
-                  left: longueurPerCent(20, context), top: MediaQuery
+                  left: longueurPerCent(20, context),  top: MediaQuery
                   .of(context)
                   .size
                   .height - 60),
@@ -329,9 +351,14 @@ class _PanierState extends State<Panier> {
                 if(total==0){
 
                 } else {
-                  Navigator.push(
-                      context, MaterialPageRoute(
-                      builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                  sleep(Duration(seconds: 3));
+                  if(produitsIndisponibles.isNotEmpty){
+                    confirmationPopup(context);
+                  } else {
+                    Navigator.push(
+                        context, MaterialPageRoute(
+                        builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                  }
                 }
               }),
             ),
@@ -348,4 +375,50 @@ class _PanierState extends State<Panier> {
         body: Center(child: CircularProgressIndicator(),),
       );
     }
-}}
+ }
+
+
+  confirmationPopup(BuildContext dialogContext) {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      overlayColor: Colors.black87,
+      isCloseButton: true,
+      isOverlayTapDismiss: true,
+      titleStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+      descStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+      animationDuration: Duration(milliseconds: 400),
+    );
+
+    Alert(
+        context: dialogContext,
+        style: alertStyle,
+        title: "IMPORTANT?",
+        desc: "Certains de vos produits ont été déjà commandés. Si vous continuez ces produits seront automatiquement supprimés.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Continuer",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            onPressed: () {
+              Navigator.push(  
+                  context, MaterialPageRoute(
+                  builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+            },
+            color: HexColor("#001C36"),
+          ),
+          DialogButton(
+            child: Text(
+              "Voir ces produits",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: HexColor("#001C36"),
+          )
+        ]).show();
+  }
+
+
+}

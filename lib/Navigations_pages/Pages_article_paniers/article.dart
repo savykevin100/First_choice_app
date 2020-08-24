@@ -620,7 +620,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                           width: largeurPerCent(262, context),
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(produit.imageSelect, ),
+                                 image: NetworkImage(produit.imageSelect,),
                                   fit: BoxFit.cover)),
                           child:GestureDetector(
                             onTap: (){
