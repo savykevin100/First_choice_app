@@ -300,7 +300,7 @@ class _Panier1State extends State<Panier1> {
                                   ),
                                   //Ajouter le textField ici
                                   Center(
-                                    child: Container(
+                                    child: 	Container(
                                       width: largeurPerCent(347, context),
                                       child: TextFormField(
                                         decoration: InputDecoration(

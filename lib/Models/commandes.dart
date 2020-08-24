@@ -1,4 +1,3 @@
-
 class Commandes {
   String nomComplet;
   String telephone;
@@ -15,6 +14,11 @@ class Commandes {
   String created;
   int sousTotal;
   int numberOrder;
+  String id;
+
+  // Pour l'admin il faudra recuperer l'id de la commande chez l'utilisateur et aussi l'id de la commande chez lui
+  String idCommandeUser;
+
   Commandes(
       {this.nomComplet,
       this.telephone,
@@ -27,9 +31,11 @@ class Commandes {
       this.numeroDePayement,
       this.produitsCommander,
       this.lieuDeLivraison,
-        this.sousTotal,
-        this.livrer,
-        this.numberOrder,
+      this.sousTotal,
+      this.livrer,
+      this.numberOrder,
+      this.id,
+      this.idCommandeUser,
       this.created});
 
   Commandes.fromMap(Map<String, dynamic> donnees, String id)
@@ -46,7 +52,9 @@ class Commandes {
         livrer = donnees["livrer"],
         created = donnees["created"],
         sousTotal = donnees["sousTotal"],
-      numeroDePayement = donnees["numeroDePayement"],
+        id = donnees["id"],
+        idCommandeUser = donnees["idCommandeUser"],
+        numeroDePayement = donnees["numeroDePayement"],
         numberOrder = donnees["numberOrder"];
 
   Map<String, dynamic> toMap() {
@@ -66,6 +74,8 @@ class Commandes {
       "created": created,
       "sousTotal": sousTotal,
       "numberOrder": numberOrder,
+      "id": id,
+      "idCommandeUser": idCommandeUser,
     };
   }
 }
