@@ -219,7 +219,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                    height: longueurPerCent(
                                        60, context),
                                    width: largeurPerCent(80, context),
-                                   child: Image.asset(
+                                   child: Image.network(
                                      widget.commande["produitsCommander"][i]["image1"],
                                      fit: BoxFit.cover,
                                    ),
@@ -540,25 +540,38 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(
-                              top: longueurPerCent(0.0, context),
-                              right: longueurPerCent(0.0, context),
-                              left: longueurPerCent(10.0, context)),
-                          child: (widget.commande["moyenDePayement"]=="Mobile Money")?Text(
-                            "Mobile Money",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          ):Text(
-                            "Espèce",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: HexColor("#909090"),
-                                fontSize: 12,
-                                fontFamily: "MonseraBold"),
-                          )
+                            margin: EdgeInsets.only(
+                                top: longueurPerCent(0.0, context),
+                                right: longueurPerCent(0.0, context),
+                                left: longueurPerCent(10.0, context)),
+                            child: (widget.commande["moyenDePayement"]=="Mobile Money")?Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Mobile Money: ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: HexColor("#001C36"),
+                                      fontSize: 15,
+                                      fontFamily: "MonseraBold"),
+                                ),
+                                Text(
+                                  widget.commande["numeroDePayement"],
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: HexColor("#909090"),
+                                      fontSize: 12,
+                                      fontFamily: "MonseraBold"),
+                                ),
+                              ],
+                            ):Text(
+                              "Espèce",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: HexColor("#909090"),
+                                  fontSize: 12,
+                                  fontFamily: "MonseraBold"),
+                            )
                         ),
                       ],
                     ),

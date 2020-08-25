@@ -117,7 +117,7 @@ class FirestoreService {
         );
   }
 
-  Stream<List<InfoCategories>> getCategoriesHF(String nom) {
+  Stream<List<InfoCategories>> getSousCategoriesNoms(String nom) {
     return _db.collection(nom).snapshots().map(
           (snapshot) => snapshot.documents
               .map(

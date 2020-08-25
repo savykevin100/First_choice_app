@@ -142,6 +142,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       image2: widget.produitMap["image3"],  image3: widget.produitMap["image3"], selectImage:  widget.produitMap["selectImage"], numberImages:  widget.produitMap["numberImages"],
       numberStar: widget.produitMap["numberStar"], surMesure: widget.produitMap["surMesure"], taille: widget.produitMap["taille"],
     );
+    print(widget.produit.numberImages);
   }
 
   ScrollController controller = ScrollController();
@@ -445,153 +446,154 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
   // ignore: missing_return
   Widget affichageImagesSecondaires(){
-    if(widget.produit.numberImages==1){
-      return Column(
-        children: <Widget>[
-          notImage(),
-          SizedBox(height: longueurPerCent(20, context),),
-          notImage(),
-          SizedBox(height: longueurPerCent(20, context),),
-          notImage()
-        ],
-      );
-    } else if(widget.produit.numberImages==2 && widget.produit!=null){
-      return Column(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _db
-                    .collection("Utilisateurs")
-                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                    .document(id_produit)
-                    .updateData({"imageSelect":widget.produitMap["image1"]});
-                print(widget.produit.selectImage);
-              });
-            },
+ if(widget.produit!=null){
+   if(widget.produit.numberImages==1){
+     return Column(
+       children: <Widget>[
+         notImage(),
+         SizedBox(height: longueurPerCent(20, context),),
+         notImage(),
+         SizedBox(height: longueurPerCent(20, context),),
+         notImage()
+       ],
+     );
+   } else if(widget.produit.numberImages==2 ){
+     return Column(
+       children: <Widget>[
+         GestureDetector(
+           onTap: () {
+             setState(() {
+               _db
+                   .collection("Utilisateurs")
+                   .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                   .document(id_produit)
+                   .updateData({"imageSelect":widget.produitMap["image1"]});
+               print(widget.produit.selectImage);
+             });
+           },
 
-              child: Container(
-                height: longueurPerCent(70, context),
-                width: largeurPerCent(83, context),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: largeurPerCent(1, context),
-                        color: HexColor("#707070")),
-                    image: DecorationImage(
-                        image: NetworkImage(widget.produit.image1),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-          SizedBox(height: longueurPerCent(20, context),),
+           child: Container(
+             height: longueurPerCent(70, context),
+             width: largeurPerCent(83, context),
+             decoration: BoxDecoration(
+                 border: Border.all(
+                     width: largeurPerCent(1, context),
+                     color: HexColor("#707070")),
+                 image: DecorationImage(
+                     image: NetworkImage(widget.produit.image1),
+                     fit: BoxFit.cover)),
+           ),
+         ),
+         SizedBox(height: longueurPerCent(20, context),),
 
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _db
-                    .collection("Utilisateurs")
-                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                    .document(id_produit)
-                    .updateData({"imageSelect": widget.produitMap["image2"]});
-                print(widget.produit.selectImage);
-              });
-            },
-            child: Container(
-              height: longueurPerCent(70, context),
-              width: largeurPerCent(83, context),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: largeurPerCent(1, context),
-                      color: HexColor("#707070")),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.produitMap["image2"]),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          SizedBox(height: longueurPerCent(20, context),),
+         GestureDetector(
+           onTap: () {
+             setState(() {
+               _db
+                   .collection("Utilisateurs")
+                   .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                   .document(id_produit)
+                   .updateData({"imageSelect": widget.produitMap["image2"]});
+               print(widget.produit.selectImage);
+             });
+           },
+           child: Container(
+             height: longueurPerCent(70, context),
+             width: largeurPerCent(83, context),
+             decoration: BoxDecoration(
+                 border: Border.all(
+                     width: largeurPerCent(1, context),
+                     color: HexColor("#707070")),
+                 image: DecorationImage(
+                     image: NetworkImage(widget.produitMap["image2"]),
+                     fit: BoxFit.cover)),
+           ),
+         ),
+         SizedBox(height: longueurPerCent(20, context),),
+         notImage()
+       ],
+     );
+     // ignore: unrelated_type_equality_checks
+   } else if(widget.produit.numberImages==3){
+     return Column(
+       children: <Widget>[
+         GestureDetector(
+           onTap: () {
+             setState(() {
+               _db
+                   .collection("Utilisateurs")
+                   .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                   .document(id_produit)
+                   .updateData({"imageSelect":widget.produitMap["image1"]});
+               print(widget.produit.selectImage);
+             });
+           },
+           child: Container(
+             height: longueurPerCent(70, context),
+             width: largeurPerCent(83, context),
+             decoration: BoxDecoration(
+                 border: Border.all(
+                     width: largeurPerCent(1, context),
+                     color: HexColor("#707070")),
+                 image: DecorationImage(
+                     image: NetworkImage(widget.produitMap["image1"]),
+                     fit: BoxFit.cover)),
+           ),
+         ),
+         SizedBox(height: longueurPerCent(20, context),),
 
-          notImage()
-        ],
-      );
-    // ignore: unrelated_type_equality_checks
-    } else if(widget.produit==3 && widget.produit!=null){
-      return Column(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _db
-                    .collection("Utilisateurs")
-                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                    .document(id_produit)
-                    .updateData({"imageSelect":widget.produitMap["image1"]});
-                print(widget.produit.selectImage);
-              });
-            },
-            child: Container(
-              height: longueurPerCent(70, context),
-              width: largeurPerCent(83, context),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: largeurPerCent(1, context),
-                      color: HexColor("#707070")),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.produit.image1),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          SizedBox(height: longueurPerCent(20, context),),
+         GestureDetector(
+           onTap: () {
+             setState(() {
+               _db
+                   .collection("Utilisateurs")
+                   .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                   .document(id_produit)
+                   .updateData({"imageSelect": widget.produitMap["image2"]});
+               print(widget.produit.selectImage);
+             });
+           },
+           child: Container(
+             height: longueurPerCent(70, context),
+             width: largeurPerCent(83, context),
+             decoration: BoxDecoration(
+                 border: Border.all(
+                     width: largeurPerCent(1, context),
+                     color: HexColor("#707070")),
+                 image: DecorationImage(
+                     image: NetworkImage(widget.produitMap["image2"]),
+                     fit: BoxFit.cover)),
+           ),
+         ),
+         SizedBox(height: longueurPerCent(20, context),),
 
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _db
-                    .collection("Utilisateurs")
-                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                    .document(id_produit)
-                    .updateData({"imageSelect": widget.produitMap["image2"]});
-                print(widget.produit.selectImage);
-              });
-            },
-            child: Container(
-              height: longueurPerCent(70, context),
-              width: largeurPerCent(83, context),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: largeurPerCent(1, context),
-                      color: HexColor("#707070")),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.produitMap["image2"]),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          SizedBox(height: longueurPerCent(20, context),),
-
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _db
-                    .collection("Utilisateurs")
-                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                    .document(id_produit)
-                    .updateData({"imageSelect": widget.produitMap["image3"]});
-                print(widget.produit.selectImage);
-              });
-            },
-            child: Container(
-              height: longueurPerCent(70, context),
-              width: largeurPerCent(83, context),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: largeurPerCent(1, context),
-                      color: HexColor("#707070")),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.produitMap["image3"]),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-        ],
-      );
-    }
+         GestureDetector(
+           onTap: () {
+             setState(() {
+               _db
+                   .collection("Utilisateurs")
+                   .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                   .document(id_produit)
+                   .updateData({"imageSelect": widget.produitMap["image3"]});
+               print(widget.produit.selectImage);
+             });
+           },
+           child: Container(
+             height: longueurPerCent(70, context),
+             width: largeurPerCent(83, context),
+             decoration: BoxDecoration(
+                 border: Border.all(
+                     width: largeurPerCent(1, context),
+                     color: HexColor("#707070")),
+                 image: DecorationImage(
+                     image: NetworkImage(widget.produitMap["image3"]),
+                     fit: BoxFit.cover)),
+           ),
+         ),
+       ],
+     );
+   }
+   } else Center(child: CircularProgressIndicator());
   }
 
   Widget apparitionImage(){
@@ -675,297 +677,301 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
   ///Cette fonction permet d'afficher les images secondaires en fonction de leurs nombres
   Widget imageApparition() {
-    if (widget.produit.numberImages == 1) {
-      return Stack(children: <Widget>[
-        Positioned(
-          top: longueurPerCent(120, context),
-          left: largeurPerCent(40, context),
-          child: StreamBuilder(
-              stream: _db
-                  .collection("Utilisateurs")
-                  .document(widget.currentUserId)
-                  .collection("ProduitsFavoirsUser")
-                  .snapshots()
-                  .map(
-                    (snapshot) => snapshot.documents
+    if(widget.produit!=null){
+      if (widget.produit.numberImages == 1) {
+        return Stack(children: <Widget>[
+          Positioned(
+            top: longueurPerCent(120, context),
+            left: largeurPerCent(40, context),
+            child: StreamBuilder(
+                stream: _db
+                    .collection("Utilisateurs")
+                    .document(widget.currentUserId)
+                    .collection("ProduitsFavoirsUser")
+                    .snapshots()
                     .map(
-                      (doc) => ProduitsFavorisUser.fromMap(
-                      doc.data, doc.documentID),
-                )
-                    .toList(),
-              ),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
-                if (snapshot.hasError || !snapshot.hasData) {
-                  return Center(
-                    child: null,
-                  );
-                } else {
-                  for (int i = 0; i < snapshot.data.length; i++) {
-                    if (widget.produit.image1 ==
-                        snapshot.data[i].imagePrincipaleProduit) {
-                      ProduitsFavorisUser produit = snapshot.data[i];
-                      return Container(
-                        height: longueurPerCent(253, context),
-                        width: largeurPerCent(300, context),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(produit.imageSelect),
-                                fit: BoxFit.cover)),
-                      );
-                    }
-                  }
-                  return null;
-                }
-              }),
-        ),
-      ]);
-    } else if (widget.produit.numberImages == 2) {
-      return Stack(children: <Widget>[
-        Positioned(
-          top: longueurPerCent(120, context),
-          left: largeurPerCent(10, context),
-          child: StreamBuilder(
-              stream: _db
-                  .collection("Utilisateurs")
-                  .document(widget.currentUserId)
-                  .collection("ProduitsFavoirsUser")
-                  .snapshots()
-                  .map(
-                    (snapshot) => snapshot.documents
-                    .map(
-                      (doc) => ProduitsFavorisUser.fromMap(
-                      doc.data, doc.documentID),
-                )
-                    .toList(),
-              ),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
-                if (snapshot.hasError || !snapshot.hasData) {
-                  return Center(
-                    child: null,
-                  );
-                } else {
-                  for (int i = 0; i < snapshot.data.length; i++) {
-                    if (widget.produit.image1 ==
-                        snapshot.data[i].imagePrincipaleProduit) {
-                      ProduitsFavorisUser produit = snapshot.data[i];
-                      return Container(
-                        height: longueurPerCent(253, context),
-                        width: largeurPerCent(262, context),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(produit.imageSelect),
-                                fit: BoxFit.cover)),
-                      );
-                    }
-                  }
-                  return null;
-                }
-              }),
-        ),
-        Positioned(
-          top: longueurPerCent(120, context),
-          left: largeurPerCent(320, context),
-          child: Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _db
-                      .collection("Utilisateurs")
-                      .document(widget.currentUserId)
-                      .collection("ProduitsFavoirsUser")
-                      .document(id_produit)
-                      .updateData({"imageSelect":widget.produitMap["image1"]});
-                  print(widget.produit.selectImage);
-                });
-              },
-              child: Container(
-                height: longueurPerCent(61, context),
-                width: largeurPerCent(63, context),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: largeurPerCent(2, context),
-                        color: HexColor("#707070")),
-                    image: DecorationImage(
-                        image: NetworkImage(widget.produit.image1),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: longueurPerCent(220, context),
-          left: largeurPerCent(320, context),
-          child: Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  print("2");
-                  _db
-                      .collection("Utilisateurs")
-                      .document(widget.currentUserId)
-                      .collection("ProduitsFavoirsUser")
-                      .document(id_produit)
-                      .updateData({"imageSelect": widget.produit.image2});
-                  print(widget.produit.selectImage);
-                });
-              },
-              child: Container(
-                height: longueurPerCent(61, context),
-                width: largeurPerCent(63, context),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: largeurPerCent(2, context),
-                        color: HexColor("#707070")),
-                    image: DecorationImage(
-                        image: NetworkImage(widget.produit.image2),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-          ),
-        ),
-      ]);
-    } else {
-      return ListView(
-          children: <Widget>[
-            Positioned(
-              top: longueurPerCent(120, context),
-              left: largeurPerCent(10, context),
-              child: StreamBuilder(
-                  stream: _db
-                      .collection("Utilisateurs")
-                      .document(widget.currentUserId)
-                      .collection("ProduitsFavoirsUser")
-                      .snapshots()
+                      (snapshot) => snapshot.documents
                       .map(
-                        (snapshot) => snapshot.documents
-                        .map(
-                          (doc) => ProduitsFavorisUser.fromMap(
-                          doc.data, doc.documentID),
-                    )
-                        .toList(),
-                  ),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
-                    if (snapshot.hasError || !snapshot.hasData) {
-                      return Center(
-                        child: null,
-                      );
-                    } else {
-                      for (int i = 0; i < snapshot.data.length; i++) {
-                        if (widget.produit.image1 ==
-                            snapshot.data[i].imagePrincipaleProduit) {
-                          ProduitsFavorisUser produit = snapshot.data[i];
-                          return Container(
-                            height: longueurPerCent(253, context),
-                            width: largeurPerCent(262, context),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(produit.imageSelect),
-                                    fit: BoxFit.cover)),
-                          );
-                        }
+                        (doc) => ProduitsFavorisUser.fromMap(
+                        doc.data, doc.documentID),
+                  )
+                      .toList(),
+                ),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Center(
+                      child: null,
+                    );
+                  } else {
+                    for (int i = 0; i < snapshot.data.length; i++) {
+                      if (widget.produit.image1 ==
+                          snapshot.data[i].imagePrincipaleProduit) {
+                        ProduitsFavorisUser produit = snapshot.data[i];
+                        return Container(
+                          height: longueurPerCent(253, context),
+                          width: largeurPerCent(300, context),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(produit.imageSelect),
+                                  fit: BoxFit.cover)),
+                        );
                       }
-                      return null;
                     }
-                  }),
-            ),
-            Positioned(
-              top: longueurPerCent(120, context),
-              left: largeurPerCent(320, context),
-              child: Container(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _db
-                          .collection("Utilisateurs")
-                          .document(widget.currentUserId)
-                          .collection("ProduitsFavoirsUser")
-                          .document(id_produit)
-                          .updateData({"imageSelect":widget.produitMap["image1"]});
-                      print(widget.produit.selectImage);
-                    });
-                  },
-                  child: Container(
-                    height: longueurPerCent(61, context),
-                    width: largeurPerCent(63, context),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: largeurPerCent(2, context),
-                            color: HexColor("#707070")),
-                        image: DecorationImage(
-                            image: NetworkImage(widget.produit.image1),
-                            fit: BoxFit.cover)),
-                  ),
+                    return null;
+                  }
+                }),
+          ),
+        ]);
+      } else if (widget.produit.numberImages == 2) {
+        return Stack(children: <Widget>[
+          Positioned(
+            top: longueurPerCent(120, context),
+            left: largeurPerCent(10, context),
+            child: StreamBuilder(
+                stream: _db
+                    .collection("Utilisateurs")
+                    .document(widget.currentUserId)
+                    .collection("ProduitsFavoirsUser")
+                    .snapshots()
+                    .map(
+                      (snapshot) => snapshot.documents
+                      .map(
+                        (doc) => ProduitsFavorisUser.fromMap(
+                        doc.data, doc.documentID),
+                  )
+                      .toList(),
+                ),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Center(
+                      child: null,
+                    );
+                  } else {
+                    for (int i = 0; i < snapshot.data.length; i++) {
+                      if (widget.produit.image1 ==
+                          snapshot.data[i].imagePrincipaleProduit) {
+                        ProduitsFavorisUser produit = snapshot.data[i];
+                        return Container(
+                          height: longueurPerCent(253, context),
+                          width: largeurPerCent(262, context),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(produit.imageSelect),
+                                  fit: BoxFit.cover)),
+                        );
+                      }
+                    }
+                    return null;
+                  }
+                }),
+          ),
+          Positioned(
+            top: longueurPerCent(120, context),
+            left: largeurPerCent(320, context),
+            child: Container(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _db
+                        .collection("Utilisateurs")
+                        .document(widget.currentUserId)
+                        .collection("ProduitsFavoirsUser")
+                        .document(id_produit)
+                        .updateData({"imageSelect":widget.produitMap["image1"]});
+                    print(widget.produit.selectImage);
+                  });
+                },
+                child: Container(
+                  height: longueurPerCent(61, context),
+                  width: largeurPerCent(63, context),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: largeurPerCent(2, context),
+                          color: HexColor("#707070")),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.produit.image1),
+                          fit: BoxFit.cover)),
                 ),
               ),
             ),
-            Positioned(
-              top: longueurPerCent(220, context),
-              left: largeurPerCent(320, context),
-              child: Container(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      print("2");
-                      _db
-                          .collection("Utilisateurs")
-                          .document(widget.currentUserId)
-                          .collection("ProduitsFavoirsUser")
-                          .document(id_produit)
-                          .updateData({"imageSelect": widget.produit.image2});
-                      print(widget.produit.selectImage);
-                    });
-                  },
-                  child: Container(
-                    height: longueurPerCent(61, context),
-                    width: largeurPerCent(63, context),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: largeurPerCent(2, context),
-                            color: HexColor("#707070")),
-                        image: DecorationImage(
-                            image: NetworkImage(widget.produit.image2),
-                            fit: BoxFit.cover)),
-                  ),
+          ),
+          Positioned(
+            top: longueurPerCent(220, context),
+            left: largeurPerCent(320, context),
+            child: Container(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    print("2");
+                    _db
+                        .collection("Utilisateurs")
+                        .document(widget.currentUserId)
+                        .collection("ProduitsFavoirsUser")
+                        .document(id_produit)
+                        .updateData({"imageSelect": widget.produit.image2});
+                    print(widget.produit.selectImage);
+                  });
+                },
+                child: Container(
+                  height: longueurPerCent(61, context),
+                  width: largeurPerCent(63, context),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: largeurPerCent(2, context),
+                          color: HexColor("#707070")),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.produit.image2),
+                          fit: BoxFit.cover)),
                 ),
               ),
             ),
-            Positioned(
-              top: longueurPerCent(310, context),
-              left: largeurPerCent(320, context),
-              child: Container(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      print("3");
-                      _db
-                          .collection("Utilisateurs")
-                          .document(widget.currentUserId)
-                          .collection("ProduitsFavoirsUser")
-                          .document(id_produit)
-                          .updateData({"imageSelect": widget.produit.image3});
-                      print(widget.produit.selectImage);
-                    });
-                  },
-                  child: Container(
-                    height: longueurPerCent(61, context),
-                    width: largeurPerCent(63, context),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: largeurPerCent(2, context),
-                            color: HexColor("#707070")),
-                        image: DecorationImage(
-                            image: NetworkImage(widget.produit.image3),
-                            fit: BoxFit.cover)),
+          ),
+        ]);
+      } else {
+        return ListView(
+            children: <Widget>[
+              Positioned(
+                top: longueurPerCent(120, context),
+                left: largeurPerCent(10, context),
+                child: StreamBuilder(
+                    stream: _db
+                        .collection("Utilisateurs")
+                        .document(widget.currentUserId)
+                        .collection("ProduitsFavoirsUser")
+                        .snapshots()
+                        .map(
+                          (snapshot) => snapshot.documents
+                          .map(
+                            (doc) => ProduitsFavorisUser.fromMap(
+                            doc.data, doc.documentID),
+                      )
+                          .toList(),
+                    ),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<ProduitsFavorisUser>> snapshot) {
+                      if (snapshot.hasError || !snapshot.hasData) {
+                        return Center(
+                          child: null,
+                        );
+                      } else {
+                        for (int i = 0; i < snapshot.data.length; i++) {
+                          if (widget.produit.image1 ==
+                              snapshot.data[i].imagePrincipaleProduit) {
+                            ProduitsFavorisUser produit = snapshot.data[i];
+                            return Container(
+                              height: longueurPerCent(253, context),
+                              width: largeurPerCent(262, context),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(produit.imageSelect),
+                                      fit: BoxFit.cover)),
+                            );
+                          }
+                        }
+                        return null;
+                      }
+                    }),
+              ),
+              Positioned(
+                top: longueurPerCent(120, context),
+                left: largeurPerCent(320, context),
+                child: Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _db
+                            .collection("Utilisateurs")
+                            .document(widget.currentUserId)
+                            .collection("ProduitsFavoirsUser")
+                            .document(id_produit)
+                            .updateData({"imageSelect":widget.produitMap["image1"]});
+                        print(widget.produit.selectImage);
+                      });
+                    },
+                    child: Container(
+                      height: longueurPerCent(61, context),
+                      width: largeurPerCent(63, context),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: largeurPerCent(2, context),
+                              color: HexColor("#707070")),
+                          image: DecorationImage(
+                              image: NetworkImage(widget.produit.image1),
+                              fit: BoxFit.cover)),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ]);
+              Positioned(
+                top: longueurPerCent(220, context),
+                left: largeurPerCent(320, context),
+                child: Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        print("2");
+                        _db
+                            .collection("Utilisateurs")
+                            .document(widget.currentUserId)
+                            .collection("ProduitsFavoirsUser")
+                            .document(id_produit)
+                            .updateData({"imageSelect": widget.produit.image2});
+                        print(widget.produit.selectImage);
+                      });
+                    },
+                    child: Container(
+                      height: longueurPerCent(61, context),
+                      width: largeurPerCent(63, context),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: largeurPerCent(2, context),
+                              color: HexColor("#707070")),
+                          image: DecorationImage(
+                              image: NetworkImage(widget.produit.image2),
+                              fit: BoxFit.cover)),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: longueurPerCent(310, context),
+                left: largeurPerCent(320, context),
+                child: Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        print("3");
+                        _db
+                            .collection("Utilisateurs")
+                            .document(widget.currentUserId)
+                            .collection("ProduitsFavoirsUser")
+                            .document(id_produit)
+                            .updateData({"imageSelect": widget.produit.image3});
+                        print(widget.produit.selectImage);
+                      });
+                    },
+                    child: Container(
+                      height: longueurPerCent(61, context),
+                      width: largeurPerCent(63, context),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: largeurPerCent(2, context),
+                              color: HexColor("#707070")),
+                          image: DecorationImage(
+                              image: NetworkImage(widget.produit.image3),
+                              fit: BoxFit.cover)),
+                    ),
+                  ),
+                ),
+              ),
+            ]);
+      }
+     } else {
+      return CircularProgressIndicator();
     }
-  }
+    }
 }
 // ignore: must_be_immutable
 class HeroPhotoViewRouteWrapper extends StatelessWidget {

@@ -33,7 +33,7 @@ class _PanierState extends State<Panier> {
   List<Map<String, dynamic>> produitsIndisponibles=[];
   int ajoutPanier;
   int chargementProduitsIndisponible=0;
-
+  bool checkProductIndisponible=false;
 
 
 
@@ -53,7 +53,7 @@ class _PanierState extends State<Panier> {
           setState(() {
             // Ici on parcourt les produits qui sont dans la table ProduitsIndisponibles et on vérifie si un des produits dans le panier
             // se trouve cette dernière table
-             _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
+            /* _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
                 .getDocuments().then((QuerySnapshot snapshot){
               if(snapshot.documents.isNotEmpty){
                 setState(() {
@@ -62,7 +62,7 @@ class _PanierState extends State<Panier> {
                   produitsIndisponibles.add(snapshot.documents[0].data);
                 });
               }
-            });
+            });*/
              // Fin de la vérification
             idProduitsPanier.add(snapshot.documents[i].documentID);
             produitsPaniers.add(snapshot.documents[i].data);
@@ -289,11 +289,12 @@ class _PanierState extends State<Panier> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(height: longueurPerCent(20, context),),
+                                                SizedBox(height: longueurPerCent(5, context)),
+                                                Text("Déjà commandé", style: TextStyle(color: Colors.red),),
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
-                                                    Icons.delete, color: Colors.red,),
+                                                    Icons.delete, color: Colors.red, size: 20),
                                                       onPressed: () {
                                                     setState(() {
                                                       ajoutPanier--;
@@ -339,19 +340,52 @@ class _PanierState extends State<Panier> {
               SizedBox(height: 100,),
             ],
           ),
-          floatingActionButton:Center(
+          floatingActionButton:
+          Center(
             child: Container(
               margin: EdgeInsets.only(
                   left: longueurPerCent(20, context),  top: MediaQuery
                   .of(context)
                   .size
                   .height - 60),
-              child: button(
-                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () {
+              child: (checkProductIndisponible==false)?button(
+                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () async {
                 if(total==0){
 
                 } else {
-                  sleep(Duration(seconds: 3));
+                  setState(() {
+                    checkProductIndisponible=true;
+                  });
+                  await _db
+                      .collection("Utilisateurs")
+                      .document(Renseignements.emailUser)
+                      .collection("Panier")
+                      .getDocuments()
+                      .then((QuerySnapshot snapshot) {
+                    for (int i = 0; i < snapshot.documents.length; i++) {
+                      if (this.mounted) {
+                        setState(() {
+                          // Ici on parcourt les produits qui sont dans la table ProduitsIndisponibles et on vérifie si un des produits dans le panier
+                          // se t rouve cette dernière table
+                          _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
+                              .getDocuments().then((QuerySnapshot snapshot){
+                            if(snapshot.documents.isNotEmpty){
+                              setState(() {
+                                print("Il y a un produit dans le panier qui est déjà commandé ");
+                                print(snapshot.documents[0].data["nomDuProduit"]);
+                                produitsIndisponibles.add(snapshot.documents[0].data);
+                              });
+                            }
+                          });
+                          // Fin de la vérification
+                        });
+                      }
+                    }
+
+                  });
+                  setState(() {
+                    checkProductIndisponible=false;
+                  });
                   if(produitsIndisponibles.isNotEmpty){
                     confirmationPopup(context);
                   } else {
@@ -360,7 +394,7 @@ class _PanierState extends State<Panier> {
                         builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
                   }
                 }
-              }),
+              }):Container(child: CircularProgressIndicator())
             ),
           )
       );
