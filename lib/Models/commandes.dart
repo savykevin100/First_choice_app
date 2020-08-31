@@ -10,7 +10,7 @@ class Commandes {
   String numeroDePayement;
   String lieuDeLivraison;
   List<Map<String, dynamic>> produitsCommander;
-  bool livrer;
+  String  livrer;
   String created;
   int sousTotal;
   int numberOrder;

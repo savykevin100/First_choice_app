@@ -106,6 +106,42 @@ class FirestoreService {
 
 /* Fin de la récupération des catégories de la base de données*/
 
+
+  /*Recuperation des produits de ProduitsRecommandes*/
+  Stream<List<Produit>> getProduitRecommandes() {
+    return _db.collection("ProduitsRecommandes").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
+
+  /*Recuperation des produits de TousLesProduits*/
+  Stream<List<Produit>> getTousLesProduits() {
+    return _db.collection("TousLesProduits").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
+  /*Recuperation les produits des sous-categorie*/
+  Stream<List<Produit>> getSousCategoriesProducts(String categorie, String sousCategorie) {
+    return _db.collection(categorie).document(sousCategorie).collection("Produits").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
+
 /*Recuperation du produit*/
   Stream<List<Produit>> getProduit() {
     return _db.collection("produit").snapshots().map(
@@ -117,6 +153,14 @@ class FirestoreService {
         );
   }
 
+
+  searchByName(String searchField) {
+    return Firestore.instance
+        .collection('ProduitsRecommandes')
+        .where('categorie',
+        isEqualTo: searchField.substring(0, 1).toUpperCase())
+        .getDocuments();
+  }
   Stream<List<InfoCategories>> getSousCategoriesNoms(String nom) {
     return _db.collection(nom).snapshots().map(
           (snapshot) => snapshot.documents
@@ -234,12 +278,21 @@ class FirestoreService {
         .collection("Utilisateurs")
         .document(document)
         .collection("Panier")
-        .add(produit.toMap());
+        .add(produit.toMap()).then((value) {
+          this._db.collection("Utilisateurs").document(document).collection("Panier").document(value.documentID)
+              .updateData({"id":value.documentID});
+        });
   }
 
   /// Cette fonction permettra de refuser à l'utilisateur d'ajouter des produits déjà ajouté dans le panier d'un autre utilisateur chez lui
   Future<void> produitsIndisponibles(PanierClasse produit) {
-    return _db.collection("ProduitsIndisponibles").add(produit.toMap());
+    return _db.collection("ProduitsIndisponibles").add(produit.toMap()).then((value) {
+      this
+          ._db
+          .collection("ProduitsIndisponibles")
+          .document(value.documentID)
+          .updateData({"id": value.documentID});
+    });
   }
 
   Future<void> deleteProduitsIndisponibles(String document1) {

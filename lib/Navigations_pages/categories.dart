@@ -38,7 +38,10 @@ class _CategoriesState extends State<Categories> {
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(userCurrent: Renseignements.emailUser),
+      drawer: ProfileSettings(
+        userCurrent:Renseignements.emailUser,
+        firstLetter: Renseignements.emailUser[0],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -108,6 +108,7 @@ class _ConnexionState extends State<Connexion> {
                       final user = await _auth.signInWithEmailAndPassword(email: emailAdresse , password: motDePasse);
                       if(user!=null){
                         Navigator.pushNamed(context,AllNavigationPage.id);
+                        
                       }
                     } catch (e) {
                       print(e);

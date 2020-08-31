@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Authentification/slider.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import '../Composants/calcul.dart';
@@ -19,7 +21,6 @@ class _FirstPageState extends State<FirstPage> {
 
   Future<FirebaseUser> getUser() async {
     return await FirebaseAuth.instance.currentUser();
-
   }
 
 
@@ -36,11 +37,22 @@ class _FirstPageState extends State<FirstPage> {
     super.initState();
     getUser().then((value){
       if(value!=null){
-       setState(() {
-         currentUser=true;
-         utilisateurConnecte=value.email;
-       });
-      }
+       if(this.mounted){
+         setState(()  {
+           currentUser=true;
+           utilisateurConnecte=value.email;
+            Firestore.instance.collection('Utilisateurs').document(value.email).collection("Panier").getDocuments().then((snapshot) {
+             for (DocumentSnapshot doc in snapshot.documents) {
+               doc.reference.delete();
+             }});
+             Firestore.instance
+               .collection("Utilisateurs")
+               .document(value.email)
+               .updateData({"nbAjoutPanier": 0});
+
+         });
+       }
+       }
     });
     StarTimer();
   }

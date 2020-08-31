@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
 import 'package:premierchoixapp/Navigations_pages/profile.dart';
 
+import '../test.dart';
 import 'hexadecimal.dart';
 
 // ignore: must_be_immutable
@@ -17,7 +18,8 @@ class ProfileSettings extends StatefulWidget {
   // final Widget creationHeader;
   //  ProfileSettings({this.creationHeader});
   String userCurrent;
-  ProfileSettings({this.userCurrent});
+  String firstLetter;
+  ProfileSettings({this.userCurrent, this.firstLetter});
 
   @override
   _ProfileSettingsState createState() => _ProfileSettingsState();
@@ -26,7 +28,6 @@ class ProfileSettings extends StatefulWidget {
 class _ProfileSettingsState extends State<ProfileSettings> {
   final _auth = FirebaseAuth.instance;
   Utilisateur donneesUtilisateurConnecte;
-  var firstLetter;
 
 
   @override
@@ -56,6 +57,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
+              }),
+          drawerItem(
+              icon: Icons.local_grocery_store,
+              text: "Rechercher par les filtres",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Test()));
               }),
           drawerItem(
               icon: Icons.person,
@@ -95,7 +103,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   Utilisateur utilisateur = snapshot.data[i];
                   if(utilisateur.email == currentUser) {
                     donneesUtilisateurConnecte = utilisateur;
-                    firstLetter=donneesUtilisateurConnecte.nomComplet[0];
                   }
                 }
 
@@ -108,7 +115,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             backgroundColor: Colors.white,
         child: Center(
           child: Text(
-            "$firstLetter",
+            widget.firstLetter,
             style: TextStyle(color: HexColor("#001c36"), fontSize: 50,fontWeight: FontWeight.bold),
           ),
         ),),

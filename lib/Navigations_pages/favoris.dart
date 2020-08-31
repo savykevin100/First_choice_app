@@ -84,7 +84,10 @@ class _FavorisState extends State<Favoris> {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(userCurrent: Renseignements.emailUser),
+      drawer: ProfileSettings(
+        userCurrent:Renseignements.emailUser,
+        firstLetter: Renseignements.emailUser[0],
+      ),
       body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? StreamBuilder(
           stream: FirestoreService().getFavoris(Renseignements.emailUser),
           builder: (BuildContext context,
@@ -116,19 +119,7 @@ class _FavorisState extends State<Favoris> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ArticleSansTaille({
-                                      "nomDuProduit": produit.nomDuProduit,
-                                      "prix": produit.prix,
-                                      "description": produit.description,
-                                      "image1":produit.image1,
-                                      "image2":produit.image2,
-                                      "image3":produit.image3,
-                                      "selectImage":produit.selectImage,
-                                      "numberImages":produit.numberImages,
-                                      "numberStar":produit.numberStar,
-                                      "surMesure":produit.surMesure,
-                                      "taille":produit.taille
-                                    }, Renseignements.emailUser)));
+                                    ArticleSansTaille(produit, Renseignements.emailUser)));
                       },
                       child: Card(
                         elevation: 5.0,

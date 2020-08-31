@@ -13,6 +13,7 @@ class Produit {
   String taille;
   String categorie;
   String sousCategorie;
+  String idProduitCategorie;
 
   Produit(
       {this.nomDuProduit,
@@ -28,6 +29,7 @@ class Produit {
       this.taille,
       this.sousCategorie,
       this.categorie,
+      this.idProduitCategorie,
       this.numberImages});
 
   Produit.fromMap(Map<String, dynamic> donnees, String id)
@@ -45,6 +47,7 @@ class Produit {
         surMesure = donnees["surMesure"],
         categorie = donnees["categorie"],
         sousCategorie = donnees["sousCategorie"],
+        idProduitCategorie = donnees["idProduitCategorie"],
         id = donnees["id"];
 
   Map<String, dynamic> toMap() {
@@ -62,6 +65,7 @@ class Produit {
       "taille": taille,
       "categorie": categorie,
       "sousCategorie": sousCategorie,
+      "idProduitCategorie": idProduitCategorie,
       "id": id
     };
   }

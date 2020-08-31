@@ -802,7 +802,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               EdgeInsets.only(left: longueurPerCent(0, context)),
                               child: Text(
                                 "${widget.commande["sousTotal"]} ",
-
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),
