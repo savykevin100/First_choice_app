@@ -8,8 +8,10 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
+import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/commande_send.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 // ignore: must_be_immutable
 class Panier2 extends StatefulWidget {
@@ -54,7 +56,6 @@ class _Panier2State extends State<Panier2> {
   List<String> idProduitsPanier = [];
   int numberOrder;
   String idCommandeUser;
-
   int totalPlusLivraison;
   String numeroDePayement;
   bool chargement = false;
@@ -74,6 +75,7 @@ class _Panier2State extends State<Panier2> {
     });
     getIdProduit();
     getNumberOrder();
+    print(widget.produitsCommander[0]["etatSurMesure"]);
   }
 
   /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
@@ -115,7 +117,6 @@ class _Panier2State extends State<Panier2> {
   @override
   Widget build(BuildContext context) {
     if (chargement == false && idProduitsPanier != null) {
-      print(idProduitsPanier.length);
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           key: _scaffoldKey,
@@ -546,7 +547,7 @@ class _Panier2State extends State<Panier2> {
                                       itemBuilder: (context, i) {
                                         return Container(
                                             margin: EdgeInsets.only(
-                                              top: longueurPerCent(5, context),
+                                              top: longueurPerCent(0, context),
                                               left: longueurPerCent(5, context),
                                               right:
                                                   longueurPerCent(5, context),
@@ -554,7 +555,7 @@ class _Panier2State extends State<Panier2> {
                                                   longueurPerCent(5, context),
                                             ),
                                             height:
-                                                longueurPerCent(60, context),
+                                                longueurPerCent(80, context),
                                             child: Material(
                                               borderRadius:
                                                   BorderRadius.circular(7.0),
@@ -662,14 +663,8 @@ class _Panier2State extends State<Panier2> {
                                                           ],
                                                         )),
                                                   ),
-                                                  (widget.produitsCommander[i][
-                                                              "etatSurMesure"] =
-                                                          true)
-                                                      ? Expanded(
-                                                          child: Container(
-                                                            child: Column(
-                                                              children: <
-                                                                  Widget>[
+                                                  (widget.produitsCommander[i]["etatSurMesure"] == true)
+                                                      ? Expanded(child: Container(child: Column(children: <Widget>[
                                                                 SizedBox(
                                                                   height:
                                                                       longueurPerCent(
@@ -1019,7 +1014,7 @@ class _Panier2State extends State<Panier2> {
                                       Colors.red);
                                 }
                               } else {
-                                commandAction();
+                               commandAction();
                               }
                             }),
                             Container(
@@ -1060,15 +1055,48 @@ class _Panier2State extends State<Panier2> {
     }
   }
 
+
+  Widget popup() {
+    showDialog(context: context, builder: (builder) {
+      return AlertDialog(
+        content:  Container( child: (chargement)?LinearProgressIndicator() :Text(""),),
+        actions: <Widget>[
+          Text('Cancel'),
+          InkWell(child: Text('OK'),)
+        ],
+      );
+    });
+  }
+
   Future<void> commandAction() async {
     setState(() {
-      numberOrder = numberOrder + 1;
+      chargement=true;
+    });
+    for(int i=0; i<widget.produitsCommander.length; i++){
+      _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:widget.produitsCommander[i]["image1"])
+          .getDocuments().then((QuerySnapshot snapshot){
+        if(snapshot.documents.isEmpty){
+          setState(() {
+            FirestoreService().produitsIndisponibles(PanierClasse(
+              nomDuProduit:widget.produitsCommander[i]["nomDuProduit"],
+              image1:widget.produitsCommander[i]["image1"],
+              prix:widget.produitsCommander[i]["prix"],
+              idProduitCategorie: widget.produitsCommander[i]["idProduitCategorie"],
+              etatSurMesure: widget.produitsCommander[i]["etatSurMesure"],
+              description:widget.produitsCommander[i]["description"],
+            ));
+          });
+        }
+      });
+    }
+
+    setState(() {
+      numberOrder++;
     });
     _db
         .collection("Utilisateurs")
         .document(Renseignements.emailUser)
         .updateData({"nbAjoutPanier": 0});
-
     _db
         .collection("Utilisateurs")
         .document(Renseignements.emailUser)
@@ -1100,13 +1128,12 @@ class _Panier2State extends State<Panier2> {
         "dateHeureDeLivraison": widget.dateHeureDeLivraison,
         "total": widget.total,
         "sousTotal": totalPlusLivraison,
-        "moyenDePayement": widget.moyenDePayement,
         "numeroDePayement": numeroDePayement,
         "produitsCommander": widget.produitsCommander,
         "prixLivraison": widget.prixLivraison,
         "lieuDeLivraison": widget.lieuDeLivraison,
         "numberOrder": numberOrder,
-        "livrer": false,
+        "livrer": "En cours",
         "created": DateTime.now().toString(),
       }).then((value) {
         setState(() {
@@ -1120,28 +1147,6 @@ class _Panier2State extends State<Panier2> {
             .document(value.documentID)
             .updateData({"id": value.documentID});
       });
-
-
-      /*FirestoreService().addCommande(
-          Commandes(
-              nomComplet: widget.nomComplet,
-              telephone: widget.telephone,
-              quartier: widget.quartier,
-              indication: widget.indication,
-              dateHeureDeLivraison:
-              widget.dateHeureDeLivraison,
-              total: widget.total,
-              sousTotal: totalPlusLivraison,
-              moyenDePayement: widget.moyenDePayement,
-              numeroDePayement: numeroDePayement,
-              produitsCommander: widget.produitsCommander,
-              prixLivraison: widget.prixLivraison,
-              lieuDeLivraison: widget.lieuDeLivraison,
-              numberOrder: numberOrder,
-              livrer: false,
-              created: DateTime.now().toString()),
-          Renseignements.emailUser);*/
-
 
 
        FirestoreService().addCommandeToAdmin(
@@ -1162,9 +1167,11 @@ class _Panier2State extends State<Panier2> {
               created: DateTime.now().toString(),
               numberOrder: numberOrder,
               idCommandeUser: idCommandeUser,
-              livrer: false),
+              livrer: "En cours"),
        );
-
+       setState(() {
+         chargement=false;
+       });
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => CommandeSend()));
     } catch (e) {

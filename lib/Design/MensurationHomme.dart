@@ -71,93 +71,13 @@ class _MensurationHommeState extends State<MensurationHomme> {
                         fontFamily: "MonseraBold"),
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: longueurPerCent(20, context),
-                      left: largeurPerCent(17, context),
-                      bottom: longueurPerCent(10, context)),
-                  child: Text(
-                    "Pantalons:",
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontSize: 20,
-                        fontFamily: "MonseraBold"),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: largeurPerCent(17, context)),
-                    child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                                keyboardType: TextInputType.number,
-                                style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 18,
-                                    fontFamily: "MonseraBold"
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: "Stature en cm",
-                                  hintStyle: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight'),
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 20),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, style: BorderStyle.none)),
-                                ),
-                                onChanged: (value) {
-                                  staturePantatalon = value;
-                                }),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
-                            TextFormField(
-                                style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 18,
-                                    fontFamily: "MonseraBold"
-                                ),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: "Tour de taille en cm",
-                                  hintStyle: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight'),
-                                  contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 24),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, style: BorderStyle.none)),
-                                ),
-                                onChanged: (value) {
-                                  tourDeTailePantalon = value;
-                                }),
-                          ],
-                        )
-                    )
-                ),
-
-                //////////////////////////////////////////////
-
                 Padding(
                   padding: EdgeInsets.only(
                       top: longueurPerCent(30, context),
                       left: largeurPerCent(17, context),
                       bottom: longueurPerCent(10, context)),
                   child: Text(
-                    "Vestes/Blousons/Chemises/Pulls/Jacket/T-shirt:",
+                    "HAUT:",
                     style: TextStyle(
                         color: HexColor("#001C36"),
                         fontSize: 20,
@@ -251,7 +171,60 @@ class _MensurationHommeState extends State<MensurationHomme> {
                       SizedBox(
                         height: longueurPerCent(20, context),
                       ),
-                      Container(
+                      TextFormField(
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 18,
+                              fontFamily: "MonseraBold"
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Tour de taille en cm",
+                            hintStyle: TextStyle(
+                                color: HexColor('#919191'),
+                                fontSize: 18.0,
+                                fontFamily: 'MonseraLight'),
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.only(
+                                top: 30, bottom: 5, left: 20),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(7.0)),
+                                borderSide: BorderSide(
+                                    width: 1, style: BorderStyle.none)),
+                          ),
+                          onChanged: (value) {
+                            tourDeTaileHaut = value;
+                          }),
+                      SizedBox(
+                        height: longueurPerCent(20, context),
+                      ),
+                      TextFormField(
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 18,
+                              fontFamily: "MonseraBold"
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Tour de taille en cm",
+                            hintStyle: TextStyle(
+                                color: HexColor('#919191'),
+                                fontSize: 18.0,
+                                fontFamily: 'MonseraLight'),
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.only(
+                                top: 30, bottom: 5, left: 20),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(7.0)),
+                                borderSide: BorderSide(
+                                    width: 1, style: BorderStyle.none)),
+                          ),
+                          onChanged: (value) {
+                            tourDeTaileHaut = value;
+                          }),
+                     /* Container(
                         padding: EdgeInsets.only(
                             left: largeurPerCent(20, context),
                             right: largeurPerCent(20, context),
@@ -303,7 +276,7 @@ class _MensurationHommeState extends State<MensurationHomme> {
                             );
                           },
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -314,7 +287,7 @@ class _MensurationHommeState extends State<MensurationHomme> {
                       left: largeurPerCent(17, context),
                       bottom: longueurPerCent(10, context)),
                   child: Text(
-                    "Jeans:",
+                    "BAS:",
                     style: TextStyle(
                         color: HexColor("#001C36"),
                         fontSize: 20,
@@ -409,7 +382,7 @@ class _MensurationHommeState extends State<MensurationHomme> {
                   ),
                 ),
                 SizedBox(
-                  height: longueurPerCent(60, context),
+                  height: longueurPerCent(20, context),
                 ),
                 button(
                     Colors.white, HexColor("#001C36"), context, "CONFIRMATION ",
