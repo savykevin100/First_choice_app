@@ -103,8 +103,6 @@ class _InscriptionState extends State<Inscription> {
                           _auth.currentUser().then((value) {
                             value.sendEmailVerification();
                           });
-                          print("reussie");
-                          Navigator.pushNamed(context, Connexion.id);
                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                             return Renseignements(emailAdress: emailAdress);
                           }));
@@ -139,6 +137,7 @@ class _InscriptionState extends State<Inscription> {
             ),
           ));
   }
+
 
   Widget popup() {
     showDialog(context: context, builder: (builder) {

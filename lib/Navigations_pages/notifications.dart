@@ -21,7 +21,10 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(userCurrent:  Renseignements.emailUser),
+      drawer: ProfileSettings(
+        userCurrent:Renseignements.emailUser,
+        firstLetter: Renseignements.emailUser[0],
+      ),
       body: Container(
         child:   elementsVides(context, Icons.add_alert, " aucune notification",),
       ),

@@ -26,7 +26,10 @@ class _ChatState extends State<Chat> {
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer:  ProfileSettings(userCurrent:  Renseignements.emailUser),
+      drawer:  ProfileSettings(
+        userCurrent:Renseignements.emailUser,
+        firstLetter: Renseignements.emailUser[0],
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height/1.5,
         child: Column(

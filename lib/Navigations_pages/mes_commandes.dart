@@ -183,25 +183,7 @@ List<Map<String, dynamic>> commandes=[];
                                   child: Padding(
                                     padding:
                                     EdgeInsets.only(right: longueurPerCent(12, context)),
-                                    child: (commandes[i]["livrer"]==false)?Text(
-                                      "En cours",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                        fontFamily: "MontserratBold",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ):Text(
-                                      "Livrer",
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 14,
-                                        fontFamily: "MontserratBold",
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    child:statutCommande((commandes[i]["livrer"]))
                                   ),
                                 ),
                               ],
@@ -239,6 +221,43 @@ List<Map<String, dynamic>> commandes=[];
           )
       ):Center(child: CircularProgressIndicator(),)
     );
+
+
   }
+
+      Widget statutCommande(String statut){
+        if(statut=="En cours"){
+         return Text(
+              "En cours",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+                fontFamily: "MontserratBold",
+                fontWeight: FontWeight.bold,
+              ));
+        } else if(statut=="Livrer"){
+          return Text(
+              "Livrer",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 16,
+                fontFamily: "MontserratBold",
+                fontWeight: FontWeight.bold,
+              ));
+        } else {
+          return Text(
+              "Annuler",
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+                fontFamily: "MontserratBold",
+                fontWeight: FontWeight.bold,
+              ));
+        }
+      }
+
 }
 /*     */

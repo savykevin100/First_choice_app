@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,13 +24,9 @@ class Panier extends StatefulWidget {
 }
 
 class _PanierState extends State<Panier> {
-  bool value;
   Firestore _db = Firestore.instance;
-  int quantiteProduitDisponible;
   int total = 0;
-  List<String> idProduitsPanier = [];
   List<Map<String, dynamic>> produitsPaniers=[];
-  List<String> idProduitsIndisponibles = [];
   List<Map<String, dynamic>> produitsIndisponibles=[];
   int ajoutPanier;
   int chargementProduitsIndisponible=0;
@@ -38,10 +35,9 @@ class _PanierState extends State<Panier> {
 
 
 
-
   /// Cette fonction getIdProduit permet de recuperer l'id du produit en vue de pouvoir le supprimer. Donc je récupère tous les ID
   /// dans la variable idProduitsPanier et au moment de la suppression je supprimer le produit qui est à l'index i
-  Future<void> getIdProduit() async {
+  Future<void> getProduitPanier() async {
     await _db
         .collection("Utilisateurs")
         .document(Renseignements.emailUser)
@@ -53,38 +49,29 @@ class _PanierState extends State<Panier> {
           setState(() {
             // Ici on parcourt les produits qui sont dans la table ProduitsIndisponibles et on vérifie si un des produits dans le panier
             // se trouve cette dernière table
-             _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
+            _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
                 .getDocuments().then((QuerySnapshot snapshot){
               if(snapshot.documents.isNotEmpty){
+               if(this.mounted){
+                 setState(() {
+                   produitsIndisponibles.add(snapshot.documents[0].data);
+                   print(snapshot.documents[0].data["nomDuProduit"]);
+                 });
+               }
+              } else {
                 setState(() {
-                  print("Il y a un produit dans le panier qui est déjà commandé ");
-                  print(snapshot.documents[0].data["nomDuProduit"]);
-                  produitsIndisponibles.add(snapshot.documents[0].data);
+                  chargementProduitsIndisponible++;
                 });
               }
             });
              // Fin de la vérification
-            idProduitsPanier.add(snapshot.documents[i].documentID);
             produitsPaniers.add(snapshot.documents[i].data);
-
           });
         }
       }
     });
 
-    await _db
-        .collection("ProduitsIndisponibles")
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      for (int i = 0; i < snapshot.documents.length; i++) {
-        if (this.mounted) {
-          setState(() {
-            idProduitsIndisponibles.add(snapshot.documents[i].documentID);
-            produitsIndisponibles.add(snapshot.documents[i].data);
-          });
-        }
-      }
-    });
+
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,14 +112,15 @@ class _PanierState extends State<Panier> {
   @override
   void initState() {
     super.initState();
-    getIdProduit();
+    getProduitPanier();
     getNombreProduitPanier();
     sumPrice();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (idProduitsPanier != null && total != null && produitsPaniers!=null && produitsIndisponibles!=null && idProduitsIndisponibles!=null  ) {
+    if (total != null && produitsPaniers!=null && (chargementProduitsIndisponible==produitsPaniers.length || produitsIndisponibles!=null) ) {
+
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -188,7 +176,12 @@ class _PanierState extends State<Panier> {
                               shrinkWrap: true,
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, i) {
+                                bool dejaCommader=false;
                                 PanierClasse panier = snapshot.data[i];
+                                for(int i=0; i<produitsIndisponibles.length; i++){
+                                  if(produitsIndisponibles[i]["image1"]==panier.image1)
+                                    dejaCommader=true;
+                                }
                                 return Container(
                                   margin: EdgeInsets.only(
                                     top: longueurPerCent(18, context),
@@ -289,19 +282,26 @@ class _PanierState extends State<Panier> {
                                                     ),
                                                   ),
                                                 ),
-                                                SizedBox(height: longueurPerCent(20, context),),
+                                                SizedBox(height: longueurPerCent(5, context)),
+                                                (dejaCommader)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
-                                                    Icons.delete, color: Colors.red,),
+                                                    Icons.delete, color: Colors.red, size: 20),
                                                       onPressed: () {
                                                     setState(() {
                                                       ajoutPanier--;
                                                     });
-                                                    print(ajoutPanier);
-                                                        FirestoreService().deletePanier(
+                                                    FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
+                                                        /*FirestoreService().deletePanier(
                                                             Renseignements.emailUser,
-                                                            idProduitsPanier[i]);
+                                                            idProduitsPanier[i]);*/
+                                                       for(int i=0; i<produitsIndisponibles.length; i++){
+                                                         if(produitsIndisponibles[i]["image1"]==panier.image1)
+                                                           setState(() {
+                                                             produitsIndisponibles.removeAt(i);
+                                                           });
+                                                       }
                                                             _db
                                                                 .collection("Utilisateurs")
                                                                 .document(
@@ -309,15 +309,8 @@ class _PanierState extends State<Panier> {
                                                                 .updateData({
                                                                 "nbAjoutPanier": ajoutPanier
                                                             });
-                                                        _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:panier.image1)
-                                                            .getDocuments().then((QuerySnapshot snapshot){
-                                                          if(snapshot.documents.isNotEmpty){
-                                                            FirestoreService().deleteProduitsIndisponibles(snapshot.documents.first.documentID);
-                                                          }
-                                                        });
                                                         setState(() {
                                                           total = total - panier.prix;
-                                                          idProduitsPanier.removeAt(i);
                                                           produitsPaniers.removeAt(i);
                                                         });
 
@@ -339,7 +332,8 @@ class _PanierState extends State<Panier> {
               SizedBox(height: 100,),
             ],
           ),
-          floatingActionButton:Center(
+          floatingActionButton:
+          (produitsPaniers!=null)?Center(
             child: Container(
               margin: EdgeInsets.only(
                   left: longueurPerCent(20, context),  top: MediaQuery
@@ -347,11 +341,10 @@ class _PanierState extends State<Panier> {
                   .size
                   .height - 60),
               child: button(
-                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () {
+                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () async {
                 if(total==0){
 
                 } else {
-                  sleep(Duration(seconds: 3));
                   if(produitsIndisponibles.isNotEmpty){
                     confirmationPopup(context);
                   } else {
@@ -360,14 +353,9 @@ class _PanierState extends State<Panier> {
                         builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
                   }
                 }
-              }),
+              })
             ),
-          )
-      );
-    } else if (idProduitsPanier == [] && total == 0) {
-      return Scaffold(
-        body: elementsVides(
-            context, Icons.shopping_cart, "AUCUN PRODUIT DANS LE PANIER"),
+          ):Center(child: CircularProgressIndicator(),)
       );
     }
     else {
@@ -393,7 +381,7 @@ class _PanierState extends State<Panier> {
         context: dialogContext,
         style: alertStyle,
         title: "IMPORTANT?",
-        desc: "Certains de vos produits ont été déjà commandés. Si vous continuez ces produits seront automatiquement supprimés.",
+        desc: "Certains de vos produits ont été déjà commandés. Supprimer ces produits pour continuer l'achat.",
         buttons: [
           DialogButton(
             child: Text(
@@ -401,22 +389,13 @@ class _PanierState extends State<Panier> {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             onPressed: () {
-              Navigator.push(  
+              Navigator.pop(context);
+              /*Navigator.push(
                   context, MaterialPageRoute(
-                  builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                  builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));*/
             },
             color: HexColor("#001C36"),
           ),
-          DialogButton(
-            child: Text(
-              "Voir ces produits",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: HexColor("#001C36"),
-          )
         ]).show();
   }
 

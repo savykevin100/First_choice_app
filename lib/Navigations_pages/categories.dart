@@ -38,7 +38,10 @@ class _CategoriesState extends State<Categories> {
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(userCurrent: Renseignements.emailUser),
+      drawer: ProfileSettings(
+        userCurrent:Renseignements.emailUser,
+        firstLetter: Renseignements.emailUser[0],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +142,7 @@ class _CategoriesState extends State<Categories> {
               (nombre==0)?Padding(
               padding:EdgeInsets.symmetric(horizontal: 10),
               child: StreamBuilder(
-                  stream: FirestoreService().getCategoriesHF("Femmes"),
+                  stream: FirestoreService().getSousCategoriesNoms("Femmes"),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<InfoCategories>> snapshot) {
                     if (snapshot.hasError || !snapshot.hasData) {
@@ -214,7 +217,7 @@ class _CategoriesState extends State<Categories> {
             ):Padding(
                 padding:EdgeInsets.symmetric(horizontal: 10),
                 child: StreamBuilder(
-                    stream: FirestoreService().getCategoriesHF("Hommes"),
+                    stream: FirestoreService().getSousCategoriesNoms("Hommes"),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<InfoCategories>> snapshot) {
                       if (snapshot.hasError || !snapshot.hasData) {

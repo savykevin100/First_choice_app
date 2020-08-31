@@ -25,7 +25,6 @@ class AppBarClasse extends StatefulWidget{
   State<StatefulWidget> createState() {
     // TODO: implement createState
     throw UnimplementedError();
-
   }
 
 
