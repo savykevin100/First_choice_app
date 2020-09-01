@@ -506,8 +506,6 @@ class _Panier1State extends State<Panier1> {
                 prixLivraison = value.documents[i].data["prix"];
                 stopSommeLivraisonRetour++;
               });
-            } else {
-
             }
           }
         }
