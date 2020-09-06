@@ -1015,6 +1015,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
@@ -1143,13 +1144,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   void initState() {
     super.initState();
     getNombreProduitPanier();
-   /* widget.produit= Produit(nomDuProduit: widget.produit.nomDuProduit prix: widget.produit.prix description: widget.produit.description, image1: widget.produit.image1
-      image2: widget.produitMap["image3"],  image3: widget.produitMap["image3"], selectImage:  widget.produitMap["selectImage"], numberImages:  widget.produitMap["numberImages"],
-      numberStar: widget.produitMap["numberStar"], surMesure: widget.produitMap["surMesure"], taille: widget.produit.taille
-    );*/
-    print(widget.produit.id);
-    print(widget.produit.description);
-
   }
 
   ScrollController controller = ScrollController();
@@ -1168,7 +1162,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
-        body: ListView(
+        body: ConnexionState(body: ListView(
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -1366,17 +1360,17 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 SizedBox(width: largeurPerCent(20, context),),
                 InkWell(
                   onTap: () {
-                   _db.collection("ProduitsIndisponibles").where("image1", isEqualTo: widget.produit.image1).getDocuments().then((value){
-                     if(value.documents.isNotEmpty){
-                       displaySnackBarNom(context, "Ce produit est indiponible pour le moment", Colors.white);
-                     } else {
-                       Navigator.push(
-                           context,
-                           MaterialPageRoute(
-                               builder: (context) =>
-                                   Panier1(total: widget.produit.prix , produitsPanier: [widget.produit.toMap()],)));
-                     }
-                   });
+                    _db.collection("ProduitsIndisponibles").where("image1", isEqualTo: widget.produit.image1).getDocuments().then((value){
+                      if(value.documents.isNotEmpty){
+                        displaySnackBarNom(context, "Ce produit est indiponible pour le moment", Colors.white);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Panier1(total: widget.produit.prix , produitsPanier: [widget.produit.toMap()],)));
+                      }
+                    });
                   },
                   child: Padding(
                     padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
@@ -1428,7 +1422,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
             SizedBox(height: longueurPerCent(20, context),),
           ],
-        ));
+        ),)
+    );
   }
 
   Stream<List<ProduitsFavorisUser>> getImagesProduct(){

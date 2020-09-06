@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'package:intl/intl.dart';
@@ -126,319 +127,265 @@ class _Panier1State extends State<Panier1> {
           ),
         ),
         body: (numUser != null && name != null)
-            ? SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: longueurPerCent(40, context),
-                      ),
-                      Center(
-                        child: Text(
-                          "INFORMATION DE LA COMMANDE",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#001C36"),
-                              fontSize: 19.0,
-                              fontFamily: "MonseraBold",
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(height: longueurPerCent(20, context)),
+            ? ConnexionState(body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: longueurPerCent(40, context),
+                ),
+                Center(
+                  child: Text(
+                    "INFORMATION DE LA COMMANDE",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 19.0,
+                        fontFamily: "MonseraBold",
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: longueurPerCent(20, context)),
 
-                      Center(
-                        child: Text(
-                          name,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: HexColor("#001C36"),
-                              fontSize: 17.0,
-                              fontFamily: "MonseraLight",
-                              fontWeight: FontWeight.bold),
-                        ),
+                Center(
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 17.0,
+                        fontFamily: "MonseraLight",
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    padding:EdgeInsets.all(longueurPerCent(10, context)),
+                    child: Center(
+                      child: Text(
+                        numUser,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 17.0,
+                            fontFamily: "MonseraLight",
+                            fontWeight: FontWeight.bold),
                       ),
-                      Center(
-                        child: Container(
-                          padding:EdgeInsets.all(longueurPerCent(10, context)),
-                          child: Center(
-                            child: Text(
-                              numUser,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 17.0,
-                                  fontFamily: "MonseraLight",
-                                  fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+                SizedBox(
+                  height: longueurPerCent(66.0, context),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: largeurPerCent(347.0, context),
+                            height: longueurPerCent(40, context),
+                            padding: EdgeInsets.only(
+                                left: largeurPerCent(10, context),
+                                right: largeurPerCent(20, context),
+                                top: longueurPerCent(0, context)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(7.0),
+                                ),
+                                border: Border.all(
+                                    color: Colors.grey, width: 1)),
+                            child: DropdownButton(
+                              underline: Text(""),
+                              hint: _dropDownValue == null
+                                  ? Text(
+                                'Lieu de Livraison',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                    fontFamily: 'MonseraLight'),
+                              )
+                                  : Text(
+                                _dropDownValue,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16),
+                              ),
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              style: TextStyle(color: HexColor("#919191")),
+                              items: ['En Agence', 'A domicile'].map(
+                                    (val) {
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(val),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (val) {
+                                setState(
+                                      () {
+                                    _dropDownValue = val;
+                                    lieu = _dropDownValue;
+                                  },
+                                );
+                              },
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(height: longueurPerCent(20, context)),
 
-                      SizedBox(
-                        height: longueurPerCent(66.0, context),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                        ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
+                        (lieu == "A domicile")
+                            ? Column(
+                          children: <Widget>[
+                            Center(
+                              child: Container(
+                                padding: EdgeInsets.only(left: 0,right: 0),
+                                width: longueurPerCent(347, context),
+                                height: 50,
+                                child: DropdownSearch<String>(
+                                  mode: Mode.BOTTOM_SHEET,
+                                  maxHeight: 300,
+                                  items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
+                                  onChanged:  (value) {
+                                    quartier= value;
+                                  },
+                                  hint: "Sélectionner un quartier",
+                                  showClearButton: true,
+                                  showSearchBox: true,
+                                  searchBoxDecoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.only(left: 100),
+                                    hintText:"Rechercher un quartier",
+                                    hintStyle: TextStyle(
+                                        fontSize: 18.0,
+                                        fontFamily: 'MonseraLight'),
+                                  ),
+                                  popupTitle: Container(
+                                    height: longueurPerCent(50, context),
+                                    decoration: BoxDecoration(
+                                      color: HexColor("#001C36"),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Quartier',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  popupShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(24),
+                                      topRight: Radius.circular(24),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: longueurPerCent(20.0, context),
+                            ),
+                            //Ajouter le textField ici
+                            Center(
+                              child: 	Container(
+                                width: largeurPerCent(347, context),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: "Indication",
+                                    hintStyle: TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.only(
+                                        top: 30, bottom: 5, left: 15),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7.0)),
+                                        borderSide: BorderSide(
+                                            width: 1,
+                                            style: BorderStyle.none)),
+                                  ),
+                                  onChanged: (value) {
+                                    indication = value;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                            : Text(""),
+                        ////////////////////////////////////////////////////////////////////////////////////////////////
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              SizedBox(
+                                height: longueurPerCent(70.0, context),
+                              ),
                               Center(
                                 child: Container(
-                                  width: largeurPerCent(347.0, context),
                                   height: longueurPerCent(40, context),
-                                  padding: EdgeInsets.only(
-                                      left: largeurPerCent(10, context),
-                                      right: largeurPerCent(20, context),
-                                      top: longueurPerCent(0, context)),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(7.0),
-                                      ),
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1)),
-                                  child: DropdownButton(
-                                    underline: Text(""),
-                                    hint: _dropDownValue == null
-                                        ? Text(
-                                            'Lieu de Livraison',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16.0,
-                                                fontFamily: 'MonseraLight'),
-                                          )
-                                        : Text(
-                                            _dropDownValue,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                          ),
-                                    isExpanded: true,
-                                    iconSize: 30.0,
-                                    style: TextStyle(color: HexColor("#919191")),
-                                    items: ['En Agence', 'A domicile'].map(
-                                      (val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: Text(val),
-                                        );
-                                      },
-                                    ).toList(),
-                                    onChanged: (val) {
-                                      setState(
-                                        () {
-                                          _dropDownValue = val;
-                                          lieu = _dropDownValue;
-                                        },
-                                      );
+                                  width: largeurPerCent(336.0, context),
+                                  child: DateTimeField(
+                                    format: format,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        dateHeureDeLivraison = value.toString();
+                                      });
                                     },
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: longueurPerCent(20, context)),
-
-                              ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
-                              (lieu == "A domicile")
-                                  ? Column(
-                                children: <Widget>[
-                                  Center(
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 0,right: 0),
-                                      width: longueurPerCent(347, context),
-                                      height: 50,
-                                      child: DropdownSearch<String>(
-                                        mode: Mode.BOTTOM_SHEET,
-                                        maxHeight: 300,
-                                        items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
-                                        onChanged:  (value) {
-                                          quartier= value;
-                                        },
-                                        hint: "Sélectionner un quartier",
-                                        showClearButton: true,
-                                        showSearchBox: true,
-                                        searchBoxDecoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          contentPadding: EdgeInsets.only(left: 100),
-                                          hintText:"Rechercher un quartier",
-                                          hintStyle: TextStyle(
-                                              fontSize: 18.0,
-                                              fontFamily: 'MonseraLight'),
-                                        ),
-                                        popupTitle: Container(
-                                          height: longueurPerCent(50, context),
-                                          decoration: BoxDecoration(
-                                            color: HexColor("#001C36"),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'Quartier',
-                                              style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        popupShape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(24),
-                                            topRight: Radius.circular(24),
-                                          ),
+                                    decoration: InputDecoration(
+                                      prefixIcon: Padding(
+                                        padding: EdgeInsets.only(
+                                            right: largeurPerCent(0, context),
+                                            left: largeurPerCent(0, context)),
+                                        child: Icon(
+                                          Icons.calendar_today,
+                                          color: HexColor('#001C36'),
+                                          size: 30.0,
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: longueurPerCent(20.0, context),
-                                  ),
-                                  //Ajouter le textField ici
-                                  Center(
-                                    child: 	Container(
-                                      width: largeurPerCent(347, context),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          hintText: "Indication",
-                                          hintStyle: TextStyle(
-                                            fontSize: 16.0,
-                                          ),
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsets.only(
-                                              top: 30, bottom: 5, left: 15),
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(7.0)),
-                                              borderSide: BorderSide(
-                                                  width: 1,
-                                                  style: BorderStyle.none)),
-                                        ),
-                                        onChanged: (value) {
-                                          indication = value;
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                                  : Text(""),
-                              ////////////////////////////////////////////////////////////////////////////////////////////////
-                              Container(
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: longueurPerCent(70.0, context),
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        height: longueurPerCent(40, context),
-                                        width: largeurPerCent(336.0, context),
-                                        child: DateTimeField(
-                                          format: format,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              dateHeureDeLivraison = value.toString();
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            prefixIcon: Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: largeurPerCent(0, context),
-                                                  left: largeurPerCent(0, context)),
-                                              child: Icon(
-                                                Icons.calendar_today,
-                                                color: HexColor('#001C36'),
-                                                size: 30.0,
-                                              ),
-                                            ),
-                                            labelText: null,
-                                            hintText: "Date et heure de livraison",
-                                            contentPadding: EdgeInsets.only(top: longueurPerCent(10, context)),
-                                            hintStyle: TextStyle(
-                                              fontSize: 16.0,
-                                            ),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(7.0)),
-                                                borderSide: BorderSide(
-                                                    width: 1, style: BorderStyle.none)),
-                                          ),
-                                          onShowPicker: (context, currentValue) async {
-                                            final date = await showDatePicker(
-                                                context: context,
-                                                firstDate: DateTime(1900),
-                                                initialDate:
-                                                currentValue ?? DateTime.now(),
-                                                lastDate: DateTime(2100));
-                                            if (date != null) {
-                                              final time = await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.fromDateTime(
-                                                    currentValue ?? DateTime.now()),
-                                              );
-                                              return DateTimeField.combine(date, time);
-                                            } else {
-                                              return currentValue;
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Center(
-                                child: Container(
-                                  width: largeurPerCent(347.0, context),
-                                  height: longueurPerCent(40, context),
-                                  padding: EdgeInsets.only(
-                                      left: largeurPerCent(10, context),
-                                      right: largeurPerCent(20, context),
-                                      top: longueurPerCent(0, context)),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(7.0),
-                                      ),
-                                      border: Border.all(
-                                          color: Colors.grey, width: 1)),
-                                  child: DropdownButton(
-                                    underline: Text(""),
-                                    hint: _dropDownValue2 == null
-                                        ? Text(
-                                      'Payement',
-                                      style: TextStyle(
+                                      labelText: null,
+                                      hintText: "Date et heure de livraison",
+                                      contentPadding: EdgeInsets.only(top: longueurPerCent(10, context)),
+                                      hintStyle: TextStyle(
                                         fontSize: 16.0,
                                       ),
-                                    )
-                                        : Text(
-                                      _dropDownValue2,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16),
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(7.0)),
+                                          borderSide: BorderSide(
+                                              width: 1, style: BorderStyle.none)),
                                     ),
-                                    isExpanded: true,
-                                    iconSize: 30.0,
-                                    items:
-                                    ['Mobile Money' ,' Espèce'].map(
-                                          (val) {
-                                        return DropdownMenuItem<String>(
-                                          value: val,
-                                          child: Text(val),
+                                    onShowPicker: (context, currentValue) async {
+                                      final date = await showDatePicker(
+                                          context: context,
+                                          firstDate: DateTime(1900),
+                                          initialDate:
+                                          currentValue ?? DateTime.now(),
+                                          lastDate: DateTime(2100));
+                                      if (date != null) {
+                                        final time = await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.fromDateTime(
+                                              currentValue ?? DateTime.now()),
                                         );
-                                      },
-                                    ).toList(),
-                                    onChanged: (val) {
-                                      setState(
-                                            () {
-                                          _dropDownValue2 = val;
-                                          moyenDePayement = _dropDownValue2;
-                                        },
-                                      );
+                                        return DateTimeField.combine(date, time);
+                                      } else {
+                                        return currentValue;
+                                      }
                                     },
                                   ),
                                 ),
@@ -446,22 +393,76 @@ class _Panier1State extends State<Panier1> {
                             ],
                           ),
                         ),
-                      ),
-                      //////////////////////////////////////////////////////////////////////////////////////////////
-                      SizedBox(height: longueurPerCent(60.0, context)),
-                      Center(
-                        child: button(Colors.white, HexColor("#001C36"),
-                            context, 'CONFIRMER', () {
-                          checkInformationsComplete(context);
-                        }),
-                      ),
-                      SizedBox(
-                        height: longueurPerCent(30, context),
-                      )
-                    ],
+                        Center(
+                          child: Container(
+                            width: largeurPerCent(347.0, context),
+                            height: longueurPerCent(40, context),
+                            padding: EdgeInsets.only(
+                                left: largeurPerCent(10, context),
+                                right: largeurPerCent(20, context),
+                                top: longueurPerCent(0, context)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(7.0),
+                                ),
+                                border: Border.all(
+                                    color: Colors.grey, width: 1)),
+                            child: DropdownButton(
+                              underline: Text(""),
+                              hint: _dropDownValue2 == null
+                                  ? Text(
+                                'Payement',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                              )
+                                  : Text(
+                                _dropDownValue2,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16),
+                              ),
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              items:
+                              ['Mobile Money' ,' Espèce'].map(
+                                    (val) {
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(val),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (val) {
+                                setState(
+                                      () {
+                                    _dropDownValue2 = val;
+                                    moyenDePayement = _dropDownValue2;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              )
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                SizedBox(height: longueurPerCent(60.0, context)),
+                Center(
+                  child: button(Colors.white, HexColor("#001C36"),
+                      context, 'CONFIRMER', () {
+                        checkInformationsComplete(context);
+                      }),
+                ),
+                SizedBox(
+                  height: longueurPerCent(30, context),
+                )
+              ],
+            ),
+          ),
+        ),)
             : Center(
                 child: CircularProgressIndicator(),
               ));
@@ -530,7 +531,7 @@ class _Panier1State extends State<Panier1> {
       });
     } else {
         displaySnackBarNom(
-          context, "Veuillez remplir tous les champs ", Colors.red);
+          context, "Veuillez remplir tous les champs ", Colors.white);
     }
   }
 }
