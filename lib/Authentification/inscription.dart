@@ -40,25 +40,7 @@ class _InscriptionState extends State<Inscription> {
 
   @override
   Widget build(BuildContext context) {
-      return (chargement==true)?Scaffold(
-        backgroundColor: HexColor("#001C36"),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
-          child: Column(
-            children: <Widget>[
-              Image.asset('assets/images/logo.png',
-                height: 197,
-                width: 278,
-              ),
-              SizedBox(height: 50.0,),
-              SpinKitThreeBounce(
-                color:HexColor('#FFFFFF'),
-                size: 60,
-              )
-            ],
-          ),
-        ),
-      ) :Scaffold(
+      return (chargement==false)?Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           body: SingleChildScrollView(
             child: Container(
@@ -96,10 +78,15 @@ class _InscriptionState extends State<Inscription> {
                   SizedBox(height: longueurPerCent(50, context),),
                   button(HexColor("#001C36"), HexColor('#FFC30D'), context, "S'INSCRIRE", () async{
                     if(_formKey.currentState.validate()) {
-                     popup();
+                     setState(() {
+                       chargement=true;
+                     });
                       try {
                         final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
                         if(user!=null ) {
+                          setState(() {
+                            chargement=true;
+                          });
                           _auth.currentUser().then((value) {
                             value.sendEmailVerification();
                           });
@@ -107,11 +94,13 @@ class _InscriptionState extends State<Inscription> {
                             return Renseignements(emailAdress: emailAdress);
                           }));
                         }
+
+                      } catch(e){
                         setState(() {
                           chargement = false;
                         });
-                      } catch(e){
                         print(e);
+                        showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
                       }
                     }
                   }),
@@ -135,7 +124,57 @@ class _InscriptionState extends State<Inscription> {
                 ],
               ),
             ),
-          ));
+          )): Scaffold(
+            backgroundColor: HexColor("#001C36"),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: 197,
+                    width: 278,
+                  ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  SpinKitThreeBounce(
+                    color: HexColor('#FFFFFF'),
+                    size: 60,
+                  )
+                ],
+              ),
+            ),
+          );
+  }
+
+
+  showAlertDialog(BuildContext context, String text) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("ALERT"),
+      content: Text(text),
+      actions: [
+        cancelButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 
