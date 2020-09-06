@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
@@ -30,7 +31,7 @@ class _ChatState extends State<Chat> {
         userCurrent:Renseignements.emailUser,
         firstLetter: Renseignements.emailUser[0],
       ),
-      body: Container(
+      body:ConnexionState(body:  Container(
         height: MediaQuery.of(context).size.height/1.5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,10 +40,10 @@ class _ChatState extends State<Chat> {
               child: Text(
                 "Continuez ",
                 style: TextStyle(
-                    color: HexColor("#001C36"),
-                    fontSize: 50,
-                    fontFamily: "MonseraBold",
-                    ),
+                  color: HexColor("#001C36"),
+                  fontSize: 50,
+                  fontFamily: "MonseraBold",
+                ),
               ),
             ),
             SizedBox(height: longueurPerCent(30, context),),
@@ -74,7 +75,7 @@ class _ChatState extends State<Chat> {
                         Container(
                           margin: EdgeInsets.only(left: longueurPerCent(10, context)),
                           child: Image.asset("assets/images/1021px-WhatsApp.svg.png",
-                          width: largeurPerCent(40, context),),
+                            width: largeurPerCent(40, context),),
                         ),
                         Padding(
                           padding:  EdgeInsets.only(left:longueurPerCent(10, context)),
@@ -133,7 +134,7 @@ class _ChatState extends State<Chat> {
             ),
           ],
         ),
-      ),
+      ),)
     );
   }
 }

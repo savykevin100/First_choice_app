@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
@@ -25,9 +26,9 @@ class _NotificationsState extends State<Notifications> {
         userCurrent:Renseignements.emailUser,
         firstLetter: Renseignements.emailUser[0],
       ),
-      body: Container(
-        child:   elementsVides(context, Icons.add_alert, " aucune notification",),
-      ),
+      body:ConnexionState(body:  Container(
+        child:   elementsVides(context, Icons.add_alert, "AUCUNE NOTIFICATION",),
+      ),)
     );
 
   }
