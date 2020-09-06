@@ -131,6 +131,7 @@ class _Panier1State extends State<Panier1> {
           child: Form(
             key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
                   height: longueurPerCent(40, context),
@@ -239,7 +240,6 @@ class _Panier1State extends State<Panier1> {
                           ),
                         ),
                         SizedBox(height: longueurPerCent(20, context)),
-
                         ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
                         (lieu == "A domicile")
                             ? Column(
