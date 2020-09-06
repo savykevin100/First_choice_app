@@ -75,8 +75,7 @@ class _Panier2State extends State<Panier2> {
     });
     getIdProduit();
     getNumberOrder();
-    print(widget.produitsCommander[0]["etatSurMesure"]);
-  }
+    }
 
   /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
   /// quand la commande a été lancé
@@ -1005,7 +1004,7 @@ class _Panier2State extends State<Panier2> {
                             button(HexColor("#FFFFFF"), HexColor("#001C36"),
                                 context, 'COMMANDER', () {
                               if (widget.moyenDePayement == "Mobile Money") {
-                                if (numeroDePayement.length == 8) {
+                                if (numeroDePayement.length != 8 || numeroDePayement!=null) {
                                   commandAction();
                                 } else {
                                   displaySnackBarNom(

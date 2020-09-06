@@ -1,4 +1,50 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+
+class Test extends StatelessWidget {
+  static String id="Test";
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Offline Demo"),
+      ),
+      body: OfflineBuilder(
+        connectivityBuilder: (
+            BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,
+            ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          return new Stack(
+            fit: StackFit.expand,
+            children: [
+              Center(
+                child: new Text(
+                  '${connected ? 'CONNECTEZ!' : "VOUS N'ETES PAS CONNECTER À INTERNET"}',
+                ),
+              ),
+            ],
+          );
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Text(
+              'There are no bottons to push :)',
+            ),
+            new Text(
+              'Just turn off your internet.',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+/*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -466,7 +512,7 @@ class _TestState extends State<Test> {
       });
     }
   }
-}
+}*/
 
 /*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

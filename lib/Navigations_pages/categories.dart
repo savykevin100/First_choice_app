@@ -5,6 +5,7 @@ import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
@@ -42,7 +43,7 @@ class _CategoriesState extends State<Categories> {
         userCurrent:Renseignements.emailUser,
         firstLetter: Renseignements.emailUser[0],
       ),
-      body: SingleChildScrollView(
+      body: ConnexionState(body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -96,7 +97,7 @@ class _CategoriesState extends State<Categories> {
                     iconOn: Icons.account_circle,
                     iconOff: Icons.account_circle,
                     textSize: 16.0,
-                    animationDuration: Duration(milliseconds: 1),
+                    animationDuration: Duration(milliseconds: 3),
                     onChanged: (bool state) {
                       val=state;
                     },
@@ -139,7 +140,7 @@ class _CategoriesState extends State<Categories> {
               ),
             ),
             SizedBox(height: longueurPerCent(5, context)),
-              (nombre==0)?Padding(
+            (nombre==0)?Padding(
               padding:EdgeInsets.symmetric(horizontal: 10),
               child: StreamBuilder(
                   stream: FirestoreService().getSousCategoriesNoms("Femmes"),
@@ -159,7 +160,7 @@ class _CategoriesState extends State<Categories> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                         ProduitsCategorie(categories.nomCategorie, "Femmes")));
+                                          ProduitsCategorie(categories.nomCategorie, "Femmes")));
                             },
                             child: Stack(
                               children: [
@@ -215,84 +216,84 @@ class _CategoriesState extends State<Categories> {
                     }
                   }),
             ):Padding(
-                padding:EdgeInsets.symmetric(horizontal: 10),
-                child: StreamBuilder(
-                    stream: FirestoreService().getSousCategoriesNoms("Hommes"),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<InfoCategories>> snapshot) {
-                      if (snapshot.hasError || !snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        return StaggeredGridView.countBuilder(
-                          crossAxisCount: 4,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            InfoCategories categories = snapshot.data[index];
-                            return  GestureDetector(
-                              onTap: (){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProduitsCategorie(categories.nomCategorie, "Hommes")));
-                              },
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: 180,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                          image:NetworkImage(categories.imagePath,
-                                          ),
-                                          fit: BoxFit.cover
-                                      ),
+              padding:EdgeInsets.symmetric(horizontal: 10),
+              child: StreamBuilder(
+                  stream: FirestoreService().getSousCategoriesNoms("Hommes"),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<InfoCategories>> snapshot) {
+                    if (snapshot.hasError || !snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return StaggeredGridView.countBuilder(
+                        crossAxisCount: 4,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, index) {
+                          InfoCategories categories = snapshot.data[index];
+                          return  GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProduitsCategorie(categories.nomCategorie, "Hommes")));
+                            },
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        image:NetworkImage(categories.imagePath,
+                                        ),
+                                        fit: BoxFit.cover
                                     ),
                                   ),
-                                  Container(
-                                    height: 180.0,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        gradient: LinearGradient(
-                                            begin: FractionalOffset.topCenter,
-                                            end: FractionalOffset.bottomCenter,
-                                            colors: [
-                                              Colors.grey.withOpacity(0.0),
-                                              Colors.black.withOpacity(0.8),
-                                            ],
-                                            stops: [
-                                              0.0,
-                                              1.0
-                                            ])),
+                                ),
+                                Container(
+                                  height: 180.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      gradient: LinearGradient(
+                                          begin: FractionalOffset.topCenter,
+                                          end: FractionalOffset.bottomCenter,
+                                          colors: [
+                                            Colors.grey.withOpacity(0.0),
+                                            Colors.black.withOpacity(0.8),
+                                          ],
+                                          stops: [
+                                            0.0,
+                                            1.0
+                                          ])),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 140,bottom: longueurPerCent(10, context)),
+                                    child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                            maxWidth: 300
+                                        ),
+                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 140,bottom: longueurPerCent(10, context)),
-                                      child: ConstrainedBox(
-                                          constraints: BoxConstraints(
-                                              maxWidth: 300
-                                          ),
-                                          child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                          mainAxisSpacing: 20.0,
-                          crossAxisSpacing: 10.0,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                        );
-                      }
-                    }),
-              )
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                        mainAxisSpacing: 20.0,
+                        crossAxisSpacing: 10.0,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                      );
+                    }
+                  }),
+            )
           ],
         ),
-      ),
+      ),)
     );
   }
 

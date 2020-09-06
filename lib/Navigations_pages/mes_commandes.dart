@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 
@@ -40,7 +41,7 @@ List<Map<String, dynamic>> commandes=[];
       appBar: AppBar(
         title: Text("Liste des commandes"),
       ),
-      body: (commandes!=null)?Center(
+      body: (commandes!=null)?ConnexionState(body: Center(
           child: Container(
               margin: EdgeInsets.only(top: longueurPerCent(30, context), left: largeurPerCent(20, context), right: largeurPerCent(20, context), ),
               child: ListView.builder(
@@ -181,9 +182,9 @@ List<Map<String, dynamic>> commandes=[];
                                 Expanded(
                                   flex: 7,
                                   child: Padding(
-                                    padding:
-                                    EdgeInsets.only(right: longueurPerCent(12, context)),
-                                    child:statutCommande((commandes[i]["livrer"]))
+                                      padding:
+                                      EdgeInsets.only(right: longueurPerCent(12, context)),
+                                      child:statutCommande((commandes[i]["livrer"]))
                                   ),
                                 ),
                               ],
@@ -219,7 +220,8 @@ List<Map<String, dynamic>> commandes=[];
                   }
               )
           )
-      ):Center(child: CircularProgressIndicator(),)
+      ),)
+          :Center(child: CircularProgressIndicator(),)
     );
 
 

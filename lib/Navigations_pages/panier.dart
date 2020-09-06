@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
@@ -120,7 +121,6 @@ class _PanierState extends State<Panier> {
   @override
   Widget build(BuildContext context) {
     if (total != null && produitsPaniers!=null && (chargementProduitsIndisponible==produitsPaniers.length || produitsIndisponibles!=null) ) {
-
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
@@ -146,7 +146,7 @@ class _PanierState extends State<Panier> {
                   }
               )
           ),
-          body: ListView(
+          body: ConnexionState(body: ListView(
             children: <Widget>[
               Stack(
                 children: <Widget>[
@@ -287,28 +287,28 @@ class _PanierState extends State<Panier> {
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
                                                   child: IconButton(icon: Icon(
-                                                    Icons.delete, color: Colors.red, size: 20),
+                                                      Icons.delete, color: Colors.red, size: 20),
                                                       onPressed: () {
-                                                    setState(() {
-                                                      ajoutPanier--;
-                                                    });
-                                                    FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
+                                                        setState(() {
+                                                          ajoutPanier--;
+                                                        });
+                                                        FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
                                                         /*FirestoreService().deletePanier(
                                                             Renseignements.emailUser,
                                                             idProduitsPanier[i]);*/
-                                                       for(int i=0; i<produitsIndisponibles.length; i++){
-                                                         if(produitsIndisponibles[i]["image1"]==panier.image1)
-                                                           setState(() {
-                                                             produitsIndisponibles.removeAt(i);
-                                                           });
-                                                       }
-                                                            _db
-                                                                .collection("Utilisateurs")
-                                                                .document(
-                                                                Renseignements.emailUser)
-                                                                .updateData({
-                                                                "nbAjoutPanier": ajoutPanier
+                                                        for(int i=0; i<produitsIndisponibles.length; i++){
+                                                          if(produitsIndisponibles[i]["image1"]==panier.image1)
+                                                            setState(() {
+                                                              produitsIndisponibles.removeAt(i);
                                                             });
+                                                        }
+                                                        _db
+                                                            .collection("Utilisateurs")
+                                                            .document(
+                                                            Renseignements.emailUser)
+                                                            .updateData({
+                                                          "nbAjoutPanier": ajoutPanier
+                                                        });
                                                         setState(() {
                                                           total = total - panier.prix;
                                                           produitsPaniers.removeAt(i);
@@ -331,7 +331,7 @@ class _PanierState extends State<Panier> {
               ),
               SizedBox(height: 100,),
             ],
-          ),
+          ),),
           floatingActionButton:
           (produitsPaniers!=null)?Center(
             child: Container(
