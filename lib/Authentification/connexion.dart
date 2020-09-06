@@ -32,25 +32,7 @@ class _ConnexionState extends State<Connexion> {
   Widget build(BuildContext context) {
 
 
-    return (chargement==true)?Scaffold(
-      backgroundColor: HexColor("#001C36"),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
-        child: Column(
-          children: <Widget>[
-            Image.asset('assets/images/logo.png',
-              height: 197,
-              width: 278,
-            ),
-            SizedBox(height: 50.0,),
-            SpinKitThreeBounce(
-              color:HexColor('#FFFFFF'),
-              size: 60,
-            )
-          ],
-        ),
-      ),
-    ) :Scaffold(
+    return (chargement==false)?Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
         body: SingleChildScrollView(
@@ -104,17 +86,26 @@ class _ConnexionState extends State<Connexion> {
                 SizedBox(height: longueurPerCent(50, context),),
                 button(HexColor("#001C36"), HexColor('#FFC30D'), context, "SE CONNECTER",  () async{
                   if(_formKey.currentState.validate()) {
+                    setState(() {
+                      chargement=true;
+                    });
                     try{
                       final user = await _auth.signInWithEmailAndPassword(email: emailAdresse , password: motDePasse);
                       if(user!=null){
+                        setState(() {
+                          chargement=false;
+                        });
                         Navigator.pushNamed(context,AllNavigationPage.id);
                         
                       }
                     } catch (e) {
+                      setState(() {
+                        chargement=false;
+                      });
                       print(e);
                       if(e.toString()=="PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)")
-                      displaySnackBarNom(context, "Mot de passe incorrect", Colors.white);
-                      else  displaySnackBarNom(context, "Aucun email ne correspond à l'email entré", Colors.white);
+                      showAlertDialog(context, "Mot de passe incorrect");
+                      else  showAlertDialog(context, "Aucun email ne correspond à l'email entré");
                     }
                   }
                 }),
@@ -139,6 +130,53 @@ class _ConnexionState extends State<Connexion> {
             ),
           ),
         )
+    ):Scaffold(
+      backgroundColor: HexColor("#001C36"),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
+        child: Column(
+          children: <Widget>[
+            Image.asset('assets/images/logo.png',
+              height: 197,
+              width: 278,
+            ),
+            SizedBox(height: 50.0,),
+            SpinKitThreeBounce(
+              color:HexColor('#FFFFFF'),
+              size: 60,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  showAlertDialog(BuildContext context, String text) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("ALERT"),
+      content: Text(text),
+      actions: [
+        cancelButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
