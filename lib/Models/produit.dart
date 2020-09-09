@@ -9,34 +9,32 @@ class Produit {
   int numberImages;
   String id;
   int numberStar;
-  bool surMesure;
   String taille;
   String categorie;
   String sousCategorie;
   String idProduitCategorie;
+  String expiryBadgeNew;
 
   Produit(
       {this.nomDuProduit,
-      this.prix,
-      this.description,
-      this.image1,
-      this.image2,
-      this.image3,
-      this.selectImage,
-      this.id,
-      this.numberStar,
-      this.surMesure,
-      this.taille,
-      this.sousCategorie,
-      this.categorie,
-      this.idProduitCategorie,
-      this.numberImages});
+        this.prix,
+        this.description,
+        this.image1,
+        this.image2,
+        this.image3,
+        this.selectImage,
+        this.id,
+        this.numberStar,
+        this.taille,
+        this.sousCategorie,
+        this.categorie,
+        this.expiryBadgeNew,
+        this.idProduitCategorie,
+        this.numberImages});
 
   Produit.fromMap(Map<String, dynamic> donnees, String id)
       : nomDuProduit = donnees["nomDuProduit"],
         prix = donnees["prix"],
-        description = donnees[
-            "description                                                                                                                                                                                                                                                                                                                                                                                "],
         image1 = donnees["image1"],
         image2 = donnees["image2"],
         image3 = donnees["image3"],
@@ -44,11 +42,12 @@ class Produit {
         numberImages = donnees["numberImages"],
         numberStar = donnees["numberStar"],
         taille = donnees["taille"],
-        surMesure = donnees["surMesure"],
         categorie = donnees["categorie"],
+        expiryBadgeNew = donnees["expiryBadgeNew"],
         sousCategorie = donnees["sousCategorie"],
-        idProduitCategorie = donnees["idProduitCategorie"],
-        id = donnees["id"];
+        id = donnees["id"],
+        description = donnees["description"],
+        idProduitCategorie = donnees["idProduitCategorie"];
 
   Map<String, dynamic> toMap() {
     return {
@@ -58,15 +57,15 @@ class Produit {
       "image1": image1,
       "image2": image2,
       "image3": image3,
+      "expiryBadgeNew": expiryBadgeNew,
       "selectImage": selectImage,
       "numberImages": numberImages,
       "numberStar": numberStar,
-      "surMesure": surMesure,
       "taille": taille,
       "categorie": categorie,
       "sousCategorie": sousCategorie,
-      "idProduitCategorie": idProduitCategorie,
-      "id": id
+      "id": id,
+      "idProduitCategorie": idProduitCategorie
     };
   }
 }

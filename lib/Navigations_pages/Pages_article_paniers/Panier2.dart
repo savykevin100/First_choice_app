@@ -11,7 +11,6 @@ import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/commande_send.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 // ignore: must_be_immutable
 class Panier2 extends StatefulWidget {
@@ -1055,6 +1054,7 @@ class _Panier2State extends State<Panier2> {
   }
 
 
+  // ignore: missing_return
   Widget popup() {
     showDialog(context: context, builder: (builder) {
       return AlertDialog(

@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 
 
 
@@ -17,34 +18,42 @@ import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 ///de l'utilisateur pour la selection des images et l'ajout des favoris, cette collection est utilisée pour enregister les
 ///produits sur lesquels ils cliquent ce qui aide permet d'ajouter dans la table le produit avec les informations
 
- void idProduitsFavorisUser(Produit produit, BuildContext context) async{
+void idProduitsFavorisUser(Produit produit, BuildContext context) async {
   if (Renseignements.emailUser != null) {
     try {
-      Firestore.instance.collection("Utilisateurs").document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
+      Firestore.instance
+          .collection("Utilisateurs")
+          .document(Renseignements.emailUser)
+          .collection("ProduitsFavoirsUser")
           .where("imagePrincipaleProduit", isEqualTo: produit.image1)
-          .getDocuments().then((QuerySnapshot snapshot) async {
-        if(snapshot.documents.isEmpty){
-          await  FirestoreService().addProduitFavorisUser(ProduitsFavorisUser(
-              imagePrincipaleProduit: produit.image1,
-              imageSelect: produit.image1,
-              etatIconeFavoris: false,
-              etatSurMesure: false
-          ), Renseignements.emailUser);
+          .getDocuments()
+          .then((QuerySnapshot snapshot) async {
+        if (snapshot.documents.isEmpty) {
+          await FirestoreService().addProduitFavorisUser(
+              ProduitsFavorisUser(
+                  imagePrincipaleProduit: produit.image1,
+                  imageSelect: produit.image1,
+                  etatIconeFavoris: false,
+                  etatSurMesure: false),
+              Renseignements.emailUser);
           print("L'ajout a été fait avant le onap");
         }
       });
-    } catch (e){
+    } catch (e) {
       print(e);
     }
   }
 }
 
+DateTime expiryBadgeNew;
+
+
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 
 // ignore: non_constant_identifier_names
-Widget product_grid_view(){
+Widget product_grid_view(Stream<List<Produit>> askDb){
   return  StreamBuilder(
-      stream: FirestoreService().getProduitFemmes(),
+      stream: askDb,
       builder: (BuildContext context,
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData) {
@@ -55,8 +64,9 @@ Widget product_grid_view(){
             crossAxisCount: 4,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
+             /* expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
+              bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());*/
               Produit produit = snapshot.data[index];
-              ///idProduitsFavorisUser(produit, context);
               return Container(
                 width: largeurPerCent(200, context),
                 margin: EdgeInsets.only(
@@ -69,11 +79,11 @@ Widget product_grid_view(){
                   onTap: () {
                     idProduitsFavorisUser(produit, context);
                     print(produit.nomDuProduit);
-                   /* Navigator.push(
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                ArticleSansTaille(produit, Renseignements.emailUser)));*/
+                                ArticleSansTaille(produit, Renseignements.emailUser)));
                   },
                   child: Card(
                     elevation: 5.0,
@@ -95,6 +105,24 @@ Widget product_grid_view(){
                                 fit: BoxFit.cover,
                               )),
                         ),
+                        /*(displayBadgeNew)? Container(
+                          height: longueurPerCent(10, context),
+                          width: largeurPerCent(50, context),
+                          color: Colors.red,
+                          child: Center(
+                            child: Text(
+                              "NOUVEAU",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                  color: HexColor("#FFFFFF"),
+                                  fontSize: 9.0,
+                                  fontFamily: "MontserratBold",
+                                  fontWeight: FontWeight.bold
+
+                              ),
+                            ),
+                          ),
+                        ):Container(),*/
                         ConstrainedBox(
                           constraints: BoxConstraints(
                             maxWidth:
@@ -102,20 +130,19 @@ Widget product_grid_view(){
                           ),
                           child: Padding(
                               padding: EdgeInsets.only(
-                                  left:
-                                  largeurPerCent(10, context),
+                                  left: largeurPerCent(
+                                      10, context),
                                   top: longueurPerCent(
                                       10, context)),
                               child: Text(
-                               "${ produit.prix} FCFA",
+                                "${snapshot.data[index].prix} FCFA",
                                 style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 15,
-                                    fontFamily: "MonseraBold"),
+                                    color:
+                                    HexColor("#00CC7b"),
+                                    fontSize: 16.5,
+                                    fontFamily:
+                                    "MonseraBold"),
                               )),
-                        ),
-                        SizedBox(
-                          height: longueurPerCent(5, context),
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(
@@ -123,13 +150,18 @@ Widget product_grid_view(){
                             largeurPerCent(200, context),
                           ),
                           child: Padding(
-                            padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
+                            padding: EdgeInsets.only(
+                                left: largeurPerCent(
+                                    10, context),
+                                top: longueurPerCent(
+                                    5, context)),
                             child: Text(
-                              produit.nomDuProduit,
+                              snapshot.data[index].nomDuProduit,
                               style: TextStyle(
                                   color: HexColor("#909090"),
                                   fontSize: 15,
-                                  fontFamily: "MonseraRegular"),
+                                  fontFamily:
+                                  "MonseraRegular"),
                             ),
                           ),
                         ),

@@ -204,6 +204,7 @@ class _ConnexionState extends State<Connexion> {
       onChanged: (value){
        emailAdresse = value;
       },
+      // ignore: missing_return
       validator: (String value) {
         if (EmailValidator.validate(emailAdresse) == false) {
           return ("Entrer un email valide");
@@ -234,6 +235,7 @@ class _ConnexionState extends State<Connexion> {
       onChanged: (value){
         motDePasse = value;
       },
+      // ignore: missing_return
       validator: (String value) {
         if(value.isEmpty) {
           return ("Entrer un mot de passe valide");

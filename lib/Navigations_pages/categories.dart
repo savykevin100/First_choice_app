@@ -200,7 +200,7 @@ class _CategoriesState extends State<Categories> {
                                         constraints: BoxConstraints(
                                             maxWidth: 300
                                         ),
-                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 15,fontFamily: "MonseraBold"),)),
                                   ),
                                 ),
                               ],
@@ -275,7 +275,7 @@ class _CategoriesState extends State<Categories> {
                                         constraints: BoxConstraints(
                                             maxWidth: 300
                                         ),
-                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 20,fontFamily: "MonseraBold"),)),
+                                        child: Text(categories.nomCategorie, style: TextStyle(color:Colors.white, fontSize: 15,fontFamily: "MonseraBold"),)),
                                   ),
                                 ),
                               ],
