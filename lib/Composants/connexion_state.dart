@@ -5,6 +5,7 @@ import 'hexadecimal.dart';
 
 
 
+// ignore: must_be_immutable
 class ConnexionState extends StatefulWidget {
   Widget body;
   ConnexionState({this.body});

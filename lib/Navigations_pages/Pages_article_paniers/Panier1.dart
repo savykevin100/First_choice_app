@@ -446,7 +446,7 @@ class _Panier1State extends State<Panier1> {
                         ),
                       ],
                     ),
-                  ),
+                  ), 
                 ),
                 //////////////////////////////////////////////////////////////////////////////////////////////
                 SizedBox(height: longueurPerCent(60.0, context)),

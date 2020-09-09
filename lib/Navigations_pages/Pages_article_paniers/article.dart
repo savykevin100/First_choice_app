@@ -1022,6 +1022,8 @@ import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'Panier1.dart';
 
 
@@ -1316,24 +1318,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 ],
               ),
             ),
-            (widget.produit.surMesure==true)?
-            (etatSurMesure!=null)? Padding(padding: EdgeInsets.only(left: largeurPerCent(0, context)), child: Row(
-              children: <Widget>[
-                Checkbox(value: isSwitch, onChanged: (bool value){
-                  setState(() {
-                    isSwitch=value;
-                    etatSurMesure=value;
-                    _db
-                        .collection("Utilisateurs")
-                        .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                        .document(id_produit)
-                        .updateData({"etatSurMesure":etatSurMesure});
-                  });
-                  print(etatSurMesure);
-                }),
-                Text("Faire une retouche", style: TextStyle(fontSize: 16, decoration: TextDecoration.underline,color: Colors.red),)
-              ],
-            ),):Text(""):Text(""),
             SizedBox(height: longueurPerCent(10, context),),
             Padding(
               padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
@@ -1354,7 +1338,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     fontSize: 15) ),
               ),
             ),
-            SizedBox(height: longueurPerCent(20, context),),
+            SizedBox(height: longueurPerCent(40, context),),
             Row(
               children: <Widget>[
                 SizedBox(width: largeurPerCent(20, context),),
@@ -1420,9 +1404,28 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 )
               ],
             ),
-            SizedBox(height: longueurPerCent(20, context),),
+            SizedBox(height: largeurPerCent(50, context),),
+
+           /* Padding(
+              padding: EdgeInsets.only(
+                  top: longueurPerCent(30, context),
+                  left: largeurPerCent(13, context)),
+              child: Text(
+                "Produits de la même catégorie",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 20,
+                    fontFamily: "MonseraBold"),
+              ),
+            ),
+            SizedBox(height: longueurPerCent(10, context),),
+            Container(
+                height: longueurPerCent(220, context),
+                margin: EdgeInsets.only(bottom: longueurPerCent(10, context)),
+                child:scrollabe_products_horizontal(context,FirestoreService().getTousLesProduits(),)),
+            SizedBox(height: longueurPerCent(10, context),),*/
           ],
-        ),)
+        ),),
     );
   }
 
