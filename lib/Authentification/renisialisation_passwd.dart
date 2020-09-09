@@ -99,6 +99,7 @@ class _ResetPasswdState extends State<ResetPasswd> {
       onChanged: (value){
         emailAdresse = value;
       },
+      // ignore: missing_return
       validator: (String value) {
         if (EmailValidator.validate(emailAdresse) == false) {
           return ("Entrer un email valide");

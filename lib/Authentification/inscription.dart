@@ -178,6 +178,7 @@ class _InscriptionState extends State<Inscription> {
   }
 
 
+  // ignore: missing_return
   Widget popup() {
     showDialog(context: context, builder: (builder) {
       return AlertDialog(
@@ -218,6 +219,7 @@ class _InscriptionState extends State<Inscription> {
       onChanged: (value){
         emailAdress = value;
       },
+      // ignore: missing_return
       validator: (String value) {
         if (EmailValidator.validate(emailAdress) == false) {
           return ("Entrer un email valide");
@@ -248,6 +250,7 @@ class _InscriptionState extends State<Inscription> {
       onChanged: (value){
         motDePass = value;
       },
+      // ignore: missing_return
       validator: (String value) {
         if(value.isEmpty) {
           return ("Entrer un mot de passe valide");
@@ -279,6 +282,7 @@ class _InscriptionState extends State<Inscription> {
         ),
         onChanged:
             (value) => confirmation = value,
+      // ignore: missing_return
       validator: (String value) {
         if (value.isEmpty || motDePass != value) {
           return ("Veuillez confirmer votre mot de passe");

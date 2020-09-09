@@ -14,7 +14,6 @@ class MensurationHomme extends StatefulWidget {
 }
 
 class _MensurationHommeState extends State<MensurationHomme> {
-  String _dropDownValue;
   String image;
   String staturePantatalon;
   String statureHaut;
@@ -28,7 +27,6 @@ class _MensurationHommeState extends State<MensurationHomme> {
   String correspndance;
 
   int i = 0;
-  final _formKey = GlobalKey<FormState>();
   Utilisateur utilisateur;
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
