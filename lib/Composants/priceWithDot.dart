@@ -24,7 +24,7 @@ class PriceWithDotState extends State<PriceWithDot>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Text(priceWithDot(widget.price), style: TextStyle(color: widget.couleur, fontSize: widget.size, fontFamily: widget.police),);
+    return Text(priceWithDot(widget.price) + ' FCFA', textAlign: TextAlign.start, style: TextStyle(color: widget.couleur, fontSize: widget.size, fontFamily: widget.police, fontWeight: FontWeight.bold),);
   }
 
   String priceWithDot(int price){
