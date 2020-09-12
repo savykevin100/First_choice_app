@@ -59,14 +59,21 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
               }),
           drawerItem(
-              icon: Icons.local_grocery_store,
+              icon: Icons.search,
               text: "Rechercher par les filtres",
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Test()));
               }),
           drawerItem(
-              icon: Icons.person,
+              icon: Icons.share,
+              text: "Partager l'application",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Chat()));
+              }),
+          drawerItem(
+              icon: Icons.local_gas_station,
               text: "Deconnexion",
               onTap: () async {
                 await _auth.signOut();
@@ -82,44 +89,51 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Chat()));
               }),
+          drawerItem(
+              icon: Icons.library_books,
+              text: "Conditions Générales",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Chat()));
+              }),
         ],
       ),
     );
   }
 
   Widget creationHeader(String currentUser) {
-      return UserAccountsDrawerHeader(
-        decoration: BoxDecoration(
-          color: HexColor('#001C36'),
-        ),
-        otherAccountsPictures: <Widget>[],
-        accountName: StreamBuilder(
-            stream:  FirestoreService().getUtilisateurs(),
-            builder: (BuildContext context, AsyncSnapshot<List<Utilisateur>> snapshot) {
-              if(snapshot.hasError || !snapshot.hasData) {
-                return CircularProgressIndicator();
-              } else {
-                for(int i=0; i<snapshot.data.length; i++) {
-                  Utilisateur utilisateur = snapshot.data[i];
-                  if(utilisateur.email == currentUser) {
-                    donneesUtilisateurConnecte = utilisateur;
-                  }
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(
+        color: HexColor('#001C36'),
+      ),
+      otherAccountsPictures: <Widget>[],
+      accountName: StreamBuilder(
+          stream:  FirestoreService().getUtilisateurs(),
+          builder: (BuildContext context, AsyncSnapshot<List<Utilisateur>> snapshot) {
+            if(snapshot.hasError || !snapshot.hasData) {
+              return CircularProgressIndicator();
+            } else {
+              for(int i=0; i<snapshot.data.length; i++) {
+                Utilisateur utilisateur = snapshot.data[i];
+                if(utilisateur.email == currentUser) {
+                  donneesUtilisateurConnecte = utilisateur;
                 }
-
-                return Text("${donneesUtilisateurConnecte.nomComplet}",style: TextStyle(fontSize: 20));
               }
+
+              return Text("${donneesUtilisateurConnecte.nomComplet}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold));
             }
-        ),
-        accountEmail: Text(currentUser, style: TextStyle(fontSize: 15)),
-        currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.white,
+          }
+      ),
+      accountEmail: Text(currentUser, style: TextStyle(fontSize: 15)),
+      currentAccountPicture: CircleAvatar(
+        backgroundColor: Colors.white,
         child: Center(
           child: Text(
             widget.firstLetter,
             style: TextStyle(color: HexColor("#001c36"), fontSize: 50,fontWeight: FontWeight.bold),
           ),
         ),),
-      );
+    );
   }
 
   Widget drawerItem({IconData icon, String text, GestureTapCallback onTap}) {
@@ -146,5 +160,3 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     );
   }
 }
-
-

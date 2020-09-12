@@ -1276,43 +1276,46 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     children: <Widget>[
                       Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
                       SizedBox(width: largeurPerCent(20, context),),
-                      (widget.produit.taille!=null)?Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold)):
-                      Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), )
+                      (widget.produit.taille!=null)?Expanded(flex:0,child: Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold))):
+                      Expanded(flex:0,child: Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), ))
 
                     ],
                   ),
                   SizedBox(width: largeurPerCent(MediaQuery.of(context).size.width-230, context),),
-                  GestureDetector(
-                      onTap: () {
-                        if(id_produit!=null && etatIconeFavoris!=null){
-                          if(etatIconeFavoris == false){
-                            setState(() {
-                              displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.green);
-                              print("ajout");
-                              etatIconeFavoris = true;
-                              FirestoreService().addFavoris(widget.produit, Renseignements.emailUser);
-                              _db
-                                  .collection("Utilisateurs")
-                                  .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
-                                  .document(id_produit)
-                                  .updateData({"etatIconeFavoris":etatIconeFavoris});
-                            });
-                          } else {
-                            setState(() {
-                              displaySnackBarNom(context, "Produit supprimé des favoris", Colors.green);
-                              print("supprimer");
-                              etatIconeFavoris = false;
-                              _db
-                                  .collection("Utilisateurs")
-                                  .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                  .document(id_produit)
-                                  .updateData({"etatIconeFavoris":etatIconeFavoris});
-                              FirestoreService().deleteFavoris(Renseignements.emailUser, idFavorisProduit);
-                            });
+                  Expanded(
+                    flex: 0,
+                    child: GestureDetector(
+                        onTap: () {
+                          if(id_produit!=null && etatIconeFavoris!=null){
+                            if(etatIconeFavoris == false){
+                              setState(() {
+                                displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.white);
+                                print("ajout");
+                                etatIconeFavoris = true;
+                                FirestoreService().addFavoris(widget.produit, Renseignements.emailUser);
+                                _db
+                                    .collection("Utilisateurs")
+                                    .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
+                                    .document(id_produit)
+                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
+                              });
+                            } else {
+                              setState(() {
+                                displaySnackBarNom(context, "Produit supprimé des favoris", Colors.white);
+                                print("supprimer");
+                                etatIconeFavoris = false;
+                                _db
+                                    .collection("Utilisateurs")
+                                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
+                                    .document(id_produit)
+                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
+                                FirestoreService().deleteFavoris(Renseignements.emailUser, idFavorisProduit);
+                              });
+                            }
                           }
-                        }
-                      },
-                      child: (id_produit!=null && etatIconeFavoris!=null)?(Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)):CircularProgressIndicator())
+                        },
+                        child: (id_produit!=null && etatIconeFavoris!=null)?(Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)):CircularProgressIndicator()),
+                  )
                 ],
               ),
             ),

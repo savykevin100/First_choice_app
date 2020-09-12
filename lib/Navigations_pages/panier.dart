@@ -166,7 +166,7 @@ class _PanierState extends State<Panier> {
                           );
                         } else if (snapshot.data.isEmpty) {
                           return elementsVides(context, Icons.shopping_cart,
-                              "Pas de nouveau produits ajoutés");
+                              "Pas de nouveaux produits ajoutés");
                         }
                         else {
                           /* */

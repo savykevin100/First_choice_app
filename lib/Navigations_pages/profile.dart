@@ -1,16 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Models/utilisateurs.dart';
 
 class UserProfil extends StatefulWidget{
   static String id='Userprofil';
+  String userCurrent;
+  String firstLetter;
+  UserProfil({this.userCurrent, this.firstLetter});
+
   @override
   _UserProfilState createState() => new _UserProfilState();
 
 }
 
 class _UserProfilState extends State<UserProfil>{
+  final _auth = FirebaseAuth.instance;
+  Utilisateur donneesUtilisateurConnecte;
 
   @override
   void initState() {
@@ -57,7 +65,7 @@ class _UserProfilState extends State<UserProfil>{
                              ),
                            ),
                            Container(
-                               margin: EdgeInsets.only(left:longueurPerCent(120.0, context),top: longueurPerCent(0, context)),
+                               margin: EdgeInsets.only(left:longueurPerCent(100.0, context),top: longueurPerCent(0, context)),
                              child: Center(
                                child: IconButton(
                                  icon: Icon(Icons.favorite_border),
@@ -70,9 +78,10 @@ class _UserProfilState extends State<UserProfil>{
                                ),
                              )
                            ),
-                           Container(
-                               margin: EdgeInsets.only(left: longueurPerCent(0.0, context)),
-                               child: Center(
+                           Expanded(
+                             flex: 1,
+                             child: Container(
+                                 margin: EdgeInsets.only(left: longueurPerCent(0.0, context)),
                                  child: IconButton(
                                    icon: Icon(Icons.local_grocery_store),
                                    color: Colors.white,
@@ -81,8 +90,8 @@ class _UserProfilState extends State<UserProfil>{
                                        // A toi de jouer
                                      });
                                    },
-                                 ),
-                               )
+                                 )
+                             ),
                            ),
                          ],
                        ),
@@ -91,7 +100,13 @@ class _UserProfilState extends State<UserProfil>{
                           children: <Widget>[
                             Container(
                               child: CircleAvatar(
-                                backgroundImage: AssetImage("assets/images/user33312571280.png"),
+                                backgroundColor: Colors.white,
+                                child: Center(
+                                  child: Text(
+                                    "S",
+                                    style: TextStyle(color: HexColor("#001c36"), fontSize: 70,fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                                 radius: 70,
                               ),
                             ),
@@ -238,7 +253,7 @@ class _UserProfilState extends State<UserProfil>{
                                   //padding: EdgeInsets.only(top: longueurPerCent(10.0, context), right: longueurPerCent(65.0, context), left:longueurPerCent(62.0, context),),
                                   child: Center(
                                     child: Text(
-                                      "Mensurations",
+                                      "Tableau Mensurations",
                                       style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 20.0, fontWeight: FontWeight.bold ),
                                     ),
                                   ),

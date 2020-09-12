@@ -85,7 +85,7 @@ class _Panier1State extends State<Panier1> {
           "Godomey",
           "Bidossessi",
         ].map(
-          (val) {
+              (val) {
             return DropdownMenuItem<String>(
               value: val,
               child: Text(val),
@@ -114,292 +114,291 @@ class _Panier1State extends State<Panier1> {
       ),
     };
     ///////////////////////////////////////////////////////
-
     return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: HexColor("#001c36"),
-          title: Text(
-            "Panier",
-            style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: HexColor("#001c36"),
+        title: Text(
+          "Panier",
+          style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
+        ),
+      ),
+      body: (numUser != null && name != null)
+          ? ConnexionState(body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: longueurPerCent(40, context),
+              ),
+              Center(
+                child: Text(
+                  "INFORMATION DE LA COMMANDE",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 19.0,
+                      fontFamily: "MonseraBold",
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: longueurPerCent(20, context)),
+
+              Center(
+                child: Text(
+                  name,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 17.0,
+                      fontFamily: "MonseraLight",
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Center(
+                child: Container(
+                  padding:EdgeInsets.all(longueurPerCent(10, context)),
+                  child: Center(
+                    child: Text(
+                      numUser,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontSize: 17.0,
+                          fontFamily: "MonseraLight",
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: longueurPerCent(50.0, context),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: largeurPerCent(347.0, context),
+                          height: longueurPerCent(40, context),
+                          padding: EdgeInsets.only(
+                              left: largeurPerCent(10, context),
+                              right: largeurPerCent(20, context),
+                              top: longueurPerCent(0, context)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(7.0),
+                              ),
+                              border: Border.all(
+                                  color: Colors.grey, width: 1)),
+                          child: DropdownButton(
+                            underline: Text(""),
+                            hint: _dropDownValue == null
+                                ? Text(
+                              'Lieu de Livraison',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  fontFamily: 'MonseraLight'),
+                            )
+                                : Text(
+                              _dropDownValue,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            ),
+                            isExpanded: true,
+                            iconSize: 30.0,
+                            style: TextStyle(color: HexColor("#919191")),
+                            items: ['En Agence', 'A domicile'].map(
+                                  (val) {
+                                return DropdownMenuItem<String>(
+                                  value: val,
+                                  child: Text(val,  ),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (val) {
+                              setState(
+                                    () {
+                                  _dropDownValue = val;
+                                  lieu = _dropDownValue;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
+                      (lieu == "A domicile")
+                          ? Column(
+                        children: <Widget>[
+                          SizedBox(height: longueurPerCent(20, context)),
+                          Center(
+                            child: Container(
+                              padding: EdgeInsets.only(left: 0,right: 0),
+                              width: longueurPerCent(347, context),
+                              height: 50,
+                              child: DropdownSearch<String>(
+                                mode: Mode.BOTTOM_SHEET,
+                                maxHeight: 300,
+                                items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
+                                onChanged:  (value) {
+                                  quartier= value;
+                                },
+                                hint: "Sélectionner un quartier",
+                                showClearButton: true,
+                                showSearchBox: true,
+                                searchBoxDecoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.only(left: 100),
+                                  hintText:"Rechercher un quartier",
+                                  hintStyle: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: 'MonseraLight'),
+                                ),
+                                popupTitle: Container(
+                                  height: longueurPerCent(50, context),
+                                  decoration: BoxDecoration(
+                                    color: HexColor("#001C36"),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Quartier',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                popupShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(24),
+                                    topRight: Radius.circular(24),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: longueurPerCent(20.0, context),
+                          ),
+                          Center(
+                            child: 	Container(
+                              width: largeurPerCent(347, context),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: "Indication",
+                                  hintStyle: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                  fillColor: Colors.white,
+                                  contentPadding: EdgeInsets.only(
+                                      top: 30, bottom: 5, left: 15),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(7.0)),
+                                      borderSide: BorderSide(
+                                          width: 1,
+                                          style: BorderStyle.none)),
+                                ),
+                                onChanged: (value) {
+                                  indication = value;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                          : Text(""),
+                      ////////////////////////////////////////////////////////////////////////////////////////////////
+                      SizedBox(
+                        height: longueurPerCent(20.0, context),
+                      ),
+                      Center(
+                        child: Container(
+                          width: largeurPerCent(347.0, context),
+                          height: longueurPerCent(40, context),
+                          padding: EdgeInsets.only(
+                              left: largeurPerCent(10, context),
+                              right: largeurPerCent(20, context),
+                              top: longueurPerCent(0, context)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(7.0),
+                              ),
+                              border: Border.all(
+                                  color: Colors.grey, width: 1)),
+                          child: DropdownButton(
+                            underline: Text(""),
+                            hint: _dropDownValue2 == null
+                                ? Text(
+                              'Payement',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            )
+                                : Text(
+                              _dropDownValue2,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16),
+                            ),
+                            isExpanded: true,
+                            iconSize: 30.0,
+                            items:
+                            ['Mobile Money' ,'Mooov Money', 'Espèce'].map(
+                                  (val) {
+                                return DropdownMenuItem<String>(
+                                  value: val,
+                                  child: Text(val,),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (val) {
+                              setState(
+                                    () {
+                                  _dropDownValue2 = val;
+                                  moyenDePayement = _dropDownValue2;
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //////////////////////////////////////////////////////////////////////////////////////////////
+              SizedBox(height: longueurPerCent(100.0, context)),
+              Center(
+                child:
+                Container(
+                  child: button(Colors.white, HexColor("#001C36"), context, 'CONFIRMER', () {
+                    checkInformationsComplete(context);
+                  }),
+                ),
+              ),
+            ],
           ),
         ),
-        body: (numUser != null && name != null)
-            ? ConnexionState(body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: longueurPerCent(40, context),
-                ),
-                Center(
-                  child: Text(
-                    "INFORMATION DE LA COMMANDE",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontSize: 19.0,
-                        fontFamily: "MonseraBold",
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(height: longueurPerCent(20, context)),
-
-                Center(
-                  child: Text(
-                    name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontSize: 17.0,
-                        fontFamily: "MonseraLight",
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    padding:EdgeInsets.all(longueurPerCent(10, context)),
-                    child: Center(
-                      child: Text(
-                        numUser,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 17.0,
-                            fontFamily: "MonseraLight",
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: longueurPerCent(50.0, context),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Container(
-                            width: largeurPerCent(347.0, context),
-                            height: longueurPerCent(40, context),
-                            padding: EdgeInsets.only(
-                                left: largeurPerCent(10, context),
-                                right: largeurPerCent(20, context),
-                                top: longueurPerCent(0, context)),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(7.0),
-                                ),
-                                border: Border.all(
-                                    color: Colors.grey, width: 1)),
-                            child: DropdownButton(
-                              underline: Text(""),
-                              hint: _dropDownValue == null
-                                  ? Text(
-                                'Lieu de Livraison',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                    fontFamily: 'MonseraLight'),
-                              )
-                                  : Text(
-                                _dropDownValue,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16),
-                              ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              style: TextStyle(color: HexColor("#919191")),
-                              items: ['En Agence', 'A domicile'].map(
-                                    (val) {
-                                  return DropdownMenuItem<String>(
-                                    value: val,
-                                    child: Text(val,  ),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (val) {
-                                setState(
-                                      () {
-                                    _dropDownValue = val;
-                                    lieu = _dropDownValue;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
-                        (lieu == "A domicile")
-                            ? Column(
-                          children: <Widget>[
-                            SizedBox(height: longueurPerCent(20, context)),
-                            Center(
-                              child: Container(
-                                padding: EdgeInsets.only(left: 0,right: 0),
-                                width: longueurPerCent(347, context),
-                                height: 50,
-                                child: DropdownSearch<String>(
-                                  mode: Mode.BOTTOM_SHEET,
-                                  maxHeight: 300,
-                                  items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
-                                  onChanged:  (value) {
-                                    quartier= value;
-                                  },
-                                  hint: "Sélectionner un quartier",
-                                  showClearButton: true,
-                                  showSearchBox: true,
-                                  searchBoxDecoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.only(left: 100),
-                                    hintText:"Rechercher un quartier",
-                                    hintStyle: TextStyle(
-                                        fontSize: 18.0,
-                                        fontFamily: 'MonseraLight'),
-                                  ),
-                                  popupTitle: Container(
-                                    height: longueurPerCent(50, context),
-                                    decoration: BoxDecoration(
-                                      color: HexColor("#001C36"),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Quartier',
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  popupShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(24),
-                                      topRight: Radius.circular(24),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: longueurPerCent(20.0, context),
-                            ),
-                            Center(
-                              child: 	Container(
-                                width: largeurPerCent(347, context),
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                    hintText: "Indication",
-                                    hintStyle: TextStyle(
-                                      fontSize: 16.0,
-                                    ),
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.only(
-                                        top: 30, bottom: 5, left: 15),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(7.0)),
-                                        borderSide: BorderSide(
-                                            width: 1,
-                                            style: BorderStyle.none)),
-                                  ),
-                                  onChanged: (value) {
-                                    indication = value;
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                            : Text(""),
-                        ////////////////////////////////////////////////////////////////////////////////////////////////
-                        SizedBox(
-                          height: longueurPerCent(20.0, context),
-                        ),
-                        Center(
-                          child: Container(
-                            width: largeurPerCent(347.0, context),
-                            height: longueurPerCent(40, context),
-                            padding: EdgeInsets.only(
-                                left: largeurPerCent(10, context),
-                                right: largeurPerCent(20, context),
-                                top: longueurPerCent(0, context)),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(7.0),
-                                ),
-                                border: Border.all(
-                                    color: Colors.grey, width: 1)),
-                            child: DropdownButton(
-                              underline: Text(""),
-                              hint: _dropDownValue2 == null
-                                  ? Text(
-                                'Payement',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                ),
-                              )
-                                  : Text(
-                                _dropDownValue2,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16),
-                              ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              items:
-                              ['Mobile Money' ,' Espèce'].map(
-                                    (val) {
-                                  return DropdownMenuItem<String>(
-                                    value: val,
-                                    child: Text(val,),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (val) {
-                                setState(
-                                      () {
-                                    _dropDownValue2 = val;
-                                    moyenDePayement = _dropDownValue2;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ), 
-                ),
-                //////////////////////////////////////////////////////////////////////////////////////////////
-                SizedBox(height: longueurPerCent(100.0, context)),
-                Center(
-                  child:
-                  Container(
-                    child: button(Colors.white, HexColor("#001C36"), context, 'CONFIRMER', () {
-                      checkInformationsComplete(context);
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),)
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
+      ),)
+          : Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
@@ -411,21 +410,21 @@ class _Panier1State extends State<Panier1> {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("RETOUR",style: TextStyle(
-      color: HexColor("#001C36"),
-        fontSize: 15.0,
-        fontFamily: "MonseraBold",
-        fontWeight: FontWeight.bold)),
+          color: HexColor("#001C36"),
+          fontSize: 15.0,
+          fontFamily: "MonseraBold",
+          fontWeight: FontWeight.bold)),
       onPressed:  () {
-      Navigator.pop(context);
+        Navigator.pop(context);
       },
     );
 
     Widget nextButton = FlatButton(
       child: Text("CONTINUER",   style: TextStyle(
-    color: HexColor("#001C36"),
-    fontSize: 15.0,
-    fontFamily: "MonseraBold",
-    fontWeight: FontWeight.bold)),
+          color: HexColor("#001C36"),
+          fontSize: 15.0,
+          fontFamily: "MonseraBold",
+          fontWeight: FontWeight.bold)),
       onPressed:  () {
 
       },
@@ -556,8 +555,8 @@ class _Panier1State extends State<Panier1> {
                 color: HexColor("#001C36"),
                 fontSize: 15.0,
                 fontFamily: "MonseraRegular",
-                 fontWeight: FontWeight.bold
-                ),),
+                fontWeight: FontWeight.bold
+            ),),
           SizedBox(height: longueurPerCent(15, context),),
           Text("L'agence est située à Joncquet  en face pharmacie. Immeuble blanc, 2ème étage.",
             textAlign: TextAlign.center,
@@ -617,7 +616,7 @@ class _Panier1State extends State<Panier1> {
         ),);
       });
     } else {
-        displaySnackBarNom(
+      displaySnackBarNom(
           context, "Veuillez remplir tous les champs ", Colors.white);
     }
   }

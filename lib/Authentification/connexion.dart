@@ -76,9 +76,9 @@ class _ConnexionState extends State<Connexion> {
                     child:Column(
                       children: <Widget>[
                         Text("Mot de passe oublié",style:TextStyle(
-                            color: HexColor('#9B9B9B'),
-                            fontSize: 15.0,
-                            fontFamily: 'MonseraLight',  decoration: TextDecoration.underline,),),
+                          color: HexColor('#9B9B9B'),
+                          fontSize: 15.0,
+                          fontFamily: 'MonseraLight',  decoration: TextDecoration.underline,),),
                       ],
                     ),
                   ),
@@ -96,7 +96,7 @@ class _ConnexionState extends State<Connexion> {
                           chargement=false;
                         });
                         Navigator.pushNamed(context,AllNavigationPage.id);
-                        
+
                       }
                     } catch (e) {
                       setState(() {
@@ -104,7 +104,7 @@ class _ConnexionState extends State<Connexion> {
                       });
                       print(e);
                       if(e.toString()=="PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)")
-                      showAlertDialog(context, "Mot de passe incorrect");
+                        showAlertDialog(context, "Mot de passe incorrect");
                       else  showAlertDialog(context, "Aucun email ne correspond à l'email entré");
                     }
                   }
@@ -117,7 +117,7 @@ class _ConnexionState extends State<Connexion> {
                     SizedBox(width: largeurPerCent(5, context),),
                     GestureDetector(
                       onTap: (){
-                      Navigator.pushNamed(context, Inscription.id);
+                        Navigator.pushNamed(context, Inscription.id);
                       },
                       child: Text("Inscrivez-vous",  style:TextStyle(
                           color: HexColor('#001C36'),
@@ -202,7 +202,7 @@ class _ConnexionState extends State<Connexion> {
         ),
       ),
       onChanged: (value){
-       emailAdresse = value;
+        emailAdresse = value;
       },
       // ignore: missing_return
       validator: (String value) {
