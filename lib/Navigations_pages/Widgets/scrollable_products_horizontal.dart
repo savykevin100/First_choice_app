@@ -16,7 +16,6 @@ import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.
 /// Cette fonction permet d'ajouter un produit dans ProduitsFavorisUser(collection composant le produit personnel
 ///de l'utilisateur pour la selection des images et l'ajout des favoris, cette collection est utilisée pour enregister les
 ///produits sur lesquels ils cliquent ce qui aide permet d'ajouter dans la table le produit avec les informations
-
 void idProduitsFavorisUser(Produit produit, BuildContext context) async {
   if (Renseignements.emailUser != null) {
     try {
@@ -49,7 +48,6 @@ DateTime expiryBadgeNew;
 
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 
-
 /*Fin de la fonction*/
 // ignore: non_constant_identifier_names
 Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>> askDb){
@@ -75,11 +73,11 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                     return GestureDetector(
                       onTap: (){
                         idProduitsFavorisUser(snapshot.data[i], context);
-                         Navigator.push(
-                             context,
-                             MaterialPageRoute(
-                                 builder: (context) =>
-                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
                       },
                       child: Container(
                         width: largeurPerCent(160, context),

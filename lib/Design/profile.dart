@@ -5,6 +5,10 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
 class UserProfil extends StatefulWidget{
   static String id='Userprofil';
+  String userCurrent;
+  String firstLetter;
+  UserProfil({this.userCurrent, this.firstLetter});
+
   @override
   _UserProfilState createState() => new _UserProfilState();
 
@@ -88,11 +92,7 @@ class _UserProfilState extends State<UserProfil>{
                               width: largeurPerCent(95.0, context),
                               height: longueurPerCent(95.0, context),
                               decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  image:DecorationImage(
-                                      image: AssetImage("assets/images/user33312571280.png"),
-                                      fit: BoxFit.cover
-                                  ),
+
                                   borderRadius: BorderRadius.all(Radius.circular(79.0)),
                                   boxShadow: [
                                     BoxShadow(blurRadius:7.0, color: Colors.black )
