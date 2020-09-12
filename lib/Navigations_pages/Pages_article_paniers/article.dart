@@ -1022,8 +1022,6 @@ import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'Panier1.dart';
 
 

@@ -74,7 +74,9 @@ class _Panier2State extends State<Panier2> {
     });
     getIdProduit();
     getNumberOrder();
-    }
+  }
+
+
 
   /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
   /// quand la commande a été lancé

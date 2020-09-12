@@ -381,6 +381,7 @@ class _PanierState extends State<Panier> {
         style: alertStyle,
         title: "IMPORTANT?",
         desc: "Certains de vos produits ont été déjà commandés. Supprimer ces produits pour continuer l'achat.",
+
         buttons: [
           DialogButton(
             child: Text(

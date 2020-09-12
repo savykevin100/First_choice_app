@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
-import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:search_choices/search_choices.dart';
 
 // ignore: must_be_immutable
@@ -41,7 +40,6 @@ class _Panier1State extends State<Panier1> {
   String selectedValueSingleDialog;
   Map<String, Widget> widgets;
   List<Map<String, dynamic>> quartiersDb = [];
-  final format = DateFormat("yyyy-MM-dd HH:mm");
   int stopSommeLivraisonRetour=0;
 
   Future<void> fetchNameNumUser() async {
@@ -176,9 +174,8 @@ class _Panier1State extends State<Panier1> {
                     ),
                   ),
                 ),
-
                 SizedBox(
-                  height: longueurPerCent(66.0, context),
+                  height: longueurPerCent(50.0, context),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
@@ -224,7 +221,7 @@ class _Panier1State extends State<Panier1> {
                                     (val) {
                                   return DropdownMenuItem<String>(
                                     value: val,
-                                    child: Text(val),
+                                    child: Text(val,  ),
                                   );
                                 },
                               ).toList(),
@@ -239,11 +236,11 @@ class _Panier1State extends State<Panier1> {
                             ),
                           ),
                         ),
-                        SizedBox(height: longueurPerCent(20, context)),
                         ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
                         (lieu == "A domicile")
                             ? Column(
                           children: <Widget>[
+                            SizedBox(height: longueurPerCent(20, context)),
                             Center(
                               child: Container(
                                 padding: EdgeInsets.only(left: 0,right: 0),
@@ -299,7 +296,6 @@ class _Panier1State extends State<Panier1> {
                             SizedBox(
                               height: longueurPerCent(20.0, context),
                             ),
-                            //Ajouter le textField ici
                             Center(
                               child: 	Container(
                                 width: largeurPerCent(347, context),
@@ -329,69 +325,8 @@ class _Panier1State extends State<Panier1> {
                         )
                             : Text(""),
                         ////////////////////////////////////////////////////////////////////////////////////////////////
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              SizedBox(
-                                height: longueurPerCent(70.0, context),
-                              ),
-                              Center(
-                                child: Container(
-                                  height: longueurPerCent(40, context),
-                                  width: largeurPerCent(336.0, context),
-                                  child: DateTimeField(
-                                    format: format,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        dateHeureDeLivraison = value.toString();
-                                      });
-                                    },
-                                    decoration: InputDecoration(
-                                      prefixIcon: Padding(
-                                        padding: EdgeInsets.only(
-                                            right: largeurPerCent(0, context),
-                                            left: largeurPerCent(0, context)),
-                                        child: Icon(
-                                          Icons.calendar_today,
-                                          color: HexColor('#001C36'),
-                                          size: 30.0,
-                                        ),
-                                      ),
-                                      labelText: null,
-                                      hintText: "Date et heure de livraison",
-                                      contentPadding: EdgeInsets.only(top: longueurPerCent(10, context)),
-                                      hintStyle: TextStyle(
-                                        fontSize: 16.0,
-                                      ),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(7.0)),
-                                          borderSide: BorderSide(
-                                              width: 1, style: BorderStyle.none)),
-                                    ),
-                                    onShowPicker: (context, currentValue) async {
-                                      final date = await showDatePicker(
-                                          context: context,
-                                          firstDate: DateTime(1900),
-                                          initialDate:
-                                          currentValue ?? DateTime.now(),
-                                          lastDate: DateTime(2100));
-                                      if (date != null) {
-                                        final time = await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.fromDateTime(
-                                              currentValue ?? DateTime.now()),
-                                        );
-                                        return DateTimeField.combine(date, time);
-                                      } else {
-                                        return currentValue;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        SizedBox(
+                          height: longueurPerCent(20.0, context),
                         ),
                         Center(
                           child: Container(
@@ -429,7 +364,7 @@ class _Panier1State extends State<Panier1> {
                                     (val) {
                                   return DropdownMenuItem<String>(
                                     value: val,
-                                    child: Text(val),
+                                    child: Text(val,),
                                   );
                                 },
                               ).toList(),
@@ -449,24 +384,156 @@ class _Panier1State extends State<Panier1> {
                   ), 
                 ),
                 //////////////////////////////////////////////////////////////////////////////////////////////
-                SizedBox(height: longueurPerCent(60.0, context)),
+                SizedBox(height: longueurPerCent(100.0, context)),
                 Center(
-                  child: button(Colors.white, HexColor("#001C36"),
-                      context, 'CONFIRMER', () {
-                        checkInformationsComplete(context);
-                      }),
+                  child:
+                  Container(
+                    child: button(Colors.white, HexColor("#001C36"), context, 'CONFIRMER', () {
+                      checkInformationsComplete(context);
+                    }),
+                  ),
                 ),
-                SizedBox(
-                  height: longueurPerCent(30, context),
-                )
               ],
             ),
           ),
         ),)
             : Center(
                 child: CircularProgressIndicator(),
-              ));
+              ),
+    );
   }
+
+
+
+
+  showAlertDialog(BuildContext context, Widget text,) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("RETOUR",style: TextStyle(
+      color: HexColor("#001C36"),
+        fontSize: 15.0,
+        fontFamily: "MonseraBold",
+        fontWeight: FontWeight.bold)),
+      onPressed:  () {
+      Navigator.pop(context);
+      },
+    );
+
+    Widget nextButton = FlatButton(
+      child: Text("CONTINUER",   style: TextStyle(
+    color: HexColor("#001C36"),
+    fontSize: 15.0,
+    fontFamily: "MonseraBold",
+    fontWeight: FontWeight.bold)),
+      onPressed:  () {
+
+      },
+    );
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Center(
+        child: Text("AVIS",    style: TextStyle(
+            color: Colors.red,
+            fontSize: 30.0,
+            fontFamily: "MonseraBold",
+            fontWeight: FontWeight.bold)),
+      ),
+      content: text,
+      actions: [
+        cancelButton,
+        nextButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  confirmationPopup(BuildContext dialogContext, Widget text) {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      overlayColor: Colors.black87,
+      isCloseButton: true,
+      isOverlayTapDismiss: true,
+      titleStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
+      descStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+      animationDuration: Duration(milliseconds: 400),
+    );
+
+    Alert(
+        context: dialogContext,
+        style: alertStyle,
+        title: "AVIS",
+        content: text,
+        buttons: [
+          DialogButton(
+            child: Text(
+              "RETOUR",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold",
+                  fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: HexColor("#001C36"),
+          ),
+          DialogButton(
+            child: Text(
+              "CONTINUER",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold",
+                  fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              if(lieu=="En Agence")
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Panier2(
+                          prixLivraison: prixLivraison,
+                          total: widget.total,
+                          nomComplet: name,
+                          telephone: numUser,
+                          moyenDePayement: moyenDePayement,
+                          lieuDeLivraison: lieu,
+                          dateHeureDeLivraison: dateHeureDeLivraison,
+                          produitsCommander: widget.produitsPanier,
+                        )));
+              else
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Panier2(
+                          prixLivraison: prixLivraison,
+                          total: widget.total,
+                          nomComplet: name,
+                          telephone: numUser,
+                          lieuDeLivraison: lieu,
+                          moyenDePayement: moyenDePayement,
+                          dateHeureDeLivraison: dateHeureDeLivraison,
+                          indication: indication,
+                          quartier: quartier,
+                          produitsCommander: widget.produitsPanier,
+                        )));
+            },
+            color: HexColor("#001C36"),
+          ),
+        ]).show();
+  }
+
 
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(
@@ -476,58 +543,78 @@ class _Panier1State extends State<Panier1> {
   }
 
   void checkInformationsComplete(context) {
-    if (lieu == 'En Agence' && dateHeureDeLivraison != null && moyenDePayement!=null) {
-      print("Reusssie");
+    if (lieu == 'En Agence'  && moyenDePayement!=null) {
       setState(() {
         prixLivraison = 0;
       });
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Panier2(
-                    prixLivraison: prixLivraison,
-                    total: widget.total,
-                    nomComplet: name,
-                    telephone: numUser,
-                    moyenDePayement: moyenDePayement,
-                    lieuDeLivraison: lieu,
-                    dateHeureDeLivraison: dateHeureDeLivraison,
-                    produitsCommander: widget.produitsPanier,
-                  )));
-    } else if (lieu == "A domicile" &&
-        CupertinoDatePickerMode.date != null &&
-        indication != null &&
-        quartier != null && moyenDePayement!=null) {
+      confirmationPopup(context, Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: longueurPerCent(20, context),),
+          Text("Heure d'ouverture: 9H - 20H", textAlign: TextAlign.center,
+            style: TextStyle(
+                color: HexColor("#001C36"),
+                fontSize: 15.0,
+                fontFamily: "MonseraRegular",
+                 fontWeight: FontWeight.bold
+                ),),
+          SizedBox(height: longueurPerCent(15, context),),
+          Text("L'agence est située à Joncquet  en face pharmacie. Immeuble blanc, 2ème étage.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: HexColor("#001C36"),
+                fontSize: 15.0,
+                fontFamily: "MonseraRegular",
+                fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),);
+
+    } else if (lieu == "A domicile" && indication != null && quartier != null && moyenDePayement!=null ) {
       _db.collection("Zones").getDocuments().then((value) {
         /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
         for (int i = 0; i < value.documents.length; i++) {
           if (value.documents[i].data.containsValue(quartier)) {
             if(stopSommeLivraisonRetour==0){
-              setState(() {
-                prixLivraison = value.documents[i].data["prix"];
-                stopSommeLivraisonRetour++;
-              });
+              if(DateTime.now().weekday==7){
+                setState(() {
+                  prixLivraison = value.documents[i].data["prix"]*2;
+                  stopSommeLivraisonRetour++;
+                });
+              } else {
+                setState(() {
+                  prixLivraison = value.documents[i].data["prix"];
+                  stopSommeLivraisonRetour++;
+                });
+              }
             }
           }
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Panier2(
-                      prixLivraison: prixLivraison,
-                      total: widget.total,
-                      nomComplet: name,
-                      telephone: numUser,
-                      lieuDeLivraison: lieu,
-                       moyenDePayement: moyenDePayement,
-                       dateHeureDeLivraison: dateHeureDeLivraison,
-                       indication: indication,
-                      quartier: quartier,
-                      produitsCommander: widget.produitsPanier,
-                    )));
-        print(widget.total);
-        print(prixLivraison);
+        confirmationPopup(context,  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: longueurPerCent(15, context),),
+            Text(
+              "Le temps d'estimation de la livraison est entre 80 et 120 minutes",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color:HexColor("#001C36"),
+                  fontSize: 15.0,
+                  fontFamily: "MonseraRegular",
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: longueurPerCent(15, context),),
+            Text("Nos heures de livraison sont entre 9H - 20H", textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 15.0,
+                  fontFamily: "MonseraRegular",
+                  fontWeight: FontWeight.bold),),
+            SizedBox(height: longueurPerCent(20, context),),
+
+          ],
+        ),);
       });
     } else {
         displaySnackBarNom(
