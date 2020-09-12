@@ -6,7 +6,6 @@ class PanierClasse {
   String description;
   String image1;
   String id;
-  bool etatSurMesure;
   String taille;
   String idProduitCategorie;
   int numberStar;
@@ -20,7 +19,6 @@ class PanierClasse {
         this.description,
         this.image1,
         this.id,
-        this.etatSurMesure,
         this.taille,
         this.idProduitCategorie,
         this.numberStar,
@@ -33,7 +31,6 @@ class PanierClasse {
         prix = donnees["prix"],
         description = donnees["description"],
         image1 = donnees["image1"],
-        etatSurMesure = donnees["etatSurMesure"],
         taille = donnees["taille"],
         idProduitCategorie = donnees["idProduitCategorie"],
         numberStar = donnees["numberStar"],
@@ -47,7 +44,6 @@ class PanierClasse {
       "prix": prix,
       "description": description,
       "image1": image1,
-      "etatSurMesure":etatSurMesure,
       "taille":taille,
       "idProduitCategorie":idProduitCategorie,
       "numberStar":numberStar,

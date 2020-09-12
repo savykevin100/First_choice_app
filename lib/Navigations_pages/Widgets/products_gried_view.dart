@@ -6,6 +6,7 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
@@ -134,15 +135,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                       10, context),
                                   top: longueurPerCent(
                                       10, context)),
-                              child: Text(
-                                "${snapshot.data[index].prix} FCFA",
-                                style: TextStyle(
-                                    color:
-                                    HexColor("#00CC7b"),
-                                    fontSize: 16.5,
-                                    fontFamily:
-                                    "MonseraBold"),
-                              )),
+                              child: PriceWithDot(price:snapshot.data[index].prix, couleur: HexColor("#00CC7b"), size:16.5,police: "MonseraBold")),
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(

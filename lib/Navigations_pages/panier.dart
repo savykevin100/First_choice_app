@@ -30,6 +30,8 @@ class _PanierState extends State<Panier> {
   List<Map<String, dynamic>> produitsIndisponibles=[];
   int ajoutPanier;
   int chargementProduitsIndisponible=0;
+  int numberProductOrder=0;
+  String prixWithDot="0";
 
 
 
@@ -100,7 +102,9 @@ class _PanierState extends State<Panier> {
       for (int i = 0; i < value.documents.length; i++) {
         if (this.mounted) {
           setState(() {
+            numberProductOrder++;
             total = total + value.documents[i].data["prix"];
+            prixWithDot = priceWithDot(total);
           });
         }
       }
@@ -132,15 +136,11 @@ class _PanierState extends State<Panier> {
                     if (snapshot.hasError || !snapshot.hasData) {
                       return Text("");
                     } else {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            left: largeurPerCent(30, context)),
-                        child: Text(
-                          " TOTAL :    $total FCFA",textAlign: TextAlign.center, style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: "MonseraBold"),),
-                      );
+                      return Text(
+                        " TOTAL" +  "  ($numberProductOrder)   :  " +   " $prixWithDot FCFA" ,textAlign: TextAlign.start, style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: "MonseraBold"),);
                     }
                   }
               )
@@ -262,26 +262,6 @@ class _PanierState extends State<Panier> {
                                             child: Column(
                                               children: <Widget>[
                                                 SizedBox(height: longueurPerCent(10, context),),
-                                                (panier.etatSurMesure==false)?Text(""): Container(
-                                                  height: longueurPerCent(20, context),
-                                                  width: largeurPerCent(100, context),
-                                                  margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                                  color: HexColor("#001C36"),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "A RETOUCHER",
-                                                      textAlign: TextAlign.right,
-                                                      style: TextStyle(
-                                                          color: HexColor("#FFFFFF"),
-                                                          fontSize: 9.0,
-                                                          fontFamily: "MontserratBold",
-                                                          fontWeight: FontWeight.bold
-
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(height: longueurPerCent(5, context)),
                                                 (dejaCommader)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
                                                 Container(
                                                   margin: EdgeInsets.only(left: longueurPerCent(70, context)),
@@ -292,9 +272,6 @@ class _PanierState extends State<Panier> {
                                                           ajoutPanier--;
                                                         });
                                                         FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
-                                                        /*FirestoreService().deletePanier(
-                                                            Renseignements.emailUser,
-                                                            idProduitsPanier[i]);*/
                                                         for(int i=0; i<produitsIndisponibles.length; i++){
                                                           if(produitsIndisponibles[i]["image1"]==panier.image1)
                                                             setState(() {
@@ -310,6 +287,7 @@ class _PanierState extends State<Panier> {
                                                         });
                                                         setState(() {
                                                           total = total - panier.prix;
+                                                          prixWithDot = priceWithDot(total);
                                                           produitsPaniers.removeAt(i);
                                                         });
 
@@ -399,5 +377,32 @@ class _PanierState extends State<Panier> {
         ]).show();
   }
 
+
+  String priceWithDot(int price){
+    int lengthPrice = price.toString().length;
+    String priceWithDot=price.toString();
+    if(lengthPrice==4){
+      setState(() {
+        priceWithDot = priceWithDot[0] + '.' + priceWithDot.substring(1, priceWithDot.length);
+      });
+      return priceWithDot;
+    } else if(lengthPrice==5){
+      setState(() {
+        priceWithDot = priceWithDot.substring(0, 2) + '.' + priceWithDot.substring(2, 5) ;
+      });
+      return priceWithDot;
+    }else if(lengthPrice==6){
+      setState(() {
+        priceWithDot = priceWithDot.substring(0, 3) + '.' + priceWithDot.substring(3, 6) ;
+      });
+      return priceWithDot;
+    } else if(lengthPrice==7){
+      setState(() {
+        priceWithDot = priceWithDot.substring(0, 1) + '.' + priceWithDot.substring(1, 4) + '.' + priceWithDot.substring(4, 7) ;
+      });
+      return priceWithDot;
+    } else
+      return priceWithDot;
+  }
 
 }
