@@ -217,6 +217,8 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     );
   }
 
+
+
   String key = "email_user";
 
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */

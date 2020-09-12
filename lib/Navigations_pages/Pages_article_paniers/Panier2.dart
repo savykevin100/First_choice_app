@@ -1083,7 +1083,6 @@ class _Panier2State extends State<Panier2> {
               image1:widget.produitsCommander[i]["image1"],
               prix:widget.produitsCommander[i]["prix"],
               idProduitCategorie: widget.produitsCommander[i]["idProduitCategorie"],
-              etatSurMesure: widget.produitsCommander[i]["etatSurMesure"],
               description:widget.produitsCommander[i]["description"],
             ));
           });
