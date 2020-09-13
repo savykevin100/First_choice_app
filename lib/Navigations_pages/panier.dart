@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
@@ -243,16 +244,8 @@ class _PanierState extends State<Panier> {
                                                     height: longueurPerCent(
                                                         15.0, context),
                                                   ),
-                                                  Text(
-                                                    '${panier.prix} FCFA',
-                                                    textAlign: TextAlign.right,
-                                                    style: TextStyle(
-                                                      color: HexColor("#00CC7b"),
-                                                      fontSize: 16,
-                                                      fontFamily: "MontserratBold",
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
+                                                  PriceWithDot(price: panier.prix, couleur: HexColor("#00CC7b",),size: 16, police: "MontseraBold",),
+
                                                 ],
                                               )
                                           ),
@@ -264,7 +257,7 @@ class _PanierState extends State<Panier> {
                                                 SizedBox(height: longueurPerCent(10, context),),
                                                 (dejaCommader)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
                                                 Container(
-                                                  margin: EdgeInsets.only(left: longueurPerCent(70, context)),
+                                                  margin: EdgeInsets.only(left: longueurPerCent(50, context)),
                                                   child: IconButton(icon: Icon(
                                                       Icons.delete, color: Colors.red, size: 20),
                                                       onPressed: () {
@@ -288,6 +281,7 @@ class _PanierState extends State<Panier> {
                                                         setState(() {
                                                           total = total - panier.prix;
                                                           prixWithDot = priceWithDot(total);
+                                                          numberProductOrder--;
                                                           produitsPaniers.removeAt(i);
                                                         });
 

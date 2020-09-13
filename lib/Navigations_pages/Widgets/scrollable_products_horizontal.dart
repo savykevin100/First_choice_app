@@ -141,7 +141,7 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                                             10, context),
                                         top: longueurPerCent(
                                             10, context)),
-                                    child: PriceWithDot(price:snapshot.data[i].prix, couleur: HexColor("#00CC7b"), size:16.5,police: "MonseraBold")),
+                                    child: PriceWithDot(price:snapshot.data[i].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
                               ),
                               ConstrainedBox(
                                 constraints: BoxConstraints(
