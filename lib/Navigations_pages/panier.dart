@@ -281,6 +281,7 @@ class _PanierState extends State<Panier> {
                                                         setState(() {
                                                           total = total - panier.prix;
                                                           prixWithDot = priceWithDot(total);
+                                                          numberProductOrder--;
                                                           produitsPaniers.removeAt(i);
                                                         });
 

@@ -274,41 +274,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
                     ],
                   ),
-                  SizedBox(width: largeurPerCent(MediaQuery.of(context).size.width-230, context),),
-                  Expanded(
-                    flex: 0,
-                    child: GestureDetector(
-                        onTap: () {
-                          if(id_produit!=null && etatIconeFavoris!=null){
-                            if(etatIconeFavoris == false){
-                              setState(() {
-                                displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.white);
-                                print("ajout");
-                                etatIconeFavoris = true;
-                                FirestoreService().addFavoris(widget.produit, Renseignements.emailUser);
-                                _db
-                                    .collection("Utilisateurs")
-                                    .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
-                                    .document(id_produit)
-                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
-                              });
-                            } else {
-                              setState(() {
-                                displaySnackBarNom(context, "Produit supprimé des favoris", Colors.white);
-                                print("supprimer");
-                                etatIconeFavoris = false;
-                                _db
-                                    .collection("Utilisateurs")
-                                    .document(widget.currentUserId).collection("ProduitsFavoirsUser")
-                                    .document(id_produit)
-                                    .updateData({"etatIconeFavoris":etatIconeFavoris});
-                                FirestoreService().deleteFavoris(Renseignements.emailUser, idFavorisProduit);
-                              });
-                            }
-                          }
-                        },
-                        child: (id_produit!=null && etatIconeFavoris!=null)?(Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)):CircularProgressIndicator()),
-                 
                   GestureDetector(
                       onTap: () {
                         if(id_produit!=null && etatIconeFavoris!=null){
@@ -477,6 +442,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
       decoration: BoxDecoration(
+          border: Border.all(
+              width: largeurPerCent(1, context),
+              color: Colors.black),
           image: DecorationImage(
               image: NetworkImage(image),
               fit: BoxFit.cover)),
@@ -620,7 +588,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                   fit: BoxFit.cover)),
                           child:GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(produit.imageSelect) ,),),);
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
                             },
 
                           ) ,
