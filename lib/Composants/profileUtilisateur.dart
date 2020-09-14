@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/APrpos.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/ConditionsG%C3%A9n%C3%A9rales.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
@@ -87,14 +89,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text: "À propos",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Chat()));
+                    context, MaterialPageRoute(builder: (context) => APrpos()));
               }),
           drawerItem(
               icon: Icons.library_books,
               text: "Conditions Générales",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Chat()));
+                    context, MaterialPageRoute(builder: (context) => ConditionGenerales()));
               }),
         ],
       ),

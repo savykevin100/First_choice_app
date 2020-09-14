@@ -108,11 +108,11 @@ class _FavorisState extends State<Favoris> {
                     Produit produit = snapshot.data[index];
 
                     return Container(
-                      width: largeurPerCent(130, context),
+                      width: largeurPerCent(200, context),
                       margin: EdgeInsets.only(
-                          left: largeurPerCent(0, context), top: longueurPerCent(20, context)),
+                          left: largeurPerCent(10, context),right: largeurPerCent(10, context), top: longueurPerCent(20, context)),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: InkWell(
                         onTap: () {
@@ -131,7 +131,7 @@ class _FavorisState extends State<Favoris> {
                               Container(
                                 //height: longueurPerCent(100, context),
                                 width: largeurPerCent(200, context),
-                                height: longueurPerCent(200, context),
+                                height: longueurPerCent(150, context),
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(10),
@@ -164,7 +164,7 @@ class _FavorisState extends State<Favoris> {
                                     )),
                               ),
                               SizedBox(
-                                height: longueurPerCent(10, context),
+                                height: longueurPerCent(5, context),
                               ),
                               ConstrainedBox(
                                 constraints: BoxConstraints(
@@ -186,7 +186,7 @@ class _FavorisState extends State<Favoris> {
                                 children: <Widget>[
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: longueurPerCent(10, context),left: largeurPerCent(5, context)),
+                                        top: longueurPerCent(0, context),left: largeurPerCent(5, context)),
                                     child:  RatingBar(
                                       initialRating:  produit.numberStar.ceilToDouble(),
                                       minRating: 1,
@@ -241,7 +241,7 @@ class _FavorisState extends State<Favoris> {
                   },
                   staggeredTileBuilder: (_) => StaggeredTile.fit(2),
                   mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
+                  crossAxisSpacing: 0.0,
                   shrinkWrap: true,
                 );
               }

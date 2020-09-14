@@ -92,7 +92,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          height: longueurPerCent(150, context),
+                          height: longueurPerCent(200, context),
                           width: largeurPerCent(200, context),
                           child: ClipRRect(
                               borderRadius: BorderRadius.only(
@@ -190,7 +190,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
             },
             staggeredTileBuilder: (_) => StaggeredTile.fit(2),
             mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
+            crossAxisSpacing: 0.0,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
           );

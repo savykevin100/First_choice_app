@@ -80,7 +80,7 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
                       },
                       child: Container(
-                        width: largeurPerCent(160, context),
+                        width: largeurPerCent(180, context),
                         margin: EdgeInsets.only(
                             left: largeurPerCent(10, context)),
                         decoration: BoxDecoration(
@@ -94,7 +94,7 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                               Container(
                                 height:
                                 longueurPerCent(120, context),
-                                width: largeurPerCent(160, context),
+                                width: largeurPerCent(180, context),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                 ),

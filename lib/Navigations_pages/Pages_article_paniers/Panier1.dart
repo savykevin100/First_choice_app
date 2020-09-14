@@ -27,6 +27,7 @@ class _Panier1State extends State<Panier1> {
   String lieu;
   String moyenDePayement;
   String _dropDownValue2;
+  String _dropDownValue3;
   String quartier;
   String _dropDownValue;
   Firestore _db = Firestore.instance;
@@ -75,44 +76,7 @@ class _Panier1State extends State<Panier1> {
   @override
   Widget build(BuildContext context) {
     /// Ce wiget est utilisé pour la selection des quartiers
-    widgets = {
-      "Single dialog": SearchChoices.single(
-        items: [
-          "Vodjè",
-          "Gbegamey",
-          "Houeyiho",
-          "Calavi",
-          "Godomey",
-          "Bidossessi",
-        ].map(
-              (val) {
-            return DropdownMenuItem<String>(
-              value: val,
-              child: Text(val),
-            );
-          },
-        ).toList(),
-        value: quartier,
-        underline: Text(""),
-        hint: Center(
-          child: Container(
-            color: Colors.blue,
-            child: Text(
-              "Selectionnez un quartier",
-              style: TextStyle(
-                  color: HexColor("#909090"), fontSize: 18, fontFamily: "Regular"),
-            ),
-          ),
-        ),
-        searchHint: "Quartiers",
-        onChanged: (value) {
-          setState(() {
-            quartier = value;
-          });
-        },
-        isExpanded: true,
-      ),
-    };
+
     ///////////////////////////////////////////////////////
     return Scaffold(
       key: _scaffoldKey,
@@ -215,7 +179,9 @@ class _Panier1State extends State<Panier1> {
                             ),
                             isExpanded: true,
                             iconSize: 30.0,
-                            style: TextStyle(color: HexColor("#919191")),
+                            style:TextStyle(
+                                color: Colors.black,
+                                fontSize: 16),
                             items: ['En Agence', 'A domicile'].map(
                                   (val) {
                                 return DropdownMenuItem<String>(
@@ -250,7 +216,10 @@ class _Panier1State extends State<Panier1> {
                                 maxHeight: 300,
                                 items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
                                 onChanged:  (value) {
-                                  quartier= value;
+                                  setState(() {
+                                    quartier = value;
+                                    print(quartier);
+                                  });
                                 },
                                 hint: "Sélectionner un quartier",
                                 showClearButton: true,
@@ -315,7 +284,9 @@ class _Panier1State extends State<Panier1> {
                                           style: BorderStyle.none)),
                                 ),
                                 onChanged: (value) {
-                                  indication = value;
+                                  setState(() {
+                                    indication = value;
+                                  });
                                 },
                               ),
                             ),
@@ -434,7 +405,7 @@ class _Panier1State extends State<Panier1> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Center(
-        child: Text("AVIS",    style: TextStyle(
+        child: Text("INFO",    style: TextStyle(
             color: Colors.red,
             fontSize: 30.0,
             fontFamily: "MonseraBold",
@@ -470,7 +441,7 @@ class _Panier1State extends State<Panier1> {
     Alert(
         context: dialogContext,
         style: alertStyle,
-        title: "AVIS",
+        title: "INFO",
         content: text,
         buttons: [
           DialogButton(

@@ -216,7 +216,7 @@ class _PanierState extends State<Panier> {
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
-                                                  SizedBox(height: longueurPerCent(0, context),),
+                                                  SizedBox(height: longueurPerCent(10, context),),
                                                   Text(
                                                     "${panier.nomDuProduit} ",
                                                     textAlign: TextAlign.left,
@@ -242,9 +242,9 @@ class _PanierState extends State<Panier> {
                                                   ),
                                                   SizedBox(
                                                     height: longueurPerCent(
-                                                        15.0, context),
+                                                        4.0, context),
                                                   ),
-                                                  PriceWithDot(price: panier.prix, couleur: HexColor("#00CC7b",),size: 16, police: "MontseraBold",),
+                                                  PriceWithDot(price: panier.prix, couleur: HexColor("#00CC7b",),size: 15, police: "MontseraBold",),
 
                                                 ],
                                               )

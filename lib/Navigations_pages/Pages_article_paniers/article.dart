@@ -267,8 +267,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text("Taille:", style: TextStyle(color: HexColor("#909090"), fontSize: 15, decoration: TextDecoration.underline)),
-                      SizedBox(width: largeurPerCent(20, context),),
+                      Text("Taille :", style: TextStyle(color: HexColor("#909090"), fontSize: 15,)),
+                      SizedBox(width: largeurPerCent(4, context),),
                       (widget.produit.taille!=null)?Expanded(flex:0,child: Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold))):
                       Expanded(flex:0,child: Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), ))
 
@@ -279,7 +279,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         if(id_produit!=null && etatIconeFavoris!=null){
                           if(etatIconeFavoris == false){
                             setState(() {
-                              displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.green);
+                              displaySnackBarNom(context, "Produit ajouté aux favoris", Colors.white);
                               print("ajout");
                               etatIconeFavoris = true;
                               FirestoreService().addFavoris(widget.produit, Renseignements.emailUser);
@@ -291,7 +291,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             });
                           } else {
                             setState(() {
-                              displaySnackBarNom(context, "Produit supprimé des favoris", Colors.green);
+                              displaySnackBarNom(context, "Produit supprimé des favoris", Colors.white);
                               print("supprimer");
                               etatIconeFavoris = false;
                               _db
@@ -619,7 +619,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
           widget.produit.image1));
       var response = await request.close();
       Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-      await Share.file('ESYS AMLOG', 'amlog.jpg', bytes, 'image/jpg', text: 'My optional text.');
+      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: 'My optional text.');
       setState(() {
         chargement=false;
       });
