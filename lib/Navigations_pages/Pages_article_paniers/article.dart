@@ -305,7 +305,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         }
                       },
                       child: (id_produit!=null && etatIconeFavoris!=null)?Padding(
-                        padding: EdgeInsets.only(right: largeurPerCent(10, context)),
+                        padding: EdgeInsets.only(right: largeurPerCent(50, context)),
                         child: (Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)),
                       ):CircularProgressIndicator())
                 ],
