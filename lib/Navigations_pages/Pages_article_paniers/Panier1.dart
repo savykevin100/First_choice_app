@@ -214,7 +214,6 @@ class _Panier1State extends State<Panier1> {
                               child: DropdownSearch(
                                 mode: Mode.BOTTOM_SHEET,
                                 maxHeight: 300,
-
                                 hint: "Sélectionner un quartier",
                                 label: quartier,
                                 items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
