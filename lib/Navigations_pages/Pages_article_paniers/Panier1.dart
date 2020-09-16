@@ -211,9 +211,12 @@ class _Panier1State extends State<Panier1> {
                               padding: EdgeInsets.only(left: 0,right: 0),
                               width: longueurPerCent(347, context),
                               height: 50,
-                              child: DropdownSearch<String>(
+                              child: DropdownSearch(
                                 mode: Mode.BOTTOM_SHEET,
                                 maxHeight: 300,
+
+                                hint: "Sélectionner un quartier",
+                                label: quartier,
                                 items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
                                 onChanged:  (value) {
                                   setState(() {
@@ -221,7 +224,6 @@ class _Panier1State extends State<Panier1> {
                                     print(quartier);
                                   });
                                 },
-                                hint: "Sélectionner un quartier",
                                 showClearButton: true,
                                 showSearchBox: true,
                                 searchBoxDecoration: InputDecoration(

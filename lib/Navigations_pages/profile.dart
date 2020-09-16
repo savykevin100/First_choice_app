@@ -149,33 +149,64 @@ class _UserProfilState extends State<UserProfil>{
                                       //padding: EdgeInsets.only(top: longueurPerCent(10.0, context), right: longueurPerCent(65.0, context), left:longueurPerCent(62.0, context),),
                                       child: Center(
                                         child: Text(
-                                          "Informations personnelles",
+                                          "Paramètre du compte",
                                           style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 20.0, fontWeight: FontWeight.bold ),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: longueurPerCent(40.0, context),),
-                                    new Container(
-                                      height: longueurPerCent(19.0, context),
-                                      width: largeurPerCent(300, context),
-                                      child: Text(
-                                        "Nom"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " +  "SAVY Kevin",
-                                        style: TextStyle(
-                                          color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
+                                    Row(
+                                      children: [
+                                        new Container(
+                                          height: longueurPerCent(19.0, context),
+                                          width: largeurPerCent(300, context),
+                                          child: Text(
+                                            "Numéro"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + "69063800",
+                                            style: TextStyle(
+                                              color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Center(
+                                            child: Container(
+                                              color: Colors.red,
+                                              margin: EdgeInsets.only(top: longueurPerCent(10.0, context), right: longueurPerCent(30.0, context), left: longueurPerCent(30.0, context), ),
+                                              child: TextField(
+                                                //controller: _textFieldController,
+                                                //enabled: !_isEnabled,
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: HexColor("#909090"),
+                                                    fontFamily: "MonseraBold",
+                                                ),
+                                                decoration: InputDecoration(
+                                                  hintText:
+                                                  "HOUEGBELO Jean de Dieu Amour",
+                                                  hintStyle: TextStyle(
+                                                    color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
+                                                  ),
+                                                  fillColor: Colors.white,
+                                                  contentPadding: EdgeInsets.only(
+                                                      ),
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              7.0)),
+                                                      borderSide: BorderSide(
+                                                          width: 0,
+                                                          style:
+                                                          BorderStyle.none)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                     SizedBox(height: longueurPerCent(15.0, context),),
-                                    new Container(
-                                      height: longueurPerCent(19.0, context),
-                                      width: largeurPerCent(300, context),
-                                      child: Text(
-                                        "Prénoms"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " +  "Jean de Dieu  Amour",
-                                        style: TextStyle(
-                                          color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
-                                        ),
-                                      ),
-                                    ),
+
                                     SizedBox(height: longueurPerCent(15.0, context),),
                                     new Container(
                                       height: longueurPerCent(19.0, context),
