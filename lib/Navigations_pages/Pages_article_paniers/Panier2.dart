@@ -60,6 +60,7 @@ class _Panier2State extends State<Panier2> {
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -149,7 +150,7 @@ class _Panier2State extends State<Panier2> {
                                 top: longueurPerCent(0.0, context),
                                 right: longueurPerCent(0.0, context),
                                 left: longueurPerCent(30.0, context),
-                                bottom: longueurPerCent(5, context)),
+                                bottom: longueurPerCent(3, context)),
                             child: Text(
                               "Info Client",
                               textAlign: TextAlign.left,
@@ -224,7 +225,7 @@ class _Panier2State extends State<Panier2> {
                                           left:
                                               longueurPerCent(30.0, context),
                                           bottom:
-                                              longueurPerCent(5.0, context)),
+                                              longueurPerCent(3.0, context)),
                                       child: Text(
                                         "Adresse de Livraison",
                                         textAlign: TextAlign.left,
@@ -245,8 +246,6 @@ class _Panier2State extends State<Panier2> {
                                         padding: EdgeInsets.only(
                                             left: longueurPerCent(
                                                 10, context),
-                                            bottom: longueurPerCent(
-                                                10.0, context),
                                             top: longueurPerCent(
                                                 6, context)),
                                         child: Text(
@@ -257,7 +256,7 @@ class _Panier2State extends State<Panier2> {
                                           style: TextStyle(
                                             color: HexColor("#909090"),
                                             fontSize: 12,
-                                            fontFamily: "Montserrat_Light",
+                                            fontFamily: "MonseraBold",
                                           ),
                                         ),
                                       ),
@@ -407,22 +406,13 @@ class _Panier2State extends State<Panier2> {
                                                               left: largeurPerCent(
                                                                   10,
                                                                   context)),
-                                                          child: Container(
-                                                            child: Icon(
-                                                              Icons
-                                                                  .check_circle,
-                                                              color: HexColor(
-                                                                  "#001C36"),
-                                                              size: 30,
-                                                            ),
-                                                          ),
                                                         )
                                                       : Text(""),
                                               hintText: "Espèce",
                                               hintStyle: TextStyle(
                                                   color:
                                                       HexColor("#909090"),
-                                                  fontSize: 16.0,
+                                                  fontSize: 15.0,
                                                   fontFamily:
                                                       'MonseraBold'),
                                               fillColor: Colors.white,
