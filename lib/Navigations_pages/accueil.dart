@@ -1,10 +1,11 @@
 import 'package:badges/badges.dart';
+import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -14,6 +15,7 @@ import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
+import 'package:premierchoixapp/Pages/search_filtre.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,12 +30,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final _auth = FirebaseAuth.instance;
   int nombreAjoutPanier;
   FirebaseUser utilisateurConnecte;
-  AnimationController animationController;
-  Animation carouselAnimation;
   int lenght;
-  List<Map<String, dynamic>> produitsRecommander = [];
-  List<Map<String, dynamic>> tousLesProduits = [];
   DateTime expiryBadgeNew;
+  List<String> imagesCarousel=[];
+  String nameUser;
 
   void getCurrentUser() async {
     try {
@@ -49,71 +49,43 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     }
   }
 
+  Future<void> fetchDataUser(String id) async {
+    await Firestore.instance
+        .collection("Utilisateurs")
+        .document(id)
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+          nameUser = value.data["nomComplet"];
+        });
+      }
+    });
+  }
 
-/* Liste de photos qui contient les images à defiler dans le carousel */
-  int photoIndex = 0;
-  List<String> photos = [
-    'assets/images/gadgets-336635_1920.jpg',
-    'assets/images/make-up-1209798_1920.jpg',
-    'assets/images/sketchbook-156775_1280.png',
-  ];
+  void fetchImageCarousel(){
+    Firestore.instance.collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get().then((value) {
+     setState(() {
+       imagesCarousel.add(value.data["image1"]);
+       imagesCarousel.add(value.data["image2"]);
+       imagesCarousel.add(value.data["image3"]);
+     });
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getCurrentUser();
-    animationController =
-        AnimationController(duration: Duration(seconds: 18), vsync: this);
+    fetchImageCarousel();
 
-    carouselAnimation =
-        IntTween(begin: 0, end: photos.length - 1).animate(animationController)
-          ..addListener(() {
-            setState(() {
-              photoIndex = carouselAnimation.value;
-            });
-          });
-
-    animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  /*Fin de l'initialisation de la page*/
-
-  Widget carousel() {
-    return Stack(
-      children: <Widget>[
-        Container(
-          height: longueurPerCent(200, context),
-          //margin: EdgeInsets.only(top: longueurPerCent(0, context)),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(photos[photoIndex]), fit: BoxFit.cover)),
-        ),
-        Positioned(
-          top: longueurPerCent(170.0, context),
-          left: longueurPerCent(
-              MediaQuery.of(context).size.width * 0.33, context),
-          child: SelectedPhoto(
-              photoIndex: photoIndex, numberOfDots: photos.length),
-        ),
-      ],
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (utilisateurConnecte != null ) {
-      AppBarClasse _appBar = AppBarClasse(
-          titre: "Premier Choix",
-          context: context,
-          controller: controller,
-          nbAjoutPanier: nombreAjoutPanier);
+    if (utilisateurConnecte != null && imagesCarousel.length==3) {
+      fetchDataUser(utilisateurConnecte.email);
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: ScrollAppBar(
@@ -134,7 +106,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                           if(snapshot.data[i].email == Renseignements.emailUser){
                             nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
                           }
-                        }
+                        } 
                         return Text("$nombreAjoutPanier");}
                     }
                 ),
@@ -158,15 +130,73 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
           ),
           drawer: ProfileSettings(
             userCurrent: utilisateurConnecte.email,
-            firstLetter: utilisateurConnecte.email[0],
+            firstLetter:(nameUser!=null)?nameUser[0]:""
           ),
-          body: ConnexionState(body: bodyAccueil(),)
+          body: WillPopScope(
+              onWillPop: _onBackPressed,
+              child: ConnexionState(body: bodyAccueil(),)),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SearchFiltre ()));
+            },
+            child: Icon(
+              Icons.search,
+              color:Colors.white,
+              size: 30,
+            ),
+            backgroundColor: Theme.of(context).primaryColor
+       ),
       );
+
     } else {
-      return Container(
-        height: 100,
-        width: 100,
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        appBar:  ScrollAppBar(
+          controller: controller,
+          backgroundColor: HexColor("#001c36"),
+          title:Image.asset("assets/images/logo.png", height: 30, width: 50,),
+          iconTheme: IconThemeData(color: Colors.white),
+          actions: <Widget>[
+            Badge(
+              badgeContent:StreamBuilder(
+                  stream: FirestoreService().getUtilisateurs(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Utilisateur>> snapshot) {
+                    if(snapshot.hasError || !snapshot.hasData){
+                      return Text("");
+                    } else {
+                      for(int i=0; i<snapshot.data.length; i++){
+                        if(snapshot.data[i].email == Renseignements.emailUser){
+                          nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
+                        }
+                      }
+                      return Text("$nombreAjoutPanier");}
+                  }
+              ),
+              toAnimate: true,
+              position: BadgePosition.topRight(top:   0,  right: 0),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.local_grocery_store,
+                    color: Colors.white,
+                  ),
+                  onPressed: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Panier  ()));
+                  }),
+            )
+
+          ],
+        ),
+        body:  Center(
+          child: CircularProgressIndicator(),
+        )
       );
     }
   }
@@ -175,45 +205,28 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     return Snap(
       controller: controller.appBar,
       child: ListView(controller: controller, children: <Widget>[
-        SizedBox(
-          height: longueurPerCent(10, context),
-        ),
-        Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: largeurPerCent(6, context)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(7.0)),
-              color: HexColor("#DDDDDD"),
-            ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: Padding(
-                  padding:
-                  EdgeInsets.only(left: largeurPerCent(90, context)),
-                  child: Icon(Icons.search, color: HexColor('#9B9B9B')),
-                ),
-                hintText: "Rechercher un produit",
-                hintStyle: TextStyle(
-                    color: HexColor('#9B9B9B'),
-                    fontSize: 17.0,
-                    fontFamily: 'MonseraLight'),
-                contentPadding: EdgeInsets.only(
-                  top: 10,
-                  bottom: 5,
-                ),
-              ),
-            )),
-        SizedBox(
-          height: longueurPerCent(10, context),
-        ),
         Container(
           width: MediaQuery.of(context).size.width,
           height: longueurPerCent(200, context),
           decoration: BoxDecoration(
             color: HexColor("#001C36"),
           ),
-          child: carousel(),
+          child: Carousel(
+            boxFit: BoxFit.cover,
+            autoplay: true,
+            animationCurve: Curves.fastOutSlowIn,
+            animationDuration: Duration(seconds: 2),
+            dotSize: 6.0,
+            dotIncreasedColor: Color(0xFFFF335C),
+            dotPosition: DotPosition.bottomCenter,
+            dotVerticalPadding: 10.0,
+            indicatorBgPadding: 7.0,
+            images: [
+              Image.network(imagesCarousel[0], fit: BoxFit.cover,),
+              Image.network(imagesCarousel[1], fit: BoxFit.cover,),
+              Image.network(imagesCarousel[2], fit: BoxFit.cover,),
+            ],
+          ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -257,6 +270,31 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
       ]),
     );
+
+  }
+
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
+        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
+        actions: <Widget>[
+          new GestureDetector(
+            onTap: () => Navigator.of(context).pop(false),
+              child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(50, context),),
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(true),
+              child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(20, context),),
+        ],
+      ),
+    ) ??
+        false;
   }
 
 

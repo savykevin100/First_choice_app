@@ -31,7 +31,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   final _auth = FirebaseAuth.instance;
   Utilisateur donneesUtilisateurConnecte;
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -59,13 +58,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
-              }),
-          drawerItem(
-              icon: Icons.search,
-              text: "Rechercher par les filtres",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Test()));
               }),
           drawerItem(
               icon: Icons.share,
