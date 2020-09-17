@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -16,6 +17,8 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+
+  String nameUser;
 
   launchWhatsApp(String phone) async {
     String url ="https://api.whatsapp.com/send?phone="+phone;
@@ -37,8 +40,55 @@ class _ChatState extends State<Chat> {
     }
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
+        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
+        actions: <Widget>[
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(false),
+              child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(50, context),),
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(true),
+              child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(20, context),),
+        ],
+      ),
+    ) ??
+        false;
+  }
+
+
+  Future<void> fetchDataUser(String id) async {
+    await Firestore.instance
+        .collection("Utilisateurs")
+        .document(id)
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+          nameUser = value.data["nomComplet"];
+        });
+      }
+    });
+  }
+
+
   int ajoutPanier;
   ScrollController controller=ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchDataUser(Renseignements.emailUser);
+
+  }
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
@@ -50,113 +100,116 @@ class _ChatState extends State<Chat> {
       appBar: _appBar.appBarFunctionStream(),
       drawer:  ProfileSettings(
         userCurrent:Renseignements.emailUser,
-        firstLetter: Renseignements.emailUser[0],
+          firstLetter:(nameUser!=null)?nameUser[0]:""
       ),
-      body:ConnexionState(body:  Container(
-        height: MediaQuery.of(context).size.height/1.5,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Text(
-                "Continuez ",
-                style: TextStyle(
-                  color: HexColor("#001C36"),
-                  fontSize: 50,
-                  fontFamily: "MonseraBold",
+      body:WillPopScope(
+        onWillPop: _onBackPressed,
+        child: ConnexionState(body:  Container(
+          height: MediaQuery.of(context).size.height/1.5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Center(
+                child: Text(
+                  "Continuez ",
+                  style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 50,
+                    fontFamily: "MonseraBold",
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: longueurPerCent(30, context),),
-            Center(
-              child: Text(
-                "sur ",
-                style: TextStyle(
-                  color: HexColor("#001C36"),
-                  fontSize: 40,
-                  fontFamily: "MonseraRegular",
+              SizedBox(height: longueurPerCent(30, context),),
+              Center(
+                child: Text(
+                  "sur ",
+                  style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 40,
+                    fontFamily: "MonseraRegular",
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: longueurPerCent(40, context),),
-            Container(
-              margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
-              height: longueurPerCent(50.0, context),
-              width: largeurPerCent(220.0, context),
-              child: GestureDetector(
-                onTap: () {
-                  launchWhatsApp("22996184655");
-                },
-                child: Material(
-                  borderRadius: BorderRadius.circular(7.0),
-                  color: HexColor("#55D062"),
-                  elevation: 7.0,
-                  child: Center(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(left: longueurPerCent(10, context)),
-                          child: Image.asset("assets/images/1021px-WhatsApp.svg.png",
-                            width: largeurPerCent(40, context),),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.only(left:longueurPerCent(10, context)),
-                          child: Text(
-                            "WhatsApp",
-                            style: TextStyle(
-                              color: HexColor("#FFFFFF"),
-                              fontSize: 23,
-                              fontFamily: "MonseraBold",
-                            ),
+              SizedBox(height: longueurPerCent(40, context),),
+              Container(
+                margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
+                height: longueurPerCent(50.0, context),
+                width: largeurPerCent(220.0, context),
+                child: GestureDetector(
+                  onTap: () {
+                    launchWhatsApp("22996184655");
+                  },
+                  child: Material(
+                    borderRadius: BorderRadius.circular(7.0),
+                    color: HexColor("#55D062"),
+                    elevation: 7.0,
+                    child: Center(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: longueurPerCent(10, context)),
+                            child: Image.asset("assets/images/1021px-WhatsApp.svg.png",
+                              width: largeurPerCent(40, context),),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding:  EdgeInsets.only(left:longueurPerCent(10, context)),
+                            child: Text(
+                              "WhatsApp",
+                              style: TextStyle(
+                                color: HexColor("#FFFFFF"),
+                                fontSize: 23,
+                                fontFamily: "MonseraBold",
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: longueurPerCent(40, context),),
-            Container(
-              margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
-              height: longueurPerCent(50.0, context),
-              width: largeurPerCent(220.0, context),
-              child: GestureDetector(
-                onTap: () {
-                    launchMessenger();
-                },
-                child: Material(
-                  borderRadius: BorderRadius.circular(7.0),
-                  color: HexColor("#0084FF"),
-                  elevation: 7.0,
-                  child: Center(
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(left: longueurPerCent(5, context)),
-                          child: Image.asset("assets/images/7d6d999657b076cd4d101b5b93535103.png",
-                            width: largeurPerCent(60, context),),
-                        ),
-                        Padding(
-                          padding:  EdgeInsets.only(left:longueurPerCent(0, context)),
-                          child: Text(
-                            "Messenger",
-                            style: TextStyle(
-                              color: HexColor("#FFFFFF"),
-                              fontSize: 23,
-                              fontFamily: "MonseraBold",
-                            ),
+              SizedBox(height: longueurPerCent(40, context),),
+              Container(
+                margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
+                height: longueurPerCent(50.0, context),
+                width: largeurPerCent(220.0, context),
+                child: GestureDetector(
+                  onTap: () {
+                      launchMessenger();
+                  },
+                  child: Material(
+                    borderRadius: BorderRadius.circular(7.0),
+                    color: HexColor("#0084FF"),
+                    elevation: 7.0,
+                    child: Center(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(left: longueurPerCent(5, context)),
+                            child: Image.asset("assets/images/7d6d999657b076cd4d101b5b93535103.png",
+                              width: largeurPerCent(60, context),),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding:  EdgeInsets.only(left:longueurPerCent(0, context)),
+                            child: Text(
+                              "Messenger",
+                              style: TextStyle(
+                                color: HexColor("#FFFFFF"),
+                                fontSize: 23,
+                                fontFamily: "MonseraBold",
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),)
+            ],
+          ),
+        ),),
+      )
     );
   }
 

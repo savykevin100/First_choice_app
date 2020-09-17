@@ -3,14 +3,13 @@ class Commandes {
   String telephone;
   String quartier;
   String indication;
-  String dateHeureDeLivraison;
   int total;
   int prixLivraison;
   String moyenDePayement;
   String numeroDePayement;
   String lieuDeLivraison;
   List<Map<String, dynamic>> produitsCommander;
-  String  livrer;
+  String livrer;
   String created;
   int sousTotal;
   int numberOrder;
@@ -21,29 +20,27 @@ class Commandes {
 
   Commandes(
       {this.nomComplet,
-      this.telephone,
-      this.quartier,
-      this.indication,
-      this.dateHeureDeLivraison,
-      this.total,
-      this.prixLivraison,
-      this.moyenDePayement,
-      this.numeroDePayement,
-      this.produitsCommander,
-      this.lieuDeLivraison,
-      this.sousTotal,
-      this.livrer,
-      this.numberOrder,
-      this.id,
-      this.idCommandeUser,
-      this.created});
+        this.telephone,
+        this.quartier,
+        this.indication,
+        this.total,
+        this.prixLivraison,
+        this.moyenDePayement,
+        this.numeroDePayement,
+        this.produitsCommander,
+        this.lieuDeLivraison,
+        this.sousTotal,
+        this.livrer,
+        this.numberOrder,
+        this.id,
+        this.idCommandeUser,
+        this.created});
 
   Commandes.fromMap(Map<String, dynamic> donnees, String id)
       : nomComplet = donnees["nomComplet"],
         telephone = donnees["telephone"],
         quartier = donnees["quartier"],
         indication = donnees["indication"],
-        dateHeureDeLivraison = donnees["dateHeureDeLivraison"],
         total = donnees["total"],
         prixLivraison = donnees["prixLivraison"],
         moyenDePayement = donnees["moyenDePayement"],
@@ -63,7 +60,6 @@ class Commandes {
       "telephone": telephone,
       "quartier": quartier,
       "indication": indication,
-      "dateHeureDeLivraison": dateHeureDeLivraison,
       "total": total,
       "prixLivraison": prixLivraison,
       "moyenDePayement": moyenDePayement,

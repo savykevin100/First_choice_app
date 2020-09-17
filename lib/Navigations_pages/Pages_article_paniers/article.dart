@@ -435,9 +435,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
           border: Border.all(
               width: largeurPerCent(5, context),
               color:  HexColor('#FFC30D')),
-          image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.cover)),
+         ),
+      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(image), fit: BoxFit.cover,),
     ):Container(
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
@@ -445,9 +444,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
           border: Border.all(
               width: largeurPerCent(1, context),
               color: Colors.black),
-          image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.cover)),
+        ),
+      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(image), fit: BoxFit.cover,),
     );
   }
 
@@ -462,6 +460,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       child: Center(child: Text("Pas d'image", textAlign: TextAlign.center,),),
     );
   }
+
 
 
   // ignore: missing_return
@@ -582,15 +581,11 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         child: Container(
                           height: longueurPerCent(253, context),
                           width: largeurPerCent(262, context),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(imageSelect),
-                                  fit: BoxFit.cover)),
                           child:GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
                             },
-
+                            child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(imageSelect), fit: BoxFit.cover,),
                           ) ,
 
                         ),

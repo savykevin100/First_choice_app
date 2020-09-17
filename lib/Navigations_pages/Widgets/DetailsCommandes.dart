@@ -24,7 +24,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Commande n°1"),
+        title: Text('${widget.commande["id"]}'),
       ),
       body:SingleChildScrollView(
         child: Column(

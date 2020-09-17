@@ -1070,8 +1070,6 @@ class _Panier2State extends State<Panier2> {
               telephone: widget.telephone,
               quartier: widget.quartier,
               indication: widget.indication,
-              dateHeureDeLivraison:
-              widget.dateHeureDeLivraison,
               total: widget.total,
               sousTotal: totalPlusLivraison,
               moyenDePayement: widget.moyenDePayement,
