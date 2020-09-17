@@ -26,10 +26,6 @@ class _APrposState extends State<APrpos> {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
-      drawer:  ProfileSettings(
-        userCurrent:Renseignements.emailUser,
-        firstLetter: Renseignements.emailUser[0],
-      ),
       body: new SingleChildScrollView(
         child: Column(
           children: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
@@ -106,6 +107,19 @@ class FirestoreService {
 
 /* Fin de la récupération des catégories de la base de données*/
 
+
+  /* Récupération des commandes de la base de données*/
+  Stream<List<Commandes>> getUserOrder(String id) {
+    return _db.collection("Utilisateurs").document(id).collection("Commandes").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => Commandes.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
+/* Fin de la récupération des catégories de la base de données*/
 
   /*Recuperation des produits de ProduitsRecommandes*/
   Stream<List<Produit>> getProduitRecommandes() {
