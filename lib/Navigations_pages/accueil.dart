@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:badges/badges.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -214,13 +216,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
           child: Carousel(
             boxFit: BoxFit.cover,
             autoplay: true,
-            animationCurve: Curves.fastOutSlowIn,
-            animationDuration: Duration(seconds: 2),
-            dotSize: 6.0,
-            dotIncreasedColor: Color(0xFFFF335C),
+            animationCurve: Curves.linearToEaseOut,
+            animationDuration: Duration(seconds: 5),
+            dotSize: 10.0,
+            dotIncreasedColor: Colors.amber,
             dotPosition: DotPosition.bottomCenter,
             dotVerticalPadding: 10.0,
             indicatorBgPadding: 7.0,
+            dotBgColor: Colors.red.withOpacity(0),
             images: [
               Image.network(imagesCarousel[0], fit: BoxFit.cover,),
               Image.network(imagesCarousel[1], fit: BoxFit.cover,),
