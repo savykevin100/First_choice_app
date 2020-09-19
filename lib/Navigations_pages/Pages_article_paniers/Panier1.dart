@@ -40,7 +40,7 @@ class _Panier1State extends State<Panier1> {
   final _formKey = GlobalKey<FormState>();
   String selectedValueSingleDialog;
   Map<String, Widget> widgets;
-  List<Map<String, dynamic>> quartiersDb = [];
+  List<String> quartiersDb = [];
   int stopSommeLivraisonRetour=0;
 
   Future<void> fetchNameNumUser() async {
@@ -59,8 +59,14 @@ class _Panier1State extends State<Panier1> {
   }
 
   Future<void> fetchZones() async {
-    await _db.collection("Zones").document("Zone").get().then((value) {
-      quartiersDb.add(value.data);
+    await _db.collection("Zones").getDocuments().then((value){
+       value.documents.forEach((element) {
+         element.data.forEach((key, value) {
+           setState(() {
+             quartiersDb.add(value);
+           });
+         });
+       });
     });
   }
 
@@ -70,14 +76,20 @@ class _Panier1State extends State<Panier1> {
     super.initState();
     fetchNameNumUser();
     fetchZones();
-    print(widget.produitsPanier);
   }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Navigator.pop(context);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    /// Ce wiget est utilisé pour la selection des quartiers
 
-    ///////////////////////////////////////////////////////
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -87,7 +99,7 @@ class _Panier1State extends State<Panier1> {
           style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
         ),
       ),
-      body: (numUser != null && name != null)
+      body: (numUser != null && name != null && quartiersDb!=null)
           ? ConnexionState(body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -216,7 +228,7 @@ class _Panier1State extends State<Panier1> {
                                 maxHeight: 300,
                                 hint: "Sélectionner un quartier",
                                 label: quartier,
-                                items: ["Vodjè", "Gbegamey", "Houeyiho", 'Calavi',"Godomey","Bidossessi"],
+                                items:quartiersDb.toList(),
                                 onChanged:  (value) {
                                   setState(() {
                                     quartier = value;
@@ -331,7 +343,7 @@ class _Panier1State extends State<Panier1> {
                             isExpanded: true,
                             iconSize: 30.0,
                             items:
-                            ['Mobile Money' ,'Mooov Money', 'Espèce'].map(
+                            ['Mobile Money' , 'Espèce'].map(
                                   (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -549,12 +561,12 @@ class _Panier1State extends State<Panier1> {
             if(stopSommeLivraisonRetour==0){
               if(DateTime.now().weekday==7){
                 setState(() {
-                  prixLivraison = value.documents[i].data["prix"]*2;
+                  prixLivraison = int.tryParse(value.documents[i].documentID.toString())*2;
                   stopSommeLivraisonRetour++;
                 });
               } else {
                 setState(() {
-                  prixLivraison = value.documents[i].data["prix"];
+                  prixLivraison =int.tryParse(value.documents[i].documentID.toString());
                   stopSommeLivraisonRetour++;
                 });
               }

@@ -98,7 +98,13 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10)),
-                              child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(produit.image1), fit: BoxFit.cover,),
+                              child: Image.network(
+                                produit.image1,
+                                loadingBuilder: (context,child, progress){
+                                  return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                },
+                                fit: BoxFit.cover,
+                              )
                           ),
                         ),
                         /*(displayBadgeNew)? Container(

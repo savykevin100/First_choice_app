@@ -1,12 +1,10 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/tokens_utilisateurs.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +22,7 @@ class Renseignements extends StatefulWidget {
 }
 
 class _RenseignementsState extends State<Renseignements> {
+
   String _dropDownValue;
   String image;
   String nomComplet;
@@ -38,20 +37,134 @@ class _RenseignementsState extends State<Renseignements> {
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Map<String, dynamic>> produits=[];
-  final FirebaseMessaging _firebaseMessaging=FirebaseMessaging();
+  String verificationId;
+  String smsCode;
 
+
+  Future<void> _submit() async {
+    final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verId) {
+      this.verificationId = verId;
+    };
+
+    final PhoneCodeSent phoneCodeSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId;
+      smsCodeDialog(context).then((value) => print("Signed In"));
+    };
+
+    final PhoneVerificationCompleted verificationSucess = (AuthCredential auth){
+      print("$auth");
+    };
+
+    final PhoneVerificationFailed phoneVerificationFailed = (
+        AuthException exception) {
+      print("${exception.message}");
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        verificationCompleted: verificationSucess,
+        phoneNumber: '+229'+this.numeroPayement,
+        timeout: const Duration(seconds: 5),
+        verificationFailed: phoneVerificationFailed,
+        codeSent: phoneCodeSent,
+        codeAutoRetrievalTimeout: autoRetrievalTimeout
+    );
+  }
+
+
+  Future<void> verifyPhone() async{
+
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId){
+      this.verificationId = verId;
+    };
+
+    final PhoneCodeSent smsCodeSent= (String verId, [int forceCodeResend]){
+      this.verificationId=verId;
+      smsCodeDialog(context).then((value) => print("Signed In"));
+    };
+
+    final PhoneVerificationCompleted verificationSucess = (AuthCredential auth){
+      print("$auth");
+    };
+    final PhoneVerificationFailed verificationFailed = (AuthException e){
+      print("$e");
+    };
+
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        codeSent: smsCodeSent,
+        timeout: const Duration(seconds:5),
+        phoneNumber: numeroPayement,
+        codeAutoRetrievalTimeout: autoRetrieve,
+        verificationCompleted: verificationSucess,
+        verificationFailed: verificationFailed
+    );
+  }
+
+  signIn() async {
+
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: verificationId,
+        smsCode: smsCode
+    );
+
+    final FirebaseUser user =
+    await FirebaseAuth.instance .signInWithCredential(credential).then((user) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AllNavigationPage()),
+      );
+    }).catchError((e) {
+      print(e);
+    });
+
+  }
+
+
+
+  Future<bool> smsCodeDialog(BuildContext context){
+    return showDialog(
+        context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Enter sms code"),
+            content: TextField(
+              onChanged: (value){
+                this.smsCode = value;
+              },
+            ),
+            contentPadding: EdgeInsets.all(10.0),
+            actions: [
+              FlatButton(onPressed: (){
+                FirebaseAuth.instance.currentUser().then((user) => {
+                  if(user!=null){
+                    Navigator.pop(context),
+                    Navigator.of(context).pushNamed(AllNavigationPage.id)
+                  }
+                  else {
+                    Navigator.pop(context),
+                    signIn()
+                }
+                });
+              }, child: Text("Done"))
+            ],
+          );
+      }
+    );
+  }
 
 
 
 
   void initState() {
     super.initState();
-    _firebaseMessaging.getToken().then((token){
+   /* _firebaseMessaging.getToken().then((token){
      setState(() {
        tokenUser=token;
        print(tokenUser);
      });
-    });
+    });*/
   }
 
   @override
@@ -314,10 +427,11 @@ class _RenseignementsState extends State<Renseignements> {
                         () async {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null) {
-                        setState(() {
+                          _submit();
+                        /*setState(() {
                           chargement = true;
-                        });
-                        try {
+                        });*/
+                       /* try {
                           await FirestoreService().addUtilisateur(
                               Utilisateur(
                                   nomComplet: nomComplet,
@@ -342,7 +456,8 @@ class _RenseignementsState extends State<Renseignements> {
                           });
                         } catch (e) {
                           print(e);
-                        }
+                        }*/
+
                       } else {
 
                         displaySnackBarNom(context,
