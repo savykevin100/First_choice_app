@@ -483,7 +483,8 @@ class _Panier1State extends State<Panier1> {
                   fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              if(lieu=="En Agence")
+              if(lieu=="En Agence"){
+                Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -497,7 +498,9 @@ class _Panier1State extends State<Panier1> {
                           dateHeureDeLivraison: dateHeureDeLivraison,
                           produitsCommander: widget.produitsPanier,
                         )));
-              else
+              }
+              else{
+                Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -513,6 +516,7 @@ class _Panier1State extends State<Panier1> {
                           quartier: quartier,
                           produitsCommander: widget.produitsPanier,
                         )));
+              }
             },
             color: HexColor("#001C36"),
           ),

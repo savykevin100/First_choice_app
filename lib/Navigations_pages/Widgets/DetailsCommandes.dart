@@ -268,35 +268,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                        )
                                    ),
                                  ),
-                                 (widget.commande["produitsCommander"][i]["etatSurMesure"]==true)?
-                                 Expanded(
-                                   child: Container(
-                                     child: Column(
-                                       children: <Widget>[
-                                         SizedBox(height: longueurPerCent(5, context),),
-                                         Container(
-                                           height: longueurPerCent(20, context),
-                                           width: largeurPerCent(100, context),
-                                           margin: EdgeInsets.only(left: longueurPerCent(20, context)),
-                                           color: HexColor("#001C36"),
-                                           child: Center(
-                                             child: Text(
-                                               "SUR MESURE",
-                                               textAlign: TextAlign.right,
-                                               style: TextStyle(
-                                                   color: HexColor("#FFFFFF"),
-                                                   fontSize: 9.0,
-                                                   fontFamily: "MontserratBold",
-                                                   fontWeight: FontWeight.bold
-
-                                               ),
-                                             ),
-                                           ),
-                                         ),
-                                       ],
-                                     ),
-                                   ),
-                                 ):Text("")
                                ],
                              ),
                              Divider(
@@ -343,7 +314,14 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 top: longueurPerCent(0.0, context),
                                 right: longueurPerCent(0.0, context),
                                 left: longueurPerCent(10.0, context)),
-                            child: (widget.commande["moyenDePayement"]=="Mobile Money")?Row(
+                            child: (widget.commande["moyenDePayement"]=="Espèce")? Text(
+                              "Espèce",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: HexColor("#909090"),
+                                  fontSize: 12,
+                                  fontFamily: "MonseraBold"),
+                            ):Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -363,13 +341,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                       fontFamily: "MonseraBold"),
                                 ),
                               ],
-                            ):Text(
-                              "Espèce",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: HexColor("#909090"),
-                                  fontSize: 12,
-                                  fontFamily: "MonseraBold"),
                             )
                         ),
                       ],

@@ -48,6 +48,7 @@ class _UserProfilState extends State<UserProfil>{
       if (this.mounted) {
         setState(() {
           name = value.data["nomComplet"];
+          number=value.data ["numero"];
         });
       }
     });
@@ -161,54 +162,7 @@ if(name!=null){
                               ),
                             ),
                             SizedBox(height: longueurPerCent(20,context),),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: new Container(
-                                    height: longueurPerCent(20.0, context),
-                                    width: largeurPerCent(300, context),
-                                    color: Colors.grey,
-                                    child: Center(
-                                      child: TextField(
-                                          controller:
-                                          _userNameController,
-                                          //Set this field to enable or disable (true or flase)
-                                          enabled: userNameControllerEnable,
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: "MonseraBold"),
-                                          decoration: InputDecoration(
-                                            hintText: name,
-                                            hintStyle: TextStyle(
-                                                color:
-                                                Colors.white,
-                                                fontSize: 16.0,
-                                                fontFamily:
-                                                'MonseraBold'),
-                                            contentPadding: EdgeInsets.only(
-                                              top: longueurPerCent(5, context),
-                                            ),
-                                            fillColor: Colors.white,
-                                            border: OutlineInputBorder(
 
-                                                borderRadius:
-                                                BorderRadius.all(
-                                                    Radius.circular(
-                                                        7.0)),
-                                                borderSide: BorderSide(
-                                                    width: 0,
-                                                    style: BorderStyle
-                                                        .none)),
-                                          ),
-                                          onChanged: (value) {}),
-                                    ),
-                                  ),
-                                ),
-                                IconButton(icon: Icon(Icons.add), onPressed: null)
-                              ],
-                            ),
                             Container(
                               margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
                               child: Material(
@@ -224,7 +178,7 @@ if(name!=null){
                                   ),
                                   decoration: InputDecoration(
                                     hintText:
-                                    "HOUEGBELO Jean de Dieu Amour",
+                                    name,
                                     hintStyle: TextStyle(
                                       color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
                                     ),
@@ -250,10 +204,6 @@ if(name!=null){
                               ),
                             ),
                             SizedBox(height: longueurPerCent(10,context),),
-                            Padding(
-                                padding: EdgeInsets.only(left: 20,right: 330),
-                                child:Text("Numéro")
-                            ),
                             Container(
                               margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
                               child: Material(
@@ -270,7 +220,7 @@ if(name!=null){
                                   ),
                                   decoration: InputDecoration(
                                     hintText:
-                                    "69063800",
+                                    number,
                                     hintStyle: TextStyle(
                                       color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
                                     ),
