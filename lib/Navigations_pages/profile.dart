@@ -48,6 +48,7 @@ class _UserProfilState extends State<UserProfil>{
       if (this.mounted) {
         setState(() {
           name = value.data["nomComplet"];
+          number=value.data ["numero"];
         });
       }
     });
@@ -161,10 +162,7 @@ if(name!=null){
                               ),
                             ),
                             SizedBox(height: longueurPerCent(20,context),),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20,right: 288),
-                              child:Text("Nom Complet")
-                            ),
+
                             Container(
                               margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
                               child: Material(
@@ -180,7 +178,7 @@ if(name!=null){
                                   ),
                                   decoration: InputDecoration(
                                     hintText:
-                                    "HOUEGBELO Jean de Dieu Amour",
+                                    name,
                                     hintStyle: TextStyle(
                                       color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
                                     ),
@@ -206,10 +204,6 @@ if(name!=null){
                               ),
                             ),
                             SizedBox(height: longueurPerCent(10,context),),
-                            Padding(
-                                padding: EdgeInsets.only(left: 20,right: 330),
-                                child:Text("Numéro")
-                            ),
                             Container(
                               margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
                               child: Material(
@@ -226,7 +220,7 @@ if(name!=null){
                                   ),
                                   decoration: InputDecoration(
                                     hintText:
-                                    "69063800",
+                                    number,
                                     hintStyle: TextStyle(
                                       color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
                                     ),

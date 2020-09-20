@@ -906,6 +906,7 @@ class _Panier2State extends State<Panier2> {
         "dateHeureDeLivraison": widget.dateHeureDeLivraison,
         "total": widget.total,
         "sousTotal": totalPlusLivraison,
+        "moyenDePayement": widget.moyenDePayement,
         "numeroDePayement": numeroDePayement,
         "produitsCommander": widget.produitsCommander,
         "prixLivraison": widget.prixLivraison,

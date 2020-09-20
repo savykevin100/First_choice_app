@@ -4,7 +4,6 @@ import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/APrpos.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/ConditionsG%C3%A9n%C3%A9rales.dart';
 import 'package:premierchoixapp/Pages/FirstPage.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
@@ -54,7 +53,7 @@ class MyApp extends StatelessWidget {
         Test.id: (context) => Test(),
         MensurationHomme.id: (context) => MensurationHomme(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
-        ConditionGenerales.id: (context) => ConditionGenerales(),
+       // ConditionGenerales.id: (context) => ConditionGenerales(),
         APrpos.id: (context) => APrpos(),
       },
     );
