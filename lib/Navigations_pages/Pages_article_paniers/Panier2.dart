@@ -791,7 +791,7 @@ class _Panier2State extends State<Panier2> {
                                   } else if(numeroDePayement=="0"){
                                     displaySnackBarNom(
                                         context,
-                                        "Veuillez entrer votre numéro de payement",
+                                        "Veuillez entrer votre numéro de pa yement",
                                         Colors.white);
                                   } else if(numeroDePayement.length!=8)
                                     displaySnackBarNom(

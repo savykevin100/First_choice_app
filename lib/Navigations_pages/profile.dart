@@ -193,7 +193,7 @@ if(name!=null){
                                     ),
                                   ),
                                 ),
-                                IconButton(icon: Icon(Icons.auto_fix_high), onPressed: null)
+                                IconButton(icon: Icon(Icons.add), onPressed: null)
                               ],
                             ),
                             Row(
