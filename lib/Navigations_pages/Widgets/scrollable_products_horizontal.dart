@@ -104,7 +104,13 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                                         Radius.circular(10),
                                         topRight:
                                         Radius.circular(10)),
-                                    child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(snapshot.data[i].image1), fit: BoxFit.cover,),
+                                    child: Image.network(
+                                     snapshot.data[i].image1,
+                                      loadingBuilder: (context,child, progress){
+                                        return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                      },
+                                      fit: BoxFit.cover,
+                                    )
                                    /* Image.network(
                                       snapshot.data[i].image1,
                                       fit: BoxFit.cover,

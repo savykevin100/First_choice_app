@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Composants/priceWithDot.dart';
 
 // ignore: must_be_immutable
 class DetailsCommandes extends StatefulWidget {
@@ -24,7 +25,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.commande["id"]}'),
+        title: Text('${widget.commande["numberOrder"]}'),
       ),
       body:SingleChildScrollView(
         child: Column(
@@ -260,16 +261,9 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                              height: longueurPerCent(
                                                  8.0, context),
                                            ),
-                                           Text(
-                                             "${widget.commande["produitsCommander"][i]["prix"]}",
-                                             textAlign: TextAlign.right,
-                                             style: TextStyle(
-                                               color: HexColor("#00CC7b"),
-                                               fontSize: 15,
-                                               fontFamily: "MontserratBold",
-                                               fontWeight: FontWeight.bold,
-                                             ),
-                                           ),
+                                           PriceWithDot(price: widget.commande["produitsCommander"][i]["prix"], size:14 ,
+                                             couleur:  HexColor("#00CC7b"), police:  "MontserratBold",
+                                           )
                                          ],
                                        )
                                    ),
@@ -410,6 +404,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(
@@ -425,47 +420,18 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
-                        Expanded(
-                          flex: 6,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "${widget.commande["total"]} ",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                        Padding(
+                          padding:
+                          EdgeInsets.only(right: longueurPerCent(12, context)),
+                          child: PriceWithDot(price: widget.commande["total"], size:12 ,
+                            couleur:  HexColor("#001C36"), police:  "MontserratBold",
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(
@@ -481,55 +447,26 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "${widget.commande["prixLivraison"]} ",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            margin: EdgeInsets.only(right: longueurPerCent(10, context)),
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+
+                        Padding(
+                          padding:
+                          EdgeInsets.only(right: longueurPerCent(12, context)),
+                          child:
+                          PriceWithDot(price: widget.commande["prixLivraison"], size:12 ,
+                            couleur:  HexColor("#001C36"), police:  "MontserratBold",
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
 
-                    SizedBox(height: longueurPerCent(10, context),),
                     Divider(
                       color: Colors.grey,
                       height: 1,
                     ),
                     SizedBox(height: longueurPerCent(10, context),),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(
@@ -545,41 +482,13 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                 fontFamily: "MonseraBold"),
                           ),
                         ),
-                        Expanded(
-                          flex: 8,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                              EdgeInsets.only(left: longueurPerCent(0, context)),
-                              child: Text(
-                                "${widget.commande["sousTotal"]} ",
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            child: Padding(
-                              padding:  EdgeInsets.only(right: longueurPerCent(0, context)),
-                              child: Text(
-                                " FCFA",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 12,
-                                  fontFamily: "MontserratBold",
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+
+                        Padding(
+                          padding:
+                          EdgeInsets.only(right: longueurPerCent(12, context)),
+                          child:
+                          PriceWithDot(price: widget.commande["sousTotal"], size:12 ,
+                            couleur:  HexColor("#001C36"), police:  "MontserratBold",
                           ),
                         ),
                       ],
@@ -596,4 +505,6 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
       ),
     );
   }
+
+
 }

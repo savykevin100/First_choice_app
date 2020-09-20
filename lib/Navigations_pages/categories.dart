@@ -192,7 +192,14 @@ class _CategoriesState extends State<Categories> {
                                         color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
+                                      child: Image.network(
+                                        categories.imagePath,
+                                        loadingBuilder: (context,child, progress){
+                                          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                        },
+                                        fit: BoxFit.cover,
+                                      )
+                                      //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
                                     ),
                                     Container(
                                       height: 180.0,
@@ -263,7 +270,14 @@ class _CategoriesState extends State<Categories> {
                                         color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
+                                      child: Image.network(
+                                        categories.imagePath,
+                                        loadingBuilder: (context,child, progress){
+                                          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                        },
+                                        fit: BoxFit.cover,
+                                      )
+                                      //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
                                     ),
                                     Container(
                                       height: 180.0,

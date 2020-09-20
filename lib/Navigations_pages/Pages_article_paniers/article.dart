@@ -436,7 +436,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(5, context),
               color:  HexColor('#FFC30D')),
          ),
-      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(image), fit: BoxFit.cover,),
+      child: Image.network(
+         image,
+         loadingBuilder: (context,child, progress){
+          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+        },
+        fit: BoxFit.cover,
+      )
     ):Container(
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
@@ -445,7 +451,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(1, context),
               color: Colors.black),
         ),
-      child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(image), fit: BoxFit.cover,),
+      child:Image.network(
+        image,
+        loadingBuilder: (context,child, progress){
+          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+        },
+        fit: BoxFit.cover,
+      )
     );
   }
 
@@ -457,7 +469,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         border: Border.all(
             width: largeurPerCent(1, context),
             color: HexColor("#707070")),),
-      child: Center(child: Text("Pas d'image", textAlign: TextAlign.center,),),
+      child: Center(child: Image.asset("assets/images/no_image_icon.png", fit: BoxFit.cover,)),
     );
   }
 

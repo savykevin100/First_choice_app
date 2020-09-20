@@ -28,6 +28,7 @@ class _ConnexionState extends State<Connexion> {
   bool chargement = false;
   bool r=false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool visibilityPassword=true;
   @override
   Widget build(BuildContext context) {
 
@@ -219,7 +220,7 @@ class _ConnexionState extends State<Connexion> {
           fontSize: 18,
           fontFamily: "MonseraBold"
       ),
-      obscureText: true,
+      obscureText: visibilityPassword,
       decoration: InputDecoration(
         hintText: "Mot de passe",
         hintStyle: TextStyle(
@@ -227,6 +228,16 @@ class _ConnexionState extends State<Connexion> {
             fontSize: 18.0,
             fontFamily: 'MonseraLight'),
         fillColor: Colors.white,
+        suffixIcon: IconButton(icon: Icon((visibilityPassword)?Icons.visibility:Icons.visibility_off), onPressed: (){
+          if(visibilityPassword)
+            setState(() {
+              visibilityPassword=false;
+            });
+          else
+            setState(() {
+              visibilityPassword=true;
+            });
+        }),
         contentPadding: EdgeInsets.only(top: 30, bottom: 5, left:30),
         border: OutlineInputBorder( borderRadius: BorderRadius.all(Radius.circular(7.0) ),
             borderSide: BorderSide(width: 0, style: BorderStyle.none)
