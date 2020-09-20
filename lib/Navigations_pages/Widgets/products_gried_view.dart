@@ -92,7 +92,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          height: longueurPerCent(200, context),
+                          height: longueurPerCent(150, context),
                           width: largeurPerCent(200, context),
                           child: ClipRRect(
                               borderRadius: BorderRadius.only(

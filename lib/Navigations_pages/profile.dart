@@ -21,6 +21,20 @@ class UserProfil extends StatefulWidget{
 
 class _UserProfilState extends State<UserProfil>{
   final _auth = FirebaseAuth.instance;
+
+  TextEditingController _textFieldControllerNumero = TextEditingController();
+  TextEditingController _textFieldController = TextEditingController();
+  TextEditingController _textFieldController1 = TextEditingController();
+  TextEditingController _textFieldController2 = TextEditingController();
+
+  bool _isEnabled = false;
+  bool _isEnabled1 = false;
+  bool _isEnabled2 = false;
+
+  String number;
+  String birthday;
+  String completeName;
+
   Utilisateur donneesUtilisateurConnecte;
   Firestore _db = Firestore.instance;
   String name;
@@ -129,7 +143,6 @@ if(name!=null){
                   children: <Widget>[
                     SizedBox(height: longueurPerCent(20, context)),
                     Container(
-                      height: longueurPerCent(320.0, context),
                       width: largeurPerCent(348.0, context),
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
@@ -196,137 +209,117 @@ if(name!=null){
                                 IconButton(icon: Icon(Icons.add), onPressed: null)
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-
-                                Expanded(
-                                  flex: 3,
-                                  child: Center(
-                                    child: Container(
-                                      color: Colors.red,
-                                      margin: EdgeInsets.only(top: longueurPerCent(10.0, context), right: longueurPerCent(30.0, context), left: longueurPerCent(30.0, context), ),
-                                      child: TextField(
-                                        //controller: _textFieldController,
-                                        //enabled: !_isEnabled,
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          color: HexColor("#909090"),
-                                          fontFamily: "MonseraBold",
-                                        ),
-                                        decoration: InputDecoration(
-                                          hintText:
-                                          "HOUEGBELO Jean de Dieu Amour",
-                                          hintStyle: TextStyle(
-                                            color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
-                                          ),
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsets.only(
-                                          ),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                              BorderRadius.all(
-                                                  Radius.circular(
-                                                      7.0)),
-                                              borderSide: BorderSide(
-                                                  width: 0,
-                                                  style:
-                                                  BorderStyle.none)),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(height: longueurPerCent(15.0, context),),
-
-                            SizedBox(height: longueurPerCent(15.0, context),),
-
-                            SizedBox(height: longueurPerCent(15.0, context),),
-
-
-
-
-                            new Container(
-                              height: longueurPerCent(19.0, context),
-                              width: largeurPerCent(300, context),
-                              child: Text(
-                                "Anniversaire"+ " " + " " + " " + " " + " " + "08 Mars 2000",
-                                style: TextStyle(
-                                  color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: longueurPerCent(15.0, context),),
-                            new Container(
-                              height: longueurPerCent(19.0, context),
-                              width: largeurPerCent(300, context),
-                              child: Text(
-                                "Ville"+ " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + " " + "  Cotonou",
-                                style: TextStyle(
-                                  color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 17.0,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height:longueurPerCent(35.0, context)),
                             Container(
-                              padding: EdgeInsets.only(right: longueurPerCent(16.0, context),left: longueurPerCent(16.0, context),top: largeurPerCent(6.0, context),),
-                              height: longueurPerCent(40.0, context),
-                              width: largeurPerCent(160.0, context),
+                              margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
                               child: Material(
-                                borderRadius: BorderRadius.circular(3.0),
-                                //shadowColor: Colors.greenAccent,
-                                color: HexColor("#001C36"),
-                                elevation: 7.0,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: Center(
-                                    child: Text(
-                                      'ACTUALISER',
-                                      style: TextStyle(color: HexColor("#FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
-                                    ),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight: Radius.circular(5),),
+                                color: Colors.grey.withOpacity(0.3),
+                                child: TextField(
+                                  controller: _textFieldController,
+                                  enabled: _isEnabled1,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: HexColor("#909090"),
+                                    fontFamily: "MonseraBold",
                                   ),
+                                  decoration: InputDecoration(
+                                    hintText:
+                                    "HOUEGBELO Jean de Dieu Amour",
+                                    hintStyle: TextStyle(
+                                      color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                      left: longueurPerCent(8, context)
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.all(
+                                            Radius.circular(
+                                                7.0)),
+                                        borderSide: BorderSide(
+                                            width: 0,
+                                            style:
+                                            BorderStyle.none)),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      completeName = value;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
+                            SizedBox(height: longueurPerCent(10,context),),
+                            Padding(
+                                padding: EdgeInsets.only(left: 20,right: 330),
+                                child:Text("Numéro")
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: longueurPerCent(2.0, context), right: longueurPerCent(15.0, context), left: longueurPerCent(15.0, context), ),
+                              child: Material(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight: Radius.circular(5),),
+                                color: Colors.grey.withOpacity(0.3),
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  controller: _textFieldControllerNumero,
+                                  enabled: _isEnabled2,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: HexColor("#909090"),
+                                    fontFamily: "MonseraBold",
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText:
+                                    "69063800",
+                                    hintStyle: TextStyle(
+                                      color: HexColor("#909090"), fontFamily: 'Montserrat_Light',fontSize: 15.0,
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                        left: longueurPerCent(8, context)
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.all(
+                                            Radius.circular(
+                                                7.0)),
+                                        borderSide: BorderSide(
+                                            width: 0,
+                                            style:
+                                            BorderStyle.none)),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      number = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height:longueurPerCent(15.0, context)),
+                            RaisedButton(
+                              onPressed: (){
+                                setState(() {
+                                  _isEnabled = ! _isEnabled;
+                                  _isEnabled1 = ! _isEnabled1;
+                                  _isEnabled2 = ! _isEnabled2;
+                                });
+                              },
+                              child: Text((!_isEnabled && !_isEnabled1 && !_isEnabled2)? "MODIFIER" : "ACTUALISER",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12
+                                ),
+                              ),
+                              color:HexColor("#001C36")
+                            ),
+                            SizedBox(height: longueurPerCent(20.0, context),),
+                            new Container(),
                           ],
                         ),
                       ),
                     ),
-
                   ],
                 ),
-                SizedBox(height: longueurPerCent(16.0, context),),
-               /* Container(
-                  height: longueurPerCent(420.0, context),
-                  width: largeurPerCent(348.0, context),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(20.0),
-                    //shadowColor: Colors.greenAccent,
-                    color: Colors.white,
-                    elevation: 7.0,
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: longueurPerCent(10.0, context),),
-                        Container(
-                          //padding: EdgeInsets.only(top: longueurPerCent(10.0, context), right: longueurPerCent(65.0, context), left:longueurPerCent(62.0, context),),
-                          child: Center(
-                            child: Text(
-                              "Tableau Mensurations",
-                              style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 20.0, fontWeight: FontWeight.bold ),
-                            ),
-                          ),
-                        ),
-
-
-
-                      ],
-                    ),
-                  ),
-                ),*/
-                SizedBox(height: longueurPerCent(75.0, context),),
-                new Container(),
               ],
             ),
           )

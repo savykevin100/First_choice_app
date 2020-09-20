@@ -10,7 +10,6 @@ import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
 import 'package:premierchoixapp/Navigations_pages/profile.dart';
-
 import '../test.dart';
 import 'hexadecimal.dart';
 
@@ -74,20 +73,20 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 Navigator.pushNamed(context, Connexion.id);
               }),
           Divider(),
-
-          drawerItem(
-              icon: Icons.info,
-              text: "À propos",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => APrpos()));
-              }),
           drawerItem(
               icon: Icons.library_books,
               text: "Conditions Générales",
               onTap: () {
                /* Navigator.push(
                     context, MaterialPageRoute(builder: (context) => ConditionGenerales()));*/
+              }),
+          drawerItem(
+              icon: Icons.info,
+              text: "À propos",
+              onTap: () {
+
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => APrpos()));
               }),
         ],
       ),
