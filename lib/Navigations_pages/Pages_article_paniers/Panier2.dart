@@ -61,6 +61,7 @@ class _Panier2State extends State<Panier2> {
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -143,6 +144,7 @@ class _Panier2State extends State<Panier2> {
                           children: <Widget>[
                             SizedBox(
                               height: longueurPerCent(20, context),
+
                             ),
                             Container(
                               width: longueurPerCent(330, context),
@@ -186,6 +188,7 @@ class _Panier2State extends State<Panier2> {
                                       ),
                                     ),
                                   ),
+
                                   Padding(
                                     padding: EdgeInsets.only(
                                       left: longueurPerCent(10, context),
@@ -226,6 +229,7 @@ class _Panier2State extends State<Panier2> {
                                                 longueurPerCent(30.0, context),
                                             bottom:
                                                 longueurPerCent(5.0, context)),
+
                                         child: Text(
                                           "Adresse de Livraison",
                                           textAlign: TextAlign.left,
@@ -258,8 +262,10 @@ class _Panier2State extends State<Panier2> {
                                               style: TextStyle(
                                               color: HexColor("#909090"),
                                             fontSize: 12,
+
                                             fontFamily: "MonseraBold"
                                         ),
+
                                           ),
                                         ),
                                       ),
@@ -489,10 +495,12 @@ class _Panier2State extends State<Panier2> {
                                                           "assets/images/new_logo_mtn_momo1.jpg")),
                                                 ),
                                               ),
+
                                               hintStyle: TextStyle(
                                                   color: Colors.red,
                                                   fontSize: 12.0,
                                                   fontFamily: 'MonseraLight'),
+
                                               fillColor: Colors.white,
                                               contentPadding: EdgeInsets.only(
                                                   top: 30,

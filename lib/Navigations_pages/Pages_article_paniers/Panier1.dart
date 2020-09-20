@@ -9,7 +9,7 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:search_choices/search_choices.dart';
+
 
 // ignore: must_be_immutable
 class Panier1 extends StatefulWidget {
@@ -223,18 +223,20 @@ class _Panier1State extends State<Panier1> {
                               padding: EdgeInsets.only(left: 0,right: 0),
                               width: longueurPerCent(347, context),
                               height: 50,
-                              child: DropdownSearch(
+                              child: DropdownSearch<String>(
                                 mode: Mode.BOTTOM_SHEET,
                                 maxHeight: 300,
                                 hint: "Sélectionner un quartier",
+
                                 label: quartier,
                                 items:quartiersDb.toList(),
                                 onChanged:  (value) {
+
                                   setState(() {
                                     quartier = value;
-                                    print(quartier);
                                   });
                                 },
+                                selectedItem: quartier,
                                 showClearButton: true,
                                 showSearchBox: true,
                                 searchBoxDecoration: InputDecoration(
