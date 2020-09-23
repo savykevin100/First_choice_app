@@ -37,7 +37,7 @@ class PriceWithDotState extends State<PriceWithDot>{
       return priceWithDot;
     } else if(lengthPrice==5){
       setState(() {
-        priceWithDot = priceWithDot.substring(0, 1) + '.' + priceWithDot.substring(2, 5) ;
+        priceWithDot = priceWithDot.substring(0, 2) + '.' + priceWithDot.substring(2, 5) ;
       });
       return priceWithDot;
     }else if(lengthPrice==6){

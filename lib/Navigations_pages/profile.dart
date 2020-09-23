@@ -33,11 +33,14 @@ class _UserProfilState extends State<UserProfil>{
 
   String number;
   String birthday;
-  String completeName;
+  String stateUpdate="MODIFIER";
 
   Utilisateur donneesUtilisateurConnecte;
   Firestore _db = Firestore.instance;
   String name;
+  String firstLetter;
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> fetchDataUser() async {
     await _db
@@ -48,6 +51,7 @@ class _UserProfilState extends State<UserProfil>{
       if (this.mounted) {
         setState(() {
           name = value.data["nomComplet"];
+          firstLetter=name[0];
           number=value.data ["numero"];
         });
       }
@@ -66,6 +70,7 @@ if(name!=null){
   TextEditingController _userNameController;
   bool userNameControllerEnable =false;
   return Scaffold(
+    key: _scaffoldKey,
     body: new SingleChildScrollView(
       child: new Stack(
         children: <Widget>[
@@ -111,7 +116,7 @@ if(name!=null){
                         backgroundColor: Colors.white,
                         child: Center(
                           child: Text(
-                            name[0],
+                            firstLetter,
                             style: TextStyle(color: HexColor("#001c36"), fontSize: 70,fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -197,7 +202,7 @@ if(name!=null){
                                   ),
                                   onChanged: (value) {
                                     setState(() {
-                                      completeName = value;
+                                      name = value;
                                     });
                                   },
                                 ),
@@ -248,13 +253,38 @@ if(name!=null){
                             SizedBox(height:longueurPerCent(15.0, context)),
                             RaisedButton(
                               onPressed: (){
-                                setState(() {
-                                  _isEnabled = ! _isEnabled;
-                                  _isEnabled1 = ! _isEnabled1;
-                                  _isEnabled2 = ! _isEnabled2;
+                                setState(()  {
+                                  if(stateUpdate=="MODIFIER"){
+                                    setState(() {
+                                      _isEnabled = ! _isEnabled;
+                                      _isEnabled1 = ! _isEnabled1;
+                                      _isEnabled2 = ! _isEnabled2;
+                                      stateUpdate="ACTUALISER";
+                                    });
+                                  }
+                                    else {
+
+                                    if(number.length!=8 || number.isEmpty)
+                                      {
+                                       displaySnackBarNom(context, "Entrer un numéro valide", Colors.white);
+                                      } else {
+                                       _db.collection("Utilisateurs").document(Renseignements.emailUser).updateData({
+                                        "nomComplet": name,
+                                        "numero": number
+                                      });
+                                      setState(() {
+                                        _isEnabled = ! _isEnabled;
+                                        _isEnabled1 = ! _isEnabled1;
+                                        _isEnabled2 = ! _isEnabled2;
+                                        firstLetter=name[0];
+                                        stateUpdate="MODIFIER";
+                                      });
+                                       displaySnackBarNom(context, "Modification réussie", Colors.white);
+                                    }
+                                  }
                                 });
                               },
-                              child: Text((!_isEnabled && !_isEnabled1 && !_isEnabled2)? "MODIFIER" : "ACTUALISER",
+                              child: Text(stateUpdate,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12
@@ -288,7 +318,16 @@ if(name!=null){
 }
 
   }
+
+  displaySnackBarNom(BuildContext context, String text, Color couleur) {
+    final snackBar = SnackBar(
+      content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
 }
+
 
 // ignore: camel_case_types
 class getClipper extends CustomClipper<Path>{
