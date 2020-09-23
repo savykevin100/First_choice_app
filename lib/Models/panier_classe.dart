@@ -11,6 +11,7 @@ class PanierClasse {
   int numberStar;
   String categorie;
   String sousCategorie;
+  String reference;
 
 
   PanierClasse(
@@ -23,6 +24,7 @@ class PanierClasse {
         this.idProduitCategorie,
         this.numberStar,
         this.categorie,
+        this.reference,
         this.sousCategorie
     });
 
@@ -35,6 +37,7 @@ class PanierClasse {
         idProduitCategorie = donnees["idProduitCategorie"],
         numberStar = donnees["numberStar"],
         categorie = donnees["categorie"],
+        reference = donnees["reference"],
         sousCategorie = donnees["sousCategorie"],
       id= donnees["id"];
 
@@ -48,6 +51,7 @@ class PanierClasse {
       "idProduitCategorie":idProduitCategorie,
       "numberStar":numberStar,
       "categorie":categorie,
+      "reference":reference,
       "sousCategorie":sousCategorie,
       "id":id,
 

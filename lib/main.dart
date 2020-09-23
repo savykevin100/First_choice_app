@@ -17,7 +17,6 @@ import 'Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'Navigations_pages/all_navigation_page.dart';
 import 'Navigations_pages/panier.dart';
-import 'Pages/page_chargement.dart';
 
 void main() => runApp(MyApp());
 
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
         ResetPasswd.id: (context) => ResetPasswd(),
         Renseignements.id: (context) => Renseignements(),
         AllNavigationPage.id: (context) => AllNavigationPage(),
-        PageChargement.id: (context) => PageChargement(),
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
         Test.id: (context) => Test(),

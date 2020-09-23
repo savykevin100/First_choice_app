@@ -217,6 +217,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               nomDuProduit:widget.produit.nomDuProduit,
                               image1:widget.produit.image1,
                               prix: widget.produit.prix,
+                              reference: widget.produit.reference,
                               numberStar:widget.produit.numberStar,
                               categorie: widget.produit.categorie,
                               sousCategorie: widget.produit.sousCategorie,

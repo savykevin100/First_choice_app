@@ -14,6 +14,7 @@ class Produit {
   String sousCategorie;
   String idProduitCategorie;
   String expiryBadgeNew;
+  String reference;
 
   Produit(
       {this.nomDuProduit,
@@ -29,6 +30,7 @@ class Produit {
         this.sousCategorie,
         this.categorie,
         this.expiryBadgeNew,
+        this.reference,
         this.idProduitCategorie,
         this.numberImages});
 
@@ -46,6 +48,7 @@ class Produit {
         expiryBadgeNew = donnees["expiryBadgeNew"],
         sousCategorie = donnees["sousCategorie"],
         id = donnees["id"],
+        reference = donnees["reference"],
         description = donnees["description"],
         idProduitCategorie = donnees["idProduitCategorie"];
 
@@ -65,6 +68,7 @@ class Produit {
       "categorie": categorie,
       "sousCategorie": sousCategorie,
       "id": id,
+      "reference": reference,
       "idProduitCategorie": idProduitCategorie
     };
   }

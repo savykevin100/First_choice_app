@@ -79,12 +79,7 @@ class _Panier1State extends State<Panier1> {
   }
 
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    Navigator.pop(context);
-  }
+
 
 
   @override
@@ -579,6 +574,8 @@ class _Panier1State extends State<Panier1> {
             }
           }
         }
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         confirmationPopup(context,  Column(
           mainAxisAlignment: MainAxisAlignment.center,
