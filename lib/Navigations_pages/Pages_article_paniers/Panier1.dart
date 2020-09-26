@@ -7,6 +7,7 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -41,7 +42,7 @@ class _Panier1State extends State<Panier1> {
   String selectedValueSingleDialog;
   Map<String, Widget> widgets;
   List<String> quartiersDb = [];
-  int stopSommeLivraisonRetour=0;
+  int stopSommeLivraisonRetour = 0;
 
   Future<void> fetchNameNumUser() async {
     await _db
@@ -59,14 +60,14 @@ class _Panier1State extends State<Panier1> {
   }
 
   Future<void> fetchZones() async {
-    await _db.collection("Zones").getDocuments().then((value){
-       value.documents.forEach((element) {
-         element.data.forEach((key, value) {
-           setState(() {
-             quartiersDb.add(value);
-           });
-         });
-       });
+    await _db.collection("Zones").getDocuments().then((value) {
+      value.documents.forEach((element) {
+        element.data.forEach((key, value) {
+          setState(() {
+            quartiersDb.add(value);
+          });
+        });
+      });
     });
   }
 
@@ -79,22 +80,18 @@ class _Panier1State extends State<Panier1> {
   }
 
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: HexColor("#001c36"),
         title: Text(
-          "Panier",
+          "Livraison",
           style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
         ),
       ),
-      body: (numUser != null && name != null && quartiersDb!=null)
+      body: (numUser != null && name != null && quartiersDb != null)
           ? ConnexionState(body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -130,7 +127,7 @@ class _Panier1State extends State<Panier1> {
               ),
               Center(
                 child: Container(
-                  padding:EdgeInsets.all(longueurPerCent(10, context)),
+                  padding: EdgeInsets.all(longueurPerCent(10, context)),
                   child: Center(
                     child: Text(
                       numUser,
@@ -148,7 +145,8 @@ class _Panier1State extends State<Panier1> {
                 height: longueurPerCent(50.0, context),
               ),
               Container(
-                margin: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
+                margin: EdgeInsets.only(left: longueurPerCent(30, context),
+                    right: longueurPerCent(30, context)),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -186,14 +184,14 @@ class _Panier1State extends State<Panier1> {
                             ),
                             isExpanded: true,
                             iconSize: 30.0,
-                            style:TextStyle(
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16),
                             items: ['En Agence', 'A domicile'].map(
                                   (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
-                                  child: Text(val,  ),
+                                  child: Text(val,),
                                 );
                               },
                             ).toList(),
@@ -208,6 +206,7 @@ class _Panier1State extends State<Panier1> {
                           ),
                         ),
                       ),
+
                       ///Ici on fait la récupération du lieu de livraison pour l'appariton des champs quartier et indication
                       (lieu == "A domicile")
                           ? Column(
@@ -215,18 +214,15 @@ class _Panier1State extends State<Panier1> {
                           SizedBox(height: longueurPerCent(20, context)),
                           Center(
                             child: Container(
-                              padding: EdgeInsets.only(left: 0,right: 0),
+                              padding: EdgeInsets.only(left: 0, right: 0),
                               width: longueurPerCent(347, context),
                               height: 50,
                               child: DropdownSearch<String>(
                                 mode: Mode.BOTTOM_SHEET,
                                 maxHeight: 300,
                                 hint: "Sélectionner un quartier",
-
-                                label: quartier,
-                                items:quartiersDb.toList(),
-                                onChanged:  (value) {
-
+                                items: quartiersDb.toList(),
+                                onChanged: (value) {
                                   setState(() {
                                     quartier = value;
                                   });
@@ -237,7 +233,7 @@ class _Panier1State extends State<Panier1> {
                                 searchBoxDecoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.only(left: 100),
-                                  hintText:"Rechercher un quartier",
+                                  hintText: "Rechercher un quartier",
                                   hintStyle: TextStyle(
                                       fontSize: 18.0,
                                       fontFamily: 'MonseraLight'),
@@ -275,7 +271,7 @@ class _Panier1State extends State<Panier1> {
                             height: longueurPerCent(20.0, context),
                           ),
                           Center(
-                            child: 	Container(
+                            child: Container(
                               width: largeurPerCent(347, context),
                               child: TextFormField(
                                 decoration: InputDecoration(
@@ -340,7 +336,7 @@ class _Panier1State extends State<Panier1> {
                             isExpanded: true,
                             iconSize: 30.0,
                             items:
-                            ['Mobile Money' , 'Espèce'].map(
+                            ['Mobile Money', 'Espèce'].map(
                                   (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -368,9 +364,10 @@ class _Panier1State extends State<Panier1> {
               Center(
                 child:
                 Container(
-                  child: button(Colors.white, HexColor("#001C36"), context, 'CONFIRMER', () {
-                    checkInformationsComplete(context);
-                  }),
+                  child: button(Colors.white, HexColor("#001C36"), context,
+                      'CONFIRMER', () {
+                        checkInformationsComplete(context);
+                      }),
                 ),
               ),
             ],
@@ -384,100 +381,40 @@ class _Panier1State extends State<Panier1> {
   }
 
 
-
-
-  showAlertDialog(BuildContext context, Widget text,) {
-
-    // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text("RETOUR",style: TextStyle(
-          color: HexColor("#001C36"),
-          fontSize: 15.0,
-          fontFamily: "MonseraBold",
-          fontWeight: FontWeight.bold)),
-      onPressed:  () {
-        Navigator.pop(context);
-      },
+  displaySnackBarNom(BuildContext context, String text, Color couleur) {
+    final snackBar = SnackBar(
+      content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
     );
-
-    Widget nextButton = FlatButton(
-      child: Text("CONTINUER",   style: TextStyle(
-          color: HexColor("#001C36"),
-          fontSize: 15.0,
-          fontFamily: "MonseraBold",
-          fontWeight: FontWeight.bold)),
-      onPressed:  () {
-
-      },
-    );
-
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Center(
-        child: Text("INFO",    style: TextStyle(
-            color: Colors.red,
-            fontSize: 30.0,
-            fontFamily: "MonseraBold",
-            fontWeight: FontWeight.bold)),
-      ),
-      content: text,
-      actions: [
-        cancelButton,
-        nextButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
-  confirmationPopup(BuildContext dialogContext, Widget text) {
-    var alertStyle = AlertStyle(
-      animationType: AnimationType.grow,
-      overlayColor: Colors.black87,
-      isCloseButton: true,
-      isOverlayTapDismiss: true,
-      titleStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
-      descStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-      animationDuration: Duration(milliseconds: 400),
-    );
-
-    Alert(
-        context: dialogContext,
-        style: alertStyle,
-        title: "INFO",
-        content: text,
-        buttons: [
-          DialogButton(
-            child: Text(
-              "RETOUR",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontFamily: "MonseraBold",
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: HexColor("#001C36"),
-          ),
-          DialogButton(
-            child: Text(
-              "CONTINUER",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontFamily: "MonseraBold",
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
+  checkInformationsComplete(context) {
+    if (lieu == 'En Agence' && moyenDePayement != null) {
+      setState(() {
+        prixLivraison = 0;
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          title: "L'agence est située à Joncquet  en face pharmacie. Immeuble blanc, 2ème étage.",
+          description:
+          "Heure d'ouverture: 9H - 20H",
+         cancelButton: FlatButton(
+           onPressed: (
+               ) {
+             Navigator.of(context).pop(); // To close the dialog
+           },
+           child: Text("Annuler",
+             style: TextStyle(
+                 color: HexColor("#001C36"),
+                 fontSize: 12.0,
+                 fontFamily: "MonseraBold"
+             ),
+           ),
+         ),
+          nextButton: FlatButton(
+            onPressed: (
+                ) {
               if(lieu=="En Agence"){
                 Navigator.pop(context);
                 Navigator.push(
@@ -513,61 +450,37 @@ class _Panier1State extends State<Panier1> {
                         )));
               }
             },
-            color: HexColor("#001C36"),
+            child: Text("Continuer",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"
+              ),),
           ),
-        ]).show();
-  }
+          icon: Icon(Icons.location_on,size: 100,color: HexColor("#001C36")),
+        ),
+      );
 
-
-  displaySnackBarNom(BuildContext context, String text, Color couleur) {
-    final snackBar = SnackBar(
-      content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
-
-  void checkInformationsComplete(context) {
-    if (lieu == 'En Agence'  && moyenDePayement!=null) {
-      setState(() {
-        prixLivraison = 0;
-      });
-      confirmationPopup(context, Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: longueurPerCent(20, context),),
-          Text("Heure d'ouverture: 9H - 20H", textAlign: TextAlign.center,
-            style: TextStyle(
-                color: HexColor("#001C36"),
-                fontSize: 15.0,
-                fontFamily: "MonseraRegular",
-                fontWeight: FontWeight.bold
-            ),),
-          SizedBox(height: longueurPerCent(15, context),),
-          Text("L'agence est située à Joncquet  en face pharmacie. Immeuble blanc, 2ème étage.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: HexColor("#001C36"),
-                fontSize: 15.0,
-                fontFamily: "MonseraRegular",
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),);
-
-    } else if (lieu == "A domicile" && indication != null && quartier != null && moyenDePayement!=null ) {
+    } else if (lieu == "A domicile" && indication != null && quartier != null &&
+        moyenDePayement != null) {
       _db.collection("Zones").getDocuments().then((value) {
         /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
         for (int i = 0; i < value.documents.length; i++) {
           if (value.documents[i].data.containsValue(quartier)) {
-            if(stopSommeLivraisonRetour==0){
-              if(DateTime.now().weekday==7){
+            if (stopSommeLivraisonRetour == 0) {
+              if (DateTime
+                  .now()
+                  .weekday == 7) {
                 setState(() {
-                  prixLivraison = int.tryParse(value.documents[i].documentID.toString())*2;
+                  prixLivraison =
+                      int.tryParse(value.documents[i].documentID.toString()) *
+                          2;
                   stopSommeLivraisonRetour++;
                 });
               } else {
                 setState(() {
-                  prixLivraison =int.tryParse(value.documents[i].documentID.toString());
+                  prixLivraison =
+                      int.tryParse(value.documents[i].documentID.toString());
                   stopSommeLivraisonRetour++;
                 });
               }
@@ -577,34 +490,79 @@ class _Panier1State extends State<Panier1> {
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        confirmationPopup(context,  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: longueurPerCent(15, context),),
-            Text(
-              "Le temps d'estimation de la livraison est entre 80 et 120 minutes",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color:HexColor("#001C36"),
-                  fontSize: 15.0,
-                  fontFamily: "MonseraRegular",
-                  fontWeight: FontWeight.bold),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CustomDialog(
+            title: "Livraison",
+            description:
+            "Le temps d'estimation de la livraison est entre 80 et 120 minutes. Nos heures de livraison sont entre 9H - 20H",
+            cancelButton: FlatButton(
+              onPressed: (
+                  ) {
+                Navigator.of(context).pop(); // To close the dialog
+              },
+              child: Text("Annuler",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 12.0,
+                    fontFamily: "MonseraBold"
+                ),
+              ),
             ),
-            SizedBox(height: longueurPerCent(15, context),),
-            Text("Nos heures de livraison sont entre 9H - 20H", textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: HexColor("#001C36"),
-                  fontSize: 15.0,
-                  fontFamily: "MonseraRegular",
-                  fontWeight: FontWeight.bold),),
-            SizedBox(height: longueurPerCent(20, context),),
-
-          ],
-        ),);
+            nextButton: FlatButton(
+              onPressed: (
+                  ) {
+                if(lieu=="En Agence"){
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Panier2(
+                            prixLivraison: prixLivraison,
+                            total: widget.total,
+                            nomComplet: name,
+                            telephone: numUser,
+                            moyenDePayement: moyenDePayement,
+                            lieuDeLivraison: lieu,
+                            dateHeureDeLivraison: dateHeureDeLivraison,
+                            produitsCommander: widget.produitsPanier,
+                          )));
+                }
+                else{
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Panier2(
+                            prixLivraison: prixLivraison,
+                            total: widget.total,
+                            nomComplet: name,
+                            telephone: numUser,
+                            lieuDeLivraison: lieu,
+                            moyenDePayement: moyenDePayement,
+                            dateHeureDeLivraison: dateHeureDeLivraison,
+                            indication: indication,
+                            quartier: quartier,
+                            produitsCommander: widget.produitsPanier,
+                          )));
+                }
+              },
+              child: Text("Continuer",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 12.0,
+                    fontFamily: "MonseraBold"
+                ),),
+            ),
+            icon: Icon(Icons.local_shipping,size: 100,color:HexColor("#001C36"),),
+          ),
+        );
       });
     } else {
       displaySnackBarNom(
           context, "Veuillez remplir tous les champs ", Colors.white);
     }
   }
+
+
 }

@@ -414,22 +414,14 @@ class _Panier2State extends State<Panier2> {
                                                                 left: largeurPerCent(
                                                                     10,
                                                                     context)),
-                                                            child: Container(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .check_circle,
-                                                                color: HexColor(
-                                                                    "#001C36"),
-                                                                size: 30,
-                                                              ),
-                                                            ),
+
                                                           )
                                                         : Text(""),
                                                 hintText: "Espèce",
                                                 hintStyle: TextStyle(
                                                     color:
                                                         HexColor("#909090"),
-                                                    fontSize: 16.0,
+                                                    fontSize: 15.0,
                                                     fontFamily:
                                                         'MonseraBold'),
                                                 fillColor: Colors.white,

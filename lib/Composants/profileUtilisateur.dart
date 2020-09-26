@@ -4,8 +4,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
+import 'package:premierchoixapp/Design/MensurationHomme.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/APrpos.dart';
+import 'package:premierchoixapp/Navigations_pages/APrpos.dart';
+import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
@@ -58,6 +60,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     context, MaterialPageRoute(builder: (context) => MesCommandes()));
               }),
           drawerItem(
+              icon: Icons.description,
+              text: "Tableau Mensurations",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => MensurationHomme()));
+              }),
+          drawerItem(
               icon: Icons.share,
               text: "Partager l'application",
               onTap: () {
@@ -77,8 +86,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               icon: Icons.library_books,
               text: "Conditions Générales",
               onTap: () {
-               /* Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ConditionGenerales()));*/
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => ConditionGenerales()));
               }),
           drawerItem(
               icon: Icons.info,
