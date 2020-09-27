@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -192,13 +193,21 @@ class _CategoriesState extends State<Categories> {
                                         color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: Image.network(
-                                        categories.imagePath,
-                                        loadingBuilder: (context,child, progress){
-                                          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                        },
-                                        fit: BoxFit.cover,
-                                      )
+                                      child:  CachedNetworkImage(
+                                        imageUrl: categories.imagePath,
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+
+                                        ),
+
+                                      ),
                                       //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
                                     ),
                                     Container(
@@ -270,13 +279,20 @@ class _CategoriesState extends State<Categories> {
                                         color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: Image.network(
-                                        categories.imagePath,
-                                        loadingBuilder: (context,child, progress){
-                                          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                        },
-                                        fit: BoxFit.cover,
-                                      )
+                                      child:  CachedNetworkImage(
+                                        imageUrl: categories.imagePath,
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                             ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+
+                                        ),
+                                      ),
                                       //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
                                     ),
                                     Container(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -7,6 +6,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 
+// ignore: must_be_immutable
 class UserProfil extends StatefulWidget{
   static String id='Userprofil';
 
@@ -20,12 +20,10 @@ class UserProfil extends StatefulWidget{
 }
 
 class _UserProfilState extends State<UserProfil>{
-  final _auth = FirebaseAuth.instance;
 
   TextEditingController _textFieldControllerNumero = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
-  TextEditingController _textFieldController1 = TextEditingController();
-  TextEditingController _textFieldController2 = TextEditingController();
+
 
   bool _isEnabled = false;
   bool _isEnabled1 = false;
@@ -67,8 +65,7 @@ class _UserProfilState extends State<UserProfil>{
   Widget build(BuildContext context ){
 
 if(name!=null){
-  TextEditingController _userNameController;
-  bool userNameControllerEnable =false;
+
   return Scaffold(
     key: _scaffoldKey,
     body: new SingleChildScrollView(

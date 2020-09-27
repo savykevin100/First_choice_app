@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -29,22 +29,96 @@ class _SearchFiltreState extends State<SearchFiltre> {
   bool sizeChekbox=false;
   int prixMax;
   int prixMin;
-  String _dropDownValue2;
   String genre;
   String sousCategorie;
   List<Map<String, dynamic>> data = [];
   int nombreAjoutPanier;
   List<String> selectedSizes = <String>[];
-  String _currentCategory;
-  String emptySearch=null;
+  String emptySearch;
   bool loadingSearch=false;
   String noData ;
+  List<RadioModel> sampleData = new List<RadioModel>();
+  List<RadioModelGenre> sampleDataGenre = new List<RadioModelGenre>();
+  List<RadioModelGenre> sampleDataSousCategorie = new List<RadioModelGenre>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<String> sousCategorieHommes=[];
+  List<String> sousCategorieFemmes=[];
+  List<String> sousCategorieHommesEtFemmes=[];
+  int somme=0;
+  int verificationLength=0;
+
+
+
+
+  Future<void> getSousCategorie() async{
+    await Firestore.instance.collection("Hommes").getDocuments().then((value) {
+      value.documents.forEach((element) {
+        if(this.mounted){
+          setState(() {
+            somme++;
+            verificationLength++;
+            /*sousCategorieHommes.add(element.data["nomCategorie"]);
+                sousCategorieHommesEtFemmes.add(element.data["nomCategorie"]);*/
+            sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
+          });
+        }
+
+      });
+    });
+
+
+
+    await Firestore.instance.collection("Femmes").getDocuments().then((value) {
+      value.documents.forEach((element) {
+       if(sampleDataSousCategorie.contains(element.data['nomCategorie'])){
+        if(this.mounted){
+          setState(() {
+            somme++;
+            sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
+          });
+        }
+       }
+      });
+    });
+
+
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    sampleData.add(new RadioModel(false, 'XS'));
+    sampleData.add(new RadioModel(false, 'S',));
+    sampleData.add(new RadioModel(false, 'M', ));
+    sampleData.add(new RadioModel(false, 'L',));
+    sampleData.add(new RadioModel(false, 'XL'));
+    sampleData.add(new RadioModel(false, 'XXL',));
+    sampleData.add(new RadioModel(false, '28', ));
+    sampleData.add(new RadioModel(false, '30',));
+    sampleData.add(new RadioModel(false, '32'));
+    sampleData.add(new RadioModel(false, '34',));
+    sampleData.add(new RadioModel(false, '36', ));
+    sampleData.add(new RadioModel(false, '38',));
+    sampleData.add(new RadioModel(false, '40'));
+    sampleData.add(new RadioModel(false, '42',));
+    sampleData.add(new RadioModel(false, '44', ));
+    sampleData.add(new RadioModel(false, '46',));
+    sampleData.add(new RadioModel(false, '48',));
+    sampleData.add(new RadioModel(false, '50',));
+
+
+
+    sampleDataGenre.add(new RadioModelGenre(false, '','Hommes',));
+    sampleDataGenre.add(new RadioModelGenre(false, '','Femmes',));
+
+    getSousCategorie();
+
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,64 +127,147 @@ class _SearchFiltreState extends State<SearchFiltre> {
         context: context,
         controller: controller,
         nbAjoutPanier: nombreAjoutPanier);
+
     return Scaffold(
+      key: _scaffoldKey,
       appBar: _appBar.appBarFunctionStream(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: longueurPerCent(50, context),),
-              Padding(
-                padding: EdgeInsets.only(right: largeurPerCent(20, context)),
-                child: Text("Selectionnez le genre:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "MonseraBold"),),
+              SizedBox(height: longueurPerCent(20, context),),
+              Card(
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.only(top: 10.0, left: 60.0, right: 0.0),
+                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  height: longueurPerCent(60, context),
+                  child:  ListView.builder(
+                    shrinkWrap: false,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: sampleDataGenre.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new InkWell(
+                        splashColor: Colors.blueAccent,
+                        onTap: () {
+                          setState(() {
+                            sampleDataGenre.forEach(
+                                    (element) => element.isSelected = false);
+                            sampleDataGenre[index].isSelected = true;
+                            genre=sampleDataGenre[index].text;
+                          });
+                        },
+                        child: new RadioItemGenre(sampleDataGenre[index]),
+                      );
+                    },
+                  ),
+                ),
               ),
-              SizedBox(height: longueurPerCent(10, context),),
-              // Genre list
-              Center(
+
+              /*Center(
                 child: Card(
                   child: Container(
-                    height: longueurPerCent(50, context),
+                    height: longueurPerCent(200, context),
                     padding: EdgeInsets.only(
                         left: largeurPerCent(10, context),
                         right: largeurPerCent(20, context),
                         top: longueurPerCent(10, context)),
-                    child: DropdownButton(
-                      underline: Text(""),
-                      hint: genre == null
-                          ? Text(
-                        'Genre',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      )
-                          : Text(
-                        genre,
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
-                      isExpanded: true,
-                      iconSize: 40.0,
-                      items: ['Hommes', 'Femmes'].map(
-                            (val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(val),
-                          );
-                        },
-                      ).toList(),
-                      onChanged: (val) {
-                        setState(
-                              () {
-                            genre = val;
+                    child: Column(
+                      children: <Widget>[
+                       /* DropdownButton(
+                          underline: Text(""),
+                          hint: genre == null
+                              ? Text(
+                            'Genre',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          )
+                              : Text(
+                            genre,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                          isExpanded: true,
+                          iconSize: 40.0,
+                          items: ['Hommes', 'Femmes'].map(
+                                (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                                  () {
+                                genre = val;
+                              },
+                            );
                           },
-                        );
-                      },
+                        ),*/
+                      ],
                     ),
                   ),
                 ),
-              ),
+              ),*/
               SizedBox(height: longueurPerCent(20, context),),
-              Padding(
+
+             /* (sampleDataSousCategorie!=null)?Card(child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(top: 10.0, left: 60.0, right: 0.0),
+                margin: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                height: longueurPerCent(300, context),
+                child:  ListView.builder(
+                  shrinkWrap: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: sampleDataSousCategorie.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new InkWell(
+                      splashColor: Colors.blueAccent,
+                      onTap: () {
+                        setState(() {
+                          sampleDataSousCategorie.forEach(
+                                  (element) => element.isSelected = false);
+                          sampleDataSousCategorie[index].isSelected = true;
+                          sousCategorie=sampleDataSousCategorie[index].text;
+                        });
+                      },
+                      child: new RadioItemGenre(sampleDataSousCategorie[index]),
+                    );
+                  },
+                ),
+              ),):Container(),*/
+              (sampleDataSousCategorie!=null)?Container(
+               height: longueurPerCent(200, context),
+               child:  StaggeredGridView.countBuilder(
+                 reverse: false,
+                 crossAxisCount: 4,
+                 itemCount: sampleDataSousCategorie.length,
+                 itemBuilder: (BuildContext context, index) {
+                   return InkWell(
+                     splashColor: Colors.blueAccent,
+                     onTap: () {
+                       setState(() {
+                         sampleDataSousCategorie.forEach(
+                                 (element) => element.isSelected = false);
+                         sampleDataSousCategorie[index].isSelected = true;
+                         sousCategorie=sampleDataSousCategorie[index].text;
+                       });
+                     },
+                     child: new RadioItemGenre(sampleDataSousCategorie[index]),
+                   );
+                 },
+                 staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                 mainAxisSpacing: 0.0,
+                 crossAxisSpacing: 10.0,
+                 
+                 shrinkWrap: true,
+                 physics: NeverScrollableScrollPhysics(),
+               ),
+             ):Container(),
+             /* Padding(
                 padding: EdgeInsets.only(right: largeurPerCent(20, context)),
                 child: Text("Selectionnez la catégorie :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "MonseraBold"),),
               ),
@@ -159,9 +316,8 @@ class _SearchFiltreState extends State<SearchFiltre> {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: longueurPerCent(20, context),),
-              Padding(
+              ),*/
+              /*Padding(
                 padding: EdgeInsets.only(right: largeurPerCent(20, context)),
                 child: Text("Selectionnez le type de filtre :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "MonseraBold"),),
               ),
@@ -192,10 +348,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       Text("prix")
                     ],
                   ),
-                ],
-              ),
 
-              SizedBox(height: longueurPerCent(20, context),),
+
+                ],
+              ),*/
+
               (sizeChekbox)?Card(
                 child: Container(
                   width: MediaQuery.of(context).size.width/2,
@@ -207,80 +364,33 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   ),
                 ),
               ):Text(""),
-              /*(sizeChekbox)?
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Checkbox(value: selectedSizes.contains('XS'), onChanged: (value) => changeSelectedSize('XS')),
-                      Text('XS'),
+              (sampleDataSousCategorie!=null)?Container(
+                height: longueurPerCent(200, context),
+                child:  StaggeredGridView.countBuilder(
+                  reverse: false,
+                  crossAxisCount: 10,
+                  itemCount: sampleData.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return InkWell(
+                      splashColor: Colors.blueAccent,
+                      onTap: () {
+                        setState(() {
+                          sampleData.forEach(
+                                  (element) => element.isSelected = false);
+                          sampleData[index].isSelected = true;
+                          taille=sampleData[index].buttonText;
+                        });
+                      },
+                      child: new RadioItem(sampleData[index]),
+                    );
+                  },
+                  staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                ),
+              ):Container(),
 
-                      Checkbox(value: selectedSizes.contains('S'), onChanged: (value) => changeSelectedSize('S')),
-                      Text('S'),
-
-                      Checkbox(value: selectedSizes.contains('M'), onChanged: (value) => changeSelectedSize('M')),
-                      Text('M'),
-
-                      Checkbox(value: selectedSizes.contains('L'), onChanged: (value) => changeSelectedSize('L')),
-                      Text('L'),
-
-                      Checkbox(value: selectedSizes.contains('XL'), onChanged: (value) => changeSelectedSize('XL')),
-                      Text('XL'),
-
-                      Checkbox(value: selectedSizes.contains('XXL'), onChanged: (value) => changeSelectedSize('XXL')),
-                      Text('XXL'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Checkbox(value: selectedSizes.contains('28'), onChanged: (value) => changeSelectedSize('28')),
-                      Text('28'),
-
-                      Checkbox(value: selectedSizes.contains('30'), onChanged: (value) => changeSelectedSize('30')),
-                      Text('30'),
-
-                      Checkbox(value: selectedSizes.contains('32'), onChanged: (value) => changeSelectedSize('32')),
-                      Text('32'),
-
-                      Checkbox(value: selectedSizes.contains('34'), onChanged: (value) => changeSelectedSize('34')),
-                      Text('34'),
-
-
-                      Checkbox(value: selectedSizes.contains('36'), onChanged: (value) => changeSelectedSize('36')),
-                      Text('36'),
-
-                      Checkbox(value: selectedSizes.contains('38'), onChanged: (value) => changeSelectedSize('38')),
-                      Text('38'),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Checkbox(value: selectedSizes.contains('40'), onChanged: (value) => changeSelectedSize('40')),
-                      Text('40'),
-
-                      Checkbox(value: selectedSizes.contains('42'), onChanged: (value) => changeSelectedSize('42')),
-                      Text('42'),
-
-                      Checkbox(value: selectedSizes.contains('44'), onChanged: (value) => changeSelectedSize('44')),
-                      Text('44'),
-
-                      Checkbox(value: selectedSizes.contains('46'), onChanged: (value) => changeSelectedSize('46')),
-                      Text('46'),
-
-                      Checkbox(value: selectedSizes.contains('48'), onChanged: (value) => changeSelectedSize('48')),
-                      Text('48'),
-
-                      Checkbox(value: selectedSizes.contains('50'), onChanged: (value) => changeSelectedSize('50')),
-                      Text('50'),
-                    ],
-                  ),
-                ],
-              ):Text(""),*/
-              SizedBox(height: longueurPerCent(20, context),),
+              SizedBox(height: longueurPerCent(10, context),),
               (prix)?Row(
                 children: [
                   Expanded(
@@ -323,7 +433,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
               ),
               (loadingSearch==false)? displaySearchResult():Center(child: CircularProgressIndicator(),),
               SizedBox(
-                height: longueurPerCent(50, context),
+                height: longueurPerCent(200, context),
               ),
             ],
           ),
@@ -350,8 +460,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
               getGenreAndPriceAndSizeAndCategorie(genre, taille, sousCategorie, prixMax, prixMin); // good
 
             // categorie search
-            else if (sousCategorie != null && genre == null && prixMax==null && prixMin==null && taille==null)
+            else if (sousCategorie != null && genre == null && prixMax==null && prixMin==null && taille==null){
               getCategorieOnly(sousCategorie);// good
+
+            }
             else if(sousCategorie!=null && prixMax!=null && prixMin!=null && genre==null && taille==null)
               getCategorieAndPrice(sousCategorie, prixMax, prixMin); // good
             else if(sousCategorie!=null && taille!=null && prixMax==null && prixMin==null && genre==null)
@@ -370,16 +482,16 @@ class _SearchFiltreState extends State<SearchFiltre> {
             else if (  prixMax!=null && prixMin!=null )
               getPriceMinAndPriceMaxOnly(prixMin, prixMax); // good
             // Size search
-            else if(prixMax==null && prixMin==null && taille!=null && genre==null && sousCategorie==null)
+            else if(prixMax==null && prixMin==null && taille!=null && genre==null && sousCategorie==null) {
               getSizeOnly();// good
+            }
             else if(prixMax==null && prixMin==null && taille==null && genre==null && sousCategorie==null)
               setState(() {
                 data=null;
                 loadingSearch=false;
-                emptySearch="VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
+                noData="VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
               });
             setState(() {
-              _dropDownValue2=null;
               sousCategorie=null;
               sizeChekbox = false;
               prix = false;
@@ -387,6 +499,21 @@ class _SearchFiltreState extends State<SearchFiltre> {
               prixMin = null;
               taille = null;
               genre = null;
+              sampleData.forEach((element) {
+                setState(() {
+                  element.isSelected=false;
+                });
+              });
+              sampleDataGenre.forEach((element) {
+                setState(() {
+                  element.isSelected=false;
+                });
+              });
+              sampleDataSousCategorie.forEach((element) {
+                setState(() {
+                  element.isSelected=false;
+                });
+              });
             });
           },
           child: Icon(Icons.search, color: Colors.white,),
@@ -405,7 +532,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -420,11 +551,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        setState(() {
-          loadingSearch = false;
-          noData="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
-          print(noData);
-        });
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -439,7 +570,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -454,7 +589,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -469,7 +608,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -485,7 +628,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -501,7 +648,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -518,7 +669,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -535,7 +690,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -551,7 +710,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -569,7 +732,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -586,7 +753,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -603,7 +774,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -620,7 +795,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
             });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -636,7 +815,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
@@ -645,19 +828,32 @@ class _SearchFiltreState extends State<SearchFiltre> {
     Firestore.instance.collection("TousLesProduits").where("taille", isEqualTo: taille).getDocuments().then((value){
       if(value.documents.isNotEmpty){
         value.documents.forEach((element) {
-          setState(() {
+          if(this.mounted)
+            setState(() {
             data.add(element.data);
             loadingSearch = false;
 
           });
         });
       } else {
-        emptySearch="AUCUN RESULTAT NE CORRESPOND À VOTRE RECHERCHE";
+        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
+        if(this.mounted)
+          setState(() {
+            loadingSearch = false;
+          });
       }
     });
   }
 
+  displaySnackBarNom(BuildContext context, String text, Color couleur) {
+    final snackBar = SnackBar(
+      content: Text(text, style: TextStyle(color: couleur, fontSize: 13)),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 
+
+  // ignore: missing_return
   Widget displaySearchResult(){
     if(data!=null && loadingSearch==false){
       return  StaggeredGridView.countBuilder(
@@ -707,19 +903,20 @@ class _SearchFiltreState extends State<SearchFiltre> {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10)),
-                          child: Image.network(
-                            data[index]["image1"],
-                            loadingBuilder:
-                                (context, child, progress) {
-                              return progress == null
-                                  ? child
-                                  : LinearProgressIndicator(
-                                backgroundColor:
-                                HexColor("EFD807"),
-                              );
-                            },
-                            fit: BoxFit.cover,
-                          )),
+                          child: CachedNetworkImage(
+                            imageUrl: data[index]["image1"],
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                            ),
+                          ),
+                         ),
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -797,39 +994,113 @@ class _SearchFiltreState extends State<SearchFiltre> {
         physics: NeverScrollableScrollPhysics(),
       );
     }
-    else if(emptySearch!=null && data==null)
-      return Center(child: Text(emptySearch),);
     else if(noData!=null && loadingSearch==false && data==null)
-      return Center(child: Text("Pas de données"),);
-
-  }
-
-  changeSelectedCategory(String selectedCategory) {
-    setState(() => _currentCategory = selectedCategory);
-  }
-
-  changeSelectedBrand(String selectedBrand) {
-    setState(() => _currentCategory = selectedBrand);
-  }
-
-  void changeSelectedSize(String size) {
-    if(selectedSizes.contains(size)){
-      setState(() {
-        selectedSizes.remove(size);
-      });
-    }else{
-      setState(() {
-        selectedSizes.insert(0, size);
-      });
-    }
+      return Center(child: Text(noData),);
+    else if(loadingSearch==false && emptySearch!=null && data==null && noData==null)
+      return Center(child: Text(emptySearch),);
   }
 
 
 
+}
 
 
+class RadioItemGenre extends StatelessWidget {
+  final RadioModelGenre _item;
+  RadioItemGenre(this._item);
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: new EdgeInsets.all(15.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          new Container(
+            height: 20.0,
+            width: 20.0,
+            child: new Center(
+              child: new Text(_item.buttonText,
+                  style: new TextStyle(
+                      color:
+                      _item.isSelected ? Colors.white : Colors.black,
+                      //fontWeight: FontWeight.bold,
+                      fontSize: 18.0)),
+            ),
+            decoration: new BoxDecoration(
+              color: _item.isSelected
+                  ? HexColor("#FFC30D")
+                  : Colors.transparent,
+              border: new Border.all(
+                  width: 1.0,
+                  color: _item.isSelected
+                      ? Colors.blueAccent
+                      : Colors.grey),
+              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+            ),
+          ),
+          new Container(
+            margin: new EdgeInsets.only(left: 10.0),
+            child: new Text(_item.text),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RadioModelGenre {
+  bool isSelected;
+  final String buttonText;
+  final String text;
+
+  RadioModelGenre(this.isSelected, this.buttonText, this.text);
+}
 
 
+class RadioItem extends StatelessWidget {
+  final RadioModel _item;
+  RadioItem(this._item);
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: new EdgeInsets.all(15.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          new Container(
+            height: 30.0,
+            width: 30.0,
+            child: new Center(
+              child: new Text(_item.buttonText,
+                  style: new TextStyle(
+                      color:
+                      _item.isSelected ? Colors.white : Colors.black,
+                      //fontWeight: FontWeight.bold,
+                      fontSize: 15.0)),
+            ),
+            decoration: new BoxDecoration(
+              color: _item.isSelected
+                  ? HexColor("#FFC30D")
+                  : Colors.transparent,
+              border: new Border.all(
+                  width: 1.0,
+                  color: _item.isSelected
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey),
+              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RadioModel {
+  bool isSelected;
+  final String buttonText;
+
+  RadioModel(this.isSelected, this.buttonText);
 }
 
 /*import 'package:cloud_firestore/cloud_firestore.dart';

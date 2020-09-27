@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
@@ -437,13 +438,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(5, context),
               color:  HexColor('#FFC30D')),
          ),
-      child: Image.network(
-         image,
-         loadingBuilder: (context,child, progress){
-          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-        },
-        fit: BoxFit.cover,
-      )
+      child: CachedNetworkImage(
+        imageUrl: image,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+        ),
+      ),
     ):Container(
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
@@ -452,13 +459,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               width: largeurPerCent(1, context),
               color: Colors.black),
         ),
-      child:Image.network(
-        image,
-        loadingBuilder: (context,child, progress){
-          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-        },
-        fit: BoxFit.cover,
-      )
+      child:CachedNetworkImage(
+        imageUrl: image,
+        imageBuilder: (context, imageProvider) => Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+        ),
+      ),
     );
   }
 
@@ -588,7 +601,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 } else {
                   for (int i = 0; i < snapshot.data.length; i++) {
                     if (widget.produit.image1 == snapshot.data[i].imagePrincipaleProduit) {
-                      ProduitsFavorisUser produit = snapshot.data[i];
                       return Hero(
                         tag: "customBackground",
                         child: Container(
@@ -598,7 +610,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
                             },
-                            child:FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(imageSelect), fit: BoxFit.cover,),
+                            child:CachedNetworkImage(
+                              imageUrl: imageSelect,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                              ),
+                            ),
                           ) ,
 
                         ),

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
+import 'package:premierchoixapp/Models/notifications.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
@@ -198,6 +198,19 @@ class FirestoreService {
 
   /*Fin de la récupération*/
 
+
+  /*Récupération des notifications*/
+  Stream<List<InformationNotification>> getNotifications() {
+    return _db.collection("Notifications").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => InformationNotification.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
+  /*Fin de la récupération*/
   Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
     return _db
         .collection("Utilisateurs")

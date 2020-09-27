@@ -3,15 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
-import 'package:premierchoixapp/Models/utilisateurs.dart';
 
+// ignore: must_be_immutable
 class MensurationHomme extends StatefulWidget {
   static String id="MensurationHomme";
   String genre;

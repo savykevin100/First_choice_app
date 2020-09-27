@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -9,6 +10,7 @@ import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
+import 'package:premierchoixapp/Pages/elements_vides.dart';
 
 
 /***************************************************************************************************/
@@ -62,6 +64,10 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
               return Center(
                 child: CircularProgressIndicator(),
               );
+            else if (snapshot.data.isEmpty) {
+              return elementsVides(context, Icons.do_not_disturb,
+                  "Pas de nouveaux produits ajoutés");
+            }
             else {
               return ListView.builder(
                   shrinkWrap: true,
@@ -104,13 +110,28 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                                         Radius.circular(10),
                                         topRight:
                                         Radius.circular(10)),
-                                    child: Image.network(
+                                    child: CachedNetworkImage(
+                                      imageUrl: snapshot.data[i].image1,
+                                      imageBuilder: (context, imageProvider) => Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                             ),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+
+                                      ),
+
+                                    ),
+                                  /*Image.network(
                                      snapshot.data[i].image1,
                                       loadingBuilder: (context,child, progress){
                                         return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
                                       },
                                       fit: BoxFit.cover,
-                                    )
+                                    )*/
                                    /* Image.network(
                                       snapshot.data[i].image1,
                                       fit: BoxFit.cover,

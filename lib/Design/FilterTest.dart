@@ -2,15 +2,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
-import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
+//import 'package:flutter_range_slider/flutter_range_slider.dart' as frs;
 
 
+// ignore: must_be_immutable
 class FilterTest extends StatefulWidget {
   static String id="FilterTest";
   String genre;
@@ -43,8 +40,7 @@ class _FilterTestState extends State<FilterTest> {
   List<Map<String, dynamic>> data = [];
   int nombreAjoutPanier;
   List<String> selectedSizes = <String>[];
-  String _currentCategory;
-  String emptySearch=null;
+  String emptySearch;
   bool loadingSearch=false;
   String noData ;
   List<RadioModel> sampleData = new List<RadioModel>();
@@ -75,28 +71,6 @@ class _FilterTestState extends State<FilterTest> {
 
   }
 
-  Future<bool> _onBackPressed() {
-    return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
-        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
-        actions: <Widget>[
-          new GestureDetector(
-              onTap: () => Navigator.of(context).pop(false),
-              child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
-          ),
-          SizedBox(width: largeurPerCent(50, context),),
-          new GestureDetector(
-              onTap: () => Navigator.of(context).pop(true),
-              child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
-          ),
-          SizedBox(width: largeurPerCent(20, context),),
-        ],
-      ),
-    ) ??
-        false;
-  }
 
   Future<void> fetchDataUser(String id) async {
     await Firestore.instance
@@ -132,7 +106,7 @@ class _FilterTestState extends State<FilterTest> {
                     child: Text("Price Range"),
                   )
                 ]
-                  ..addAll(_buildRangeSliders())
+                 // ..addAll(_buildRangeSliders())
               ),
             ),
 
@@ -276,7 +250,7 @@ class _FilterTestState extends State<FilterTest> {
   // Creates a list of RangeSliders, based on their
   // definition and SliderTheme customizations
   // -----------------------------------------------
-  List<Widget> _buildRangeSliders() {
+ /* List<Widget> _buildRangeSliders() {
     List<Widget> children = <Widget>[];
     for (int index = 0; index < rangeSliders.length; index++) {
       children
@@ -292,7 +266,7 @@ class _FilterTestState extends State<FilterTest> {
     }
 
     return children;
-  }
+  }*/
 
   // -------------------------------------------------
   // Creates a list of RangeSlider definitions
@@ -373,7 +347,7 @@ class RangeSliderData {
   // Builds a RangeSlider and customizes the theme
   // based on parameters
   //
-  Widget build(BuildContext context, frs.RangeSliderCallback callback) {
+  /*Widget build(BuildContext context, frs.RangeSliderCallback callback) {
     return Container(
       width: double.infinity,
       child: Row(
@@ -431,8 +405,9 @@ class RangeSliderData {
         ],
       ),
     );
-  }
+  }*/
 }
+
 
 
 class RadioItem extends StatelessWidget {

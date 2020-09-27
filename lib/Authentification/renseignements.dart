@@ -107,7 +107,6 @@ class _RenseignementsState extends State<Renseignements> {
         smsCode: smsCode
     );
 
-    final FirebaseUser user =
     await FirebaseAuth.instance .signInWithCredential(credential).then((user) {
       Navigator.push(
         context,

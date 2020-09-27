@@ -9,7 +9,6 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 // ignore: must_be_immutable
@@ -28,7 +27,6 @@ class _Panier1State extends State<Panier1> {
   String lieu;
   String moyenDePayement;
   String _dropDownValue2;
-  String _dropDownValue3;
   String quartier;
   String _dropDownValue;
   Firestore _db = Firestore.instance;
@@ -244,6 +242,7 @@ class _Panier1State extends State<Panier1> {
                                     color: HexColor("#001C36"),
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20),
+
                                       topRight: Radius.circular(20),
                                     ),
                                   ),
@@ -492,7 +491,12 @@ class _Panier1State extends State<Panier1> {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         showDialog(
           context: context,
-          builder: (BuildContext context) => CustomDialog(
+          builder: (BuildContext context) =>
+
+
+
+
+              CustomDialog(
             title: "Livraison",
             description:
             "Le temps d'estimation de la livraison est entre 80 et 120 minutes. Nos heures de livraison sont entre 9H - 20H",
