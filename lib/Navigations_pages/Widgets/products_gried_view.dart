@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,6 +11,7 @@ import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
+import 'package:premierchoixapp/Pages/elements_vides.dart';
 
 
 
@@ -59,13 +61,17 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
-        } else {
+        } else if (snapshot.data.isEmpty) {
+          return elementsVides(context, Icons.do_not_disturb,
+              "Pas de nouveaux produits ajoutés");
+        }
+        else {
           return StaggeredGridView.countBuilder(
             reverse: false,
             crossAxisCount: 4,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
-             /* expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
+              /* expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
               bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());*/
               Produit produit = snapshot.data[index];
               return Container(
@@ -98,13 +104,20 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10)),
-                              child: Image.network(
-                                produit.image1,
-                                loadingBuilder: (context,child, progress){
-                                  return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                },
-                                fit: BoxFit.cover,
-                              )
+                              child:  CachedNetworkImage(
+                                imageUrl: produit.image1,
+                                imageBuilder: (context, imageProvider) => Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        ),
+                                  ),
+                                ),
+                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+
+                                ),
+                              ),
                           ),
                         ),
                         /*(displayBadgeNew)? Container(

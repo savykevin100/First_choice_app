@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
+// ignore: must_be_immutable
 class CustomDialog extends StatelessWidget {
   static String id = 'CustomDialog';
   final String title, description, buttonText;
@@ -13,7 +14,7 @@ class CustomDialog extends StatelessWidget {
   CustomDialog({
     @required this.title,
     @required this.description,
-    @required this.buttonText,
+   this.buttonText,
     @required this.cancelButton,
     @required this.nextButton,
     @required this.icon,

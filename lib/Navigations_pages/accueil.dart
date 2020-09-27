@@ -1,6 +1,6 @@
-import 'dart:ffi';
 
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -225,9 +225,43 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             indicatorBgPadding: 7.0,
             dotBgColor: Colors.red.withOpacity(0),
             images: [
-              Image.network(imagesCarousel[0], fit: BoxFit.cover,),
-              Image.network(imagesCarousel[1], fit: BoxFit.cover,),
-              Image.network(imagesCarousel[2], fit: BoxFit.cover,),
+              CachedNetworkImage(
+                imageUrl:imagesCarousel[0],
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                ),
+              ),CachedNetworkImage(
+                imageUrl:imagesCarousel[1],
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                ),
+              ),CachedNetworkImage(
+                imageUrl:imagesCarousel[2],
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                ),
+              ),
             ],
           ),
         ),

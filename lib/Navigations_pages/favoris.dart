@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -176,13 +177,19 @@ class _FavorisState extends State<Favoris> {
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           topRight: Radius.circular(10)),
-                                      child: Image.network(
-                                        produit.image1,
-                                        loadingBuilder: (context,child, progress){
-                                          return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                        },
-                                        fit: BoxFit.cover,
-                                      )),
+                                      child:CachedNetworkImage(
+                                        imageUrl: produit.image1,
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                                        ),
+                                      ),),
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
