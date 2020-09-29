@@ -106,7 +106,7 @@ class _FilterTestState extends State<FilterTest> {
                     child: Text("Price Range"),
                   )
                 ]
-                 // ..addAll(_buildRangeSliders())
+                  //..addAll(_buildRangeSliders())
               ),
             ),
 
@@ -250,7 +250,7 @@ class _FilterTestState extends State<FilterTest> {
   // Creates a list of RangeSliders, based on their
   // definition and SliderTheme customizations
   // -----------------------------------------------
- /* List<Widget> _buildRangeSliders() {
+/*  List<Widget> _buildRangeSliders() {
     List<Widget> children = <Widget>[];
     for (int index = 0; index < rangeSliders.length; index++) {
       children

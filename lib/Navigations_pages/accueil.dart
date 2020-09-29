@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
+import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
@@ -28,7 +30,7 @@ class Accueil extends StatefulWidget {
 class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
   List<String> imagesCarousel=[];
-
+  int nombreAjoutPanier;
 
 
 
@@ -51,23 +53,40 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     print(Renseignements.userData);
     setState(() {
       Renseignements.emailUser=Renseignements.userData[1];
+      Renseignements.nombreAjoutPanier=0;
     });
 
   }
 
   @override
   Widget build(BuildContext context) {
+    AppBarClasse _appBar = AppBarClasse(
+      titre: "Accueil", context: context, controller: controller, );
     if (imagesCarousel.length==3) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
-          appBar: ScrollAppBar(
+          appBar:ScrollAppBar(
             controller: controller,
             backgroundColor: HexColor("#001c36"),
             title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
             iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               Badge(
-                badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
+                badgeContent:StreamBuilder(
+                    stream: FirestoreService().getUtilisateurs(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Utilisateur>> snapshot) {
+                      if(snapshot.hasError || !snapshot.hasData){
+                        return Text("");
+                      } else {
+                        for(int i=0; i<snapshot.data.length; i++){
+                          if(snapshot.data[i].email == Renseignements.emailUser){
+                            nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
+                          }
+                        }
+                        return Text("$nombreAjoutPanier");}
+                    }
+                ),
                 toAnimate: true,
                 position: BadgePosition.topRight(top:   0,  right: 0),
                 child: IconButton(

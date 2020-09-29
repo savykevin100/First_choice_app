@@ -219,6 +219,11 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         if(existInCard==true)
                           displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
                         else {
+                          ajoutPanier=ajoutPanier+1;
+                          _db
+                              .collection("Utilisateurs")
+                              .document(Renseignements.emailUser)
+                              .updateData({"nbAjoutPanier": ajoutPanier});
 
                           setState(() {
                             Renseignements.nombreAjoutPanier++;

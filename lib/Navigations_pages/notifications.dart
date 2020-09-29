@@ -54,8 +54,11 @@ class _NotificationsState extends State<Notifications> {
 
  @override
   Widget build(BuildContext context) {
-    AppBarClasse _appBar = AppBarClasse(
-        titre: "Notifications", context: context, controller: controller, );
+   AppBarClasse _appBar = AppBarClasse(
+       titre: "Notifications",
+       context: context,
+       controller: controller,
+       nbAjoutPanier: nombreAjoutPanier);
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),

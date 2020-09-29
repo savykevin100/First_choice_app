@@ -837,8 +837,9 @@ class _Panier2State extends State<Panier2> {
       chargement=true;
     });
     for(int i=0; i<panierItems.length; i++){
-      DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
-      Renseignements.nombreAjoutPanier--;
+      setState(() {
+        DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
+      });
     }
 
     for(int i=0; i<widget.produitsCommander.length; i++){
@@ -859,6 +860,10 @@ class _Panier2State extends State<Panier2> {
     }
 
 
+    _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .updateData({"nbAjoutPanier": 0});
 
     _db
         .collection("Informations_généralesŒ")
