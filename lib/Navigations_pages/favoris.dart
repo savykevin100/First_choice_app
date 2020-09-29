@@ -107,7 +107,7 @@ class _FavorisState extends State<Favoris> {
         titre: "Favoris",
         context: context,
         controller: controller,
-       );
+        nbAjoutPanier: ajoutPanier);
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),

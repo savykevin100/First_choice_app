@@ -57,7 +57,7 @@ class _FirstPageState extends State<FirstPage> {
   }
 
 
-  String keyAjoutPanier="numberAjout";
+/*  String keyAjoutPanier="numberAjout";
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
   Future<void> obtenirNumberPanier() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -73,8 +73,8 @@ class _FirstPageState extends State<FirstPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Renseignements.nombreAjoutPanier = value;
     await sharedPreferences.setInt(key, Renseignements.nombreAjoutPanier);
-    obtenir();
-  }
+    obtenirNumberPanier();
+  }*/
 
 
   void getDataPanier(){
@@ -102,8 +102,6 @@ class _FirstPageState extends State<FirstPage> {
              value.data["sexe"],
            ]);
 
-           ajouterNumberPanier(value.data["nbAjoutPanier"]);
-
          });
          setState(()  {
            currentUser=true;
@@ -126,6 +124,11 @@ class _FirstPageState extends State<FirstPage> {
       for(int i=0; i<panierItems.length; i++){
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
       }
+      Firestore.instance
+          .collection("Utilisateurs")
+          .document(Renseignements.emailUser)
+          .updateData({"nbAjoutPanier": 0});
+
       Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => AllNavigationPage()
       ));

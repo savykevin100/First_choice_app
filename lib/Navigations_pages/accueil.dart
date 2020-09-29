@@ -13,6 +13,7 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
@@ -29,7 +30,7 @@ class Accueil extends StatefulWidget {
 class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
   List<String> imagesCarousel=[];
-
+  int nombreAjoutPanier;
 
 
 
@@ -60,11 +61,50 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-      titre: "Notifications", context: context, controller: controller, );
+      titre: "Accueil", context: context, controller: controller, );
     if (imagesCarousel.length==3) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
-          appBar: _appBar.appBarFunctionHome(),
+          appBar:ScrollAppBar(
+            controller: controller,
+            backgroundColor: HexColor("#001c36"),
+            title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
+            iconTheme: IconThemeData(color: Colors.white),
+            actions: <Widget>[
+              Badge(
+                badgeContent:StreamBuilder(
+                    stream: FirestoreService().getUtilisateurs(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Utilisateur>> snapshot) {
+                      if(snapshot.hasError || !snapshot.hasData){
+                        return Text("");
+                      } else {
+                        for(int i=0; i<snapshot.data.length; i++){
+                          if(snapshot.data[i].email == Renseignements.emailUser){
+                            nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
+                          }
+                        }
+                        return Text("$nombreAjoutPanier");}
+                    }
+                ),
+                toAnimate: true,
+                position: BadgePosition.topRight(top:   0,  right: 0),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.local_grocery_store,
+                      color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Panier  ()));
+                    }),
+              )
+
+            ],
+          ),
           drawer: ProfileSettings(
             userCurrent: Renseignements.userData[1],
             firstLetter:Renseignements.userData[2][0]

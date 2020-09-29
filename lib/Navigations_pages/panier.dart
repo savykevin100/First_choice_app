@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Panier extends StatefulWidget {
@@ -35,6 +36,8 @@ class _PanierState extends State<Panier> {
 
   // Table qui contient les éléments du panier
   List<PanierClasseSqflite> panierItems = [];
+
+  int ajoutPanier=0;
 
   void getDataPanier(){
     DatabaseClient().readPanierData().then((value) {
@@ -206,6 +209,11 @@ class _PanierState extends State<Panier> {
                                           child: IconButton(icon: Icon(
                                               Icons.delete, color: Colors.red, size: 20),
                                               onPressed: () {
+
+                                                setState(() {
+                                                  ajoutPanier--;
+                                                });
+
                                                 DatabaseClient().deleteItemPanier(panierItems[index].id , "panier").then((value) {
                                                   getDataPanier();
                                                 });
@@ -217,13 +225,13 @@ class _PanierState extends State<Panier> {
                                                     });
                                                 }
 
-                                              /*  _db
+                                                _db
                                                     .collection("Utilisateurs")
                                                     .document(
                                                     Renseignements.emailUser)
                                                     .updateData({
                                                   "nbAjoutPanier": ajoutPanier
-                                                });*/
+                                                });
                                                 setState(() {
                                                   Renseignements.nombreAjoutPanier--;
                                                   total = total - produitsPaniers[index]["prix"];
@@ -231,6 +239,7 @@ class _PanierState extends State<Panier> {
                                                   numberProductOrder--;
                                                   produitsPaniers.removeAt(index);
                                                 });
+                                                //ajouterNumberPanier(Renseignements.nombreAjoutPanier);
                                               }),
                                         ),
                                       ],
@@ -278,6 +287,7 @@ class _PanierState extends State<Panier> {
       );
     }
  }
+
 
 
   confirmationPopup(BuildContext dialogContext) {

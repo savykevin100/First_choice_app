@@ -63,10 +63,10 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Menu",
+        titre: "Notifications",
         context: context,
         controller: controller,
-        );
+        nbAjoutPanier: ajoutPanier);
     return Scaffold(
         appBar: _appBar.appBarFunctionStream(),
       drawer: ProfileSettings(

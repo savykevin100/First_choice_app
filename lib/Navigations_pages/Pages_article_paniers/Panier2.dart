@@ -839,7 +839,6 @@ class _Panier2State extends State<Panier2> {
     for(int i=0; i<panierItems.length; i++){
       setState(() {
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
-        Renseignements.nombreAjoutPanier--;
       });
     }
 
@@ -861,6 +860,10 @@ class _Panier2State extends State<Panier2> {
     }
 
 
+    _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .updateData({"nbAjoutPanier": 0});
 
     _db
         .collection("Informations_généralesŒ")
