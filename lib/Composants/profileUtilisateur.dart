@@ -4,8 +4,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
-import 'package:premierchoixapp/Design/MensurationHomme.dart';
+import 'package:premierchoixapp/Design/Mensuration.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
+import 'package:premierchoixapp/Navigations_pages/APrpos.dart';
+import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
@@ -37,17 +39,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         children: <Widget>[
           creationHeader(widget.userCurrent),
           drawerItem(
+              icon: Icons.home,
+              text: "Accueil",
+              onTap: () {
+                Navigator.pushNamed(context, AllNavigationPage.id);
+              }),
+          drawerItem(
               icon: Icons.person,
               text: "Mon compte",
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => UserProfil()));
-              }),
-          drawerItem(
-              icon: Icons.home,
-              text: "Accueil",
-              onTap: () {
-                Navigator.pushNamed(context, AllNavigationPage.id);
               }),
           drawerItem(
               icon: Icons.local_grocery_store,
@@ -61,14 +63,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text: "Tableau Mensurations",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => MensurationHomme()));
-              }),
-          drawerItem(
-              icon: Icons.share,
-              text: "Partager l'application",
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Chat()));
+                    context, MaterialPageRoute(builder: (context) => Mensuration()));
               }),
           drawerItem(
               icon: Icons.local_gas_station,
@@ -78,22 +73,29 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 print("Reussie");
                 Navigator.pushNamed(context, Connexion.id);
               }),
+          drawerItem(
+              icon: Icons.share,
+              text: "Partager l'application",
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Chat()));
+              }),
           Divider(),
-         /* drawerItem(
+         drawerItem(
               icon: Icons.library_books,
               text: "Conditions Générales",
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => ConditionGenerales()));
-              }),*/
-         /* drawerItem(
+              }),
+         drawerItem(
               icon: Icons.info,
               text: "À propos",
               onTap: () {
 
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => APrpos()));
-              }),*/
+              }),
         ],
       ),
     );

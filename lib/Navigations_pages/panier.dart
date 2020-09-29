@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -101,10 +100,10 @@ class _PanierState extends State<Panier> {
                 produitsPaniers[i]["dejaCommander"] = true;
               });
           } else
-            if(this.mounted)
-              setState(() {
-                chargementProduitsIndisponible++;
-              });
+          if(this.mounted)
+            setState(() {
+              chargementProduitsIndisponible++;
+            });
         }
 
       });
@@ -114,7 +113,6 @@ class _PanierState extends State<Panier> {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
   @override
@@ -139,161 +137,161 @@ class _PanierState extends State<Panier> {
                   fontFamily: "MonseraBold"),)
           ),
           body: ConnexionState(body: (produitsPaniers.length==0)?elementsVides(context, Icons.shopping_cart,
-          "Pas de nouveaux produits ajoutés"):
-              ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                  itemCount: produitsPaniers.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return  Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: longueurPerCent(18, context),
-                            left:longueurPerCent(18,context),
-                            right:longueurPerCent(18,context),
-                          ),
-                          height: longueurPerCent(100, context),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(7.0),
-                            elevation: 4,
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: longueurPerCent(10, context),
-                                    bottom: longueurPerCent(10, context),
-                                    left:longueurPerCent(10,context),
-                                  ),
-                                  height: longueurPerCent(
-                                      100, context),
-                                  width: largeurPerCent(80, context),
-                                  child: Image.network(
-                                    produitsPaniers[index]["image1"],
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                      margin:EdgeInsets.only(top: longueurPerCent(13, context),
-                                          left: longueurPerCent(10, context)),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          SizedBox(height: longueurPerCent(10, context),),
-                                          Text(
-                                            "${produitsPaniers[index]["nomDuProduit"]} ",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                                color: HexColor(
-                                                    "#909090"),
-                                                fontSize: 15,
-                                                fontFamily: "Regular"),
-                                          ),
-                                          SizedBox(
-                                            height: longueurPerCent(
-                                                4.0, context),
-                                          ),
-                                          Text(
-                                            "${produitsPaniers[index]["taille"]}",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: HexColor("#001C36"),
-                                              fontSize: 12,
-                                              fontFamily: "MontserratBold",
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: longueurPerCent(
-                                                4.0, context),
-                                          ),
-                                          PriceWithDot(price: produitsPaniers[index]["prix"], couleur: HexColor("#00CC7b",),size: 15, police: "MontseraBold",),
-
-                                        ],
-                                      )
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        SizedBox(height: longueurPerCent(10, context),),
-                                        (produitsPaniers[index]["dejaCommander"] == true)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
-                                        Container(
-                                          margin: EdgeInsets.only(left: longueurPerCent(50, context)),
-                                          child: IconButton(icon: Icon(
-                                              Icons.delete, color: Colors.red, size: 20),
-                                              onPressed: () {
-
-                                                setState(() {
-                                                  ajoutPanier--;
-                                                });
-
-                                                DatabaseClient().deleteItemPanier(panierItems[index].id , "panier").then((value) {
-                                                  getDataPanier();
-                                                });
-                                                //  FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
-                                                for(int i=0; i<produitsIndisponibles.length; i++){
-                                                  if(produitsIndisponibles[i]["image1"]==produitsPaniers[index]["image1"])
-                                                    setState(() {
-                                                      produitsIndisponibles.removeAt(i);
-                                                    });
-                                                }
-
-                                                _db
-                                                    .collection("Utilisateurs")
-                                                    .document(
-                                                    Renseignements.emailUser)
-                                                    .updateData({
-                                                  "nbAjoutPanier": ajoutPanier
-                                                });
-                                                setState(() {
-                                                  Renseignements.nombreAjoutPanier--;
-                                                  total = total - produitsPaniers[index]["prix"];
-                                                  prixWithDot = priceWithDot(total);
-                                                  numberProductOrder--;
-                                                  produitsPaniers.removeAt(index);
-                                                });
-                                                //ajouterNumberPanier(Renseignements.nombreAjoutPanier);
-                                              }),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
+              "Pas de nouveaux produits ajoutés"):
+          ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: produitsPaniers.length,
+              itemBuilder: (BuildContext context, int index){
+                return  Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: longueurPerCent(18, context),
+                        left:longueurPerCent(18,context),
+                        right:longueurPerCent(18,context),
+                      ),
+                      height: longueurPerCent(100, context),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(7.0),
+                        elevation: 4,
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: longueurPerCent(10, context),
+                                bottom: longueurPerCent(10, context),
+                                left:longueurPerCent(10,context),
+                              ),
+                              height: longueurPerCent(
+                                  100, context),
+                              width: largeurPerCent(80, context),
+                              child: Image.network(
+                                produitsPaniers[index]["image1"],
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
+                            Expanded(
+                              child: Container(
+                                  margin:EdgeInsets.only(top: longueurPerCent(13, context),
+                                      left: longueurPerCent(10, context)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      SizedBox(height: longueurPerCent(10, context),),
+                                      Text(
+                                        "${produitsPaniers[index]["nomDuProduit"]} ",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: HexColor(
+                                                "#909090"),
+                                            fontSize: 15,
+                                            fontFamily: "Regular"),
+                                      ),
+                                      SizedBox(
+                                        height: longueurPerCent(
+                                            4.0, context),
+                                      ),
+                                      Text(
+                                        "${produitsPaniers[index]["taille"]}",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: HexColor("#001C36"),
+                                          fontSize: 12,
+                                          fontFamily: "MontserratBold",
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: longueurPerCent(
+                                            4.0, context),
+                                      ),
+                                      PriceWithDot(price: produitsPaniers[index]["prix"], couleur: HexColor("#00CC7b",),size: 15, police: "MontseraBold",),
+
+                                    ],
+                                  )
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(height: longueurPerCent(10, context),),
+                                    (produitsPaniers[index]["dejaCommander"] == true)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
+                                    Container(
+                                      margin: EdgeInsets.only(left: longueurPerCent(50, context)),
+                                      child: IconButton(icon: Icon(
+                                          Icons.delete, color: Colors.red, size: 20),
+                                          onPressed: () {
+
+                                            setState(() {
+                                              ajoutPanier--;
+                                            });
+
+                                            DatabaseClient().deleteItemPanier(panierItems[index].id , "panier").then((value) {
+                                              getDataPanier();
+                                            });
+                                            //  FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
+                                            for(int i=0; i<produitsIndisponibles.length; i++){
+                                              if(produitsIndisponibles[i]["image1"]==produitsPaniers[index]["image1"])
+                                                setState(() {
+                                                  produitsIndisponibles.removeAt(i);
+                                                });
+                                            }
+
+                                            _db
+                                                .collection("Utilisateurs")
+                                                .document(
+                                                Renseignements.emailUser)
+                                                .updateData({
+                                              "nbAjoutPanier": ajoutPanier
+                                            });
+                                            setState(() {
+                                              Renseignements.nombreAjoutPanier--;
+                                              total = total - produitsPaniers[index]["prix"];
+                                              prixWithDot = priceWithDot(total);
+                                              numberProductOrder--;
+                                              produitsPaniers.removeAt(index);
+                                            });
+                                            //ajouterNumberPanier(Renseignements.nombreAjoutPanier);
+                                          }),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        (produitsPaniers.length-1==index)?SizedBox(height: longueurPerCent(100, context),):Text("")
-                      ],
-                    );
-                  }),),
+                      ),
+                    ),
+                    (produitsPaniers.length-1==index)?SizedBox(height: longueurPerCent(100, context),):Text("")
+                  ],
+                );
+              }),),
           floatingActionButton:
           (produitsPaniers!=null)?Center(
             child: Container(
-              margin: EdgeInsets.only(
-                  left: longueurPerCent(20, context),  top: MediaQuery
-                  .of(context)
-                  .size
-                  .height - 60),
-              child: button(
-                  HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () async {
-                if(total==0){
+                margin: EdgeInsets.only(
+                    left: longueurPerCent(20, context),  top: MediaQuery
+                    .of(context)
+                    .size
+                    .height - 60),
+                child: button(
+                    HexColor("#001C36"), HexColor("#FFC30D"), context, "ACHETER", () async {
+                  if(total==0){
 
-                } else {
-                  if(produitsIndisponibles.isNotEmpty){
-                    confirmationPopup(context);
                   } else {
-                    Navigator.push(
-                        context, MaterialPageRoute(
-                        builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
-                    print(produitsPaniers);
+                    if(produitsIndisponibles.isNotEmpty){
+                      confirmationPopup(context);
+                    } else {
+                      Navigator.push(
+                          context, MaterialPageRoute(
+                          builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                      print(produitsPaniers);
+                    }
                   }
-                }
-              })
+                })
             ),
           ):Center(child: CircularProgressIndicator(),)
       );
@@ -303,7 +301,7 @@ class _PanierState extends State<Panier> {
         body: Center(child: CircularProgressIndicator(),),
       );
     }
- }
+  }
 
 
 

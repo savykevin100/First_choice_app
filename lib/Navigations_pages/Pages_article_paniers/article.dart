@@ -62,7 +62,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   void fetchDataInPanier(){
     DatabaseClient().readPanierData().then((value) {
       setState(() {
-       panierItems=value;
+        panierItems=value;
       });
     });
   }
@@ -165,7 +165,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   Widget build(BuildContext context) {
 
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Article", context: context, controller: controller,);
+      titre: "Article", context: context, controller: controller,);
     getIdFavoris();
     getIdProduitFavorisUser();
     return  Scaffold(
@@ -219,7 +219,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   child: InkWell(
                     onTap: (){
                       /////////////// Test .........................................
-
                       print(panierItems.length);
                       panierItems.forEach((element) {
                         if(element.image1 == widget.produit.image1){
@@ -230,44 +229,43 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         }
                       });
 
-                        if(existInCard==true)
-                          displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
-                        else {
+                      if(existInCard==true)
+                        displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
+                      else {
 
 
-                          setState(() {
-                            ajoutPanier=ajoutPanier+1;
-                          });
+                        setState(() {
+                          ajoutPanier=ajoutPanier+1;
+                        });
 
-                          _db
-                              .collection("Utilisateurs")
-                              .document(Renseignements.emailUser)
-                              .updateData({"nbAjoutPanier": ajoutPanier});
+                        _db
+                            .collection("Utilisateurs")
+                            .document(Renseignements.emailUser)
+                            .updateData({"nbAjoutPanier": ajoutPanier});
 
-                          Map<String, dynamic> map = {
-                            "nomDuProduit": widget.produit.nomDuProduit,
-                            "image1": widget.produit.image1,
-                            "prix": widget.produit.prix,
-                            "reference": widget.produit.reference,
-                            "numberStar": widget.produit.numberStar,
-                            "categorie": widget.produit.categorie,
-                            "sousCategorie": widget.produit.sousCategorie,
-                            "taille": widget.produit.taille,
-                            "idProduitCategorie": widget.produit.idProduitCategorie,
-                            "description": widget.produit.description,
-                          };
+                        Map<String, dynamic> map = {
+                          "nomDuProduit": widget.produit.nomDuProduit,
+                          "image1": widget.produit.image1,
+                          "prix": widget.produit.prix,
+                          "reference": widget.produit.reference,
+                          "numberStar": widget.produit.numberStar,
+                          "categorie": widget.produit.categorie,
+                          "sousCategorie": widget.produit.sousCategorie,
+                          "taille": widget.produit.taille,
+                          "idProduitCategorie": widget.produit.idProduitCategorie,
+                          "description": widget.produit.description,
+                        };
 
-                          PanierClasseSqflite panierClasseSqflite = PanierClasseSqflite();
-                          panierClasseSqflite.fromMap(map);
-                          DatabaseClient().insertPanier(panierClasseSqflite);
-                          fetchDataInPanier();
+                        PanierClasseSqflite panierClasseSqflite = PanierClasseSqflite();
+                        panierClasseSqflite.fromMap(map);
+                        DatabaseClient().insertPanier(panierClasseSqflite);
+                        fetchDataInPanier();
 
 
-                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.white);
-                        }
+                        displaySnackBarNom(context, "Produit ajouté au panier", Colors.white);
+                      }
 
                       ////////////////////////////////////////////////
-
                     },
                     child: Column(
                       children: <Widget>[
@@ -375,56 +373,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         floatingActionButton: Center(
           child: Container(
             margin: EdgeInsets.only(
-              top: MediaQuery
-                .of(context)
-                .size
-                .height - 60),
+                top: MediaQuery
+                    .of(context)
+                    .size
+                    .height - 60),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 SizedBox(width: largeurPerCent(20, context),),
                 InkWell(
-                  onTap: () {
-                    _db.collection("ProduitsIndisponibles").where("image1", isEqualTo: widget.produit.image1).getDocuments().then((value){
-                      if(value.documents.isNotEmpty){
-                        displaySnackBarNom(context, "Ce produit est indiponible pour le moment", Colors.white);
-                      } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    Panier1(total: widget.produit.prix , produitsPanier: [widget.produit.toMap()],)));
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
-                    child: Container(
-                      height: longueurPerCent(37, context),
-                      width: largeurPerCent(160, context),
-                      decoration: BoxDecoration(
-                          color: HexColor('#FFC30D'),
-                          border: Border.all(color: HexColor('#FFC30D'), width: 1),
-                          borderRadius: BorderRadius.circular(7)),
-                      child: Center(
-                        child: Text(
-                          "ACHETER",
-                          style: TextStyle(
-                              color: HexColor('#001C36'),
-                              fontFamily: "MonseraBold",
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: largeurPerCent(20, context),),
-                InkWell(
                   onTap: () async => await _shareImageFromUrl(),
                   child: Padding(
-                    padding:  EdgeInsets.only(left: largeurPerCent(15, context),right: largeurPerCent(10, context),),
+                    padding:  EdgeInsets.only(left: largeurPerCent(15, context),right: largeurPerCent(5, context),),
                     child: Container(
                       height: longueurPerCent(38, context),
                       width: largeurPerCent(160, context),
@@ -443,7 +404,44 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       ),
                     ),
                   ),
-                )
+                ),
+                SizedBox(width: largeurPerCent(20, context),),
+                InkWell(
+                  onTap: () {
+                    _db.collection("ProduitsIndisponibles").where("image1", isEqualTo: widget.produit.image1).getDocuments().then((value){
+                      if(value.documents.isNotEmpty){
+                        displaySnackBarNom(context, "Ce produit est indiponible pour le moment", Colors.white);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Panier1(total: widget.produit.prix , produitsPanier: [widget.produit.toMap()],)));
+                      }
+                    });
+                  },
+                  child: Padding(
+                    padding:  EdgeInsets.only(left: largeurPerCent(10, context),right: largeurPerCent(15, context)),
+                    child: Container(
+                      height: longueurPerCent(38, context),
+                      width: largeurPerCent(160, context),
+                      decoration: BoxDecoration(
+                          color: HexColor('#FFC30D'),
+                          border: Border.all(color: HexColor('#FFC30D'), width: 1),
+                          borderRadius: BorderRadius.circular(7)),
+                      child: Center(
+                        child: Text(
+                          "ACHETER",
+                          style: TextStyle(
+                              color: HexColor('#001C36'),
+                              fontFamily: "MonseraBold",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -469,10 +467,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
       decoration: BoxDecoration(
-          border: Border.all(
-              width: largeurPerCent(5, context),
-              color:  HexColor('#FFC30D')),
-         ),
+        border: Border.all(
+            width: largeurPerCent(5, context),
+            color:  HexColor('#FFC30D')),
+      ),
       child: CachedNetworkImage(
         imageUrl: image,
         imageBuilder: (context, imageProvider) => Container(
@@ -490,10 +488,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       height: longueurPerCent(70, context),
       width: largeurPerCent(83, context),
       decoration: BoxDecoration(
-          border: Border.all(
-              width: largeurPerCent(1, context),
-              color: Colors.black),
-        ),
+        border: Border.all(
+            width: largeurPerCent(1, context),
+            color: Colors.black),
+      ),
       child:CachedNetworkImage(
         imageUrl: image,
         imageBuilder: (context, imageProvider) => Container(
@@ -530,15 +528,15 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       if(widget.produit.numberImages==1){
         return Column(
           children: <Widget>[
-           GestureDetector(
-             onTap: (){
-               setState(() {
-                 imageSelector1=true;
-                 imageSelect = widget.produit.image1;
-               });
-             },
-             child: pressImage(widget.produit.image1,imageSelector1),
-           ),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  imageSelector1=true;
+                  imageSelect = widget.produit.image1;
+                });
+              },
+              child: pressImage(widget.produit.image1,imageSelector1),
+            ),
             SizedBox(height: longueurPerCent(20, context),),
             notImage(),
             SizedBox(height: longueurPerCent(20, context),),

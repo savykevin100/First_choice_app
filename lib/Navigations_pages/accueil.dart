@@ -1,4 +1,3 @@
-
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -37,11 +36,11 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
   void fetchImageCarousel(){
     Firestore.instance.collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get().then((value) {
-     setState(() {
-       imagesCarousel.add(value.data["image1"]);
-       imagesCarousel.add(value.data["image2"]);
-       imagesCarousel.add(value.data["image3"]);
-     });
+      setState(() {
+        imagesCarousel.add(value.data["image1"]);
+        imagesCarousel.add(value.data["image2"]);
+        imagesCarousel.add(value.data["image3"]);
+      });
     });
   }
 
@@ -64,81 +63,29 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
       titre: "Accueil", context: context, controller: controller, );
     if (imagesCarousel.length==3) {
       return Scaffold(
-          backgroundColor: HexColor("#F5F5F5"),
-          appBar:ScrollAppBar(
-            controller: controller,
-            backgroundColor: HexColor("#001c36"),
-            title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: <Widget>[
-              Badge(
-                badgeContent:StreamBuilder(
-                    stream: FirestoreService().getUtilisateurs(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Utilisateur>> snapshot) {
-                      if(snapshot.hasError || !snapshot.hasData){
-                        return Text("");
-                      } else {
-                        for(int i=0; i<snapshot.data.length; i++){
-                          if(snapshot.data[i].email == Renseignements.emailUser){
-                            nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
-                          }
-                        }
-                        return Text("$nombreAjoutPanier");}
-                    }
-                ),
-                toAnimate: true,
-                position: BadgePosition.topRight(top:   0,  right: 0),
-                child: IconButton(
-                    icon: Icon(
-                      Icons.local_grocery_store,
-                      color: Colors.white,
-                    ),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Panier  ()));
-                    }),
-              )
-
-            ],
-          ),
-          drawer: ProfileSettings(
-            userCurrent: Renseignements.userData[1],
-            firstLetter:Renseignements.userData[2][0]
-          ),
-          body: WillPopScope(
-              onWillPop: _onBackPressed,
-              child: ConnexionState(body: bodyAccueil(),)),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SearchFiltre ()));
-            },
-            child: Icon(
-              Icons.search,
-              color:Colors.white,
-              size: 30,
-            ),
-            backgroundColor: Theme.of(context).primaryColor
-       ),
-      );
-
-    } else {
-      return Scaffold(
-        appBar:  ScrollAppBar(
+        backgroundColor: HexColor("#F5F5F5"),
+        appBar:ScrollAppBar(
           controller: controller,
           backgroundColor: HexColor("#001c36"),
-          title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
+          title:Image.asset("assets/images/logo.png", height: 70, width: 70,),
           iconTheme: IconThemeData(color: Colors.white),
           actions: <Widget>[
             Badge(
-              badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
+              badgeContent:StreamBuilder(
+                  stream: FirestoreService().getUtilisateurs(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Utilisateur>> snapshot) {
+                    if(snapshot.hasError || !snapshot.hasData){
+                      return Text("");
+                    } else {
+                      for(int i=0; i<snapshot.data.length; i++){
+                        if(snapshot.data[i].email == Renseignements.emailUser){
+                          nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
+                        }
+                      }
+                      return Text("$nombreAjoutPanier");}
+                  }
+              ),
               toAnimate: true,
               position: BadgePosition.topRight(top:   0,  right: 0),
               child: IconButton(
@@ -157,9 +104,61 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
           ],
         ),
-        body:  Center(
-          child: CircularProgressIndicator(),
-        )
+        drawer: ProfileSettings(
+            userCurrent: Renseignements.userData[1],
+            firstLetter:Renseignements.userData[2][0]
+        ),
+        body: WillPopScope(
+            onWillPop: _onBackPressed,
+            child: ConnexionState(body: bodyAccueil(),)),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SearchFiltre ()));
+            },
+            child: Icon(
+              Icons.search,
+              color:Colors.white,
+              size: 30,
+            ),
+            backgroundColor: Theme.of(context).primaryColor
+        ),
+      );
+
+    } else {
+      return Scaffold(
+          appBar:  ScrollAppBar(
+            controller: controller,
+            backgroundColor: HexColor("#001c36"),
+            title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
+            iconTheme: IconThemeData(color: Colors.white),
+            actions: <Widget>[
+              Badge(
+                badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
+                toAnimate: true,
+                position: BadgePosition.topRight(top:   0,  right: 0),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.local_grocery_store,
+                      color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Panier  ()));
+                    }),
+              )
+
+            ],
+          ),
+          body:  Center(
+            child: CircularProgressIndicator(),
+          )
       );
     }
   }
@@ -280,7 +279,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
         actions: <Widget>[
           new GestureDetector(
-            onTap: () => Navigator.of(context).pop(false),
+              onTap: () => Navigator.of(context).pop(false),
               child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
           ),
           SizedBox(height: longueurPerCent(10, context),),
@@ -324,6 +323,3 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     obtenir();
   }
 }
-
-
-

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
-// ignore: must_be_immutable
 class CustomDialog extends StatelessWidget {
   static String id = 'CustomDialog';
   final String title, description, buttonText;
@@ -12,12 +11,12 @@ class CustomDialog extends StatelessWidget {
   Icon icon;
 
   CustomDialog({
-    @required this.title,
-    @required this.description,
-   this.buttonText,
-    @required this.cancelButton,
-    @required this.nextButton,
-    @required this.icon,
+    this.title,
+    this.description,
+    this.buttonText,
+    this.cancelButton,
+    this.nextButton,
+    this.icon,
     this.image,
 
   });
@@ -69,10 +68,16 @@ class CustomDialog extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  cancelButton,
-                  nextButton,
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: cancelButton,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: nextButton,
+                  ),
                 ],
               ),
             ],

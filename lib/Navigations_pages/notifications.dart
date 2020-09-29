@@ -16,49 +16,49 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
- int nombreAjoutPanier;
- final controller = ScrollController();
+  int nombreAjoutPanier;
+  final controller = ScrollController();
 
 
- Future<bool> _onBackPressed() {
-   return showDialog(
-     context: context,
-     builder: (context) => new AlertDialog(
-       title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
-       content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
-       actions: <Widget>[
-         new GestureDetector(
-             onTap: () => Navigator.of(context).pop(false),
-             child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
-         ),
-         SizedBox(width: largeurPerCent(50, context),),
-         new GestureDetector(
-             onTap: () => Navigator.of(context).pop(true),
-             child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
-         ),
-         SizedBox(width: largeurPerCent(20, context),),
-       ],
-     ),
-   ) ??
-       false;
- }
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
+        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
+        actions: <Widget>[
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(false),
+              child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(50, context),),
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(true),
+              child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(width: largeurPerCent(20, context),),
+        ],
+      ),
+    ) ??
+        false;
+  }
 
 
 
 
- @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
- }
+  }
 
- @override
+  @override
   Widget build(BuildContext context) {
-   AppBarClasse _appBar = AppBarClasse(
-       titre: "Notifications",
-       context: context,
-       controller: controller,
-       nbAjoutPanier: nombreAjoutPanier);
+    AppBarClasse _appBar = AppBarClasse(
+        titre: "Notifications",
+        context: context,
+        controller: controller,
+        nbAjoutPanier: nombreAjoutPanier);
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
@@ -112,7 +112,7 @@ class _NotificationsState extends State<Notifications> {
                                         margin:EdgeInsets.only(bottom: longueurPerCent(5, context),left: longueurPerCent(8, context)),
                                         width: largeurPerCent(340.0, context),
                                         child: Text(
-                                         notification.description,
+                                          notification.description,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             color: HexColor("#001C36"),

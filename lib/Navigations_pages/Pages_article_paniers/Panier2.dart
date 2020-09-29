@@ -32,16 +32,16 @@ class Panier2 extends StatefulWidget {
 
   Panier2(
       {this.unSeulProduit,
-      this.prixLivraison,
-      this.nomComplet,
-      this.total,
-      this.telephone,
-      this.lieuDeLivraison,
-      this.quartier,
-      this.indication,
-      this.dateHeureDeLivraison,
-      this.moyenDePayement,
-      this.produitsCommander});
+        this.prixLivraison,
+        this.nomComplet,
+        this.total,
+        this.telephone,
+        this.lieuDeLivraison,
+        this.quartier,
+        this.indication,
+        this.dateHeureDeLivraison,
+        this.moyenDePayement,
+        this.produitsCommander});
 
   @override
   _Panier2State createState() => _Panier2State();
@@ -167,15 +167,15 @@ class _Panier2State extends State<Panier2> {
                                     padding: EdgeInsets.only(
                                         left: longueurPerCent(10, context),
                                         bottom:
-                                            longueurPerCent(3.0, context),
+                                        longueurPerCent(3.0, context),
                                         top: longueurPerCent(6, context)),
                                     child: Text(
                                       widget.nomComplet,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: HexColor("#909090"),
-                                        fontSize: 12,
-                                        fontFamily: "MonseraBold"
+                                          color: HexColor("#909090"),
+                                          fontSize: 12,
+                                          fontFamily: "MonseraBold"
                                       ),
                                     ),
                                   ),
@@ -189,8 +189,8 @@ class _Panier2State extends State<Panier2> {
                                       widget.telephone,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: HexColor("#909090"),
-                                        fontSize: 12,
+                                          color: HexColor("#909090"),
+                                          fontSize: 12,
                                           fontFamily: "MonseraBold"
                                       ),
                                     ),
@@ -208,110 +208,110 @@ class _Panier2State extends State<Panier2> {
                             SizedBox(height: longueurPerCent(10, context),),
                             (widget.lieuDeLivraison == "A domicile")
                                 ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            top: longueurPerCent(0.0, context),
-                                            right:
-                                                longueurPerCent(0.0, context),
-                                            left:
-                                                longueurPerCent(30.0, context),
-                                            bottom:
-                                                longueurPerCent(5.0, context)),
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: longueurPerCent(0.0, context),
+                                      right:
+                                      longueurPerCent(0.0, context),
+                                      left:
+                                      longueurPerCent(30.0, context),
+                                      bottom:
+                                      longueurPerCent(5.0, context)),
 
-                                        child: Text(
-                                          "Adresse de Livraison",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              color: HexColor("#001C36"),
-                                              fontSize: 15,
-                                              fontFamily: "MonseraBold"),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: longueurPerCent(20, context),
-                                            right: longueurPerCent(20, context),
-                                            bottom:
-                                                longueurPerCent(10.0, context)),
-                                        width: largeurPerCent(370, context),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: longueurPerCent(
-                                                  10, context),
-                                              bottom: longueurPerCent(
-                                                  10.0, context),
-                                              top: longueurPerCent(
-                                                  6, context)),
-                                          child: Text(
-                                            widget.quartier +
-                                                ", " +
-                                                widget.indication,
-                                            textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                              color: HexColor("#909090"),
-                                            fontSize: 12,
-
-                                            fontFamily: "MonseraBold"
-                                        ),
-
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            top: longueurPerCent(0.0, context),
-                                            right:
-                                                longueurPerCent(0.0, context),
-                                            left:
-                                                longueurPerCent(30.0, context),
-                                            bottom:
-                                                longueurPerCent(5.0, context)),
-                                        child: Text(
-                                          "Adresse de Livraison",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              color: HexColor("#001C36"),
-                                              fontSize: 15,
-                                              fontFamily: "MonseraBold"),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: longueurPerCent(20, context),
-                                            right: longueurPerCent(20, context),
-                                            bottom:
-                                                longueurPerCent(10.0, context)),
-                                        width: largeurPerCent(370, context),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: longueurPerCent(
-                                                  10, context),
-                                              bottom: longueurPerCent(
-                                                  0.0, context),
-                                              top: longueurPerCent(
-                                                  6, context)),
-                                          child: Text(
-                                            "Jonquet en face pharmacie. Immeuble blanc, 2ème étage.",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: HexColor("#909090"),
-                                              fontSize: 12,
-                                              fontFamily: "MonseraBold",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  child: Text(
+                                    "Adresse de Livraison",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: HexColor("#001C36"),
+                                        fontSize: 15,
+                                        fontFamily: "MonseraBold"),
                                   ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: longueurPerCent(20, context),
+                                      right: longueurPerCent(20, context),
+                                      bottom:
+                                      longueurPerCent(10.0, context)),
+                                  width: largeurPerCent(370, context),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: longueurPerCent(
+                                            10, context),
+                                        bottom: longueurPerCent(
+                                            10.0, context),
+                                        top: longueurPerCent(
+                                            6, context)),
+                                    child: Text(
+                                      widget.quartier +
+                                          ", " +
+                                          widget.indication,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: HexColor("#909090"),
+                                          fontSize: 12,
+
+                                          fontFamily: "MonseraBold"
+                                      ),
+
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                                : Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: longueurPerCent(0.0, context),
+                                      right:
+                                      longueurPerCent(0.0, context),
+                                      left:
+                                      longueurPerCent(30.0, context),
+                                      bottom:
+                                      longueurPerCent(5.0, context)),
+                                  child: Text(
+                                    "Adresse de Livraison",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: HexColor("#001C36"),
+                                        fontSize: 15,
+                                        fontFamily: "MonseraBold"),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: longueurPerCent(20, context),
+                                      right: longueurPerCent(20, context),
+                                      bottom:
+                                      longueurPerCent(10.0, context)),
+                                  width: largeurPerCent(370, context),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: longueurPerCent(
+                                            10, context),
+                                        bottom: longueurPerCent(
+                                            0.0, context),
+                                        top: longueurPerCent(
+                                            6, context)),
+                                    child: Text(
+                                      "Jonquet en face pharmacie. Immeuble blanc, 2ème étage.",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: HexColor("#909090"),
+                                        fontSize: 12,
+                                        fontFamily: "MonseraBold",
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                             Container(
                               color: Colors.grey,
                               margin: EdgeInsets.only(
@@ -348,164 +348,164 @@ class _Panier2State extends State<Panier2> {
                                 children: <Widget>[
                                   (widget.moyenDePayement != "Mobile Money")
                                       ? Container(
-                                          margin: EdgeInsets.only(
-                                            left: longueurPerCent(5, context),
-                                            right:
-                                                longueurPerCent(5, context),
-                                            top: longueurPerCent(5, context),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(7.0),
+                                    margin: EdgeInsets.only(
+                                      left: longueurPerCent(5, context),
+                                      right:
+                                      longueurPerCent(5, context),
+                                      top: longueurPerCent(5, context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(7.0),
+                                      ),
+                                    ),
+                                    child: TextField(
+                                        controller:
+                                        _textFieldController,
+                                        //Set this field to enable or disable (true or flase)
+                                        enabled: !_isEnabled,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: "MonseraBold"),
+                                        decoration: InputDecoration(
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: longueurPerCent(
+                                                    5, context),
+                                                bottom: longueurPerCent(
+                                                    5, context),
+                                                right: largeurPerCent(
+                                                    10, context),
+                                                left: largeurPerCent(
+                                                    10, context)),
+                                            child: Card(
+                                              child: Container(
+                                                  height:
+                                                  longueurPerCent(
+                                                      40, context),
+                                                  child: Image.asset(
+                                                      "assets/images/images-03.png")),
                                             ),
                                           ),
-                                          child: TextField(
-                                              controller:
-                                                  _textFieldController,
-                                              //Set this field to enable or disable (true or flase)
-                                              enabled: !_isEnabled,
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontFamily: "MonseraBold"),
-                                              decoration: InputDecoration(
-                                                prefixIcon: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: longueurPerCent(
-                                                          5, context),
-                                                      bottom: longueurPerCent(
-                                                          5, context),
-                                                      right: largeurPerCent(
-                                                          10, context),
-                                                      left: largeurPerCent(
-                                                          10, context)),
-                                                  child: Card(
-                                                    child: Container(
-                                                        height:
-                                                            longueurPerCent(
-                                                                40, context),
-                                                        child: Image.asset(
-                                                            "assets/images/images-03.png")),
-                                                  ),
-                                                ),
-                                                suffixIcon:
-                                                    (widget.moyenDePayement !=
-                                                            "Mobile Money")
-                                                        ? Padding(
-                                                            padding: EdgeInsets.only(
-                                                                top: longueurPerCent(
-                                                                    5,
-                                                                    context),
-                                                                bottom:
-                                                                    longueurPerCent(
-                                                                        5,
-                                                                        context),
-                                                                right: largeurPerCent(
-                                                                    10,
-                                                                    context),
-                                                                left: largeurPerCent(
-                                                                    10,
-                                                                    context)),
+                                          suffixIcon:
+                                          (widget.moyenDePayement !=
+                                              "Mobile Money")
+                                              ? Padding(
+                                            padding: EdgeInsets.only(
+                                                top: longueurPerCent(
+                                                    5,
+                                                    context),
+                                                bottom:
+                                                longueurPerCent(
+                                                    5,
+                                                    context),
+                                                right: largeurPerCent(
+                                                    10,
+                                                    context),
+                                                left: largeurPerCent(
+                                                    10,
+                                                    context)),
 
-                                                          )
-                                                        : Text(""),
-                                                hintText: "Espèce",
-                                                hintStyle: TextStyle(
-                                                    color:
-                                                        HexColor("#909090"),
-                                                    fontSize: 15.0,
-                                                    fontFamily:
-                                                        'MonseraBold'),
-                                                fillColor: Colors.white,
-                                                contentPadding:
-                                                    EdgeInsets.only(
-                                                        top: 30,
-                                                        bottom: 5,
-                                                        left: 30),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                7.0)),
-                                                    borderSide: BorderSide(
-                                                        width: 0,
-                                                        style: BorderStyle
-                                                            .none)),
-                                              ),
-                                              onChanged: (value) {}),
-                                        )
+                                          )
+                                              : Text(""),
+                                          hintText: "Espèce",
+                                          hintStyle: TextStyle(
+                                              color:
+                                              HexColor("#909090"),
+                                              fontSize: 15.0,
+                                              fontFamily:
+                                              'MonseraBold'),
+                                          fillColor: Colors.white,
+                                          contentPadding:
+                                          EdgeInsets.only(
+                                              top: 30,
+                                              bottom: 5,
+                                              left: 30),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.all(
+                                                  Radius.circular(
+                                                      7.0)),
+                                              borderSide: BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle
+                                                      .none)),
+                                        ),
+                                        onChanged: (value) {}),
+                                  )
                                       : Container(
-                                          margin: EdgeInsets.only(
-                                            left: longueurPerCent(0, context),
-                                            right:
-                                                longueurPerCent(5, context),
-                                            bottom:
-                                                longueurPerCent(5, context),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(7.0),
-                                            ),
-                                          ),
-                                          child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.number,
-                                            controller:
-                                                _textFieldControllerNumero,
-                                            //Set this field to enable or disable (true or flase)
-                                            enabled: !_isEnabledPayement,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: HexColor("#909090"),
-                                                fontFamily: "Montserrat_Light"),
-                                            decoration: InputDecoration(
-                                              hintText:
-                                                  "Saisir numéro Mobile Money",
-                                              prefixIcon: Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: longueurPerCent(
-                                                        5, context),
-                                                    bottom: longueurPerCent(
-                                                        5, context),
-                                                    right: largeurPerCent(
-                                                        10, context),
-                                                    left: largeurPerCent(
-                                                        17, context)),
-                                                child: Card(
-                                                  child: Container(
-                                                      height: longueurPerCent(
-                                                          40, context),
-                                                      child: Image.asset(
-                                                          "assets/images/new_logo_mtn_momo1.jpg")),
-                                                ),
-                                              ),
-
-                                              hintStyle: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: 12.0,
-                                                  fontFamily: 'MonseraLight'),
-
-                                              fillColor: Colors.white,
-                                              contentPadding: EdgeInsets.only(
-                                                  top: 30,
-                                                  bottom: 5,
-                                                  left: 30),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              7.0)),
-                                                  borderSide: BorderSide(
-                                                      width: 0,
-                                                      style:
-                                                          BorderStyle.none)),
-                                            ),
-                                            onChanged: (value) {
-                                              setState(() {
-                                                numeroDePayement = value;
-                                              });
-                                            },
+                                    margin: EdgeInsets.only(
+                                      left: longueurPerCent(0, context),
+                                      right:
+                                      longueurPerCent(5, context),
+                                      bottom:
+                                      longueurPerCent(5, context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(7.0),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      keyboardType:
+                                      TextInputType.number,
+                                      controller:
+                                      _textFieldControllerNumero,
+                                      //Set this field to enable or disable (true or flase)
+                                      enabled: !_isEnabledPayement,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: HexColor("#909090"),
+                                          fontFamily: "Montserrat_Light"),
+                                      decoration: InputDecoration(
+                                        hintText:
+                                        "Saisir numéro Mobile Money",
+                                        prefixIcon: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: longueurPerCent(
+                                                  5, context),
+                                              bottom: longueurPerCent(
+                                                  5, context),
+                                              right: largeurPerCent(
+                                                  10, context),
+                                              left: largeurPerCent(
+                                                  17, context)),
+                                          child: Card(
+                                            child: Container(
+                                                height: longueurPerCent(
+                                                    40, context),
+                                                child: Image.asset(
+                                                    "assets/images/new_logo_mtn_momo1.jpg")),
                                           ),
                                         ),
+
+                                        hintStyle: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 12.0,
+                                            fontFamily: 'MonseraLight'),
+
+                                        fillColor: Colors.white,
+                                        contentPadding: EdgeInsets.only(
+                                            top: 30,
+                                            bottom: 5,
+                                            left: 30),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.all(
+                                                Radius.circular(
+                                                    7.0)),
+                                            borderSide: BorderSide(
+                                                width: 0,
+                                                style:
+                                                BorderStyle.none)),
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          numeroDePayement = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -543,19 +543,19 @@ class _Panier2State extends State<Panier2> {
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount:
-                                      widget.produitsCommander.length,
+                                  widget.produitsCommander.length,
                                   itemBuilder: (context, i) {
                                     return Container(
                                         margin: EdgeInsets.only(
                                           top: longueurPerCent(0, context),
                                           left: longueurPerCent(5, context),
                                           right:
-                                              longueurPerCent(5, context),
+                                          longueurPerCent(5, context),
                                           bottom:
-                                              longueurPerCent(5, context),
+                                          longueurPerCent(5, context),
                                         ),
                                         height:
-                                            longueurPerCent(80, context),
+                                        longueurPerCent(80, context),
                                         child: Row(
                                           children: <Widget>[
                                             Container(
@@ -573,85 +573,85 @@ class _Panier2State extends State<Panier2> {
                                                     80, context),
                                                 child: Card(
                                                   child: Image.network(widget
-                                                          .produitsCommander[
-                                                      i]["image1"],fit: BoxFit.cover,),
+                                                      .produitsCommander[
+                                                  i]["image1"],fit: BoxFit.cover,),
                                                 )),
                                             Expanded(
                                               child: Container(
                                                   margin: EdgeInsets.only(
                                                       top:
-                                                          longueurPerCent(
-                                                              0, context),
+                                                      longueurPerCent(
+                                                          0, context),
                                                       left:
-                                                          longueurPerCent(
-                                                              0,
-                                                              context)),
+                                                      longueurPerCent(
+                                                          0,
+                                                          context)),
                                                   child: Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .start,
+                                                    MainAxisAlignment
+                                                        .start,
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    CrossAxisAlignment
+                                                        .start,
                                                     children: <Widget>[
                                                       SizedBox(
                                                         height:
-                                                            longueurPerCent(
-                                                                2,
-                                                                context),
+                                                        longueurPerCent(
+                                                            2,
+                                                            context),
                                                       ),
                                                       Padding(
                                                         padding: const EdgeInsets.only(left:10,top:12),
                                                         child: Text(
                                                           widget.produitsCommander[
-                                                                  i][
-                                                              "nomDuProduit"],
+                                                          i][
+                                                          "nomDuProduit"],
                                                           textAlign:
-                                                              TextAlign
-                                                                  .left,
+                                                          TextAlign
+                                                              .left,
                                                           style: TextStyle(
                                                               color: HexColor(
                                                                   "#909090"),
                                                               fontSize: 16,
                                                               fontFamily:
-                                                                  "Regular"),
+                                                              "Regular"),
                                                         ),
                                                       ),
                                                       SizedBox(
                                                         height:
-                                                            longueurPerCent(
-                                                                2.0,
-                                                                context),
+                                                        longueurPerCent(
+                                                            2.0,
+                                                            context),
                                                       ),
                                                       Padding(
                                                         padding: const EdgeInsets.only(left:10),
                                                         child: Text(
                                                           "${widget.produitsCommander[i]["taille"]}",
                                                           textAlign:
-                                                              TextAlign
-                                                                  .left,
+                                                          TextAlign
+                                                              .left,
                                                           style: TextStyle(
                                                             color: HexColor(
                                                                 "#001C36"),
                                                             fontSize: 12,
                                                             fontFamily:
-                                                                "MontserratBold",
+                                                            "MontserratBold",
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold,
+                                                            FontWeight
+                                                                .bold,
                                                           ),
                                                         ),
                                                       ),
                                                       SizedBox(
                                                         height:
-                                                            longueurPerCent(
-                                                                4.0,
-                                                                context),
+                                                        longueurPerCent(
+                                                            4.0,
+                                                            context),
                                                       ),
                                                       Padding(
-                                                        padding: const EdgeInsets.only(left:10),
-                                                        child: PriceWithDot(price: widget.produitsCommander[i]["prix"], size:14 ,
-                                                          couleur:  HexColor("#00CC7b"), police:  "MontserratBold",
+                                                          padding: const EdgeInsets.only(left:10),
+                                                          child: PriceWithDot(price: widget.produitsCommander[i]["prix"], size:14 ,
+                                                            couleur:  HexColor("#00CC7b"), police:  "MontserratBold",
                                                           )
                                                       ),
                                                     ],
@@ -696,9 +696,9 @@ class _Panier2State extends State<Panier2> {
                                           margin: EdgeInsets.only(
                                               top: longueurPerCent(0.0, context),
                                               right:
-                                                  longueurPerCent(0.0, context),
+                                              longueurPerCent(0.0, context),
                                               left:
-                                                  longueurPerCent(10.0, context)),
+                                              longueurPerCent(10.0, context)),
                                           child: Text(
                                             "Sous-Total",
                                             textAlign: TextAlign.left,
@@ -724,9 +724,9 @@ class _Panier2State extends State<Panier2> {
                                           margin: EdgeInsets.only(
                                               top: longueurPerCent(0.0, context),
                                               right:
-                                                  longueurPerCent(0.0, context),
+                                              longueurPerCent(0.0, context),
                                               left:
-                                                  longueurPerCent(10.0, context)),
+                                              longueurPerCent(10.0, context)),
                                           child: Text(
                                             "Livraison  ",
                                             textAlign: TextAlign.left,
@@ -752,9 +752,9 @@ class _Panier2State extends State<Panier2> {
                                           margin: EdgeInsets.only(
                                               top: longueurPerCent(0.0, context),
                                               right:
-                                                  longueurPerCent(0.0, context),
+                                              longueurPerCent(0.0, context),
                                               left:
-                                                  longueurPerCent(10.0, context)),
+                                              longueurPerCent(10.0, context)),
                                           child: Text(
                                             "Total",
                                             textAlign: TextAlign.left,
@@ -776,23 +776,23 @@ class _Panier2State extends State<Panier2> {
                               SizedBox(height: longueurPerCent(20, context)),
                               button(HexColor("#FFFFFF"), HexColor("#001C36"),
                                   context, 'COMMANDER', () {
-                                if (widget.moyenDePayement == "Mobile Money") {
-                                  if (numeroDePayement.length == 8 ) {
-                                    commandAction();
-                                  } else if(numeroDePayement=="0"){
-                                    displaySnackBarNom(
-                                        context,
-                                        "Veuillez entrer votre numéro de payement",
-                                        Colors.white);
-                                  } else if(numeroDePayement.length!=8)
-                                    displaySnackBarNom(
-                                        context,
-                                        "Veuillez entrer un numéro de téléphone valide",
-                                        Colors.white);
-                                } else {
-                                 commandAction();
-                                }
-                              }),
+                                    if (widget.moyenDePayement == "Mobile Money") {
+                                      if (numeroDePayement.length == 8 ) {
+                                        commandAction();
+                                      } else if(numeroDePayement=="0"){
+                                        displaySnackBarNom(
+                                            context,
+                                            "Veuillez entrer votre numéro de payement",
+                                            Colors.white);
+                                      } else if(numeroDePayement.length!=8)
+                                        displaySnackBarNom(
+                                            context,
+                                            "Veuillez entrer un numéro de téléphone valide",
+                                            Colors.white);
+                                    } else {
+                                      commandAction();
+                                    }
+                                  }),
                             ],
                           ),
                         ),
@@ -907,27 +907,27 @@ class _Panier2State extends State<Panier2> {
       });
 
 
-       FirestoreService().addCommandeToAdmin(
-          Commandes(
-              nomComplet: widget.nomComplet,
-              telephone: widget.telephone,
-              quartier: widget.quartier,
-              indication: widget.indication,
-              total: widget.total,
-              sousTotal: totalPlusLivraison,
-              moyenDePayement: widget.moyenDePayement,
-              numeroDePayement: numeroDePayement,
-              produitsCommander: widget.produitsCommander,
-              prixLivraison: widget.prixLivraison,
-              lieuDeLivraison: widget.lieuDeLivraison,
-              created: DateTime.now().toString(),
-              numberOrder: numberOrder,
-              idCommandeUser: idCommandeUser,
-              livrer: "En cours"),
-       );
-       setState(() {
-         chargement=false;
-       });
+      FirestoreService().addCommandeToAdmin(
+        Commandes(
+            nomComplet: widget.nomComplet,
+            telephone: widget.telephone,
+            quartier: widget.quartier,
+            indication: widget.indication,
+            total: widget.total,
+            sousTotal: totalPlusLivraison,
+            moyenDePayement: widget.moyenDePayement,
+            numeroDePayement: numeroDePayement,
+            produitsCommander: widget.produitsCommander,
+            prixLivraison: widget.prixLivraison,
+            lieuDeLivraison: widget.lieuDeLivraison,
+            created: DateTime.now().toString(),
+            numberOrder: numberOrder,
+            idCommandeUser: idCommandeUser,
+            livrer: "En cours"),
+      );
+      setState(() {
+        chargement=false;
+      });
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => CommandeSend()));
     } catch (e) {

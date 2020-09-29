@@ -38,17 +38,16 @@ class _FavorisState extends State<Favoris> {
         .collection("Favoris")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
-         for(int i=0; i<snapshot.documents.length; i++){
-          if(this.mounted){
-            setState(() {
-              idProduitsFavoris.add(snapshot.documents[i].documentID);
-            });
-          }
-         }
+      for(int i=0; i<snapshot.documents.length; i++){
+        if(this.mounted){
+          setState(() {
+            idProduitsFavoris.add(snapshot.documents[i].documentID);
+          });
+        }
+      }
     });
   }
   //////////////////////////////////////////////////////////////////////////////////////////
-
   /// Cette fonction permet de recuperer l'id du produit dans la collection ProduitsFavorisUser en vue de changer l'etat de etatIconFavoris
   /// en false pour que le coeur ne soit plus colorié au niveau de la page article
   void getIdProduitFavorisUser() {
@@ -59,17 +58,16 @@ class _FavorisState extends State<Favoris> {
         .getDocuments()
         .then((QuerySnapshot snapshot) {
       for (int i = 0; i < snapshot.documents.length; i++) {
-     if(this.mounted){
-       setState(() {
-         etatFavoris.add(snapshot.documents[i].data["imagePrincipaleProduit"]);
-         identifiantDocumentsFavorisUser.add(snapshot.documents[i].documentID);
-       });
-     }
+        if(this.mounted){
+          setState(() {
+            etatFavoris.add(snapshot.documents[i].data["imagePrincipaleProduit"]);
+            identifiantDocumentsFavorisUser.add(snapshot.documents[i].documentID);
+          });
+        }
       }
     });
   }
   /////////////////////////////////////////////////////////////////////////////////////////
-
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
@@ -109,58 +107,58 @@ class _FavorisState extends State<Favoris> {
         controller: controller,
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
-      backgroundColor: HexColor("#F5F5F5"),
-      appBar: _appBar.appBarFunctionStream(),
+        backgroundColor: HexColor("#F5F5F5"),
+        appBar: _appBar.appBarFunctionStream(),
         drawer: ProfileSettings(
             userCurrent: Renseignements.userData[1],
             firstLetter:Renseignements.userData[2][0]
         ),
-      body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? WillPopScope(
-        onWillPop: _onBackPressed,
-        child: ConnexionState(
-          body: StreamBuilder(
-              stream: FirestoreService().getFavoris(Renseignements.emailUser),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Produit>> snapshot) {
-                if (snapshot.hasError || !snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                } else if(snapshot.data.isEmpty){
-                  return elementsVides(context, Icons.favorite, "Pas de favori");
-                }
-                else {
-                  return StaggeredGridView.countBuilder(
-                    reverse: false,
-                    crossAxisCount: 4,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, index) {
-                      Produit produit = snapshot.data[index];
+        body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? WillPopScope(
+          onWillPop: _onBackPressed,
+          child: ConnexionState(
+            body: StreamBuilder(
+                stream: FirestoreService().getFavoris(Renseignements.emailUser),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Produit>> snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if(snapshot.data.isEmpty){
+                    return elementsVides(context, Icons.favorite, "Pas de favori");
+                  }
+                  else {
+                    return StaggeredGridView.countBuilder(
+                      reverse: false,
+                      crossAxisCount: 4,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, index) {
+                        Produit produit = snapshot.data[index];
 
-                      return Container(
-                        width: largeurPerCent(200, context),
-                        margin: EdgeInsets.only(
-                            left: largeurPerCent(10, context),right: largeurPerCent(10, context), top: longueurPerCent(20, context)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            print(produit.nomDuProduit);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ArticleSansTaille(produit, Renseignements.emailUser)));
-                          },
-                          child: Card(
-                            elevation: 5.0,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  //height: longueurPerCent(100, context),
-                                  width: largeurPerCent(200, context),
-                                  height: longueurPerCent(150, context),
-                                  child: ClipRRect(
+                        return Container(
+                          width: largeurPerCent(200, context),
+                          margin: EdgeInsets.only(
+                              left: largeurPerCent(10, context),right: largeurPerCent(10, context), top: longueurPerCent(20, context)),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              print(produit.nomDuProduit);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ArticleSansTaille(produit, Renseignements.emailUser)));
+                            },
+                            child: Card(
+                              elevation: 5.0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    //height: longueurPerCent(100, context),
+                                    width: largeurPerCent(200, context),
+                                    height: longueurPerCent(150, context),
+                                    child: ClipRRect(
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           topRight: Radius.circular(10)),
@@ -177,111 +175,111 @@ class _FavorisState extends State<Favoris> {
                                         placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
                                         ),
                                       ),),
-                                ),
-                                ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                    largeurPerCent(200, context),
                                   ),
-                                  child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left:
-                                          largeurPerCent(10, context),
-                                          top: longueurPerCent(
-                                              5, context)),
-                                      child: Text(
-                                        "${ produit.prix} FCFA",
-                                        style: TextStyle(
-                                            color: HexColor("#00CC7b"),
-                                            fontSize: 16.5,
-                                            fontFamily: "MonseraBold"),
-                                      )),
-                                ),
-                                SizedBox(
-                                  height: longueurPerCent(5, context),
-                                ),
-                                ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                    largeurPerCent(200, context),
-                                  ),
-                                  child: Padding(
-                                    padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
-                                    child: Text(
-                                      produit.nomDuProduit,
-                                      style: TextStyle(
-                                          color: HexColor("#909090"),
-                                          fontSize: 15,
-                                          fontFamily: "MonseraRegular"),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                      largeurPerCent(200, context),
                                     ),
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left:
+                                            largeurPerCent(10, context),
+                                            top: longueurPerCent(
+                                                5, context)),
+                                        child: Text(
+                                          "${ produit.prix} FCFA",
+                                          style: TextStyle(
+                                              color: HexColor("#00CC7b"),
+                                              fontSize: 16.5,
+                                              fontFamily: "MonseraBold"),
+                                        )),
                                   ),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: longueurPerCent(0, context),left: largeurPerCent(5, context)),
-                                      child:  RatingBar(
-                                        initialRating:  produit.numberStar.ceilToDouble(),
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 3,
-                                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                        ignoreGestures: true,
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 10,
-                                        ),
-                                        itemSize: 20,
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
+                                  SizedBox(
+                                    height: longueurPerCent(5, context),
+                                  ),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                      largeurPerCent(200, context),
+                                    ),
+                                    child: Padding(
+                                      padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
+                                      child: Text(
+                                        produit.nomDuProduit,
+                                        style: TextStyle(
+                                            color: HexColor("#909090"),
+                                            fontSize: 15,
+                                            fontFamily: "MonseraRegular"),
                                       ),
                                     ),
-                                    SizedBox(width: largeurPerCent(10, context),),
-                                    Padding(
-                                        padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context)),
-                                        child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
-                                          for(int i=0; i<etatFavoris.length; i++){
-                                            if(produit.image1==etatFavoris[i]) {
-                                              _db
-                                                  .collection("Utilisateurs")
-                                                  .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
-                                                  .document(identifiantDocumentsFavorisUser[i])
-                                                  .updateData({"etatIconeFavoris":false});
-                                              setState(() {
-                                                identifiantDocumentsFavorisUser.removeAt(i);
-                                                etatFavoris.removeAt(i);
-                                              });
-                                              print("Ça marche");
-                                              FirestoreService().deleteFavoris(Renseignements.emailUser, idProduitsFavoris[index]);
-                                              setState(() {
-                                                idProduitsFavoris.removeAt(index);
-                                              });
-                                            }
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: longueurPerCent(0, context),left: largeurPerCent(5, context)),
+                                        child:  RatingBar(
+                                          initialRating:  produit.numberStar.ceilToDouble(),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 3,
+                                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                          ignoreGestures: true,
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                            size: 10,
+                                          ),
+                                          itemSize: 20,
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(width: largeurPerCent(10, context),),
+                                      Padding(
+                                          padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context)),
+                                          child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
+                                            for(int i=0; i<etatFavoris.length; i++){
+                                              if(produit.image1==etatFavoris[i]) {
+                                                _db
+                                                    .collection("Utilisateurs")
+                                                    .document(Renseignements.emailUser).collection("ProduitsFavoirsUser")
+                                                    .document(identifiantDocumentsFavorisUser[i])
+                                                    .updateData({"etatIconeFavoris":false});
+                                                setState(() {
+                                                  identifiantDocumentsFavorisUser.removeAt(i);
+                                                  etatFavoris.removeAt(i);
+                                                });
+                                                print("Ça marche");
+                                                FirestoreService().deleteFavoris(Renseignements.emailUser, idProduitsFavoris[index]);
+                                                setState(() {
+                                                  idProduitsFavoris.removeAt(index);
+                                                });
+                                              }
 
-                                          }
-                                        })
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                            }
+                                          })
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                    staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 0.0,
-                    shrinkWrap: true,
-                  );
-                }
-              }),),
-      )
-          :Center(child: CircularProgressIndicator(),)
+                        );
+                      },
+                      staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                      mainAxisSpacing: 10.0,
+                      crossAxisSpacing: 0.0,
+                      shrinkWrap: true,
+                    );
+                  }
+                }),),
+        )
+            :Center(child: CircularProgressIndicator(),)
     );
   }
 }

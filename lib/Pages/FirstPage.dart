@@ -68,7 +68,6 @@ class _FirstPageState extends State<FirstPage> {
       });
     }
   }
-
   Future<void> ajouterNumberPanier(int value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Renseignements.nombreAjoutPanier = value;
@@ -91,24 +90,24 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
-       if(this.mounted){
-         Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
-           print(value.data);
-           ajouter([
-             value.data["numero"],
-             value.data["email"],
-             value.data["nomComplet"],
-             value.data["age"],
-             value.data["sexe"],
-           ]);
+        if(this.mounted){
+          Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+            print(value.data);
+            ajouter([
+              value.data["numero"],
+              value.data["email"],
+              value.data["nomComplet"],
+              value.data["age"],
+              value.data["sexe"],
+            ]);
 
-         });
-         setState(()  {
-           currentUser=true;
-           utilisateurConnecte=value.email;
-         });
-       }
-       }
+          });
+          setState(()  {
+            currentUser=true;
+            utilisateurConnecte=value.email;
+          });
+        }
+      }
     });
     StarTimer();
   }
@@ -118,7 +117,7 @@ class _FirstPageState extends State<FirstPage> {
     var duration = Duration(seconds: 5);
     return Timer(duration, route);
   }
-  
+
   route (){
     if(currentUser ){
       for(int i=0; i<panierItems.length; i++){
