@@ -46,7 +46,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   int quantite;
   bool etatIconeFavoris;
   String idFavorisProduit;
-  int ajoutPanier;
+  int ajoutPanier=0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool chargement=false;
   String imageSelect;
@@ -70,6 +70,19 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
 
 
+  void getNombreProduitPanier() {
+    _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+          ajoutPanier = value.data["nbAjoutPanier"];
+        });
+      }
+    });
+  }
 
   /*****************************************************************************************/
 
@@ -138,6 +151,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     setState(() {
       imageSelect = widget.produit.image1;
     });
+    getNombreProduitPanier();
     fetchDataInPanier();
 
   }
@@ -219,15 +233,16 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                         if(existInCard==true)
                           displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
                         else {
-                          ajoutPanier=ajoutPanier+1;
+
+
+                          setState(() {
+                            ajoutPanier=ajoutPanier+1;
+                          });
+
                           _db
                               .collection("Utilisateurs")
                               .document(Renseignements.emailUser)
                               .updateData({"nbAjoutPanier": ajoutPanier});
-
-                          setState(() {
-                            Renseignements.nombreAjoutPanier++;
-                          });
 
                           Map<String, dynamic> map = {
                             "nomDuProduit": widget.produit.nomDuProduit,

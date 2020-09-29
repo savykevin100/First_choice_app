@@ -48,6 +48,22 @@ class _PanierState extends State<Panier> {
   }
 
 
+  void getNombreProduitPanier() {
+    _db
+        .collection("Utilisateurs")
+        .document(Renseignements.emailUser)
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+          ajoutPanier = value.data["nbAjoutPanier"];
+        });
+      }
+    });
+  }
+
+
+
 
   void fetchDataInPanierAndVerificationIndiponibleProduct(){
     DatabaseClient().readPanierData().then((value) {
@@ -106,11 +122,12 @@ class _PanierState extends State<Panier> {
     super.initState();
     fetchDataInPanierAndVerificationIndiponibleProduct();
     getDataPanier();
+    getNombreProduitPanier();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (total != null && produitsPaniers!=null && (chargementProduitsIndisponible==produitsPaniers.length || produitsIndisponibles!=null) ) {
+    if (total != null && produitsPaniers!=null && (chargementProduitsIndisponible==produitsPaniers.length || produitsIndisponibles!=null) && ajoutPanier!=null) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(

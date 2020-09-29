@@ -126,7 +126,7 @@ class _FirstPageState extends State<FirstPage> {
       }
       Firestore.instance
           .collection("Utilisateurs")
-          .document(Renseignements.emailUser)
+          .document(utilisateurConnecte)
           .updateData({"nbAjoutPanier": 0});
 
       Navigator.pushReplacement(context, MaterialPageRoute(

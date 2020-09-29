@@ -99,7 +99,7 @@ class _Panier2State extends State<Panier2> {
         .then((value) {
       if (this.mounted) {
         setState(() {
-          numberOrder = value.data["nombreCommande"]+1;
+          //numberOrder = value.data["nombreCommande"]+1;
           print(numberOrder);
         });
       }
