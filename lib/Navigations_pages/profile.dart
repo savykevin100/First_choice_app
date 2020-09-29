@@ -270,6 +270,8 @@ if(name!=null){
                                         "numero": number
                                       });
                                       setState(() {
+                                        Renseignements.userData[0]=number;
+                                        Renseignements.userData[2]=name;
                                         _isEnabled = ! _isEnabled;
                                         _isEnabled1 = ! _isEnabled1;
                                         _isEnabled2 = ! _isEnabled2;

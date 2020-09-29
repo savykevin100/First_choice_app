@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Authentification/slider.dart';
+import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Composants/calcul.dart';
 import '../Composants/hexadecimal.dart';
 
@@ -29,26 +33,81 @@ class _FirstPageState extends State<FirstPage> {
   List<Map<String, dynamic>> produitsFavorisUsers=[];
   String utilisateurConnecte;
 
+  // Table qui contient les éléments du panier
+  List<PanierClasseSqflite> panierItems = [];
 
+  String key = "email_user";
+
+  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
+  Future<void> obtenir() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> liste = sharedPreferences.getStringList(key);
+    if (liste != null) {
+      setState(() {
+        Renseignements.userData = liste;
+      });
+    }
+  }
+
+  Future<void> ajouter(List<String> str) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Renseignements.userData = str;
+    await sharedPreferences.setStringList(key, Renseignements.userData);
+    obtenir();
+  }
+
+
+  String keyAjoutPanier="numberAjout";
+  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
+  Future<void> obtenirNumberPanier() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    int liste = sharedPreferences.getInt(keyAjoutPanier);
+    if (liste != null) {
+      setState(() {
+        Renseignements.nombreAjoutPanier = liste;
+      });
+    }
+  }
+
+  Future<void> ajouterNumberPanier(int value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Renseignements.nombreAjoutPanier = value;
+    await sharedPreferences.setInt(key, Renseignements.nombreAjoutPanier);
+    obtenir();
+  }
+
+
+  void getDataPanier(){
+    DatabaseClient().readPanierData().then((value) {
+      setState(() {
+        panierItems=value;
+      });
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getDataPanier();
     getUser().then((value){
       if(value!=null){
        if(this.mounted){
+         Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+           print(value.data);
+           ajouter([
+             value.data["numero"],
+             value.data["email"],
+             value.data["nomComplet"],
+             value.data["age"],
+             value.data["sexe"],
+           ]);
+
+           ajouterNumberPanier(value.data["nbAjoutPanier"]);
+
+         });
          setState(()  {
            currentUser=true;
            utilisateurConnecte=value.email;
-            Firestore.instance.collection('Utilisateurs').document(value.email).collection("Panier").getDocuments().then((snapshot) {
-             for (DocumentSnapshot doc in snapshot.documents) {
-               doc.reference.delete();
-             }});
-             Firestore.instance
-               .collection("Utilisateurs")
-               .document(value.email)
-               .updateData({"nbAjoutPanier": 0});
-
          });
        }
        }
@@ -64,6 +123,9 @@ class _FirstPageState extends State<FirstPage> {
   
   route (){
     if(currentUser ){
+      for(int i=0; i<panierItems.length; i++){
+        DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
+      }
       Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => AllNavigationPage()
       ));

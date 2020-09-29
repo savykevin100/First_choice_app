@@ -14,7 +14,8 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
-import 'package:premierchoixapp/Models/panier_classe.dart';
+import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
@@ -42,20 +43,31 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   Firestore _db = Firestore.instance;
   // ignore: non_constant_identifier_names
   String id_produit;
-  /// Cette variable permet de contenir l'id du produit affiché au niveau de produitFavorisUser
   int quantite;
-  /// afiiche la quantite du produit que le client
   bool etatIconeFavoris;
-  /// Variable permettant de changer la couleur de l'icone et la gestion de la couleur
   String idFavorisProduit;
   int ajoutPanier;
-  /// Variable contenant le nombre de produit ajouter aux favoris à chaque ajout
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool chargement=false;
   String imageSelect;
   bool imageSelector1=true;
   bool imageSelector2=false;
   bool imageSelector3=false;
+  bool existInCard = false ;
+
+
+  // Table qui contient les éléments du panier
+  List<PanierClasseSqflite> panierItems = [];
+
+  void fetchDataInPanier(){
+    DatabaseClient().readPanierData().then((value) {
+      setState(() {
+       panierItems=value;
+      });
+    });
+  }
+
+
 
 
 
@@ -111,23 +123,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
     });
   }
 
-  ///////////////////////////////////////////////////// fin de la fonction/////////////////////////////////////////////////////////////////////
-  /// Cette permet de permet de recuperer le nombre de produit ajouter dans le panier et l'incrémenter si l'utilisateur clique sur le bouton Ajouter au panier
-  void getNombreProduitPanier() {
-    _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          ajoutPanier = value.data["nbAjoutPanier"];
-        });
-      }
-    });
-  }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @override
   void dispose() {
     // TODO: implement dispose
@@ -139,10 +135,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   @override
   void initState() {
     super.initState();
-    getNombreProduitPanier();
     setState(() {
       imageSelect = widget.produit.image1;
     });
+    fetchDataInPanier();
 
   }
 
@@ -155,14 +151,14 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   Widget build(BuildContext context) {
 
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Article", context: context, controller: controller, nbAjoutPanier: ajoutPanier);
+        titre: "Article", context: context, controller: controller,);
     getIdFavoris();
     getIdProduitFavorisUser();
     return  Scaffold(
         backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
-        body: ConnexionState(body: ListView(
+        body: ConnexionState(body: (panierItems!=null)?ListView(
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -176,8 +172,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                           child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
                         ),
                         Padding(
-                          padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
-                          child: PriceWithDot(price: widget.produit.prix, couleur: HexColor("#00CC7b"), police: "MonseraBold", size: 20,)),
+                            padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(5, context)),
+                            child: PriceWithDot(price: widget.produit.prix, couleur: HexColor("#00CC7b"), police: "MonseraBold", size: 20,)),
                         Padding(
                           padding:  EdgeInsets.only(left: largeurPerCent(5, context), bottom: longueurPerCent(5, context)),
                           child: RatingBar(
@@ -208,31 +204,50 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   padding:  EdgeInsets.only(right: largeurPerCent(17, context), bottom:  longueurPerCent(40, context)),
                   child: InkWell(
                     onTap: (){
-                      _db .collection("Utilisateurs").document(Renseignements.emailUser).collection("Panier").where("image1", isEqualTo:widget.produit.image1)
-                          .getDocuments().then((QuerySnapshot snapshot){
-                        if(snapshot.documents.isEmpty){
-                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.white);
+                      /////////////// Test .........................................
+
+                      print(panierItems.length);
+                      panierItems.forEach((element) {
+                        if(element.image1 == widget.produit.image1){
                           setState(() {
-                            ajoutPanier=ajoutPanier+1;
-                            FirestoreService().addPanierSansId(PanierClasse(
-                              nomDuProduit:widget.produit.nomDuProduit,
-                              image1:widget.produit.image1,
-                              prix: widget.produit.prix,
-                              reference: widget.produit.reference,
-                              numberStar:widget.produit.numberStar,
-                              categorie: widget.produit.categorie,
-                              sousCategorie: widget.produit.sousCategorie,
-                              taille: widget.produit.taille,
-                              idProduitCategorie: widget.produit.idProduitCategorie,
-                              description: widget.produit.description,
-                            ), widget.currentUserId, );
-                            _db
-                                .collection("Utilisateurs")
-                                .document(Renseignements.emailUser)
-                                .updateData({"nbAjoutPanier": ajoutPanier});
+                            print("trouvé");
+                            existInCard = true;
                           });
-                        } else displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
+                        }
                       });
+
+                        if(existInCard==true)
+                          displaySnackBarNom(context, "Le produit est déjà ajouté au panier", Colors.white);
+                        else {
+
+                          setState(() {
+                            Renseignements.nombreAjoutPanier++;
+                          });
+
+                          Map<String, dynamic> map = {
+                            "nomDuProduit": widget.produit.nomDuProduit,
+                            "image1": widget.produit.image1,
+                            "prix": widget.produit.prix,
+                            "reference": widget.produit.reference,
+                            "numberStar": widget.produit.numberStar,
+                            "categorie": widget.produit.categorie,
+                            "sousCategorie": widget.produit.sousCategorie,
+                            "taille": widget.produit.taille,
+                            "idProduitCategorie": widget.produit.idProduitCategorie,
+                            "description": widget.produit.description,
+                          };
+
+                          PanierClasseSqflite panierClasseSqflite = PanierClasseSqflite();
+                          panierClasseSqflite.fromMap(map);
+                          DatabaseClient().insertPanier(panierClasseSqflite);
+                          fetchDataInPanier();
+
+
+                          displaySnackBarNom(context, "Produit ajouté au panier", Colors.white);
+                        }
+
+                      ////////////////////////////////////////////////
+
                     },
                     child: Column(
                       children: <Widget>[
@@ -335,7 +350,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
 
           ],
-        ),),
+        ): Center(child: CircularProgressIndicator())),
 
         floatingActionButton: Center(
           child: Container(

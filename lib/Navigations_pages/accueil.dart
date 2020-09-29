@@ -3,7 +3,6 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +12,6 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
-import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
@@ -29,41 +27,11 @@ class Accueil extends StatefulWidget {
 
 class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
-  final _auth = FirebaseAuth.instance;
-  int nombreAjoutPanier;
-  FirebaseUser utilisateurConnecte;
-  int lenght;
-  DateTime expiryBadgeNew;
   List<String> imagesCarousel=[];
-  String nameUser;
 
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        setState(() {
-          utilisateurConnecte = user;
-          ajouter(utilisateurConnecte.email);
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  Future<void> fetchDataUser(String id) async {
-    await Firestore.instance
-        .collection("Utilisateurs")
-        .document(id)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          nameUser = value.data["nomComplet"];
-        });
-      }
-    });
-  }
+
+
 
   void fetchImageCarousel(){
     Firestore.instance.collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get().then((value) {
@@ -79,15 +47,17 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentUser();
     fetchImageCarousel();
+    print(Renseignements.userData);
+    setState(() {
+      Renseignements.emailUser=Renseignements.userData[1];
+    });
 
   }
 
   @override
   Widget build(BuildContext context) {
-    if (utilisateurConnecte != null && imagesCarousel.length==3) {
-      fetchDataUser(utilisateurConnecte.email);
+    if (imagesCarousel.length==3) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           appBar: ScrollAppBar(
@@ -97,21 +67,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               Badge(
-                badgeContent:StreamBuilder(
-                    stream: FirestoreService().getUtilisateurs(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Utilisateur>> snapshot) {
-                      if(snapshot.hasError || !snapshot.hasData){
-                        return Text("");
-                      } else {
-                        for(int i=0; i<snapshot.data.length; i++){
-                          if(snapshot.data[i].email == Renseignements.emailUser){
-                            nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
-                          }
-                        } 
-                        return Text("$nombreAjoutPanier");}
-                    }
-                ),
+                badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
                 toAnimate: true,
                 position: BadgePosition.topRight(top:   0,  right: 0),
                 child: IconButton(
@@ -131,8 +87,8 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             ],
           ),
           drawer: ProfileSettings(
-            userCurrent: utilisateurConnecte.email,
-            firstLetter:(nameUser!=null)?nameUser[0]:""
+            userCurrent: Renseignements.userData[1],
+            firstLetter:Renseignements.userData[2][0]
           ),
           body: WillPopScope(
               onWillPop: _onBackPressed,
@@ -163,21 +119,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
           iconTheme: IconThemeData(color: Colors.white),
           actions: <Widget>[
             Badge(
-              badgeContent:StreamBuilder(
-                  stream: FirestoreService().getUtilisateurs(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Utilisateur>> snapshot) {
-                    if(snapshot.hasError || !snapshot.hasData){
-                      return Text("");
-                    } else {
-                      for(int i=0; i<snapshot.data.length; i++){
-                        if(snapshot.data[i].email == Renseignements.emailUser){
-                          nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
-                        }
-                      }
-                      return Text("$nombreAjoutPanier");}
-                  }
-              ),
+              badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
               toAnimate: true,
               position: BadgePosition.topRight(top:   0,  right: 0),
               child: IconButton(
@@ -344,10 +286,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
   Future<void> obtenir() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String liste = sharedPreferences.getString(key);
+    List<String> liste = sharedPreferences.getStringList(key);
     if (liste != null) {
       setState(() {
-        Renseignements.emailUser = liste;
+        Renseignements.userData = liste;
       });
     }
   }
@@ -356,73 +298,13 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
   /* Cette fonction permet d'ajouter les informations*/
 
-  Future<void> ajouter(String str) async {
+  Future<void> ajouter(List<String> str) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Renseignements.emailUser = str;
+    Renseignements.userData = str;
     await sharedPreferences.setString(key, Renseignements.emailUser);
     obtenir();
   }
 }
 
-class SelectedPhoto extends StatelessWidget {
-  final int numberOfDots;
-  final int photoIndex;
 
-  SelectedPhoto({this.numberOfDots, this.photoIndex});
-
-  Widget _inactivePhoto() {
-    return Center(
-      child: new Container(
-          child: new Padding(
-        padding: const EdgeInsets.only(left: 9.0, right: 9.0),
-        child: Container(
-          height: 12.0,
-          width: 12.0,
-          decoration: BoxDecoration(
-              color: HexColor('#ffffff'),
-              borderRadius: BorderRadius.circular(10.0)),
-        ),
-      )),
-    );
-  }
-
-  Widget _activePhoto() {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.only(left: 9.0, right: 9.0),
-        child: Container(
-          height: 12.0,
-          width: 12.0,
-          decoration: BoxDecoration(
-              color: Colors.yellow,
-              borderRadius: BorderRadius.circular(10.0),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.white, spreadRadius: 0.0, blurRadius: 10.0)
-              ]),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _buildDots() {
-    List<Widget> dots = [];
-
-    for (int i = 0; i < numberOfDots; ++i) {
-      dots.add(i == photoIndex ? _activePhoto() : _inactivePhoto());
-    }
-
-    return dots;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: _buildDots(),
-      ),
-    );
-  }
-}
 

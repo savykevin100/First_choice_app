@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +7,11 @@ import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/connexion_state.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
+import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
-import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -29,97 +28,81 @@ class _PanierState extends State<Panier> {
   int total = 0;
   List<Map<String, dynamic>> produitsPaniers=[];
   List<Map<String, dynamic>> produitsIndisponibles=[];
-  int ajoutPanier;
   int chargementProduitsIndisponible=0;
   int numberProductOrder=0;
   String prixWithDot="0";
 
 
+  // Table qui contient les éléments du panier
+  List<PanierClasseSqflite> panierItems = [];
+
+  void getDataPanier(){
+    DatabaseClient().readPanierData().then((value) {
+      setState(() {
+        panierItems=value;
+      });
+    });
+  }
 
 
 
-  /// Cette fonction getIdProduit permet de recuperer l'id du produit en vue de pouvoir le supprimer. Donc je récupère tous les ID
-  /// dans la variable idProduitsPanier et au moment de la suppression je supprimer le produit qui est à l'index i
-  Future<void> getProduitPanier() async {
-    await _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .collection("Panier")
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      for (int i = 0; i < snapshot.documents.length; i++) {
-        if (this.mounted) {
-          setState(() {
-            // Ici on parcourt les produits qui sont dans la table ProduitsIndisponibles et on vérifie si un des produits dans le panier
-            // se trouve cette dernière table
-            _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:snapshot.documents[i].data["image1"])
-                .getDocuments().then((QuerySnapshot snapshot){
-              if(snapshot.documents.isNotEmpty){
-               if(this.mounted){
-                 setState(() {
-                   produitsIndisponibles.add(snapshot.documents[0].data);
-                   print(snapshot.documents[0].data["nomDuProduit"]);
-                 });
-               }
-              } else {
-                setState(() {
-                  chargementProduitsIndisponible++;
-                });
-              }
-            });
-             // Fin de la vérification
-            produitsPaniers.add(snapshot.documents[i].data);
+  void fetchDataInPanierAndVerificationIndiponibleProduct(){
+    DatabaseClient().readPanierData().then((value) {
+      value.forEach((element) {
+        setState(() {
+          numberProductOrder++;
+          total = total + element.prix;
+          prixWithDot = priceWithDot(total);
+          produitsPaniers.add({
+            "nomDuProduit": element.nomDuProduit,
+            "prix":element.prix,
+            "description": element.description,
+            "sousCategorie": element.sousCategorie,
+            "image1": element.image1,
+            "taille": element.taille,
+            "reference": element.reference,
+            "numberStar": element.numberStar,
+            "categorie": element.categorie,
+            "idProduitCategorie": element.idProduitCategorie,
+            "dejaCommander": false
           });
-        }
-      }
+          panierItems=value;
+        });
+      });
     });
 
+    _db.collection("ProduitsIndisponibles").getDocuments().then((value) {
+      value.documents.forEach((produitIndisponible) {
+        print(value.documents.length);
+        for(int i=0; i<produitsPaniers.length; i++){
+          if(produitsPaniers[i]["image1"]==produitIndisponible.data["image1"]){
+            if(this.mounted)
+              setState(() {
+                produitsIndisponibles.add(produitIndisponible.data);
+                produitsPaniers[i]["dejaCommander"] = true;
+              });
+          } else
+            if(this.mounted)
+              setState(() {
+                chargementProduitsIndisponible++;
+              });
+        }
 
+      });
+    });
   }
+
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// Cette fonction permet de récuperer le nombre d'ajout panier qui se trouve dans les variables de l'utilisateur. Cette variable est récupérée pour
-  /// que quand tous les produits sont supprimés du panier le nombre de produits dans le panier soit mise à jour
-  void getNombreProduitPanier() {
-    _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          ajoutPanier = value.data["nbAjoutPanier"];
-        });
-      }
-    });
-  }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  /// Cette fonction permet de faire la somme des prix de tous les produits présents dans le panier
-  void sumPrice() {
-    _db.collection("Utilisateurs").document(Renseignements.emailUser)
-        .collection("Panier").getDocuments()
-        .then((value) {
-      for (int i = 0; i < value.documents.length; i++) {
-        if (this.mounted) {
-          setState(() {
-            numberProductOrder++;
-            total = total + value.documents[i].data["prix"];
-            prixWithDot = priceWithDot(total);
-          });
-        }
-      }
-    });
-  }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   @override
   void initState() {
     super.initState();
-    getProduitPanier();
-    getNombreProduitPanier();
-    sumPrice();
+    fetchDataInPanierAndVerificationIndiponibleProduct();
+    getDataPanier();
   }
 
   @override
@@ -129,180 +112,139 @@ class _PanierState extends State<Panier> {
           backgroundColor: HexColor("#F5F5F5"),
           appBar: AppBar(
               backgroundColor: HexColor("#001c36"),
-              title: StreamBuilder(
-                  stream: FirestoreService().getProduitPanier(
-                      Renseignements.emailUser),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<PanierClasse>> snapshot) {
-                    if (snapshot.hasError || !snapshot.hasData) {
-                      return Text("");
-                    } else {
-                      return Text(
-                        " TOTAL" +  "  ($numberProductOrder)   :  " +   " $prixWithDot FCFA" ,textAlign: TextAlign.start, style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontFamily: "MonseraBold"),);
-                    }
-                  }
-              )
+              title: Text(
+                " TOTAL" +  "  ($numberProductOrder)   :  " +   " $prixWithDot FCFA" ,textAlign: TextAlign.start, style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontFamily: "MonseraBold"),)
           ),
-          body: ConnexionState(body: ListView(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  StreamBuilder(
-                      stream:
-                      FirestoreService().getProduitPanier(
-                          Renseignements.emailUser),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<PanierClasse>> snapshot) {
-                        if (snapshot.hasError || !snapshot.hasData) {
-                          return Column(
-                            children: <Widget>[
-                              SizedBox(height: longueurPerCent(300, context),),
-                              Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ],
-                          );
-                        } else if (snapshot.data.isEmpty) {
-                          return elementsVides(context, Icons.shopping_cart,
-                              "Pas de nouveaux produits ajoutés");
-                        }
-                        else {
-                          /* */
-                          return ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, i) {
-                                bool dejaCommader=false;
-                                PanierClasse panier = snapshot.data[i];
-                                for(int i=0; i<produitsIndisponibles.length; i++){
-                                  if(produitsIndisponibles[i]["image1"]==panier.image1)
-                                    dejaCommader=true;
-                                }
-                                return Container(
+          body: ConnexionState(body: (produitsPaniers.length==0)?elementsVides(context, Icons.shopping_cart,
+          "Pas de nouveaux produits ajoutés"):
+              ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                  itemCount: produitsPaniers.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return  Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: longueurPerCent(18, context),
+                            left:longueurPerCent(18,context),
+                            right:longueurPerCent(18,context),
+                          ),
+                          height: longueurPerCent(100, context),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(7.0),
+                            elevation: 4,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
                                   margin: EdgeInsets.only(
-                                    top: longueurPerCent(18, context),
-                                    left:longueurPerCent(18,context),
-                                    right:longueurPerCent(18,context),
+                                    top: longueurPerCent(10, context),
+                                    bottom: longueurPerCent(10, context),
+                                    left:longueurPerCent(10,context),
                                   ),
-                                  height: longueurPerCent(100, context),
-                                  child: Material(
-                                    borderRadius: BorderRadius.circular(7.0),
-                                    elevation: 4,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                            top: longueurPerCent(10, context),
-                                            bottom: longueurPerCent(10, context),
-                                            left:longueurPerCent(10,context),
+                                  height: longueurPerCent(
+                                      100, context),
+                                  width: largeurPerCent(80, context),
+                                  child: Image.network(
+                                    produitsPaniers[index]["image1"],
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                      margin:EdgeInsets.only(top: longueurPerCent(13, context),
+                                          left: longueurPerCent(10, context)),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(height: longueurPerCent(10, context),),
+                                          Text(
+                                            "${produitsPaniers[index]["nomDuProduit"]} ",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    "#909090"),
+                                                fontSize: 15,
+                                                fontFamily: "Regular"),
                                           ),
-                                          height: longueurPerCent(
-                                              100, context),
-                                          width: largeurPerCent(80, context),
-                                          child: Image.network(
-                                            panier.image1,
-                                            fit: BoxFit.cover,
+                                          SizedBox(
+                                            height: longueurPerCent(
+                                                4.0, context),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                              margin:EdgeInsets.only(top: longueurPerCent(13, context),
-                                                  left: longueurPerCent(10, context)),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  SizedBox(height: longueurPerCent(10, context),),
-                                                  Text(
-                                                    "${panier.nomDuProduit} ",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                        color: HexColor(
-                                                            "#909090"),
-                                                        fontSize: 15,
-                                                        fontFamily: "Regular"),
-                                                  ),
-                                                  SizedBox(
-                                                    height: longueurPerCent(
-                                                        4.0, context),
-                                                  ),
-                                                  Text(
-                                                    "${panier.taille}",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: HexColor("#001C36"),
-                                                      fontSize: 12,
-                                                      fontFamily: "MontserratBold",
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: longueurPerCent(
-                                                        4.0, context),
-                                                  ),
-                                                  PriceWithDot(price: panier.prix, couleur: HexColor("#00CC7b",),size: 15, police: "MontseraBold",),
-
-                                                ],
-                                              )
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            child: Column(
-                                              children: <Widget>[
-                                                SizedBox(height: longueurPerCent(10, context),),
-                                                (dejaCommader)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
-                                                Container(
-                                                  margin: EdgeInsets.only(left: longueurPerCent(50, context)),
-                                                  child: IconButton(icon: Icon(
-                                                      Icons.delete, color: Colors.red, size: 20),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          ajoutPanier--;
-                                                        });
-                                                        FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
-                                                        for(int i=0; i<produitsIndisponibles.length; i++){
-                                                          if(produitsIndisponibles[i]["image1"]==panier.image1)
-                                                            setState(() {
-                                                              produitsIndisponibles.removeAt(i);
-                                                            });
-                                                        }
-                                                        _db
-                                                            .collection("Utilisateurs")
-                                                            .document(
-                                                            Renseignements.emailUser)
-                                                            .updateData({
-                                                          "nbAjoutPanier": ajoutPanier
-                                                        });
-                                                        setState(() {
-                                                          total = total - panier.prix;
-                                                          prixWithDot = priceWithDot(total);
-                                                          numberProductOrder--;
-                                                          produitsPaniers.removeAt(i);
-                                                        });
-
-                                                      }),
-                                                ),
-                                              ],
+                                          Text(
+                                            "${produitsPaniers[index]["taille"]}",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: HexColor("#001C36"),
+                                              fontSize: 12,
+                                              fontFamily: "MontserratBold",
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                        )
+                                          SizedBox(
+                                            height: longueurPerCent(
+                                                4.0, context),
+                                          ),
+                                          PriceWithDot(price: produitsPaniers[index]["prix"], couleur: HexColor("#00CC7b",),size: 15, police: "MontseraBold",),
+
+                                        ],
+                                      )
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        SizedBox(height: longueurPerCent(10, context),),
+                                        (produitsPaniers[index]["dejaCommander"] == true)?Text("Déjà commandé", style: TextStyle(color: Colors.red),):Text(""),
+                                        Container(
+                                          margin: EdgeInsets.only(left: longueurPerCent(50, context)),
+                                          child: IconButton(icon: Icon(
+                                              Icons.delete, color: Colors.red, size: 20),
+                                              onPressed: () {
+                                                DatabaseClient().deleteItemPanier(panierItems[index].id , "panier").then((value) {
+                                                  getDataPanier();
+                                                });
+
+                                                //  FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
+                                                for(int i=0; i<produitsIndisponibles.length; i++){
+                                                  if(produitsIndisponibles[i]["image1"]==produitsPaniers[index]["image1"])
+                                                    setState(() {
+                                                      produitsIndisponibles.removeAt(i);
+                                                    });
+                                                }
+                                                Renseignements.nombreAjoutPanier--;
+                                              /*  _db
+                                                    .collection("Utilisateurs")
+                                                    .document(
+                                                    Renseignements.emailUser)
+                                                    .updateData({
+                                                  "nbAjoutPanier": ajoutPanier
+                                                });*/
+                                                setState(() {
+                                                  total = total - produitsPaniers[index]["prix"];
+                                                  prixWithDot = priceWithDot(total);
+                                                  numberProductOrder--;
+                                                  produitsPaniers.removeAt(index);
+                                                });
+                                              }),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                );
-                              });
-                        }
-                      }),
-                ],
-              ),
-              SizedBox(height: 100,),
-            ],
-          ),),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        (produitsPaniers.length-1==index)?SizedBox(height: longueurPerCent(100, context),):Text("")
+                      ],
+                    );
+                  }),),
           floatingActionButton:
           (produitsPaniers!=null)?Center(
             child: Container(
@@ -322,6 +264,7 @@ class _PanierState extends State<Panier> {
                     Navigator.push(
                         context, MaterialPageRoute(
                         builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
+                    print(produitsPaniers);
                   }
                 }
               })

@@ -1,9 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/panier.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 
@@ -15,7 +13,7 @@ class AppBarClasse extends StatefulWidget{
   String titre;
   ScrollController controller = ScrollController();
   int nbAjoutPanier;
-   AppBarClasse({this.titre, this.context , this.controller, this.nbAjoutPanier});
+   AppBarClasse({this.titre, this.context , this.controller});
 
 
 
@@ -40,21 +38,7 @@ class AppBarClasse extends StatefulWidget{
       iconTheme: IconThemeData(color: Colors.white),
       actions: <Widget>[
         Badge(
-          badgeContent:StreamBuilder(
-              stream: FirestoreService().getUtilisateurs(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Utilisateur>> snapshot) {
-                if(snapshot.hasError || !snapshot.hasData){
-                  return Text("");
-                } else {
-                  for(int i=0; i<snapshot.data.length; i++){
-                    if(snapshot.data[i].email == Renseignements.emailUser){
-                      nbAjoutPanier=snapshot.data[i].nbAjoutPanier;
-                    }
-                  }
-                  return Text("$nbAjoutPanier");}
-              }
-          ),
+          badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
           toAnimate: true,
           position: BadgePosition.topRight(top:   0,  right: 0),
           child: IconButton(

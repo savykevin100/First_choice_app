@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -25,14 +24,12 @@ class _CategoriesState extends State<Categories> {
   bool val = false;
   int ajoutPanier;
   int nombre;
-  String nameUser;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     nombre=1;
-    fetchDataUser(Renseignements.emailUser);
   }
 
 
@@ -59,19 +56,6 @@ class _CategoriesState extends State<Categories> {
         false;
   }
 
-  Future<void> fetchDataUser(String id) async {
-    await Firestore.instance
-        .collection("Utilisateurs")
-        .document(id)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          nameUser = value.data["nomComplet"];
-        });
-      }
-    });
-  }
 
 
 
@@ -82,13 +66,13 @@ class _CategoriesState extends State<Categories> {
         titre: "Menu",
         context: context,
         controller: controller,
-        nbAjoutPanier: ajoutPanier);
+        );
     return Scaffold(
         appBar: _appBar.appBarFunctionStream(),
-        drawer: ProfileSettings(
-            userCurrent:Renseignements.emailUser,
-            firstLetter:(nameUser!=null)?nameUser[0]:""
-        ),
+      drawer: ProfileSettings(
+          userCurrent: Renseignements.userData[1],
+          firstLetter:Renseignements.userData[2][0]
+      ),
         body: WillPopScope(
           onWillPop: _onBackPressed,
           child: ConnexionState(body: SingleChildScrollView(

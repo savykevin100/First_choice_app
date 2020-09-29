@@ -92,19 +92,7 @@ class _FavorisState extends State<Favoris> {
     ) ??
         false;
   }
-  Future<void> fetchDataUser(String id) async {
-    await Firestore.instance
-        .collection("Utilisateurs")
-        .document(id)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          nameUser = value.data["nomComplet"];
-        });
-      }
-    });
-  }
+
 
   @override
   void initState() {
@@ -112,7 +100,6 @@ class _FavorisState extends State<Favoris> {
     super.initState();
     getIdProduitFavorisUser();
     getIdFavoris();
-    fetchDataUser(Renseignements.emailUser);
   }
   @override
   Widget build(BuildContext context) {
@@ -120,14 +107,14 @@ class _FavorisState extends State<Favoris> {
         titre: "Favoris",
         context: context,
         controller: controller,
-        nbAjoutPanier: ajoutPanier);
+       );
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(
-        userCurrent:Renseignements.emailUser,
-          firstLetter:(nameUser!=null)?nameUser[0]:""
-      ),
+        drawer: ProfileSettings(
+            userCurrent: Renseignements.userData[1],
+            firstLetter:Renseignements.userData[2][0]
+        ),
       body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? WillPopScope(
         onWillPop: _onBackPressed,
         child: ConnexionState(

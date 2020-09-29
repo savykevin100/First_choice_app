@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
+import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Renseignements extends StatefulWidget {
   static final String id = "Renseignement";
   static String emailUser;
-
+  static List<String> userData;
+  static int nombreAjoutPanier = 0;
   final String emailAdress;
 
   Renseignements({this.emailAdress});
@@ -427,10 +430,10 @@ class _RenseignementsState extends State<Renseignements> {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null) {
                           _submit();
-                        /*setState(() {
+                        setState(() {
                           chargement = true;
-                        });*/
-                       /* try {
+                        });
+                        try {
                           await FirestoreService().addUtilisateur(
                               Utilisateur(
                                   nomComplet: nomComplet,
@@ -442,9 +445,16 @@ class _RenseignementsState extends State<Renseignements> {
                                   orderNumber: 0
                               ),
                               widget.emailAdress);
-                              await FirestoreService().addToken(Tokens(
+                          ajouter([
+                            numeroPayement,
+                            widget.emailAdress,
+                            nomComplet,
+                            age,
+                            sexe
+                          ]);
+                              /*await FirestoreService().addToken(Tokens(
                                token: tokenUser
-                              ));
+                              ));*/
                           print(Renseignements.emailUser);
                           Navigator.push(
                               context,
@@ -455,7 +465,7 @@ class _RenseignementsState extends State<Renseignements> {
                           });
                         } catch (e) {
                           print(e);
-                        }*/
+                        }
 
                       } else {
 
@@ -468,6 +478,26 @@ class _RenseignementsState extends State<Renseignements> {
           ),
         ):CircularProgressIndicator()
     );
+  }
+
+  String key = "email_user";
+
+  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
+  Future<void> obtenir() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> liste = sharedPreferences.getStringList(key);
+    if (liste != null) {
+      setState(() {
+        Renseignements.userData = liste;
+      });
+    }
+  }
+
+  Future<void> ajouter(List<String> str) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Renseignements.userData = str;
+    await sharedPreferences.setStringList(key, Renseignements.userData);
+    obtenir();
   }
 
 
