@@ -1,6 +1,6 @@
 
 
-class PanierClasse {
+class PanierClasseSqflite {
   String nomDuProduit;
   int prix;
   String description;
@@ -14,7 +14,7 @@ class PanierClasse {
   String reference;
 
 
-  PanierClasse(
+  PanierClasseSqflite(
       {this.nomDuProduit,
         this.prix,
         this.description,
@@ -26,20 +26,22 @@ class PanierClasse {
         this.categorie,
         this.reference,
         this.sousCategorie
-    });
+      });
 
-  PanierClasse.fromMap(Map<String, dynamic> donnees, String id)
-      : nomDuProduit = donnees["nomDuProduit"],
-        prix = donnees["prix"],
-        description = donnees["description"],
-        image1 = donnees["image1"],
-        taille = donnees["taille"],
-        idProduitCategorie = donnees["idProduitCategorie"],
-        numberStar = donnees["numberStar"],
-        categorie = donnees["categorie"],
-        reference = donnees["reference"],
-        sousCategorie = donnees["sousCategorie"],
-        id= donnees["id"];
+
+  void fromMap(Map<String, dynamic> donnees) {
+    nomDuProduit = donnees["nomDuProduit"];
+    prix = donnees["prix"];
+    description = donnees["description"];
+    image1 = donnees["image1"];
+    taille = donnees["taille"];
+    idProduitCategorie = donnees["idProduitCategorie"];
+    numberStar = donnees["numberStar"];
+    categorie = donnees["categorie"];
+    reference = donnees["reference"];
+    sousCategorie = donnees["sousCategorie"];
+    id= donnees["id"];
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -56,5 +58,5 @@ class PanierClasse {
       "id":id,
 
     };
- }
+  }
 }

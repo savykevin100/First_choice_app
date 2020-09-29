@@ -126,7 +126,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         titre: "Filtres",
         context: context,
         controller: controller,
-        nbAjoutPanier: nombreAjoutPanier);
+        );
 
     return Scaffold(
       key: _scaffoldKey,
@@ -137,6 +137,9 @@ class _SearchFiltreState extends State<SearchFiltre> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: longueurPerCent(20, context),),
+
+              SizedBox(height: longueurPerCent(20, context),),
+
               Card(
                 child: Container(
                   color: Colors.white,
@@ -521,6 +524,47 @@ class _SearchFiltreState extends State<SearchFiltre> {
       ),
     );
   }
+
+  // -----------------------------------------------
+  // Creates a list of RangeSliders, based on their
+  // definition and SliderTheme customizations
+  // -----------------------------------------------
+  /* List<Widget> _buildRangeSliders() {
+    List<Widget> children = <Widget>[];
+    for (int index = 0; index < rangeSliders.length; index++) {
+      children
+          .add(rangeSliders[index].build(context, (double lower, double upper) {
+        // adapt the RangeSlider lowerValue and upperValue
+        setState(() {
+          rangeSliders[index].lowerValue = lower;
+          rangeSliders[index].upperValue = upper;
+        });
+      }));
+      // Add an extra padding at the bottom of each RangeSlider
+      children.add(SizedBox(height: 8.0));
+    }
+
+    return children;
+  }*/
+
+  // -------------------------------------------------
+  // Creates a list of RangeSlider definitions
+  // -------------------------------------------------
+  /*List<RangeSliderData> _rangeSliderDefinitions() {
+    return <RangeSliderData>[
+      RangeSliderData(
+          min: 0.0,
+          max: 500000.0,
+          lowerValue: 10.0,
+          upperValue: 1000.0,
+          showValueIndicator: true,
+          valueIndicatorMaxDecimals: 0,
+          activeTrackColor: Colors.red,
+          inactiveTrackColor: Colors.red[50],
+          valueIndicatorColor: Colors.green),
+
+    ];
+  }*/
 
   void getGenreOnly(){
     Firestore.instance.collection("TousLesProduits").where("categorie", isEqualTo: genre).getDocuments().then((value){
@@ -1206,4 +1250,123 @@ Widget buildResultCard(data) {
           )
       )
   );
+}*/
+// ---------------------------------------------------
+// Helper class aimed at simplifying the way to
+// automate the creation of a series of RangeSliders,
+// based on various parameters
+//
+// This class is to be used to demonstrate the appearance
+// customization of the RangeSliders
+// ---------------------------------------------------
+/*class RangeSliderData {
+  double min;
+  double max;
+  double lowerValue;
+  double upperValue;
+  int divisions;
+  bool showValueIndicator;
+  int valueIndicatorMaxDecimals;
+  bool forceValueIndicator;
+  Color overlayColor;
+  Color activeTrackColor;
+  Color inactiveTrackColor;
+  Color thumbColor;
+  Color valueIndicatorColor;
+  Color activeTickMarkColor;
+
+  static const Color defaultActiveTrackColor = const Color(0xFF0175c2);
+  static const Color defaultInactiveTrackColor = const Color(0x3d0175c2);
+  static const Color defaultActiveTickMarkColor = const Color(0x8a0175c2);
+  static const Color defaultThumbColor = const Color(0xFF0175c2);
+  static const Color defaultValueIndicatorColor = const Color(0xFF0175c2);
+  static const Color defaultOverlayColor = const Color(0x290175c2);
+
+  RangeSliderData({
+    this.min,
+    this.max,
+    this.lowerValue,
+    this.upperValue,
+    this.divisions,
+    this.showValueIndicator: true,
+    this.valueIndicatorMaxDecimals: 500,
+    this.forceValueIndicator: true,
+    this.overlayColor: defaultOverlayColor,
+    this.activeTrackColor: defaultActiveTrackColor,
+    this.inactiveTrackColor: defaultInactiveTrackColor,
+    this.thumbColor: defaultThumbColor,
+    this.valueIndicatorColor: defaultValueIndicatorColor,
+    this.activeTickMarkColor: defaultActiveTickMarkColor,
+  });
+
+  // Returns the values in text format, with the number
+  // of decimals, limited to the valueIndicatedMaxDecimals
+  //
+  String get lowerValueText =>
+      lowerValue.toStringAsFixed(valueIndicatorMaxDecimals);
+  String get upperValueText =>
+      upperValue.toStringAsFixed(valueIndicatorMaxDecimals);
+
+// Builds a RangeSlider and customizes the theme
+// based on parameters
+//
+Widget build(BuildContext context, frs.RangeSliderCallback callback) {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        children: <Widget>[
+          Container(
+            constraints: BoxConstraints(
+              minWidth: 70.0,
+              maxWidth: 70.0,
+            ),
+            child: Text(lowerValueText),
+          ),
+          Expanded(
+
+            child: Container(
+              margin: EdgeInsets.only(top: 60,),
+              child: SliderTheme(
+                // Customization of the SliderTheme
+                // based on individual definitions
+                // (see rangeSliders in _RangeSliderSampleState)
+                data: SliderTheme.of(context).copyWith(
+                  overlayColor: overlayColor,
+                  activeTickMarkColor: activeTickMarkColor,
+                  activeTrackColor: activeTrackColor,
+                  inactiveTrackColor: inactiveTrackColor,
+                  //trackHeight: 8.0,
+                  thumbColor: thumbColor,
+                  valueIndicatorColor: valueIndicatorColor,
+                  showValueIndicator: showValueIndicator
+                      ? ShowValueIndicator.always
+                      : ShowValueIndicator.onlyForDiscrete,
+                ),
+                child: frs.RangeSlider(
+                  min: min,
+                  max: max,
+                  lowerValue: lowerValue,
+                  upperValue: upperValue,
+                  divisions: 500,
+                  showValueIndicator: showValueIndicator,
+                  valueIndicatorMaxDecimals: valueIndicatorMaxDecimals,
+                  onChanged: (double lower, double upper) {
+                    // call
+                    callback(lower, upper);
+                  },
+                ),
+              ),
+            ),
+          ),
+          Container(
+            constraints: BoxConstraints(
+              minWidth: 100.0,
+              maxWidth: 100.0,
+            ),
+            child: Text(upperValueText + " F CFA"),
+          ),
+        ],
+      ),
+    );
+  }
 }*/

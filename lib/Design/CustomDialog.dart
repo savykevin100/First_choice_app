@@ -69,15 +69,10 @@ class CustomDialog extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: cancelButton,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 175),
-                    child: nextButton,
-                  ),
+                  cancelButton,
+                  nextButton,
                 ],
               ),
             ],

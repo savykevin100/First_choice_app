@@ -89,7 +89,7 @@ class _Panier1State extends State<Panier1> {
           style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
         ),
       ),
-      body: (numUser != null && name != null && quartiersDb != null)
+      body: (quartiersDb != null)
           ? ConnexionState(body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -114,7 +114,7 @@ class _Panier1State extends State<Panier1> {
 
               Center(
                 child: Text(
-                  name,
+                  Renseignements.userData[2],
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: HexColor("#001C36"),
@@ -128,7 +128,7 @@ class _Panier1State extends State<Panier1> {
                   padding: EdgeInsets.all(longueurPerCent(10, context)),
                   child: Center(
                     child: Text(
-                      numUser,
+                        Renseignements.userData[0],
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: HexColor("#001C36"),

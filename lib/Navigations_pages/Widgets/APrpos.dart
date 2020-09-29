@@ -20,7 +20,7 @@ class _APrposState extends State<APrpos> {
         titre: "A Propos",
         controller: controller,
         context: context,
-        nbAjoutPanier: ajoutPanier);
+        );
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),

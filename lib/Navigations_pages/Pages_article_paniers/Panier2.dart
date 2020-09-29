@@ -8,6 +8,8 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
+import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
@@ -61,6 +63,16 @@ class _Panier2State extends State<Panier2> {
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // Table qui contient les éléments du panier
+  List<PanierClasseSqflite> panierItems = [];
+
+  void getDataPanier(){
+    DatabaseClient().readPanierData().then((value) {
+      setState(() {
+        panierItems=value;
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -74,33 +86,12 @@ class _Panier2State extends State<Panier2> {
     setState(() {
       totalPlusLivraison = widget.total + widget.prixLivraison;
     });
-    getIdProduit();
     getNumberOrder();
+    getDataPanier();
   }
 
 
 
-  /// Cette fonction permet de recupérer tous les identifiants qui sont dans le panier de l'utilisateur afin de mettre le panier à zéro quand
-  /// quand la commande a été lancé
-  Future<void> getIdProduit() async {
-    await _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .collection("Panier")
-        .getDocuments()
-        .then((QuerySnapshot snapshot) {
-      for (int i = 0; i < snapshot.documents.length; i++) {
-        if (this.mounted) {
-          setState(() {
-            idProduitsPanier.add(snapshot.documents[i].documentID);
-          });
-        }
-      }
-    });
-  }
-
-  ///         fin de la fonction                  ////////
-  ///
 
   Future<void> getNumberOrder() async {
     await _db
@@ -845,6 +836,11 @@ class _Panier2State extends State<Panier2> {
     setState(() {
       chargement=true;
     });
+    for(int i=0; i<panierItems.length; i++){
+      DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
+      Renseignements.nombreAjoutPanier--;
+    }
+
     for(int i=0; i<widget.produitsCommander.length; i++){
       _db .collection("ProduitsIndisponibles").where("image1", isEqualTo:widget.produitsCommander[i]["image1"])
           .getDocuments().then((QuerySnapshot snapshot){
@@ -863,26 +859,12 @@ class _Panier2State extends State<Panier2> {
     }
 
 
+
     _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .updateData({"nbAjoutPanier": 0});
-    _db
-        .collection("Informations_générales")
+        .collection("Informations_généralesŒ")
         .document("78k1bDeNwVHCzMy8hMGh")
         .updateData({"nombreCommande": numberOrder});
 
-    /// ---       Cette boucle permet de parcourir les identifiants du panier et de le renitialiser     --- ///
-    for (int i = 0; i < idProduitsPanier.length; i++) {
-      Firestore.instance
-          .collection('Utilisateurs')
-          .document(Renseignements.emailUser)
-          .collection("Panier")
-          .document(idProduitsPanier[i])
-          .delete();
-    }
-
-    ///Fin de la boucle ///
 
 
     try {

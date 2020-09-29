@@ -97,7 +97,6 @@ class _ConnexionState extends State<Connexion> {
                           chargement=false;
                         });
                         Navigator.pushNamed(context,AllNavigationPage.id);
-
                       }
                     } catch (e) {
                       setState(() {

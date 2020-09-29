@@ -35,7 +35,7 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
         titre: widget.titreCategorie,
         controller: controller,
         context: context,
-        nbAjoutPanier: ajoutPanier);
+       );
     return
     Scaffold(
       appBar: _appBar.appBarFunctionStream(),

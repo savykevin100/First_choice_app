@@ -95,13 +95,13 @@ class _ChatState extends State<Chat> {
         titre: "Message",
         controller: controller,
         context: context,
-        nbAjoutPanier: ajoutPanier);
+       );
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer:  ProfileSettings(
-        userCurrent:Renseignements.emailUser,
-          firstLetter:(nameUser!=null)?nameUser[0]:""
-      ),
+        drawer: ProfileSettings(
+            userCurrent: Renseignements.userData[1],
+            firstLetter:Renseignements.userData[2][0]
+        ),
       body:WillPopScope(
         onWillPop: _onBackPressed,
         child: ConnexionState(body:  Container(

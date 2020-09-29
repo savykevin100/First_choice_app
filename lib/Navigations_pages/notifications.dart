@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -19,7 +18,6 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
  int nombreAjoutPanier;
  final controller = ScrollController();
- String nameUser;
 
 
  Future<bool> _onBackPressed() {
@@ -45,38 +43,25 @@ class _NotificationsState extends State<Notifications> {
        false;
  }
 
- Future<void> fetchDataUser(String id) async {
-   await Firestore.instance
-       .collection("Utilisateurs")
-       .document(id)
-       .get()
-       .then((value) {
-     if (this.mounted) {
-       setState(() {
-         nameUser = value.data["nomComplet"];
-       });
-     }
-   });
- }
+
 
 
  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchDataUser(Renseignements.emailUser);
  }
 
  @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Notifications", context: context, controller: controller, nbAjoutPanier: nombreAjoutPanier);
+        titre: "Notifications", context: context, controller: controller, );
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
       drawer: ProfileSettings(
-        userCurrent:Renseignements.emailUser,
-          firstLetter:(nameUser!=null)?nameUser[0]:""
+          userCurrent: Renseignements.userData[1],
+          firstLetter:Renseignements.userData[2][0]
       ),
       body: WillPopScope(
         onWillPop:_onBackPressed,
