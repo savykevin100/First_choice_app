@@ -209,7 +209,6 @@ class _PanierState extends State<Panier> {
                                                 DatabaseClient().deleteItemPanier(panierItems[index].id , "panier").then((value) {
                                                   getDataPanier();
                                                 });
-
                                                 //  FirestoreService().deletePanier(Renseignements.emailUser, panier.id);
                                                 for(int i=0; i<produitsIndisponibles.length; i++){
                                                   if(produitsIndisponibles[i]["image1"]==produitsPaniers[index]["image1"])
@@ -217,7 +216,7 @@ class _PanierState extends State<Panier> {
                                                       produitsIndisponibles.removeAt(i);
                                                     });
                                                 }
-                                                Renseignements.nombreAjoutPanier--;
+
                                               /*  _db
                                                     .collection("Utilisateurs")
                                                     .document(
@@ -226,6 +225,7 @@ class _PanierState extends State<Panier> {
                                                   "nbAjoutPanier": ajoutPanier
                                                 });*/
                                                 setState(() {
+                                                  Renseignements.nombreAjoutPanier--;
                                                   total = total - produitsPaniers[index]["prix"];
                                                   prixWithDot = priceWithDot(total);
                                                   numberProductOrder--;

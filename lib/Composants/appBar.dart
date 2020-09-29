@@ -27,6 +27,33 @@ class AppBarClasse extends StatefulWidget{
 
 
 
+  Widget appBarFunctionHome(){
+    return  ScrollAppBar(
+      controller: controller,
+      backgroundColor: HexColor("#001c36"),
+      title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
+      iconTheme: IconThemeData(color: Colors.white),
+      actions: <Widget>[
+        Badge(
+          badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
+          toAnimate: true,
+          position: BadgePosition.topRight(top:   0,  right: 0),
+          child: IconButton(
+              icon: Icon(
+                Icons.local_grocery_store,
+                color: Colors.white,
+              ),
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Panier  ()));
+              }),
+        )
+      ],
+    );
+  }
   Widget appBarFunctionStream(){
     return ScrollAppBar(
       controller: controller,
