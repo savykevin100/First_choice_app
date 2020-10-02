@@ -42,6 +42,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
   List<RadioModelGenre> sampleDataSousCategorie = new List<RadioModelGenre>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  TextEditingController _prixMaxController = TextEditingController();
+  TextEditingController _prixMinController = TextEditingController();
+
+
   List<String> sousCategorieHommes=[];
   List<String> sousCategorieFemmes=[];
   List<String> sousCategorieHommesEtFemmes=[];
@@ -58,8 +62,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
           setState(() {
             somme++;
             verificationLength++;
-            /*sousCategorieHommes.add(element.data["nomCategorie"]);
-                sousCategorieHommesEtFemmes.add(element.data["nomCategorie"]);*/
             sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
           });
         }
@@ -133,7 +135,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
       appBar: _appBar.appBarFunctionStream(),
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
+          child:  (sampleDataSousCategorie!=null)?Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: longueurPerCent(20, context),),
@@ -167,82 +169,8 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   ),
                 ),
               ),
-
-              /*Center(
-                child: Card(
-                  child: Container(
-                    height: longueurPerCent(200, context),
-                    padding: EdgeInsets.only(
-                        left: largeurPerCent(10, context),
-                        right: largeurPerCent(20, context),
-                        top: longueurPerCent(10, context)),
-                    child: Column(
-                      children: <Widget>[
-                       /* DropdownButton(
-                          underline: Text(""),
-                          hint: genre == null
-                              ? Text(
-                            'Genre',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          )
-                              : Text(
-                            genre,
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                          isExpanded: true,
-                          iconSize: 40.0,
-                          items: ['Hommes', 'Femmes'].map(
-                                (val) {
-                              return DropdownMenuItem<String>(
-                                value: val,
-                                child: Text(val),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (val) {
-                            setState(
-                                  () {
-                                genre = val;
-                              },
-                            );
-                          },
-                        ),*/
-                      ],
-                    ),
-                  ),
-                ),
-              ),*/
               SizedBox(height: longueurPerCent(20, context),),
-
-             /* (sampleDataSousCategorie!=null)?Card(child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.only(top: 10.0, left: 60.0, right: 0.0),
-                margin: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                height: longueurPerCent(300, context),
-                child:  ListView.builder(
-                  shrinkWrap: false,
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: sampleDataSousCategorie.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new InkWell(
-                      splashColor: Colors.blueAccent,
-                      onTap: () {
-                        setState(() {
-                          sampleDataSousCategorie.forEach(
-                                  (element) => element.isSelected = false);
-                          sampleDataSousCategorie[index].isSelected = true;
-                          sousCategorie=sampleDataSousCategorie[index].text;
-                        });
-                      },
-                      child: new RadioItemGenre(sampleDataSousCategorie[index]),
-                    );
-                  },
-                ),
-              ),):Container(),*/
-              (sampleDataSousCategorie!=null)?Container(
+             Container(
                height: longueurPerCent(200, context),
                child:  StaggeredGridView.countBuilder(
                  reverse: false,
@@ -265,109 +193,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
                  staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
                  mainAxisSpacing: 0.0,
                  crossAxisSpacing: 10.0,
-                 
                  shrinkWrap: true,
                  physics: NeverScrollableScrollPhysics(),
                ),
-             ):Container(),
-             /* Padding(
-                padding: EdgeInsets.only(right: largeurPerCent(20, context)),
-                child: Text("Selectionnez la catégorie :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "MonseraBold"),),
-              ),
-              SizedBox(height: longueurPerCent(10, context),),
-
-              // Categorie list
-              Center(
-                child: Card(
-                  child: Container(
-                    height: longueurPerCent(50, context),
-                    padding: EdgeInsets.only(
-                        left: largeurPerCent(10, context),
-                        right: largeurPerCent(20, context),
-                        top: longueurPerCent(10, context)),
-                    child: DropdownButton(
-                      underline: Text(""),
-                      hint: _dropDownValue2 == null
-                          ? Text(
-                        'Categorie',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      )
-                          : Text(
-                        _dropDownValue2,
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
-                      isExpanded: true,
-                      iconSize: 40.0,
-                      items: ['ACCESSOIRES', 'CHEMISES', 'T-SHIRT', 'JEANS'].map(
-                            (val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(val),
-                          );
-                        },
-                      ).toList(),
-                      onChanged: (val) {
-                        setState(
-                              () {
-                            _dropDownValue2 = val;
-                            sousCategorie = _dropDownValue2;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),*/
-              /*Padding(
-                padding: EdgeInsets.only(right: largeurPerCent(20, context)),
-                child: Text("Selectionnez le type de filtre :", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "MonseraBold"),),
-              ),
-              SizedBox(height: longueurPerCent(10, context),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                      value: sizeChekbox,
-                      onChanged: (bool value) {
-                        setState(() {
-                          sizeChekbox = value;
-                        });
-                      }),
-                  Text("Taille"),
-                  SizedBox(
-                    width: longueurPerCent(100, context),
-                  ),
-                  Row(
-                    children: [
-                      Checkbox(
-                          value: prix,
-                          onChanged: (bool value) {
-                            setState(() {
-                              prix = value;
-                            });
-                          }),
-                      Text("prix")
-                    ],
-                  ),
-
-
-                ],
-              ),*/
-
-              (sizeChekbox)?Card(
-                child: Container(
-                  width: MediaQuery.of(context).size.width/2,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Taille",
-                    ),
-                    onChanged: (value) => taille=value,
-                  ),
-                ),
-              ):Text(""),
-              (sampleDataSousCategorie!=null)?Container(
+             ),
+             Container(
                 height: longueurPerCent(200, context),
                 child:  StaggeredGridView.countBuilder(
                   reverse: false,
@@ -391,10 +221,9 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                 ),
-              ):Container(),
-
+              ),
               SizedBox(height: longueurPerCent(10, context),),
-              (prix)?Row(
+              Row(
                 children: [
                   Expanded(
                     flex: 2,
@@ -402,6 +231,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       child: Container(
                         width: MediaQuery.of(context).size.width/2,
                         child: TextField(
+                          controller: _prixMinController,
                           decoration: InputDecoration(
                             hintText: "Prix Min",
                           ),
@@ -420,6 +250,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       child: Container(
                         width: MediaQuery.of(context).size.width/2,
                         child: TextField(
+                          controller: _prixMaxController,
                           decoration: InputDecoration(
                             hintText: "Prix Max",
                           ),
@@ -430,7 +261,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                     ),
                   ),
                 ],
-              ):Text(""),
+              ),
               SizedBox(
                 height: longueurPerCent(10, context),
               ),
@@ -439,7 +270,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 height: longueurPerCent(200, context),
               ),
             ],
-          ),
+          ):CircularProgressIndicator()
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -458,14 +289,15 @@ class _SearchFiltreState extends State<SearchFiltre> {
             else if(genre!=null && taille!=null &&  sousCategorie==null && prixMax==null && prixMin==null)
               getGenreAndSize(); // good
             else if(genre!=null && taille!=null &&  sousCategorie==null && prixMax!=null && prixMin!=null)
-              getGenreAndPriceAndSize(genre, prixMax, prixMin, taille); // good
+            {
+              getGenreAndPriceAndSize(genre, prixMax, prixMin, taille);// good
+            }
             else if(genre!=null && taille!=null &&  sousCategorie!=null && prixMax!=null && prixMin!=null)
               getGenreAndPriceAndSizeAndCategorie(genre, taille, sousCategorie, prixMax, prixMin); // good
 
             // categorie search
             else if (sousCategorie != null && genre == null && prixMax==null && prixMin==null && taille==null){
               getCategorieOnly(sousCategorie);// good
-
             }
             else if(sousCategorie!=null && prixMax!=null && prixMin!=null && genre==null && taille==null)
               getCategorieAndPrice(sousCategorie, prixMax, prixMin); // good
@@ -495,11 +327,13 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 noData="VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
               });
             setState(() {
+              prixMax=null;
+              prixMin=null;
+              _prixMaxController.text="";
+              _prixMinController.text="";
               sousCategorie=null;
               sizeChekbox = false;
               prix = false;
-              prixMax = null;
-              prixMin = null;
               taille = null;
               genre = null;
               sampleData.forEach((element) {
