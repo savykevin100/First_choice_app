@@ -77,6 +77,3 @@ class AppBarClasse extends StatefulWidget{
 
 
 }
-
-
-

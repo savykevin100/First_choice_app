@@ -9,18 +9,18 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
 // ignore: must_be_immutable
-class MensurationHomme extends StatefulWidget {
-  static String id="MensurationHomme";
+class Mensuration extends StatefulWidget {
+  static String id="Mensuration";
   String genre;
   String titreCategorie;
 
 
 
   @override
-  _MensurationHommeState createState() => _MensurationHommeState();
+  _MensurationState createState() => _MensurationState();
 }
 
-class _MensurationHommeState extends State<MensurationHomme> {
+class _MensurationState extends State<Mensuration> {
 
   ScrollController controller = ScrollController();
   String nameUser;
@@ -57,10 +57,6 @@ class _MensurationHommeState extends State<MensurationHomme> {
           "Tableaux Mensurations",
           style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
         ),
-      ),
-      drawer: ProfileSettings(
-          userCurrent:Renseignements.emailUser,
-          firstLetter:(nameUser!=null)?nameUser[0]:""
       ),
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
@@ -119,7 +115,7 @@ class _MensurationHommeState extends State<MensurationHomme> {
                       ],
                     ),
                   ),
-                  (nombre==1)? Column(
+                  (nombre==0)? Column(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: longueurPerCent(20, context)),
@@ -134,13 +130,13 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                 width: MediaQuery.of(context).size.height,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                                  color: HexColor("#FFC30D"),
+                                  color: Colors.pink,
                                   child: Center(
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
-                                          'Pulls- Jaquet- Polos',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          'T-Shirt',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
@@ -211,93 +207,13 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                 width: MediaQuery.of(context).size.height,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                                  color: HexColor("#FFC30D"),
+                                  color:Colors.pink,
                                   child: Center(
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
-                                          'Robes - Combinaisons',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                        ),
-                                      )
-                                  ),
-                                ),
-                              ),
-                              Center(
-                                child: DataTable(
-                                  columnSpacing: 60,
-                                  columns: [
-                                    DataColumn(label: Container(
-                                        width:180,
-                                        child: Text('Tour de poitrine en cm',
-                                          style: TextStyle(
-                                              fontSize: 15
-                                          ),
-                                        ))),
-                                    DataColumn(label: Container(
-                                        width:200,
-                                        child: Text('Votre taille à sélectionner',
-                                          style: TextStyle(
-                                              fontSize: 15
-                                          ),
-                                        ))),
-
-                                  ],
-                                  rows: [
-                                    DataRow(cells: [
-                                      DataCell(Center(child: Text('88/92'))),
-                                      DataCell(Center(child: Text('S',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))),
-
-
-                                    ]),
-                                    DataRow(cells: [
-                                      DataCell(Center(child: Text('96/100'))),
-                                      DataCell(Center(child: Text('M',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))),
-                                    ]),
-                                    DataRow(cells: [
-                                      DataCell(Center(child: Text('104/108'))),
-                                      DataCell(Center(child: Text('L',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))),
-
-                                    ]),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: longueurPerCent(20, context),),
-                      Container(
-                        width: MediaQuery.of(context).size.height,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                          elevation: 2.0,
-                          child: Column(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.height,
-                                child: Material(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                                  color: HexColor("#FFC30D"),
-                                  child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: Text(
-                                          'T-Sirt',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          'Robes/Combinaisons',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
@@ -372,13 +288,13 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                 width: MediaQuery.of(context).size.height,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                                  color: HexColor("#FFC30D"),
+                                  color: Colors.pink,
                                   child: Center(
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
                                           'Jeans',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
@@ -461,8 +377,8 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
-                                          'Pulls- Jaquet- Polos',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          'T-Shirt/Pollos/Pulls/Jacket',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
@@ -572,8 +488,8 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
-                                          'Chemises',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          'Chemise',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
@@ -675,8 +591,8 @@ class _MensurationHommeState extends State<MensurationHomme> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
-                                          'Pantalon',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                          'Jeans',
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                                         ),
                                       )
                                   ),
