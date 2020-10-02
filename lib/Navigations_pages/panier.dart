@@ -14,7 +14,6 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Panier extends StatefulWidget {
