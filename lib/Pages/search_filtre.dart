@@ -132,45 +132,141 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
       appBar: _appBar.appBarFunctionStream(),
       body: SingleChildScrollView(
         child: Center(
           child:  (sampleDataSousCategorie!=null)?Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: longueurPerCent(20, context),),
-
-              SizedBox(height: longueurPerCent(20, context),),
-
-              Card(
-                child: Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.only(top: 10.0, left: 60.0, right: 0.0),
-                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(60, context),
-                  child:  ListView.builder(
-                    shrinkWrap: false,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: sampleDataGenre.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new InkWell(
-                        splashColor: Colors.blueAccent,
-                        onTap: () {
-                          setState(() {
-                            sampleDataGenre.forEach(
-                                    (element) => element.isSelected = false);
-                            sampleDataGenre[index].isSelected = true;
-                            genre=sampleDataGenre[index].text;
-                          });
-                        },
-                        child: new RadioItemGenre(sampleDataGenre[index]),
-                      );
-                    },
-                  ),
+              Padding(
+                padding: EdgeInsets.only(left: 20,bottom: 5),
+                child: Text(
+                  "Prix",
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 15,
+                      fontFamily: "MonseraBold",
+                    )
+                ),
+              ),
+              Container(
+                color: HexColor("#F5F5F5"),
+                padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0,bottom: 10),
+                margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width/2,
+                        child: TextField(
+                          controller: _prixMinController,
+                          style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 12,
+                            fontFamily: "MonseraBold",
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Prix Min",
+                            hintStyle: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 12,
+                              fontFamily: "MonseraRegular",
+                            )
+                          ),
+                          onChanged: (value) => prixMin=int.tryParse(value),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Container()),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width/2,
+                        child: TextField(
+                          controller: _prixMaxController,
+                          style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 12,
+                            fontFamily: "MonseraBold",
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Prix Max",
+                              hintStyle: TextStyle(
+                                color: HexColor("#001C36"),
+                                fontSize: 12,
+                                fontFamily: "MonseraRegular",
+                              )
+                          ),
+                          onChanged: (value) => prixMax=int.tryParse(value),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: longueurPerCent(20, context),),
+              Padding(
+                padding: EdgeInsets.only(left: 20,bottom: 5),
+                child: Text(
+                    "Genre",
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 15,
+                      fontFamily: "MonseraBold",
+                    )
+                ),
+              ),
+              Container(
+                color: HexColor("#F5F5F5"),
+                padding: const EdgeInsets.only(top: 10.0, left: 90.0, right: 0.0),
+                margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                height: longueurPerCent(60, context),
+                child:  ListView.builder(
+                  shrinkWrap: false,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: sampleDataGenre.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return new InkWell(
+                      splashColor: Colors.blueAccent,
+                      onTap: () {
+                        setState(() {
+                          sampleDataGenre.forEach(
+                                  (element) => element.isSelected = false);
+                          sampleDataGenre[index].isSelected = true;
+                          genre=sampleDataGenre[index].text;
+                        });
+                      },
+                      child: Row(
+                          children: [
+                        new RadioItemGenre(sampleDataGenre[index]),
+                          ]),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: longueurPerCent(20, context),),
+              Padding(
+                padding: EdgeInsets.only(left: 20,bottom: 5),
+                child: Text(
+                    "Catégories",
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 15,
+                      fontFamily: "MonseraBold",
+                    )
+                ),
+              ),
              Container(
+               color: HexColor("#F5F5F5"),
+               padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
+               margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
                height: longueurPerCent(200, context),
                child:  StaggeredGridView.countBuilder(
                  reverse: false,
@@ -197,7 +293,22 @@ class _SearchFiltreState extends State<SearchFiltre> {
                  physics: NeverScrollableScrollPhysics(),
                ),
              ),
+             SizedBox(height: longueurPerCent(20, context),),
+              Padding(
+                padding: EdgeInsets.only(left: 20,bottom: 5),
+                child: Text(
+                    "Taille",
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 15,
+                      fontFamily: "MonseraBold",
+                    )
+                ),
+              ),
              Container(
+               color: HexColor("#F5F5F5"),
+               padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
+               margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
                 height: longueurPerCent(200, context),
                 child:  StaggeredGridView.countBuilder(
                   reverse: false,
@@ -222,46 +333,8 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   physics: NeverScrollableScrollPhysics(),
                 ),
               ),
-              SizedBox(height: longueurPerCent(10, context),),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Card(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: TextField(
-                          controller: _prixMinController,
-                          decoration: InputDecoration(
-                            hintText: "Prix Min",
-                          ),
-                          onChanged: (value) => prixMin=int.tryParse(value),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Container()),
-                  Expanded(
-                    flex: 2,
-                    child: Card(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: TextField(
-                          controller: _prixMaxController,
-                          decoration: InputDecoration(
-                            hintText: "Prix Max",
-                          ),
-                          onChanged: (value) => prixMax=int.tryParse(value),
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              SizedBox(height: longueurPerCent(20, context),),
+
               SizedBox(
                 height: longueurPerCent(10, context),
               ),
@@ -900,9 +973,10 @@ class RadioItemGenre extends StatelessWidget {
               child: new Text(_item.buttonText,
                   style: new TextStyle(
                       color:
-                      _item.isSelected ? Colors.white : Colors.black,
+                      _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
+                    fontFamily: "MonseraRegular",
                       //fontWeight: FontWeight.bold,
-                      fontSize: 18.0)),
+                      )),
             ),
             decoration: new BoxDecoration(
               color: _item.isSelected
@@ -913,12 +987,17 @@ class RadioItemGenre extends StatelessWidget {
                   color: _item.isSelected
                       ? Colors.blueAccent
                       : Colors.grey),
-              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+              borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
             ),
           ),
           new Container(
             margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text),
+            child: new Text(_item.text,
+                style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12,
+                  fontFamily: "MonseraRegular",
+                )),
           )
         ],
       ),
@@ -941,7 +1020,7 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.all(15.0),
+      margin: new EdgeInsets.all(10.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -952,9 +1031,10 @@ class RadioItem extends StatelessWidget {
               child: new Text(_item.buttonText,
                   style: new TextStyle(
                       color:
-                      _item.isSelected ? Colors.white : Colors.black,
+                      _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 12,
+                      fontFamily: "MonseraRegular",
                       //fontWeight: FontWeight.bold,
-                      fontSize: 15.0)),
+                      )),
             ),
             decoration: new BoxDecoration(
               color: _item.isSelected
@@ -965,7 +1045,7 @@ class RadioItem extends StatelessWidget {
                   color: _item.isSelected
                       ? Theme.of(context).primaryColor
                       : Colors.grey),
-              borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
+              borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
             ),
           ),
         ],

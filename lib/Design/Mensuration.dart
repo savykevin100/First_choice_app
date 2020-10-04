@@ -378,7 +378,7 @@ class _MensurationState extends State<Mensuration> {
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
                                           'T-Shirt/Pollos/Pulls/Jacket',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:HexColor("#001C36")),
                                         ),
                                       )
                                   ),
@@ -489,7 +489,7 @@ class _MensurationState extends State<Mensuration> {
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
                                           'Chemise',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
                                         ),
                                       )
                                   ),
@@ -592,7 +592,7 @@ class _MensurationState extends State<Mensuration> {
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Text(
                                           'Jeans',
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
                                         ),
                                       )
                                   ),
