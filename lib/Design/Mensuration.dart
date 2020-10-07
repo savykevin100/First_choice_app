@@ -119,7 +119,7 @@ class _MensurationState extends State<Mensuration> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: longueurPerCent(20, context)),
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
                           color: Colors.white,
@@ -127,7 +127,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color: Colors.pink,
@@ -147,15 +147,13 @@ class _MensurationState extends State<Mensuration> {
                                   columnSpacing: 60,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
                                         child: Text('Tour de poitrine en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
-                                        child: Text('Votre taille à sélectionner',
+                                        child: Text('Taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
@@ -164,7 +162,15 @@ class _MensurationState extends State<Mensuration> {
                                   ],
                                   rows: [
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('88/92'))),
+                                      DataCell(Center(child: Text('78/82'))),
+                                      DataCell(Center(child: Text('XS',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('82/86'))),
                                       DataCell(Center(child: Text('S',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -172,7 +178,7 @@ class _MensurationState extends State<Mensuration> {
                                       ))),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('96/100'))),
+                                      DataCell(Center(child: Text('86/90'))),
                                       DataCell(Center(child: Text('M',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -180,8 +186,24 @@ class _MensurationState extends State<Mensuration> {
                                       ))),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('104/108'))),
+                                      DataCell(Center(child: Text('90/94'))),
                                       DataCell(Center(child: Text('L',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('94/98'))),
+                                      DataCell(Center(child: Text('XL',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('98/102'))),
+                                      DataCell(Center(child: Text('XXL',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -196,7 +218,7 @@ class _MensurationState extends State<Mensuration> {
                       ),
                       SizedBox(height: longueurPerCent(20, context),),
                       Container(
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
                           color: Colors.white,
@@ -204,7 +226,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color:Colors.pink,
@@ -221,17 +243,15 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 60,
+                                  columnSpacing: 40,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
                                         child: Text('Tour de poitrine en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
                                         child: Text('Votre taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
@@ -276,7 +296,7 @@ class _MensurationState extends State<Mensuration> {
                       ),
                       SizedBox(height: longueurPerCent(20, context),),
                       Container(
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(bottom: longueurPerCent(40, context)),
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
@@ -285,7 +305,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color: Colors.pink,
@@ -302,18 +322,21 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 60,
+                                  columnSpacing: 30,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
-                                        child: Text('Tour de poitrine en cm',
+                                        child: Text('Taille en cm',
+                                          style: TextStyle(
+                                              fontSize: 15
+                                          ),
+                                        ))),DataColumn(label: Container(
+                                        child: Text('Basin en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
-                                        child: Text('Votre taille à sélectionner',
+                                        child: Text(' Taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
@@ -322,17 +345,26 @@ class _MensurationState extends State<Mensuration> {
                                   ],
                                   rows: [
                                     DataRow(cells: [
+                                      DataCell(Center(child: Text('55/59'))),
+                                      DataCell(Center(child: Text('84/88'))),
+                                      DataCell(Center(child: Text('XS',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('59/63'))),
                                       DataCell(Center(child: Text('88/92'))),
                                       DataCell(Center(child: Text('S',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))),
-
-
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('96/100'))),
+                                      DataCell(Center(child: Text('63/67'))),
+                                      DataCell(Center(child: Text('92/96'))),
                                       DataCell(Center(child: Text('M',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -340,13 +372,31 @@ class _MensurationState extends State<Mensuration> {
                                       ))),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('104/108'))),
+                                      DataCell(Center(child: Text('67/71'))),
+                                      DataCell(Center(child: Text('96/100'))),
                                       DataCell(Center(child: Text('L',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))),
-
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('71/75'))),
+                                      DataCell(Center(child: Text('100/104'))),
+                                      DataCell(Center(child: Text('XL',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('75/79'))),
+                                      DataCell(Center(child: Text('104/108'))),
+                                      DataCell(Center(child: Text('XXL',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
                                     ]),
                                   ],
                                 ),
@@ -361,7 +411,7 @@ class _MensurationState extends State<Mensuration> {
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: longueurPerCent(20, context)),
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
                           color: Colors.white,
@@ -369,7 +419,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color: HexColor("#FFC30D"),
@@ -386,17 +436,15 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 60,
+                                  columnSpacing: 40,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
                                         child: Text('Tour de poitrine en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
                                         child: Text('Votre taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
@@ -472,7 +520,7 @@ class _MensurationState extends State<Mensuration> {
                       ),
                       SizedBox(height: longueurPerCent(20, context),),
                       Container(
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
                           color: Colors.white,
@@ -480,7 +528,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color: HexColor("#FFC30D"),
@@ -497,17 +545,15 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 60,
+                                  columnSpacing: 40,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
                                         child: Text('Tour de poitrine en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
                                         child: Text('Votre taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
@@ -575,7 +621,7 @@ class _MensurationState extends State<Mensuration> {
                       ),
                       SizedBox(height: longueurPerCent(20, context),),
                       Container(
-                        width: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: Material(
                           borderRadius: BorderRadius.circular(7),
                           color: Colors.white,
@@ -583,7 +629,7 @@ class _MensurationState extends State<Mensuration> {
                           child: Column(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
                                 child: Material(
                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
                                   color: HexColor("#FFC30D"),
@@ -600,17 +646,15 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 60,
+                                  columnSpacing: 40,
                                   columns: [
                                     DataColumn(label: Container(
-                                        width:180,
-                                        child: Text('Tour de poitrine en cm',
+                                        child: Text('Tour de taille en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        width:200,
                                         child: Text('Votre taille à sélectionner',
                                           style: TextStyle(
                                               fontSize: 15
