@@ -120,7 +120,7 @@ class _CategoriesState extends State<Categories> {
                     Padding(
                       padding: EdgeInsets.only(left: largeurPerCent(10, context)),
                       child: Text(
-                        "FEMMES",
+                        "FEMME",
                         style: TextStyle(
                             color: Colors.pink,
                             fontFamily: "MonseraBold",

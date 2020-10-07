@@ -361,7 +361,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   maxWidth: MediaQuery.of(context).size.width-10,
                 ),
                 child: Text((widget.produit.description==null)?"Pas de descritption":"${widget.produit.description}", style: TextStyle(
-                    color: HexColor("#001c36"),
+                    color: HexColor("#001C36"),
                     fontFamily: "MonseraLight",
                     fontSize: 15) ),
               ),
