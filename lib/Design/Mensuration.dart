@@ -243,44 +243,93 @@ class _MensurationState extends State<Mensuration> {
                               ),
                               Center(
                                 child: DataTable(
-                                  columnSpacing: 40,
+                                  columnSpacing: 30,
                                   columns: [
                                     DataColumn(label: Container(
-                                        child: Text('Tour de poitrine en cm',
+                                        child: Text('Poitrine',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
                                     DataColumn(label: Container(
-                                        child: Text('Votre taille à sélectionner',
+                                        child: Text('Taile',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
                                         ))),
+                                    DataColumn(label: Text('Bassin',
+                                      style: TextStyle(
+                                          fontSize: 15
+                                      ),
+                                    )),
+                                    DataColumn(label: Text('Taille à sélectionner',
+                                      style: TextStyle(
+                                          fontSize: 15
+                                      ),
+                                    )),
 
                                   ],
                                   rows: [
                                     DataRow(cells: [
+                                      DataCell(Center(child: Text('78/82'))),
+                                      DataCell(Center(child: Text('55/59'))),
+                                      DataCell(Center(child: Text('84/88'))),
+                                      DataCell(Center(child: Text('XS',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+
+
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('82/86'))),
+                                      DataCell(Center(child: Text('59/63'))),
                                       DataCell(Center(child: Text('88/92'))),
                                       DataCell(Center(child: Text('S',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))),
-
-
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('96/100'))),
+                                      DataCell(Center(child: Text('86/90'))),
+                                      DataCell(Center(child: Text('63/67'))),
+                                      DataCell(Center(child: Text('92/96'))),
                                       DataCell(Center(child: Text('M',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))),
+
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Center(child: Text('104/108'))),
+                                      DataCell(Center(child: Text('90/94'))),
+                                      DataCell(Center(child: Text('67/71'))),
+                                      DataCell(Center(child: Text('96/100'))),
                                       DataCell(Center(child: Text('L',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('94/98'))),
+                                      DataCell(Center(child: Text('71/75'))),
+                                      DataCell(Center(child: Text('100/104'))),
+                                      DataCell(Center(child: Text('XL',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))),
+
+                                    ]),
+                                    DataRow(cells: [
+                                      DataCell(Center(child: Text('98/102'))),
+                                      DataCell(Center(child: Text('75/79'))),
+                                      DataCell(Center(child: Text('104/108'))),
+                                      DataCell(Center(child: Text('XXL',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -330,7 +379,7 @@ class _MensurationState extends State<Mensuration> {
                                               fontSize: 15
                                           ),
                                         ))),DataColumn(label: Container(
-                                        child: Text('Basin en cm',
+                                        child: Text('Bassin en cm',
                                           style: TextStyle(
                                               fontSize: 15
                                           ),
