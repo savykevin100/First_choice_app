@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
@@ -42,6 +44,7 @@ class _RenseignementsState extends State<Renseignements> {
   List<Map<String, dynamic>> produits=[];
   String verificationId;
   String smsCode;
+  FirebaseMessaging  _firebaseMessaging = FirebaseMessaging();
 
 
   Future<void> _submit() async {
@@ -161,12 +164,13 @@ class _RenseignementsState extends State<Renseignements> {
 
   void initState() {
     super.initState();
-   /* _firebaseMessaging.getToken().then((token){
-     setState(() {
+    _firebaseMessaging.getToken().then((token){
+    if(this.mounted)
+      setState(() {
        tokenUser=token;
-       print(tokenUser);
+       print(token);
      });
-    });*/
+    });
   }
 
   @override
@@ -445,17 +449,21 @@ class _RenseignementsState extends State<Renseignements> {
                                   orderNumber: 0
                               ),
                               widget.emailAdress);
-                          ajouter([
+                          /*ajouter([
                             numeroPayement,
                             widget.emailAdress,
                             nomComplet,
                             age,
                             sexe
-                          ]);
-                              /*await FirestoreService().addToken(Tokens(
-                               token: tokenUser
-                              ));*/
-                          print(Renseignements.emailUser);
+                          ]);*/
+                          if(tokenUser!=null)
+                            Firestore.instance.collection("TokensUsers").where("token", isEqualTo: tokenUser).getDocuments().then((value) {
+                              if(value.documents.isEmpty){
+                                Firestore.instance.collection("TokensUsers").add({
+                                  "token": tokenUser
+                                });
+                              }   
+                            });
                           Navigator.push(
                               context,
                               MaterialPageRoute(

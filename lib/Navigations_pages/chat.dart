@@ -92,7 +92,7 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Notifications",
+        titre: "Chat",
         context: context,
         controller: controller,
         nbAjoutPanier: ajoutPanier);

@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart';
+import 'package:http/io_client.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -9,11 +14,14 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
-import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
+import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
-import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/commande_send.dart';
+import 'package:http_auth/http_auth.dart';
+
+import 'commande_send.dart';
+
 
 // ignore: must_be_immutable
 class Panier2 extends StatefulWidget {
@@ -56,20 +64,20 @@ class _Panier2State extends State<Panier2> {
 
   Firestore _db = Firestore.instance;
   List<String> idProduitsPanier = [];
-  int numberOrder;
+  int numberOrder=0;
   String idCommandeUser;
   int totalPlusLivraison;
-  String numeroDePayement="0";
+  String numeroDePayement = "0";
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Table qui contient les éléments du panier
   List<PanierClasseSqflite> panierItems = [];
 
-  void getDataPanier(){
+  void getDataPanier() {
     DatabaseClient().readPanierData().then((value) {
       setState(() {
-        panierItems=value;
+        panierItems = value;
       });
     });
   }
@@ -91,15 +99,14 @@ class _Panier2State extends State<Panier2> {
   }
 
 
-
-
   Future<void> getNumberOrder() async {
     await _db
-        .collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get()
+        .collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh")
+        .get()
         .then((value) {
       if (this.mounted) {
         setState(() {
-          //numberOrder = value.data["nombreCommande"]+1;
+          numberOrder = value.data["nombreCommande"]+1;
           print(numberOrder);
         });
       }
@@ -122,12 +129,15 @@ class _Panier2State extends State<Panier2> {
           body: SingleChildScrollView(
             child: Center(
               child: Container(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height,
                 child: Column(
                   children: <Widget>[
                     Container(
                       height: longueurPerCent(420, context),
-                      color:HexColor("#F5F5F5"),
+                      color: HexColor("#F5F5F5"),
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -574,7 +584,8 @@ class _Panier2State extends State<Panier2> {
                                                 child: Card(
                                                   child: Image.network(widget
                                                       .produitsCommander[
-                                                  i]["image1"],fit: BoxFit.cover,),
+                                                  i]["image1"],
+                                                    fit: BoxFit.cover,),
                                                 )),
                                             Expanded(
                                               child: Container(
@@ -601,9 +612,12 @@ class _Panier2State extends State<Panier2> {
                                                             context),
                                                       ),
                                                       Padding(
-                                                        padding: const EdgeInsets.only(left:10,top:12),
+                                                        padding: const EdgeInsets
+                                                            .only(
+                                                            left: 10, top: 12),
                                                         child: Text(
-                                                          widget.produitsCommander[
+                                                          widget
+                                                              .produitsCommander[
                                                           i][
                                                           "nomDuProduit"],
                                                           textAlign:
@@ -624,9 +638,11 @@ class _Panier2State extends State<Panier2> {
                                                             context),
                                                       ),
                                                       Padding(
-                                                        padding: const EdgeInsets.only(left:10),
+                                                        padding: const EdgeInsets
+                                                            .only(left: 10),
                                                         child: Text(
-                                                          "${widget.produitsCommander[i]["taille"]}",
+                                                          "${widget
+                                                              .produitsCommander[i]["taille"]}",
                                                           textAlign:
                                                           TextAlign
                                                               .left,
@@ -649,9 +665,15 @@ class _Panier2State extends State<Panier2> {
                                                             context),
                                                       ),
                                                       Padding(
-                                                          padding: const EdgeInsets.only(left:10),
-                                                          child: PriceWithDot(price: widget.produitsCommander[i]["prix"], size:14 ,
-                                                            couleur:  HexColor("#00CC7b"), police:  "MontserratBold",
+                                                          padding: const EdgeInsets
+                                                              .only(left: 10),
+                                                          child: PriceWithDot(
+                                                            price: widget
+                                                                .produitsCommander[i]["prix"],
+                                                            size: 14,
+                                                            couleur: HexColor(
+                                                                "#00CC7b"),
+                                                            police: "MontserratBold",
                                                           )
                                                       ),
                                                     ],
@@ -669,7 +691,10 @@ class _Panier2State extends State<Panier2> {
                     ),
                     Flexible(
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         child: Material(
                           elevation: 20,
                           child: Column(
@@ -690,11 +715,13 @@ class _Panier2State extends State<Panier2> {
                                       height: longueurPerCent(20, context),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceBetween,
                                       children: <Widget>[
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: longueurPerCent(0.0, context),
+                                              top: longueurPerCent(
+                                                  0.0, context),
                                               right:
                                               longueurPerCent(0.0, context),
                                               left:
@@ -708,8 +735,10 @@ class _Panier2State extends State<Panier2> {
                                                 fontFamily: "MonseraBold"),
                                           ),
                                         ),
-                                        PriceWithDot(price: widget.total, size:12 ,
-                                          couleur:  HexColor("#909090"), police:  "MontserratBold",
+                                        PriceWithDot(price: widget.total,
+                                          size: 12,
+                                          couleur: HexColor("#909090"),
+                                          police: "MontserratBold",
                                         ),
                                       ],
                                     ),
@@ -718,11 +747,13 @@ class _Panier2State extends State<Panier2> {
                                     ),
 
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceBetween,
                                       children: <Widget>[
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: longueurPerCent(0.0, context),
+                                              top: longueurPerCent(
+                                                  0.0, context),
                                               right:
                                               longueurPerCent(0.0, context),
                                               left:
@@ -736,8 +767,11 @@ class _Panier2State extends State<Panier2> {
                                                 fontFamily: "MonseraBold"),
                                           ),
                                         ),
-                                        PriceWithDot(price: widget.prixLivraison, size:12 ,
-                                          couleur:  HexColor("#909090"), police:  "MontserratBold",
+                                        PriceWithDot(
+                                          price: widget.prixLivraison,
+                                          size: 12,
+                                          couleur: HexColor("#909090"),
+                                          police: "MontserratBold",
                                         ),
                                       ],
                                     ),
@@ -746,11 +780,13 @@ class _Panier2State extends State<Panier2> {
                                     ),
 
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceBetween,
                                       children: <Widget>[
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: longueurPerCent(0.0, context),
+                                              top: longueurPerCent(
+                                                  0.0, context),
                                               right:
                                               longueurPerCent(0.0, context),
                                               left:
@@ -765,8 +801,10 @@ class _Panier2State extends State<Panier2> {
                                             ),
                                           ),
                                         ),
-                                        PriceWithDot(price: totalPlusLivraison, size:15 ,
-                                          couleur: HexColor("#001C36"), police:  "MonseraBold",
+                                        PriceWithDot(price: totalPlusLivraison,
+                                          size: 15,
+                                          couleur: HexColor("#001C36"),
+                                          police: "MonseraBold",
                                         ),
                                       ],
                                     ),
@@ -775,24 +813,7 @@ class _Panier2State extends State<Panier2> {
                               ),
                               SizedBox(height: longueurPerCent(20, context)),
                               button(HexColor("#FFFFFF"), HexColor("#001C36"),
-                                  context, 'COMMANDER', () {
-                                    if (widget.moyenDePayement == "Mobile Money") {
-                                      if (numeroDePayement.length == 8 ) {
-                                        commandAction();
-                                      } else if(numeroDePayement=="0"){
-                                        displaySnackBarNom(
-                                            context,
-                                            "Veuillez entrer votre numéro de payement",
-                                            Colors.white);
-                                      } else if(numeroDePayement.length!=8)
-                                        displaySnackBarNom(
-                                            context,
-                                            "Veuillez entrer un numéro de téléphone valide",
-                                            Colors.white);
-                                    } else {
-                                      commandAction();
-                                    }
-                                  }),
+                                  context, 'COMMANDER', () =>checkSendCommand())
                             ],
                           ),
                         ),
@@ -829,10 +850,83 @@ class _Panier2State extends State<Panier2> {
     }
   }
 
+  Future<void> checkSendCommand() async {
+      if (widget.moyenDePayement ==
+          "Mobile Money") {
+        if (numeroDePayement.length == 8) {
 
+          String username = 'QSUSR168';
+          String password = 'jf0Midq2LIdkAv4Ugi1B';
+          String transref = numberOrder.toString();
+
+
+          var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
+
+          final ioc = new HttpClient();
+          ioc.badCertificateCallback =
+              (X509Certificate cert, String host, int port) => true;
+          final http = new IOClient(ioc);
+
+          //RequestPayment Request
+
+          http.post('https://qosic.net:8443/QosicBridge/user/requestpayment',
+              headers: {HttpHeaders.authorizationHeader: auth,
+                "Content-Type": "application/json"
+              },
+              body:  jsonEncode({
+                "msisdn": "229$numeroDePayement",
+                "amount": totalPlusLivraison,
+                "nameUser": widget.nomComplet,
+                "transref": transref,
+                "clientid": "1erChoix8S"
+              })
+          ).then(
+                  (response) {
+                    if(response.statusCode == 202)
+                     // commandAction();
+                print("Reponse status : ${response.statusCode}");
+                print("Response body : ${response.body}");
+              });
+
+
+          // Get RequestPayement status
+
+          http.post('https://qosic.net:8443/QosicBridge/user/gettransactionstatus',
+              headers: {HttpHeaders.authorizationHeader: auth,
+                "Content-Type": "application/json"
+              },
+              body:  jsonEncode({                                                                                                                                                                                                   
+                "transref": transref,
+                "clientid": "1erChoix8S"
+              })
+          ).then(
+                  (response) {
+                    if(response.statusCode == 200 )
+                      //commandAction();
+                print("Reponse status : ${response.statusCode}");
+                print("Response body : ${response.body}");
+              });
+
+
+
+        } else if (numeroDePayement == "0") {
+          displaySnackBarNom(
+              context,
+              "Veuillez entrer votre numéro de payement",
+              Colors.white);
+        } else if (numeroDePayement.length != 8)
+          displaySnackBarNom(
+              context,
+              "Veuillez entrer un numéro de téléphone valide",
+              Colors.white);
+      } else {
+        commandAction();
+      }
+  }
 
 
   Future<void> commandAction() async {
+
     setState(() {
       chargement=true;
     });
@@ -866,7 +960,7 @@ class _Panier2State extends State<Panier2> {
         .updateData({"nbAjoutPanier": 0});
 
     _db
-        .collection("Informations_généralesŒ")
+        .collection("Informations_générales")
         .document("78k1bDeNwVHCzMy8hMGh")
         .updateData({"nombreCommande": numberOrder});
 
@@ -935,10 +1029,10 @@ class _Panier2State extends State<Panier2> {
     }
   }
 
-  displaySnackBarNom(BuildContext context, String text, Color couleur) {
-    final snackBar = SnackBar(
-      content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    displaySnackBarNom(BuildContext context, String text, Color couleur) {
+      final snackBar = SnackBar(
+        content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
-}

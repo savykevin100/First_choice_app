@@ -63,7 +63,7 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Notifications",
+        titre: "Catégories",
         context: context,
         controller: controller,
         nbAjoutPanier: ajoutPanier);

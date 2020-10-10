@@ -61,6 +61,7 @@ int taille;
               child: Container(
                   margin: EdgeInsets.only(top: longueurPerCent(30, context), left: largeurPerCent(20, context), right: largeurPerCent(20, context), ),
                   child: ListView.builder(
+                      reverse: true,
                       itemCount:commandes.length,
                       itemBuilder: (context, i){
                         return  Container(
@@ -82,11 +83,12 @@ int taille;
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                         /* Text(
                                             "${commandes[i]["numberOrder"]}",
                                             style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 15.0, fontWeight: FontWeight.bold ),
-                                          ),
-                                          Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
+                                          ),*/
+                                         // Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
+                                          Text(commandes[i]["created"],   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
                                         ],
                                       ),
                                     ),

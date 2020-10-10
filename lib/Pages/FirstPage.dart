@@ -43,7 +43,7 @@ class _FirstPageState extends State<FirstPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     List<String> liste = sharedPreferences.getStringList(key);
     if (liste != null) {
-      setState(() {
+      if(this.mounted)setState(() {
         Renseignements.userData = liste;
       });
     }
@@ -78,7 +78,8 @@ class _FirstPageState extends State<FirstPage> {
 
   void getDataPanier(){
     DatabaseClient().readPanierData().then((value) {
-      setState(() {
+      if(this.mounted)
+        setState(() {
         panierItems=value;
       });
     });
@@ -90,8 +91,7 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
-        if(this.mounted){
-          Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+          /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
             print(value.data);
             ajouter([
               value.data["numero"],
@@ -101,12 +101,16 @@ class _FirstPageState extends State<FirstPage> {
               value.data["sexe"],
             ]);
 
-          });
-          setState(()  {
+          });*/
+          print(value.email);
+         setState(()  {
             currentUser=true;
             utilisateurConnecte=value.email;
           });
-        }
+          Firestore.instance
+              .collection("Utilisateurs")
+              .document(value.email)
+              .updateData({"nbAjoutPanier": 0});
       }
     });
     StarTimer();
@@ -123,10 +127,7 @@ class _FirstPageState extends State<FirstPage> {
       for(int i=0; i<panierItems.length; i++){
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
       }
-      Firestore.instance
-          .collection("Utilisateurs")
-          .document(utilisateurConnecte)
-          .updateData({"nbAjoutPanier": 0});
+
 
       Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => AllNavigationPage()

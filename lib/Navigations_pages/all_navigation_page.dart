@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/accueil.dart';
-import 'package:premierchoixapp/Navigations_pages/accueil.dart';
 import 'package:premierchoixapp/Navigations_pages/categories.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/favoris.dart';
