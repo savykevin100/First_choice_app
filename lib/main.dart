@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
         Test.id: (context) => Test(),
-        Mensuration.id: (context) => Mensuration(),
+        //Mensuration.id: (context) => Mensuration(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
        ConditionGenerales.id: (context) => ConditionGenerales(),
         APrpos.id: (context) => APrpos(),
