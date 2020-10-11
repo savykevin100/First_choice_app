@@ -61,10 +61,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           drawerItem(
               icon: Icons.description,
               text: "Tableau Mensurations",
-             /* onTap: () {
+              onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Mensuration()));*/
-              ),
+                    context,
+                    MaterialPageRoute(builder: (context) => Mensuration()));
+              }),
           drawerItem(
               icon: Icons.local_gas_station,
               text: "Deconnexion",

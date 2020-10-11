@@ -153,7 +153,7 @@ class _FirstPageState extends State<FirstPage> {
                   margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
                   height: longueurPerCent(227.5, context),
                   width: MediaQuery.of(context).size.width,
-                  child: Image.asset("assets/images/logo.png",
+                  child: Image.asset("assets/images/1er choix-01.png",
                     fit: BoxFit.cover,),
                 ),
                 SizedBox(height: longueurPerCent(50, context),),

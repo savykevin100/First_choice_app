@@ -53,8 +53,8 @@ class _MensurationState extends State<Mensuration> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Tableaux Mensurations",
-          style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
+          "Tableaux des Mensurations",
+          style: TextStyle(color: Colors.white, fontFamily: "MonseraBold",fontSize: 16),
         ),
       ),
       key: _scaffoldKey,
@@ -114,6 +114,15 @@ class _MensurationState extends State<Mensuration> {
                   ],
                 ),
               ),
+              SizedBox(height: longueurPerCent(10, context),),
+              Padding(
+                padding:EdgeInsets.all(10),
+                child: Text("NB: Les différentes tailles recommandées mentionnées ci-dessous le sont juste à titre indicatif. Elles se basent sur une silhouette régulière.",
+                  style: TextStyle(
+                    fontSize: 12
+                  ),
+                ),
+              ),
               (nombre==0)? Column(
                 children: [
                   Container(
@@ -132,10 +141,10 @@ class _MensurationState extends State<Mensuration> {
                               color: Colors.pink,
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
                                       'T-Shirt',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                                     ),
                                   )
                               ),
@@ -143,16 +152,16 @@ class _MensurationState extends State<Mensuration> {
                           ),
                           Center(
                             child: DataTable(
-                              columnSpacing: 60,
+                              columnSpacing: 40,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Tour de poitrine en cm',
+                                    child: Text('Poitrine en cm',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),
                                 DataColumn(label: Container(
-                                    child: Text('Taille à sélectionner',
+                                    child: Text('Taille recommandée',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -231,10 +240,10 @@ class _MensurationState extends State<Mensuration> {
                               color:Colors.pink,
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
                                       'Robes/Combinaisons',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                                     ),
                                   )
                               ),
@@ -245,13 +254,7 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 30,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Poitrine',
-                                      style: TextStyle(
-                                          fontSize: 15
-                                      ),
-                                    ))),
-                                DataColumn(label: Container(
-                                    child: Text('Taile',
+                                    child: Text('Taille',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -262,7 +265,7 @@ class _MensurationState extends State<Mensuration> {
                                   ),
 
                                 )),
-                                DataColumn(label: Text('Taille à sélectionner',
+                                DataColumn(label: Text('Taille recommandée',
                                   style: TextStyle(
                                       fontSize: 15
                                   ),
@@ -271,7 +274,6 @@ class _MensurationState extends State<Mensuration> {
                               ],
                               rows: [
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('78/82'))),
                                   DataCell(Center(child: Text('55/59'))),
                                   DataCell(Center(child: Text('84/88'))),
                                   DataCell(Center(child: Text('XS',
@@ -283,7 +285,6 @@ class _MensurationState extends State<Mensuration> {
 
                                 ]),
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('82/86'))),
                                   DataCell(Center(child: Text('59/63'))),
                                   DataCell(Center(child: Text('88/92'))),
                                   DataCell(Center(child: Text('S',
@@ -293,7 +294,6 @@ class _MensurationState extends State<Mensuration> {
                                   ))),
                                 ]),
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('86/90'))),
                                   DataCell(Center(child: Text('63/67'))),
                                   DataCell(Center(child: Text('92/96'))),
                                   DataCell(Center(child: Text('M',
@@ -304,7 +304,6 @@ class _MensurationState extends State<Mensuration> {
 
                                 ]),
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('90/94'))),
                                   DataCell(Center(child: Text('67/71'))),
                                   DataCell(Center(child: Text('96/100'))),
                                   DataCell(Center(child: Text('L',
@@ -315,7 +314,6 @@ class _MensurationState extends State<Mensuration> {
 
                                 ]),
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('94/98'))),
                                   DataCell(Center(child: Text('71/75'))),
                                   DataCell(Center(child: Text('100/104'))),
                                   DataCell(Center(child: Text('XL',
@@ -326,7 +324,6 @@ class _MensurationState extends State<Mensuration> {
 
                                 ]),
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('98/102'))),
                                   DataCell(Center(child: Text('75/79'))),
                                   DataCell(Center(child: Text('104/108'))),
                                   DataCell(Center(child: Text('XXL',
@@ -360,10 +357,10 @@ class _MensurationState extends State<Mensuration> {
                               color: Colors.pink,
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
                                       'Jeans',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                                     ),
                                   )
                               ),
@@ -374,18 +371,18 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 30,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Taille en cm',
+                                    child: Text('Taille',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),DataColumn(label: Container(
-                                    child: Text('Bassin en cm',
+                                    child: Text('Bassin',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),
                                 DataColumn(label: Container(
-                                    child: Text(' Taille à sélectionner',
+                                    child: Text(' Taille recommandée',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -474,10 +471,10 @@ class _MensurationState extends State<Mensuration> {
                               color: HexColor("#FFC30D"),
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10, bottom:10),
                                     child: Text(
                                       'T-Shirt/Pollos/Pulls/Jacket',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color:HexColor("#001C36")),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color:HexColor("#001C36")),
                                     ),
                                   )
                               ),
@@ -488,13 +485,13 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 40,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Tour de poitrine en cm',
+                                    child: Text('Poitrine en cm',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),
                                 DataColumn(label: Container(
-                                    child: Text('Votre taille à sélectionner',
+                                    child: Text('Taille recommandée',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -583,10 +580,10 @@ class _MensurationState extends State<Mensuration> {
                               color: HexColor("#FFC30D"),
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
                                       'Chemise',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
                                     ),
                                   )
                               ),
@@ -597,13 +594,13 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 40,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Tour de poitrine en cm',
+                                    child: Text('Poitrine en cm',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),
                                 DataColumn(label: Container(
-                                    child: Text('Votre taille à sélectionner',
+                                    child: Text('Taille recommandée',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -684,10 +681,10 @@ class _MensurationState extends State<Mensuration> {
                               color: HexColor("#FFC30D"),
                               child: Center(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
                                       'Jeans',
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: HexColor("#001C36")),
                                     ),
                                   )
                               ),
@@ -698,13 +695,13 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 40,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Tour de taille en cm',
+                                    child: Text('Taille en cm',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
                                     ))),
                                 DataColumn(label: Container(
-                                    child: Text('Votre taille à sélectionner',
+                                    child: Text('Taille recommandée',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),

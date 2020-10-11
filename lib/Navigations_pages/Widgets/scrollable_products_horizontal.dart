@@ -142,9 +142,9 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                               ),
                               (displayBadgeNew)? Container(
                                 height: longueurPerCent(10, context),
-                                width: largeurPerCent(50, context),
                                 color: Colors.red,
-                                child: Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
                                   child: Text(
                                     "NOUVEAU",
                                     textAlign: TextAlign.right,

@@ -105,7 +105,7 @@ class _Panier1State extends State<Panier1> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: HexColor("#001C36"),
-                      fontSize: 19.0,
+                      fontSize: 15.0,
                       fontFamily: "MonseraBold",
                       fontWeight: FontWeight.bold),
                 ),
@@ -118,7 +118,7 @@ class _Panier1State extends State<Panier1> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: HexColor("#001C36"),
-                      fontSize: 17.0,
+                      fontSize: 15.0,
                       fontFamily: "MonseraLight",
                       fontWeight: FontWeight.bold),
                 ),
@@ -132,7 +132,7 @@ class _Panier1State extends State<Panier1> {
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: HexColor("#001C36"),
-                          fontSize: 17.0,
+                          fontSize: 15.0,
                           fontFamily: "MonseraLight",
                           fontWeight: FontWeight.bold),
                     ),
@@ -217,7 +217,7 @@ class _Panier1State extends State<Panier1> {
                               height: 50,
                               child: DropdownSearch<String>(
                                 mode: Mode.BOTTOM_SHEET,
-                                maxHeight: 300,
+                                maxHeight: 450,
                                 hint: "Sélectionner un quartier",
                                 items: quartiersDb.toList(),
                                 onChanged: (value) {
@@ -230,10 +230,10 @@ class _Panier1State extends State<Panier1> {
                                 showSearchBox: true,
                                 searchBoxDecoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.only(left: 100),
+                                  contentPadding: EdgeInsets.only(left: longueurPerCent(50, context), right: longueurPerCent(50, context)),
                                   hintText: "Rechercher un quartier",
                                   hintStyle: TextStyle(
-                                      fontSize: 18.0,
+                                      fontSize: 15.0,
                                       fontFamily: 'MonseraLight'),
                                 ),
                                 popupTitle: Container(
@@ -242,7 +242,6 @@ class _Panier1State extends State<Panier1> {
                                     color: HexColor("#001C36"),
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20),
-
                                       topRight: Radius.circular(20),
                                     ),
                                   ),
@@ -397,7 +396,7 @@ class _Panier1State extends State<Panier1> {
         builder: (BuildContext context) => CustomDialog(
           title: "Localisation",
           description:
-          "Heure d'ouverture: 9H - 20H. L'agence est située à Joncquet  en face pharmacie. Immeuble blanc, 2ème étage.",
+          "L'agence est située à Joncquet  en face de la pharmacie. Immeuble blanc, 2ème étage. Heure d'ouverture: 10H - 18H.",
          cancelButton: FlatButton(
            onPressed: (
                ) {
@@ -499,7 +498,7 @@ class _Panier1State extends State<Panier1> {
               CustomDialog(
             title: "Livraison",
             description:
-            "Le temps d'estimation de la livraison est entre 80 et 120 minutes. Nos heures de livraison sont entre 9H - 20H",
+            "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
             cancelButton: FlatButton(
               onPressed: (
                   ) {
