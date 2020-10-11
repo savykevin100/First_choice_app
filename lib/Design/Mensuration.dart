@@ -260,6 +260,7 @@ class _MensurationState extends State<Mensuration> {
                                   style: TextStyle(
                                       fontSize: 15
                                   ),
+
                                 )),
                                 DataColumn(label: Text('Taille à sélectionner',
                                   style: TextStyle(
@@ -825,7 +826,6 @@ class _MensurationState extends State<Mensuration> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ))),
-
                                 ]),
                               ],
                             ),
