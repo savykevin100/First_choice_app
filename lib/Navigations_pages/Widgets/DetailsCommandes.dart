@@ -25,7 +25,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.commande["numberOrder"]}'),
+        title: Text('${widget.commande["created"]}'),
       ),
       body:SingleChildScrollView(
         child: Column(

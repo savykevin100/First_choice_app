@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -11,6 +12,7 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Models/informations_generales.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
@@ -31,42 +33,35 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   int nombreAjoutPanier;
 
 
-
-
-  void fetchImageCarousel(){
-    Firestore.instance.collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get().then((value) {
-      setState(() {
-        imagesCarousel.add(value.data["image1"]);
-        imagesCarousel.add(value.data["image2"]);
-        imagesCarousel.add(value.data["image3"]);
-      });
-    });
+  Future<FirebaseUser> getUser() async {
+    return await FirebaseAuth.instance.currentUser();
   }
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchImageCarousel();
-    print(Renseignements.userData);
-    if(Renseignements.userData==null){
-      Navigator.pop(context);
-    }
-    else {
-      if(this.mounted)
-          setState(() {
-        Renseignements.emailUser=Renseignements.userData[1];
-        Renseignements.nombreAjoutPanier=0;
-      });
-
-    }
-
+    getUser().then((value) {
+      if(value!=null)
+          Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+            if(this.mounted)
+              ajouter([
+                value.data["numero"],
+                value.data["email"],
+                value.data["nomComplet"],
+                value.data["age"],
+                value.data["sexe"],
+              ]);
+            Renseignements.emailUser=value.data["email"];
+          });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (imagesCarousel.length==3) {
-      return Scaffold(
+      return (Renseignements.userData!=null)?Scaffold(
         backgroundColor: HexColor("#F5F5F5"),
         appBar:ScrollAppBar(
           controller: controller,
@@ -108,10 +103,13 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
           ],
         ),
-        drawer: ProfileSettings(
+        drawer: (Renseignements.userData.length==5)?ProfileSettings(
             userCurrent: Renseignements.userData[1],
             firstLetter:Renseignements.userData[2][0]
-        ),
+        ):ProfileSettings(
+        userCurrent: "",
+        firstLetter: "",
+      ),
         body: WillPopScope(
             onWillPop: _onBackPressed,
             child: ConnexionState(body: bodyAccueil(),)),
@@ -130,41 +128,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             ),
             backgroundColor: Theme.of(context).primaryColor
         ),
-      );
-
-    } else {
-      return Scaffold(
-          appBar:  ScrollAppBar(
-            controller: controller,
-            backgroundColor: HexColor("#001c36"),
-            title:Image.asset("assets/images/logo.png", height: 100, width: 100,),
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: <Widget>[
-              Badge(
-                badgeContent:Text("${Renseignements.nombreAjoutPanier}"),
-                toAnimate: true,
-                position: BadgePosition.topRight(top:   0,  right: 0),
-                child: IconButton(
-                    icon: Icon(
-                      Icons.local_grocery_store,
-                      color: Colors.white,
-                    ),
-                    onPressed: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Panier  ()));
-                    }),
-              )
-
-            ],
-          ),
-          body:  Center(
-            child: CircularProgressIndicator(),
-          )
-      );
-    }
+      ):Scaffold(body: Center(child: CircularProgressIndicator(),),);
   }
 
   Snap bodyAccueil(){
@@ -181,7 +145,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             boxFit: BoxFit.cover,
             autoplay: true,
             animationCurve: Curves.linearToEaseOut,
-            animationDuration: Duration(seconds: 5),
+            animationDuration: Duration(seconds: 10),
             dotSize: 10.0,
             dotIncreasedColor: Colors.amber,
             dotPosition: DotPosition.bottomCenter,
@@ -189,7 +153,76 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             indicatorBgPadding: 7.0,
             dotBgColor: Colors.red.withOpacity(0),
             images: [
-              CachedNetworkImage(
+              StreamBuilder(
+                stream: FirestoreService().getImageCaroussel(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<InformationsGenerales>> snapshot) {
+                   if(snapshot.hasError || !snapshot.hasData)
+                     return Center(child:CircularProgressIndicator());
+                         else {
+                     return CachedNetworkImage(
+                       imageUrl: snapshot.data[0].image1,
+                       imageBuilder: (context, imageProvider) => Container(
+                         decoration: BoxDecoration(
+                           image: DecorationImage(
+                             image: imageProvider,
+                             fit: BoxFit.cover,
+                           ),
+                         ),
+                       ),
+                       placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                       ),
+                     );
+                   }
+                  }
+              ),
+              StreamBuilder(
+                  stream: FirestoreService().getImageCaroussel(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<InformationsGenerales>> snapshot) {
+                    if(snapshot.hasError || !snapshot.hasData)
+                      return Center(child:CircularProgressIndicator());
+                    else {
+                      return CachedNetworkImage(
+                        imageUrl: snapshot.data[0].image2,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                        ),
+                      );
+                    }
+                  }
+              ),
+              StreamBuilder(
+                  stream: FirestoreService().getImageCaroussel(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<InformationsGenerales>> snapshot) {
+                    if(snapshot.hasError || !snapshot.hasData)
+                      return Center(child:CircularProgressIndicator());
+                    else {
+                      return CachedNetworkImage(
+                        imageUrl: snapshot.data[0].image3,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                        ),
+                      );
+                    }
+                  }
+              ),
+              /*CachedNetworkImage(
                 imageUrl:imagesCarousel[0],
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
@@ -225,7 +258,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 ),
                 placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -271,7 +304,6 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
       ]),
     );
-
   }
 
 
@@ -323,7 +355,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   Future<void> ajouter(List<String> str) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Renseignements.userData = str;
-    await sharedPreferences.setString(key, Renseignements.emailUser);
+    await sharedPreferences.setStringList(key, Renseignements.userData);
     obtenir();
   }
 }

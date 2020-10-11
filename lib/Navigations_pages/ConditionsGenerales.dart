@@ -2,11 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/Decision.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
 
 class ConditionGenerales extends StatefulWidget {

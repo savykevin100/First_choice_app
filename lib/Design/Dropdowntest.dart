@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 
+// ignore: must_be_immutable
 class Dropdowntest extends StatefulWidget{
   static String id='DropdownTest';
 
@@ -50,7 +49,6 @@ class Dropdowntest extends StatefulWidget{
 }
 
 class _DropdowntestState extends State<Dropdowntest>{
-  final _formKey = GlobalKey<FormState>();
 
   bool asTabs = false;
   String selectedValue;

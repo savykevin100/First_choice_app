@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
+import 'package:premierchoixapp/Models/informations_generales.dart';
 import 'package:premierchoixapp/Models/notifications.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
@@ -257,6 +258,19 @@ class FirestoreService {
         );
   }
 
+
+  Stream<List<InformationsGenerales>> getImageCaroussel() {
+    return _db
+        .collection("Informations_générales")
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => InformationsGenerales.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
   Stream<List<Produit>> getProduitFemmes1() {
     return _db
         .collection("Femmes")

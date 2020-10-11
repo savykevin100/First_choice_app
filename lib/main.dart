@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
@@ -28,7 +29,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+
+
+     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: '1er Choix',
@@ -52,12 +60,13 @@ class MyApp extends StatelessWidget {
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
         Test.id: (context) => Test(),
-        Mensuration.id: (context) => Mensuration(),
+        //Mensuration.id: (context) => Mensuration(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
        ConditionGenerales.id: (context) => ConditionGenerales(),
         APrpos.id: (context) => APrpos(),
         CustomDialog.id: (context) => CustomDialog()
       },
+
     );
   }
 }

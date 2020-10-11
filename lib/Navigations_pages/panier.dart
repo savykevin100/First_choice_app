@@ -90,7 +90,6 @@ class _PanierState extends State<Panier> {
 
     _db.collection("ProduitsIndisponibles").getDocuments().then((value) {
       value.documents.forEach((produitIndisponible) {
-        print(value.documents.length);
         for(int i=0; i<produitsPaniers.length; i++){
           if(produitsPaniers[i]["image1"]==produitIndisponible.data["image1"]){
             if(this.mounted)

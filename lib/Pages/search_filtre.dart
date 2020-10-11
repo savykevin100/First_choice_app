@@ -73,14 +73,14 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
     await Firestore.instance.collection("Femmes").getDocuments().then((value) {
       value.documents.forEach((element) {
-       if(sampleDataSousCategorie.contains(element.data['nomCategorie'])){
-        if(this.mounted){
-          setState(() {
-            somme++;
-            sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
-          });
+        if(sampleDataSousCategorie.contains(element.data['nomCategorie'])){
+          if(this.mounted){
+            setState(() {
+              somme++;
+              sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
+            });
+          }
         }
-       }
       });
     });
 
@@ -125,10 +125,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Filtres",
-        context: context,
-        controller: controller,
-        );
+      titre: "Filtres",
+      context: context,
+      controller: controller,
+    );
 
     return Scaffold(
       key: _scaffoldKey,
@@ -136,214 +136,214 @@ class _SearchFiltreState extends State<SearchFiltre> {
       appBar: _appBar.appBarFunctionStream(),
       body: SingleChildScrollView(
         child: Center(
-          child:  (sampleDataSousCategorie!=null)?Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: longueurPerCent(20, context),),
-              Padding(
-                padding: EdgeInsets.only(left: 20,bottom: 5),
-                child: Text(
-                  "Prix",
-                    style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 15,
-                      fontFamily: "MonseraBold",
-                    )
+            child:  (sampleDataSousCategorie!=null)?Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: longueurPerCent(20, context),),
+                Padding(
+                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  child: Text(
+                      "Prix",
+                      style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 15,
+                        fontFamily: "MonseraBold",
+                      )
+                  ),
                 ),
-              ),
-              Container(
-                color: HexColor("#F5F5F5"),
-                padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0,bottom: 10),
-                margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: TextField(
-                          controller: _prixMinController,
-                          style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 12,
-                            fontFamily: "MonseraBold",
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Prix Min",
-                            hintStyle: TextStyle(
+                Container(
+                  color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0,bottom: 10),
+                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width/2,
+                          child: TextField(
+                            controller: _prixMinController,
+                            style: TextStyle(
                               color: HexColor("#001C36"),
                               fontSize: 12,
-                              fontFamily: "MonseraRegular",
-                            )
+                              fontFamily: "MonseraBold",
+                            ),
+                            decoration: InputDecoration(
+                                hintText: "Prix Min",
+                                hintStyle: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MonseraRegular",
+                                )
+                            ),
+                            onChanged: (value) => prixMin=int.tryParse(value),
+                            keyboardType: TextInputType.number,
                           ),
-                          onChanged: (value) => prixMin=int.tryParse(value),
-                          keyboardType: TextInputType.number,
                         ),
                       ),
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Container()),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: TextField(
-                          controller: _prixMaxController,
-                          style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 12,
-                            fontFamily: "MonseraBold",
+                      Expanded(
+                          flex: 1,
+                          child: Container()),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width/2,
+                          child: TextField(
+                            controller: _prixMaxController,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 12,
+                              fontFamily: "MonseraBold",
+                            ),
+                            decoration: InputDecoration(
+                                hintText: "Prix Max",
+                                hintStyle: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 12,
+                                  fontFamily: "MonseraRegular",
+                                )
+                            ),
+                            onChanged: (value) => prixMax=int.tryParse(value),
+                            keyboardType: TextInputType.number,
                           ),
-                          decoration: InputDecoration(
-                            hintText: "Prix Max",
-                              hintStyle: TextStyle(
-                                color: HexColor("#001C36"),
-                                fontSize: 12,
-                                fontFamily: "MonseraRegular",
-                              )
-                          ),
-                          onChanged: (value) => prixMax=int.tryParse(value),
-                          keyboardType: TextInputType.number,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: longueurPerCent(20, context),),
-              Padding(
-                padding: EdgeInsets.only(left: 20,bottom: 5),
-                child: Text(
-                    "Genre",
-                    style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 15,
-                      fontFamily: "MonseraBold",
-                    )
+                SizedBox(height: longueurPerCent(20, context),),
+                Padding(
+                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  child: Text(
+                      "Genre",
+                      style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 15,
+                        fontFamily: "MonseraBold",
+                      )
+                  ),
                 ),
-              ),
-              Container(
-                color: HexColor("#F5F5F5"),
-                padding: const EdgeInsets.only(top: 10.0, left: 90.0, right: 0.0),
-                margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                height: longueurPerCent(60, context),
-                child:  ListView.builder(
-                  shrinkWrap: false,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: sampleDataGenre.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return new InkWell(
-                      splashColor: Colors.blueAccent,
-                      onTap: () {
-                        setState(() {
-                          sampleDataGenre.forEach(
-                                  (element) => element.isSelected = false);
-                          sampleDataGenre[index].isSelected = true;
-                          genre=sampleDataGenre[index].text;
-                        });
-                      },
-                      child: Row(
-                          children: [
-                        new RadioItemGenre(sampleDataGenre[index]),
-                          ]),
-                    );
-                  },
+                Container(
+                  color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(top: 10.0, left: 90.0, right: 0.0),
+                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  height: longueurPerCent(60, context),
+                  child:  ListView.builder(
+                    shrinkWrap: false,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: sampleDataGenre.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return new InkWell(
+                        splashColor: Colors.blueAccent,
+                        onTap: () {
+                          setState(() {
+                            sampleDataGenre.forEach(
+                                    (element) => element.isSelected = false);
+                            sampleDataGenre[index].isSelected = true;
+                            genre=sampleDataGenre[index].text;
+                          });
+                        },
+                        child: Row(
+                            children: [
+                              new RadioItemGenre(sampleDataGenre[index]),
+                            ]),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(height: longueurPerCent(20, context),),
-              Padding(
-                padding: EdgeInsets.only(left: 20,bottom: 5),
-                child: Text(
-                    "Catégories",
-                    style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 15,
-                      fontFamily: "MonseraBold",
-                    )
+                SizedBox(height: longueurPerCent(20, context),),
+                Padding(
+                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  child: Text(
+                      "Catégories",
+                      style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 15,
+                        fontFamily: "MonseraBold",
+                      )
+                  ),
                 ),
-              ),
-             Container(
-               color: HexColor("#F5F5F5"),
-               padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
-               margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-               height: longueurPerCent(200, context),
-               child:  StaggeredGridView.countBuilder(
-                 reverse: false,
-                 crossAxisCount: 4,
-                 itemCount: sampleDataSousCategorie.length,
-                 itemBuilder: (BuildContext context, index) {
-                   return InkWell(
-                     splashColor: Colors.blueAccent,
-                     onTap: () {
-                       setState(() {
-                         sampleDataSousCategorie.forEach(
-                                 (element) => element.isSelected = false);
-                         sampleDataSousCategorie[index].isSelected = true;
-                         sousCategorie=sampleDataSousCategorie[index].text;
-                       });
-                     },
-                     child: new RadioItemGenre(sampleDataSousCategorie[index]),
-                   );
-                 },
-                 staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
-                 mainAxisSpacing: 0.0,
-                 crossAxisSpacing: 10.0,
-                 shrinkWrap: true,
-                 physics: NeverScrollableScrollPhysics(),
-               ),
-             ),
-             SizedBox(height: longueurPerCent(20, context),),
-              Padding(
-                padding: EdgeInsets.only(left: 20,bottom: 5),
-                child: Text(
-                    "Taille",
-                    style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 15,
-                      fontFamily: "MonseraBold",
-                    )
+                Container(
+                  color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
+                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  height: longueurPerCent(200, context),
+                  child:  StaggeredGridView.countBuilder(
+                    reverse: false,
+                    crossAxisCount: 4,
+                    itemCount: sampleDataSousCategorie.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return InkWell(
+                        splashColor: Colors.blueAccent,
+                        onTap: () {
+                          setState(() {
+                            sampleDataSousCategorie.forEach(
+                                    (element) => element.isSelected = false);
+                            sampleDataSousCategorie[index].isSelected = true;
+                            sousCategorie=sampleDataSousCategorie[index].text;
+                          });
+                        },
+                        child: new RadioItemGenre(sampleDataSousCategorie[index]),
+                      );
+                    },
+                    staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                    mainAxisSpacing: 0.0,
+                    crossAxisSpacing: 10.0,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
                 ),
-              ),
-             Container(
-               color: HexColor("#F5F5F5"),
-               padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
-               margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
-                height: longueurPerCent(200, context),
-                child:  StaggeredGridView.countBuilder(
-                  reverse: false,
-                  crossAxisCount: 10,
-                  itemCount: sampleData.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return InkWell(
-                      splashColor: Colors.blueAccent,
-                      onTap: () {
-                        setState(() {
-                          sampleData.forEach(
-                                  (element) => element.isSelected = false);
-                          sampleData[index].isSelected = true;
-                          taille=sampleData[index].buttonText;
-                        });
-                      },
-                      child: new RadioItem(sampleData[index]),
-                    );
-                  },
-                  staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                SizedBox(height: longueurPerCent(20, context),),
+                Padding(
+                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  child: Text(
+                      "Taille",
+                      style: TextStyle(
+                        color: HexColor("#001C36"),
+                        fontSize: 15,
+                        fontFamily: "MonseraBold",
+                      )
+                  ),
                 ),
-              ),
-              SizedBox(height: longueurPerCent(20, context),),
+                Container(
+                  color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
+                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  height: longueurPerCent(200, context),
+                  child:  StaggeredGridView.countBuilder(
+                    reverse: false,
+                    crossAxisCount: 10,
+                    itemCount: sampleData.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return InkWell(
+                        splashColor: Colors.blueAccent,
+                        onTap: () {
+                          setState(() {
+                            sampleData.forEach(
+                                    (element) => element.isSelected = false);
+                            sampleData[index].isSelected = true;
+                            taille=sampleData[index].buttonText;
+                          });
+                        },
+                        child: new RadioItem(sampleData[index]),
+                      );
+                    },
+                    staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                  ),
+                ),
+                SizedBox(height: longueurPerCent(20, context),),
 
-              SizedBox(
-                height: longueurPerCent(10, context),
-              ),
-              (loadingSearch==false)? displaySearchResult():Center(child: CircularProgressIndicator(),),
-              SizedBox(
-                height: longueurPerCent(200, context),
-              ),
-            ],
-          ):CircularProgressIndicator()
+                SizedBox(
+                  height: longueurPerCent(10, context),
+                ),
+                (loadingSearch==false)? displaySearchResult():Center(child: CircularProgressIndicator(),),
+                SizedBox(
+                  height: longueurPerCent(200, context),
+                ),
+              ],
+            ):CircularProgressIndicator()
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -450,7 +450,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
       // Add an extra padding at the bottom of each RangeSlider
       children.add(SizedBox(height: 8.0));
     }
-
     return children;
   }*/
 
@@ -469,7 +468,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
           activeTrackColor: Colors.red,
           inactiveTrackColor: Colors.red[50],
           valueIndicatorColor: Colors.green),
-
     ];
   }*/
 
@@ -781,10 +779,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
         value.documents.forEach((element) {
           if(this.mounted)
             setState(() {
-            data.add(element.data);
-            loadingSearch = false;
+              data.add(element.data);
+              loadingSearch = false;
 
-          });
+            });
         });
       } else {
         displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
@@ -851,23 +849,23 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       height: longueurPerCent(150, context),
                       width: largeurPerCent(200, context),
                       child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)),
-                          child: CachedNetworkImage(
-                            imageUrl: data[index]["image1"],
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        child: CachedNetworkImage(
+                          imageUrl: data[index]["image1"],
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                            ),
                           ),
-                         ),
+                          placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                          ),
+                        ),
+                      ),
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -972,11 +970,11 @@ class RadioItemGenre extends StatelessWidget {
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
-                      color:
-                      _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
+                    color:
+                    _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
                     fontFamily: "MonseraRegular",
-                      //fontWeight: FontWeight.bold,
-                      )),
+                    //fontWeight: FontWeight.bold,
+                  )),
             ),
             decoration: new BoxDecoration(
               color: _item.isSelected
@@ -1030,11 +1028,11 @@ class RadioItem extends StatelessWidget {
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
-                      color:
-                      _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 12,
-                      fontFamily: "MonseraRegular",
-                      //fontWeight: FontWeight.bold,
-                      )),
+                    color:
+                    _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 12,
+                    fontFamily: "MonseraRegular",
+                    //fontWeight: FontWeight.bold,
+                  )),
             ),
             decoration: new BoxDecoration(
               color: _item.isSelected
@@ -1063,19 +1061,15 @@ class RadioModel {
 
 /*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'Composants/firestore_service.dart';
-
 class MyHomePage extends StatefulWidget {
  static String id="Homepage";
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
   var queryResultSet = [];
   var tempSearchStore = [];
-
   initiateSearch(value) {
     if (value.length == 0) {
       setState(() {
@@ -1083,10 +1077,8 @@ class _MyHomePageState extends State<MyHomePage> {
         tempSearchStore = [];
       });
     }
-
     var capitalizedValue =
         value.substring(0, 1).toUpperCase() + value.substring(1);
-
     if (queryResultSet.length == 0 && value.length == 1) {
      FirestoreService().searchByName(value).then((QuerySnapshot docs) {
         for (int i = 0; i < docs.documents.length; ++i) {
@@ -1104,7 +1096,6 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -1147,7 +1138,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ]));
   }
 }
-
 Widget buildResultCard(data) {
   return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -1188,14 +1178,12 @@ Widget buildResultCard(data) {
   Color thumbColor;
   Color valueIndicatorColor;
   Color activeTickMarkColor;
-
   static const Color defaultActiveTrackColor = const Color(0xFF0175c2);
   static const Color defaultInactiveTrackColor = const Color(0x3d0175c2);
   static const Color defaultActiveTickMarkColor = const Color(0x8a0175c2);
   static const Color defaultThumbColor = const Color(0xFF0175c2);
   static const Color defaultValueIndicatorColor = const Color(0xFF0175c2);
   static const Color defaultOverlayColor = const Color(0x290175c2);
-
   RangeSliderData({
     this.min,
     this.max,
@@ -1212,7 +1200,6 @@ Widget buildResultCard(data) {
     this.valueIndicatorColor: defaultValueIndicatorColor,
     this.activeTickMarkColor: defaultActiveTickMarkColor,
   });
-
   // Returns the values in text format, with the number
   // of decimals, limited to the valueIndicatedMaxDecimals
   //
@@ -1220,7 +1207,6 @@ Widget buildResultCard(data) {
       lowerValue.toStringAsFixed(valueIndicatorMaxDecimals);
   String get upperValueText =>
       upperValue.toStringAsFixed(valueIndicatorMaxDecimals);
-
 // Builds a RangeSlider and customizes the theme
 // based on parameters
 //
@@ -1237,7 +1223,6 @@ Widget build(BuildContext context, frs.RangeSliderCallback callback) {
             child: Text(lowerValueText),
           ),
           Expanded(
-
             child: Container(
               margin: EdgeInsets.only(top: 60,),
               child: SliderTheme(

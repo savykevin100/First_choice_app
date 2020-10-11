@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
+import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'components/decoration_text_field_container.dart';
 import 'components/firebase_auth_services.dart';
 
@@ -29,10 +32,16 @@ class _ConnexionState extends State<Connexion> {
   bool r=false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool visibilityPassword=true;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    supprimer();
+  }
   @override
   Widget build(BuildContext context) {
-
-
     return (chargement==false)?Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
@@ -51,6 +60,7 @@ class _ConnexionState extends State<Connexion> {
                     style: TextStyle(
                         color: HexColor("#001C36"),
                         fontFamily: "MonseraBold",
+                        
                         fontSize: 30),
                   ),
                 ),
@@ -87,15 +97,25 @@ class _ConnexionState extends State<Connexion> {
                 SizedBox(height: longueurPerCent(50, context),),
                 button(HexColor("#001C36"), HexColor('#FFC30D'), context, "SE CONNECTER",  () async{
                   if(_formKey.currentState.validate()) {
+                    /*Firestore.instance.collection("Utilisateurs").document(emailAdresse).get().then((value) {
+                      print(value.data);
+                      ajouter([
+                        value.data["numero"],
+                        value.data["email"],
+                        value.data["nomComplet"],
+                        value.data["age"],
+                        value.data["sexe"],
+                      ]);
+                    });*/
                     setState(() {
                       chargement=true;
                     });
                     try{
                       final user = await _auth.signInWithEmailAndPassword(email: emailAdresse , password: motDePasse);
                       if(user!=null){
-                        setState(() {
-                          chargement=false;
-                        });
+                       setState(() {
+                         chargement=false;
+                       });
                         Navigator.pushNamed(context,AllNavigationPage.id);
                       }
                     } catch (e) {
@@ -151,9 +171,39 @@ class _ConnexionState extends State<Connexion> {
     );
   }
 
+  String key = "email_user";
+
+  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
+  Future<void> obtenir() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    List<String> liste = sharedPreferences.getStringList(key);
+    if (liste != null) {
+      setState(() {
+        Renseignements.userData = liste;
+      });
+    }
+  }
+
+  Future<void> ajouter(List<String> str) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Renseignements.userData = str;
+    await sharedPreferences.setStringList(key, Renseignements.userData);
+    obtenir();
+  }
+
+  Future<void> supprimer() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Renseignements.userData=[];
+    await sharedPreferences.setStringList(key, Renseignements.userData);
+    obtenir();
+  }
+
+
 
   showAlertDialog(BuildContext context, String text) {
 
+
+    
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
