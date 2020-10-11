@@ -66,7 +66,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         appBar:ScrollAppBar(
           controller: controller,
           backgroundColor: HexColor("#001c36"),
-          title:Image.asset("assets/images/logo.png", height: 70, width: 70,),
+          title:Image.asset("assets/images/1er choix-02.png", height: 100, width: 100,),
           iconTheme: IconThemeData(color: Colors.white),
           actions: <Widget>[
             Badge(

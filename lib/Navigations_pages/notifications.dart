@@ -83,13 +83,13 @@ class _NotificationsState extends State<Notifications> {
                       InformationNotification notification = snapshot.data[i];
                       return Column(
                         children: <Widget>[
-                          SizedBox(height: longueurPerCent(20.0, context),),
+                          SizedBox(height: longueurPerCent(5.0, context),),
                           Container(
                             margin: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context)),
                             child: Material(
                               borderRadius: BorderRadius.circular(7.0),
                               color: Colors.white,
-                              elevation: 7.0,
+                              elevation: 3.0,
                               child: Row(
                                 children: <Widget>[
                                   Column(
@@ -97,13 +97,13 @@ class _NotificationsState extends State<Notifications> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 8),
+                                        padding: const EdgeInsets.only(top: 10, bottom: 5, left: 8),
                                         child: Text(
                                           notification.titre,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             color: HexColor("#001C36"),
-                                            fontSize: 15,
+                                            fontSize: 12,
                                             fontFamily: "MonseraBold",
                                           ),
                                         ),
@@ -116,21 +116,21 @@ class _NotificationsState extends State<Notifications> {
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             color: HexColor("#001C36"),
-                                            fontSize: 13,
-                                            fontFamily: "MonseraBold",
+                                            fontSize: 10,
+                                            fontFamily: "MonseraRegular",
                                           ),
                                         ),
                                       ),
                                       Center(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(bottom: 10,left: 8),
+                                          padding: const EdgeInsets.only(bottom: 10,left: 280),
                                           child: Text(
                                             notification.created,
-                                            textAlign: TextAlign.left,
+                                            textAlign: TextAlign.right,
                                             style: TextStyle(
                                               color: HexColor("#909090"),
-                                              fontSize: 12,
-                                              fontFamily: "MontserratBold",
+                                              fontSize: 8,
+                                              fontFamily: "MonseraRegular",
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -142,7 +142,6 @@ class _NotificationsState extends State<Notifications> {
                               ),
                             ),
                           ),
-                          SizedBox(height: longueurPerCent(10.0, context),),
                         ],
                       );
                     }

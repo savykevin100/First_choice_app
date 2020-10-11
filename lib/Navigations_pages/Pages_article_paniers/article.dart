@@ -302,10 +302,10 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text("Taille :", style: TextStyle(color: HexColor("#909090"), fontSize: 15,)),
+                      Text("Taille :", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontFamily: "MonseraBold")),
                       SizedBox(width: largeurPerCent(4, context),),
-                      (widget.produit.taille!=null)?Expanded(flex:0,child: Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold))):
-                      Expanded(flex:0,child: Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontWeight: FontWeight.bold), ))
+                      (widget.produit.taille!=null)?Expanded(flex:0,child: Text("${widget.produit.taille}", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontFamily: "MonseraLight"))):
+                      Expanded(flex:0,child: Text("Par défaut", style: TextStyle(color: HexColor("#001c36"), fontSize: 15,fontFamily: "MonseraLight"), ))
 
                     ],
                   ),
@@ -349,7 +349,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             SizedBox(height: longueurPerCent(10, context),),
             Padding(
               padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-              child: Text("Descriptif",
+              child: Text("Descriptif :",
                   style: TextStyle(
                       color: HexColor("#001c36"),
                       fontFamily: "MonseraBold",

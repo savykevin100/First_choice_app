@@ -137,7 +137,7 @@ class _Panier2State extends State<Panier2> {
                   children: <Widget>[
                     Container(
                       height: longueurPerCent(420, context),
-                      color: HexColor("#F5F5F5"),
+                      color: HexColor("#FFFFFF").withOpacity(1),
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -159,7 +159,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -184,8 +184,8 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 12,
-                                          fontFamily: "MonseraBold"
+                                          fontSize: 10,
+                                          fontFamily: "MonseraRegular"
                                       ),
                                     ),
                                   ),
@@ -200,8 +200,8 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 12,
-                                          fontFamily: "MonseraBold"
+                                          fontSize: 10,
+                                          fontFamily: "MonseraRegular"
                                       ),
                                     ),
                                   )
@@ -236,7 +236,7 @@ class _Panier2State extends State<Panier2> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: HexColor("#001C36"),
-                                        fontSize: 15,
+                                        fontSize: 12,
                                         fontFamily: "MonseraBold"),
                                   ),
                                 ),
@@ -262,9 +262,9 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 12,
+                                          fontSize: 10,
 
-                                          fontFamily: "MonseraBold"
+                                          fontFamily: "MonseraRegular"
                                       ),
 
                                     ),
@@ -290,7 +290,7 @@ class _Panier2State extends State<Panier2> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: HexColor("#001C36"),
-                                        fontSize: 15,
+                                        fontSize: 12,
                                         fontFamily: "MonseraBold"),
                                   ),
                                 ),
@@ -314,8 +314,8 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
-                                        fontSize: 12,
-                                        fontFamily: "MonseraBold",
+                                        fontSize: 10,
+                                        fontFamily: "MonseraRegular",
                                       ),
                                     ),
                                   ),
@@ -342,7 +342,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -539,7 +539,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -626,7 +626,7 @@ class _Panier2State extends State<Panier2> {
                                                           style: TextStyle(
                                                               color: HexColor(
                                                                   "#909090"),
-                                                              fontSize: 16,
+                                                              fontSize: 12,
                                                               fontFamily:
                                                               "Regular"),
                                                         ),
@@ -649,7 +649,7 @@ class _Panier2State extends State<Panier2> {
                                                           style: TextStyle(
                                                             color: HexColor(
                                                                 "#001C36"),
-                                                            fontSize: 12,
+                                                            fontSize: 10,
                                                             fontFamily:
                                                             "MontserratBold",
                                                             fontWeight:
@@ -670,7 +670,7 @@ class _Panier2State extends State<Panier2> {
                                                           child: PriceWithDot(
                                                             price: widget
                                                                 .produitsCommander[i]["prix"],
-                                                            size: 14,
+                                                            size: 12,
                                                             couleur: HexColor(
                                                                 "#00CC7b"),
                                                             police: "MontserratBold",

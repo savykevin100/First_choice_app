@@ -92,7 +92,7 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     AppBarClasse _appBar = AppBarClasse(
-        titre: "Chat",
+        titre: "Message",
         context: context,
         controller: controller,
         nbAjoutPanier: ajoutPanier);
@@ -132,9 +132,8 @@ class _ChatState extends State<Chat> {
                 ),
                 SizedBox(height: longueurPerCent(40, context),),
                 Container(
-                  margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
+                  margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(40, context),right: longueurPerCent(40, context)),
                   height: longueurPerCent(50.0, context),
-                  width: largeurPerCent(220.0, context),
                   child: GestureDetector(
                     onTap: () {
                       launchWhatsApp("22996184655");
@@ -152,7 +151,7 @@ class _ChatState extends State<Chat> {
                                 width: largeurPerCent(40, context),),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(left:longueurPerCent(10, context)),
+                              padding:  EdgeInsets.only(left:longueurPerCent(20, context)),
                               child: Text(
                                 "WhatsApp",
                                 style: TextStyle(
@@ -169,10 +168,9 @@ class _ChatState extends State<Chat> {
                   ),
                 ),
                 SizedBox(height: longueurPerCent(40, context),),
-                Container(
-                  margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(10, context)),
+                /*Container(
+                  margin: EdgeInsets.only(bottom: longueurPerCent(10, context),left: longueurPerCent(40, context),right: longueurPerCent(40, context)),
                   height: longueurPerCent(50.0, context),
-                  width: largeurPerCent(220.0, context),
                   child: GestureDetector(
                     onTap: () {
                       launchMessenger();
@@ -190,7 +188,7 @@ class _ChatState extends State<Chat> {
                                 width: largeurPerCent(60, context),),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(left:longueurPerCent(0, context)),
+                              padding:  EdgeInsets.only(left:longueurPerCent(10, context)),
                               child: Text(
                                 "Messenger",
                                 style: TextStyle(
@@ -205,7 +203,7 @@ class _ChatState extends State<Chat> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),),
