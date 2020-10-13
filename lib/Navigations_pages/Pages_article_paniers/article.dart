@@ -633,7 +633,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                   );
                 } else {
                   for (int i = 0; i < snapshot.data.length; i++) {
-                    if (widget.produit.image1 == snapshot.data[i].imagePrincipaleProduit) {
+                    if (widget.produit.image1 == snapshot.data[i].imagePrincipaleProduit) { 
                       return Hero(
                         tag: "customBackground",
                         child: Container(
@@ -643,7 +643,14 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
                             },
-                            child:CachedNetworkImage(
+                            child: Image.network(
+                             imageSelect,
+                              fit: BoxFit.cover,
+                              loadingBuilder: (context,child, progress){
+                                return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                              },
+                            )
+                            /*CachedNetworkImage(
                               imageUrl: imageSelect,
                               imageBuilder: (context, imageProvider) => Container(
                                 decoration: BoxDecoration(
@@ -655,7 +662,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               ),
                               placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
                               ),
-                            ),
+                            ),*/
                           ) ,
 
                         ),

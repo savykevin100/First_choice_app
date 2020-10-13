@@ -15,6 +15,7 @@ class Produit {
   String idProduitCategorie;
   String expiryBadgeNew;
   String reference;
+  String couleur;
 
   Produit(
       {this.nomDuProduit,
@@ -32,6 +33,7 @@ class Produit {
         this.expiryBadgeNew,
         this.reference,
         this.idProduitCategorie,
+        this.couleur,
         this.numberImages});
 
   Produit.fromMap(Map<String, dynamic> donnees, String id)
@@ -48,6 +50,7 @@ class Produit {
         expiryBadgeNew = donnees["expiryBadgeNew"],
         sousCategorie = donnees["sousCategorie"],
         id = donnees["id"],
+        couleur = donnees["couleur"],
         reference = donnees["reference"],
         description = donnees["description"],
         idProduitCategorie = donnees["idProduitCategorie"];
@@ -68,6 +71,7 @@ class Produit {
       "categorie": categorie,
       "sousCategorie": sousCategorie,
       "id": id,
+      "couleur": couleur,
       "reference": reference,
       "idProduitCategorie": idProduitCategorie
     };

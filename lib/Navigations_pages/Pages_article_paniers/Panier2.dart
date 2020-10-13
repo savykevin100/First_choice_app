@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -18,7 +17,6 @@ import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
-import 'package:http_auth/http_auth.dart';
 
 import 'commande_send.dart';
 
@@ -857,7 +855,7 @@ class _Panier2State extends State<Panier2> {
 
           String username = 'QSUSR168';
           String password = 'jf0Midq2LIdkAv4Ugi1B';
-          String transref = numberOrder.toString();
+          String transref = DateTime.now().toString().substring(10);
 
 
           var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
@@ -883,7 +881,7 @@ class _Panier2State extends State<Panier2> {
           ).then(
                   (response) {
                     if(response.statusCode == 202)
-                     // commandAction();
+                      commandAction();
                 print("Reponse status : ${response.statusCode}");
                 print("Response body : ${response.body}");
               });
@@ -902,7 +900,7 @@ class _Panier2State extends State<Panier2> {
           ).then(
                   (response) {
                     if(response.statusCode == 200 )
-                      //commandAction();
+                      commandAction();
                 print("Reponse status : ${response.statusCode}");
                 print("Response body : ${response.body}");
               });

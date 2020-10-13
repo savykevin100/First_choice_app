@@ -79,70 +79,72 @@ class _NotificationsState extends State<Notifications> {
               else {
                 return ListView.builder(
                     itemCount: snapshot.data.length,
+                    reverse:true,
                     itemBuilder: (context, i){
                       InformationNotification notification = snapshot.data[i];
-                      return Column(
-                        children: <Widget>[
-                          SizedBox(height: longueurPerCent(5.0, context),),
-                          Container(
-                            margin: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context)),
-                            child: Material(
-                              borderRadius: BorderRadius.circular(7.0),
-                              color: Colors.white,
-                              elevation: 3.0,
-                              child: Row(
+                      return Container(
+                        margin: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context), bottom: longueurPerCent(10, context), top: longueurPerCent(10, context)),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(7.0),
+                          color: Colors.white,
+                          elevation: 3.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 10, bottom: 5, left: 8),
-                                        child: Text(
-                                          notification.titre,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color: HexColor("#001C36"),
-                                            fontSize: 12,
-                                            fontFamily: "MonseraBold",
-                                          ),
-                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10, bottom: 5, left: 8),
+                                    child: Text(
+                                      notification.titre,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: HexColor("#001C36"),
+                                        fontSize: 12,
+                                        fontFamily: "MonseraBold",
                                       ),
-                                      Container(
-                                        margin:EdgeInsets.only(bottom: longueurPerCent(5, context),left: longueurPerCent(8, context)),
-                                        width: largeurPerCent(340.0, context),
-                                        child: Text(
-                                          notification.description,
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            color: HexColor("#001C36"),
-                                            fontSize: 10,
-                                            fontFamily: "MonseraRegular",
-                                          ),
-                                        ),
-                                      ),
-                                      Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(bottom: 10,left: 280),
-                                          child: Text(
-                                            notification.created,
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              color: HexColor("#909090"),
-                                              fontSize: 8,
-                                              fontFamily: "MonseraRegular",
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                      largeurPerCent(250, context),
+                                    ),
+                                    child:  Padding(
+                                      padding: EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
+                                      child: Text(
+                                        notification.description,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: HexColor("#001C36"),
+                                          fontSize: 10,
+                                          fontFamily: "MonseraRegular",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                 ],
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.only(top: longueurPerCent(10, context), right: largeurPerCent(10, context)),
+                                child: Text(
+                                  notification.created,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: HexColor("#909090"),
+                                    fontSize: 8,
+                                    fontFamily: "MonseraRegular",
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       );
                     }
 

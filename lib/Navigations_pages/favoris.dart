@@ -156,7 +156,7 @@ class _FavorisState extends State<Favoris> {
                                 children: <Widget>[
                                   Container(
                                     //height: longueurPerCent(100, context),
-                                    width: largeurPerCent(200, context),
+                                    width: largeurPerCent(250, context),
                                     height: longueurPerCent(150, context),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.only(
@@ -238,10 +238,9 @@ class _FavorisState extends State<Favoris> {
                                           },
                                         ),
                                       ),
-                                      SizedBox(width: largeurPerCent(10, context),),
                                       Padding(
-                                          padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context)),
-                                          child:IconButton(icon: Icon(Icons.delete, color: Colors.red,), onPressed: (){
+                                          padding: EdgeInsets.only(left: longueurPerCent(5, context),right: longueurPerCent(10, context)),
+                                          child:IconButton(icon: Icon(Icons.delete, color: Colors.red, size:20), onPressed: (){
                                             for(int i=0; i<etatFavoris.length; i++){
                                               if(produit.image1==etatFavoris[i]) {
                                                 _db
