@@ -1,15 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Models/produit.dart';
-import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
+
+import 'displaySearchResult.dart';
 
 
 
@@ -22,11 +19,11 @@ class SearchFiltre extends StatefulWidget {
 
 class _SearchFiltreState extends State<SearchFiltre> {
   final controller = ScrollController();
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
-
-  bool prix=false;
+  bool prix = false;
   String taille;
-  bool sizeChekbox=false;
+  bool sizeChekbox = false;
   int prixMax;
   int prixMin;
   String genre;
@@ -35,8 +32,9 @@ class _SearchFiltreState extends State<SearchFiltre> {
   int nombreAjoutPanier;
   List<String> selectedSizes = <String>[];
   String emptySearch;
-  bool loadingSearch=false;
-  String noData ;
+  bool loadingSearch = false;
+  String noData;
+
   List<RadioModel> sampleData = new List<RadioModel>();
   List<RadioModelGenre> sampleDataGenre = new List<RadioModelGenre>();
   List<RadioModelGenre> sampleDataSousCategorie = new List<RadioModelGenre>();
@@ -46,46 +44,47 @@ class _SearchFiltreState extends State<SearchFiltre> {
   TextEditingController _prixMinController = TextEditingController();
 
 
-  List<String> sousCategorieHommes=[];
-  List<String> sousCategorieFemmes=[];
-  List<String> sousCategorieHommesEtFemmes=[];
-  int somme=0;
-  int verificationLength=0;
+  List<String> sousCategorieHommes = [];
+  List<String> sousCategorieFemmes = [];
+  List<String> sousCategorieHommesEtFemmes = [];
+  int somme = 0;
+  int verificationLength = 0;
+  bool pressSearchButton = false;
 
 
+  String _dropDownValue4;
+  String couleur;
 
-
-  Future<void> getSousCategorie() async{
+  Future<void> getSousCategorie() async {
     await Firestore.instance.collection("Hommes").getDocuments().then((value) {
       value.documents.forEach((element) {
-        if(this.mounted){
+        if (this.mounted) {
           setState(() {
             somme++;
             verificationLength++;
-            sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
+            sampleDataSousCategorie.add(
+                RadioModelGenre(false, "", element.data["nomCategorie"]));
           });
         }
-
       });
     });
 
 
-
     await Firestore.instance.collection("Femmes").getDocuments().then((value) {
       value.documents.forEach((element) {
-        if(sampleDataSousCategorie.contains(element.data['nomCategorie'])){
-          if(this.mounted){
+        if (sampleDataSousCategorie.contains(element.data['nomCategorie'])) {
+          if (this.mounted) {
             setState(() {
               somme++;
-              sampleDataSousCategorie.add(RadioModelGenre(false, "", element.data["nomCategorie"]));
+              sampleDataSousCategorie.add(
+                  RadioModelGenre(false, "", element.data["nomCategorie"]));
             });
           }
         }
       });
     });
-
-
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -93,33 +92,29 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
     sampleData.add(new RadioModel(false, 'XS'));
     sampleData.add(new RadioModel(false, 'S',));
-    sampleData.add(new RadioModel(false, 'M', ));
+    sampleData.add(new RadioModel(false, 'M',));
     sampleData.add(new RadioModel(false, 'L',));
     sampleData.add(new RadioModel(false, 'XL'));
     sampleData.add(new RadioModel(false, 'XXL',));
-    sampleData.add(new RadioModel(false, '28', ));
+    sampleData.add(new RadioModel(false, '28',));
     sampleData.add(new RadioModel(false, '30',));
     sampleData.add(new RadioModel(false, '32'));
     sampleData.add(new RadioModel(false, '34',));
-    sampleData.add(new RadioModel(false, '36', ));
+    sampleData.add(new RadioModel(false, '36',));
     sampleData.add(new RadioModel(false, '38',));
     sampleData.add(new RadioModel(false, '40'));
     sampleData.add(new RadioModel(false, '42',));
-    sampleData.add(new RadioModel(false, '44', ));
+    sampleData.add(new RadioModel(false, '44',));
     sampleData.add(new RadioModel(false, '46',));
     sampleData.add(new RadioModel(false, '48',));
     sampleData.add(new RadioModel(false, '50',));
 
 
-
-    sampleDataGenre.add(new RadioModelGenre(false, '','Hommes',));
-    sampleDataGenre.add(new RadioModelGenre(false, '','Femmes',));
+    sampleDataGenre.add(new RadioModelGenre(false, '', 'Hommes',));
+    sampleDataGenre.add(new RadioModelGenre(false, '', 'Femmes',));
 
     getSousCategorie();
-
-
   }
-
 
 
   @override
@@ -136,12 +131,12 @@ class _SearchFiltreState extends State<SearchFiltre> {
       appBar: _appBar.appBarFunctionStream(),
       body: SingleChildScrollView(
         child: Center(
-            child:  (sampleDataSousCategorie!=null)?Column(
+            child: (sampleDataSousCategorie != null) ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
-                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  padding: EdgeInsets.only(left: 20, bottom: 5),
                   child: Text(
                       "Prix",
                       style: TextStyle(
@@ -153,14 +148,19 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 Container(
                   color: HexColor("#F5F5F5"),
-                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0,bottom: 10),
-                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 30.0, right: 30.0, bottom: 10),
+                  margin: const EdgeInsets.only(
+                      top: 0.0, left: 20.0, right: 20.0),
                   child: Row(
                     children: [
                       Expanded(
                         flex: 2,
                         child: Container(
-                          width: MediaQuery.of(context).size.width/2,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width / 2,
                           child: TextField(
                             controller: _prixMinController,
                             style: TextStyle(
@@ -176,7 +176,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                                   fontFamily: "MonseraRegular",
                                 )
                             ),
-                            onChanged: (value) => prixMin=int.tryParse(value),
+                            onChanged: (value) => prixMin = int.tryParse(value),
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -187,7 +187,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          width: MediaQuery.of(context).size.width/2,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width / 2,
                           child: TextField(
                             controller: _prixMaxController,
                             style: TextStyle(
@@ -203,7 +206,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                                   fontFamily: "MonseraRegular",
                                 )
                             ),
-                            onChanged: (value) => prixMax=int.tryParse(value),
+                            onChanged: (value) => prixMax = int.tryParse(value),
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -213,7 +216,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
-                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  padding: EdgeInsets.only(left: 20, bottom: 5),
                   child: Text(
                       "Genre",
                       style: TextStyle(
@@ -224,9 +227,40 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   ),
                 ),
                 Container(
+                    color: HexColor("#F5F5F5"),
+                    height: longueurPerCent(60, context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          splashColor: Colors.blueAccent,
+                          onTap: () {
+                            setState(() {
+                              sampleDataGenre.forEach(
+                                      (element) => element.isSelected = false);
+                              sampleDataGenre[0].isSelected = true;
+                              genre = sampleDataGenre[0].text;
+                            });
+                          },
+                          child: new RadioItemGenre(sampleDataGenre[0]),
+                        ),
+                        InkWell(
+                          splashColor: Colors.blueAccent,
+                          onTap: () {
+                            setState(() {
+                              sampleDataGenre.forEach(
+                                      (element) => element.isSelected = false);
+                              sampleDataGenre[1].isSelected = true;
+                              genre = sampleDataGenre[1].text;
+                            });
+                          },
+                          child: new RadioItemGenre(sampleDataGenre[1]),
+                        )
+                      ],
+                    )
+                ),
+                /* Container(
                   color: HexColor("#F5F5F5"),
-                  padding: const EdgeInsets.only(top: 10.0, left: 90.0, right: 0.0),
-                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
                   height: longueurPerCent(60, context),
                   child:  ListView.builder(
                     shrinkWrap: false,
@@ -244,16 +278,18 @@ class _SearchFiltreState extends State<SearchFiltre> {
                           });
                         },
                         child: Row(
-                            children: [
-                              new RadioItemGenre(sampleDataGenre[index]),
-                            ]),
+                          mainAxisAlignment:MainAxisAlignment.center,
+                          children: [
+                            new RadioItemGenre(sampleDataGenre[index]),
+                          ],
+                        ),
                       );
                     },
                   ),
-                ),
+                ),*/
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
-                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  padding: EdgeInsets.only(left: 20, bottom: 5),
                   child: Text(
                       "Catégories",
                       style: TextStyle(
@@ -265,28 +301,35 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 Container(
                   color: HexColor("#F5F5F5"),
-                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
-                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
                   height: longueurPerCent(200, context),
-                  child:  StaggeredGridView.countBuilder(
+                  child: StaggeredGridView.countBuilder(
                     reverse: false,
                     crossAxisCount: 4,
                     itemCount: sampleDataSousCategorie.length,
                     itemBuilder: (BuildContext context, index) {
-                      return InkWell(
-                        splashColor: Colors.blueAccent,
-                        onTap: () {
-                          setState(() {
-                            sampleDataSousCategorie.forEach(
-                                    (element) => element.isSelected = false);
-                            sampleDataSousCategorie[index].isSelected = true;
-                            sousCategorie=sampleDataSousCategorie[index].text;
-                          });
-                        },
-                        child: new RadioItemGenre(sampleDataSousCategorie[index]),
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            splashColor: Colors.blueAccent,
+                            onTap: () {
+                              setState(() {
+                                sampleDataSousCategorie.forEach(
+                                        (element) =>
+                                    element.isSelected = false);
+                                sampleDataSousCategorie[index].isSelected =
+                                true;
+                                sousCategorie =
+                                    sampleDataSousCategorie[index].text;
+                              });
+                            },
+                            child: new RadioItemGenre(
+                                sampleDataSousCategorie[index]),
+                          ),
+                        ],
                       );
                     },
-                    staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                    staggeredTileBuilder: (_) => StaggeredTile.fit(2),
                     mainAxisSpacing: 0.0,
                     crossAxisSpacing: 10.0,
                     shrinkWrap: true,
@@ -294,8 +337,76 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   ),
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
+                (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?Center(
+                  child: Container(
+                    width: largeurPerCent(347.0, context),
+                    height: longueurPerCent(40, context),
+                    padding: EdgeInsets.only(
+                        left: largeurPerCent(10, context),
+                        right: largeurPerCent(20, context),
+                        top: longueurPerCent(0, context)),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(7.0),
+                        ),
+                        border: Border.all(color: Colors.grey, width: 1)),
+                    child: DropdownButton(
+                      underline: Text(""),
+                      hint: _dropDownValue4 == null
+                          ? Text(
+                        'Couleurs',
+                          style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 12,
+                            fontFamily: "MonseraRegular",
+                          ),
+                      )
+                          : Text(
+                        _dropDownValue4,
+                          style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 12,
+                            fontFamily: "MonseraRegular",
+                          ),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      items: [
+                        'Rouge',
+                        'Orange',
+                        'Jaune',
+                        'Vert',
+                        'Bleu',
+                        'Indigo',
+                        'Violet',
+                        'Noir'
+                      ].map(
+                            (val) {
+
+                          return DropdownMenuItem<String>(
+                            value: val,
+                            child: Text(val,  style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 12,
+                              fontFamily: "MonseraRegular",
+                            ),),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (val) {
+                        setState(
+                              () {
+                            _dropDownValue4 = val;
+                            couleur = val;
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ):Text(""),
+                SizedBox(height: longueurPerCent(20, context),),
                 Padding(
-                  padding: EdgeInsets.only(left: 20,bottom: 5),
+                  padding: EdgeInsets.only(left: 20, bottom: 5),
                   child: Text(
                       "Taille",
                       style: TextStyle(
@@ -307,10 +418,12 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 Container(
                   color: HexColor("#F5F5F5"),
-                  padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 0.0),
-                  margin: const EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 30.0, right: 0.0),
+                  margin: const EdgeInsets.only(
+                      top: 0.0, left: 20.0, right: 20.0),
                   height: longueurPerCent(200, context),
-                  child:  StaggeredGridView.countBuilder(
+                  child: StaggeredGridView.countBuilder(
                     reverse: false,
                     crossAxisCount: 10,
                     itemCount: sampleData.length,
@@ -322,285 +435,360 @@ class _SearchFiltreState extends State<SearchFiltre> {
                             sampleData.forEach(
                                     (element) => element.isSelected = false);
                             sampleData[index].isSelected = true;
-                            taille=sampleData[index].buttonText;
+                            taille = sampleData[index].buttonText;
                           });
                         },
                         child: new RadioItem(sampleData[index]),
                       );
                     },
-                    staggeredTileBuilder: (_) => StaggeredTile.  fit(2),
+                    staggeredTileBuilder: (_) => StaggeredTile.fit(2),
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                   ),
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
-
-                SizedBox(
-                  height: longueurPerCent(10, context),
-                ),
-                (loadingSearch==false)? displaySearchResult():Center(child: CircularProgressIndicator(),),
-                SizedBox(
-                  height: longueurPerCent(200, context),
-                ),
               ],
-            ):CircularProgressIndicator()
+            ) : CircularProgressIndicator()
         ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            setState(() {
-              loadingSearch=true;
-              data=[];
-            });
-            // Genre search
-            if (genre!=null && sousCategorie==null && prixMax==null && prixMin==null && taille==null)
-              getGenreOnly(); // good
-            else if(genre!=null && sousCategorie!=null && prixMax==null && prixMin==null && taille==null)
-              getGenreAndSousCategorie(); // good
-            else if(genre!=null && prixMax!=null && prixMin!=null && taille==null && sousCategorie==null)
-              getGenreAndPrice(genre); // good
-            else if(genre!=null && taille!=null &&  sousCategorie==null && prixMax==null && prixMin==null)
-              getGenreAndSize(); // good
-            else if(genre!=null && taille!=null &&  sousCategorie==null && prixMax!=null && prixMin!=null)
-            {
-              getGenreAndPriceAndSize(genre, prixMax, prixMin, taille);// good
-            }
-            else if(genre!=null && taille!=null &&  sousCategorie!=null && prixMax!=null && prixMin!=null)
-              getGenreAndPriceAndSizeAndCategorie(genre, taille, sousCategorie, prixMax, prixMin); // good
+            if (prixMax == null && prixMin == null && taille == null &&
+                genre == null && sousCategorie == null) {
+              displaySnackBarNom(
+                  context, "VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE",
+                  Colors.white);
 
-            // categorie search
-            else if (sousCategorie != null && genre == null && prixMax==null && prixMin==null && taille==null){
-              getCategorieOnly(sousCategorie);// good
-            }
-            else if(sousCategorie!=null && prixMax!=null && prixMin!=null && genre==null && taille==null)
-              getCategorieAndPrice(sousCategorie, prixMax, prixMin); // good
-            else if(sousCategorie!=null && taille!=null && prixMax==null && prixMin==null && genre==null)
-              getCategorieAndSize(sousCategorie, taille); // good
-            else if(sousCategorie!=null && taille!=null && prixMax!=null && prixMin!=null && genre==null)
-              getCategorieAndSizeAndPrice(sousCategorie, taille , prixMax, prixMin); // good
+            } else if(  ((prixMin!=null && prixMax==null && genre!=null)|| (prixMin!=null && prixMax==null && sousCategorie!=null)) ||(prixMin!=null && prixMax==null && taille!=null)
+              || (prixMin!=null && prixMax==null && genre!=null && sousCategorie!=null) ||  (prixMin!=null && prixMax==null && genre!=null && taille!=null)   || (prixMin!=null && prixMax==null && taille!=null && sousCategorie!=null)
+                || (prixMin!=null && prixMax==null && genre!=null && sousCategorie!=null && taille!=null)
 
 
-            // Price search
-            else if (prixMin != null && prixMax == null && genre==null && sousCategorie==null && taille==null)
-              getPriceOnlyPriceMin();
-            else if (prixMax != null && prixMin == null   && genre==null && sousCategorie==null  && taille==null)
-              getPriceOnlyPriceMax();
-            else if (taille!=null && prixMax!=null && prixMin!=null )
-              getPriceAndSize(taille, prixMin, prixMax); // good
-            else if (  prixMax!=null && prixMin!=null )
-              getPriceMinAndPriceMaxOnly(prixMin, prixMax); // good
-            // Size search
-            else if(prixMax==null && prixMin==null && taille!=null && genre==null && sousCategorie==null) {
-              getSizeOnly();// good
+                                                                   ||
+
+                ((prixMax==null && prixMax!=null && genre!=null)|| (prixMin==null && prixMax!=null && sousCategorie!=null)) ||(prixMin==null && prixMax!=null && taille!=null)
+                || (prixMin==null && prixMax!=null && genre!=null && sousCategorie!=null) ||  (prixMin==null && prixMax!=null && genre!=null && taille!=null)   || (prixMin==null && prixMax!=null && taille!=null && sousCategorie!=null)
+                || (prixMin==null && prixMax!=null && genre!=null && sousCategorie!=null && taille!=null)
+            ){//close the dialoge
+              displaySnackBarNom(context, "Veuillez entrer les prix minimal et maximal", Colors.white);
             }
-            else if(prixMax==null && prixMin==null && taille==null && genre==null && sousCategorie==null)
+            else {
               setState(() {
-                data=null;
-                loadingSearch=false;
-                noData="VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
+                loadingSearch = true;
+                data = [];
               });
-            setState(() {
-              prixMax=null;
-              prixMin=null;
-              _prixMaxController.text="";
-              _prixMinController.text="";
-              sousCategorie=null;
-              sizeChekbox = false;
-              prix = false;
-              taille = null;
-              genre = null;
-              sampleData.forEach((element) {
+              showLoadingDialog(context, _keyLoader);
+              // Genre search
+              if (genre != null && sousCategorie == null && prixMax == null &&
+                  prixMin == null && taille == null)
+                getGenreOnly(); // good
+              else
+              if (genre != null && sousCategorie != null && prixMax == null &&
+                  prixMin == null && taille == null && couleur==null)
+                getGenreAndSousCategorie(); // good
+              else if (genre != null && prixMax != null && prixMin != null &&
+                  taille == null && sousCategorie == null)
+                getGenreAndPrice(genre); // good
+              else
+              if (genre != null && taille != null && sousCategorie == null &&
+                  prixMax == null && prixMin == null)
+                getGenreAndSize(); // good
+              else
+              if (genre != null && taille != null && sousCategorie == null &&
+                  prixMax != null && prixMin != null)
+                getGenreAndPriceAndSize(
+                    genre, prixMax, prixMin, taille); // good
+              else if (genre != null && taille != null && sousCategorie != null &&
+                  prixMax != null && prixMin != null)
+                getGenreAndPriceAndSizeAndCategorie(
+                    genre, taille, sousCategorie, prixMax, prixMin); // good
+
+              // categorie search
+              else
+              if (sousCategorie != null && genre == null && prixMax == null &&
+                  prixMin == null && taille == null && couleur==null) {
+                getCategorieOnly(sousCategorie); // good
+              }
+              else
+              if (sousCategorie != null && prixMax != null && prixMin != null &&
+                  genre == null && taille == null && couleur==null)
+                getCategorieAndPrice(sousCategorie, prixMax, prixMin); // good
+              else
+              if (sousCategorie != null && taille != null && prixMax == null &&
+                  prixMin == null && genre == null && couleur==null)
+                getCategorieAndSize(sousCategorie, taille); // good
+              else
+              if (sousCategorie != null && taille != null && prixMax != null &&
+                  prixMin != null && genre == null && couleur==null)
+                getCategorieAndSizeAndPrice(
+                    sousCategorie, taille, prixMax, prixMin); // good
+
+              // categorie search with color
+              else
+              if (sousCategorie != null && genre == null && prixMax == null &&
+                  prixMin == null && taille == null && couleur!=null) {
+                getCategorieWithColor(); // good
+              }
+              else
+              if (sousCategorie != null && prixMax != null && prixMin != null &&
+                  genre == null && taille == null)
+                getCategorieWithPriceAndColor();// good
+              else
+              if (sousCategorie != null && taille != null && prixMax == null &&
+                  prixMin == null && genre == null)
+                getCategorieWithSizeAndColor();// good
+              else
+              if (sousCategorie != null && taille != null && prixMax != null &&
+                  prixMin != null && genre == null)
+                getCategorieAndSizeAndPrice(
+                    sousCategorie, taille, prixMax, prixMin); // good
+              else
+              if (genre != null && sousCategorie != null && prixMax == null &&
+                  prixMin == null && taille == null && couleur!=null)
+                getCategorieGenreAndColor(couleur); // good
+
+              // Price search
+              else if (prixMin != null && prixMax == null && genre == null &&
+                  sousCategorie == null && taille == null)
+                getPriceOnlyPriceMin();
+              else if (prixMax != null && prixMin == null && genre == null &&
+                  sousCategorie == null && taille == null)
+                getPriceOnlyPriceMax();
+              else if (taille != null && prixMax != null && prixMin != null)
+                getPriceAndSize(taille, prixMin, prixMax); // good
+              else if (prixMax != null && prixMin != null)
+                getPriceMinAndPriceMaxOnly(prixMin, prixMax); // good
+              // Size search
+              else if (prixMax == null && prixMin == null && taille != null &&
+                  genre == null && sousCategorie == null) {
+                getSizeOnly(); // good
+              }
+              else if (prixMax == null && prixMin == null && taille == null &&
+                  genre == null && sousCategorie == null) {
                 setState(() {
-                  element.isSelected=false;
+                  data = null;
+                  loadingSearch = false;
+                  noData = "VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
+                });
+                if (noData != null && loadingSearch == false && data == null) {
+                  Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                      .pop(); //close the dialoge
+                  displaySnackBarNom(context, noData, Colors.white);
+                }
+              }
+
+              setState(() {
+                prixMax = null;
+                prixMin = null;
+                _prixMaxController.text = "";
+                _prixMinController.text = "";
+                sousCategorie = null;
+                couleur=null;
+                _dropDownValue4=null;
+                sizeChekbox = false;
+                prix = false;
+                taille = null;
+                genre = null;
+                sampleData.forEach((element) {
+                  setState(() {
+                    element.isSelected = false;
+                  });
+                });
+                sampleDataGenre.forEach((element) {
+                  setState(() {
+                    element.isSelected = false;
+                  });
+                });
+                sampleDataSousCategorie.forEach((element) {
+                  setState(() {
+                    element.isSelected = false;
+                  });
                 });
               });
-              sampleDataGenre.forEach((element) {
-                setState(() {
-                  element.isSelected=false;
-                });
-              });
-              sampleDataSousCategorie.forEach((element) {
-                setState(() {
-                  element.isSelected=false;
-                });
-              });
-            });
+            }
           },
           child: Icon(Icons.search, color: Colors.white,),
-          backgroundColor: Theme.of(context).primaryColor
+          backgroundColor: Theme
+              .of(context)
+              .primaryColor
       ),
     );
   }
 
-  // -----------------------------------------------
-  // Creates a list of RangeSliders, based on their
-  // definition and SliderTheme customizations
-  // -----------------------------------------------
-  /* List<Widget> _buildRangeSliders() {
-    List<Widget> children = <Widget>[];
-    for (int index = 0; index < rangeSliders.length; index++) {
-      children
-          .add(rangeSliders[index].build(context, (double lower, double upper) {
-        // adapt the RangeSlider lowerValue and upperValue
-        setState(() {
-          rangeSliders[index].lowerValue = lower;
-          rangeSliders[index].upperValue = upper;
-        });
-      }));
-      // Add an extra padding at the bottom of each RangeSlider
-      children.add(SizedBox(height: 8.0));
-    }
-    return children;
-  }*/
 
-  // -------------------------------------------------
-  // Creates a list of RangeSlider definitions
-  // -------------------------------------------------
-  /*List<RangeSliderData> _rangeSliderDefinitions() {
-    return <RangeSliderData>[
-      RangeSliderData(
-          min: 0.0,
-          max: 500000.0,
-          lowerValue: 10.0,
-          upperValue: 1000.0,
-          showValueIndicator: true,
-          valueIndicatorMaxDecimals: 0,
-          activeTrackColor: Colors.red,
-          inactiveTrackColor: Colors.red[50],
-          valueIndicatorColor: Colors.green),
-    ];
-  }*/
-
-  void getGenreOnly(){
-    Firestore.instance.collection("TousLesProduits").where("categorie", isEqualTo: genre).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getGenreOnly() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "categorie", isEqualTo: genre).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getCategorieOnly(String subCategorie){
-    Firestore.instance.collection("TousLesProduits").where("sousCategorie", isEqualTo: subCategorie).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getCategorieOnly(String subCategorie) {
+    Firestore.instance.collection("TousLesProduits").where(
+        "sousCategorie", isEqualTo: subCategorie).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getPriceOnlyPriceMin(){
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: prixMin).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getPriceOnlyPriceMin() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getPriceOnlyPriceMax(){
-    Firestore.instance.collection("TousLesProduits").where("prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getPriceOnlyPriceMax() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getPriceOnlySize(){
-    Firestore.instance.collection("TousLesProduits").where("taille", isLessThanOrEqualTo: taille).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getPriceOnlySize() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "taille", isLessThanOrEqualTo: taille).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
 
-  void getGenreAndSousCategorie(){
-    Firestore.instance.collection(genre).document(sousCategorie).collection("Produits").getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getGenreAndSousCategorie() {
+    Firestore.instance.collection(genre).document(sousCategorie).collection(
+        "Produits").getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
   void getGenreAndPrice(String categorie) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: prixMin).where("prix", isLessThanOrEqualTo:prixMax).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(element.data["categorie"]==categorie)
+          if (element.data["categorie"] == categorie)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
@@ -608,61 +796,81 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
 
   void getGenreAndSize() {
-    Firestore.instance.collection("TousLesProduits").where("categorie", isEqualTo: genre).where("taille", isEqualTo:taille).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "categorie", isEqualTo: genre)
+        .where("taille", isEqualTo: taille)
+        .getDocuments()
+        .then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
-
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
   void getCategorieAndPrice(String subCategorie, int maxPrice, int minPrice) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(element.data["sousCategorie"]==subCategorie)
+          if (element.data["sousCategorie"] == subCategorie)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
   void getCategorieAndSize(String subCategorie, String size) {
-    Firestore.instance.collection("TousLesProduits").where("sousCategorie", isEqualTo: subCategorie).where("taille", isEqualTo:size).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "sousCategorie", isEqualTo: subCategorie).where(
+        "taille", isEqualTo: size).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
-
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
@@ -670,128 +878,366 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
 
   void getPriceAndSize(String size, int minPrice, int maxPrice) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if( element.data["taille"]==size)
+          if (element.data["taille"] == size)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getGenreAndPriceAndSize(String categorie, int maxPrice, int minPrice, String size) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getGenreAndPriceAndSize(String categorie, int maxPrice, int minPrice,
+      String size) {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(element.data["taille"]==size && element.data["categorie"]==categorie)
+          if (element.data["taille"] == size &&
+              element.data["categorie"] == categorie)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getGenreAndPriceAndSizeAndCategorie(String categorie, String size, String subCategorie, int maxPrice, int minPrice) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getGenreAndPriceAndSizeAndCategorie(String categorie, String size,
+      String subCategorie, int maxPrice, int minPrice) {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(element.data["sousCategorie"]==subCategorie && element.data["taille"]==size && element.data["categorie"]==categorie)
+          if (element.data["sousCategorie"] == subCategorie &&
+              element.data["taille"] == size &&
+              element.data["categorie"] == categorie)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
-  void getCategorieAndSizeAndPrice(String subCategorie, String size, int maxPrice, int minPrice) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+  void getCategorieAndSizeAndPrice(String subCategorie, String size,
+      int maxPrice, int minPrice) {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(element.data["sousCategorie"]==subCategorie && element.data["taille"]==size)
+          if (element.data["sousCategorie"] == subCategorie &&
+              element.data["taille"] == size)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
   void getPriceMinAndPriceMaxOnly(int minPrice, int maxPrice) {
-    Firestore.instance.collection("TousLesProduits").where("prix", isGreaterThanOrEqualTo: minPrice).where("prix", isLessThanOrEqualTo:maxPrice).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: minPrice).where(
+        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
             loadingSearch = false;
-
           });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
   }
 
   void getSizeOnly() {
-    Firestore.instance.collection("TousLesProduits").where("taille", isEqualTo: taille).getDocuments().then((value){
-      if(value.documents.isNotEmpty){
+    Firestore.instance.collection("TousLesProduits").where(
+        "taille", isEqualTo: taille).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if(this.mounted)
+          if (this.mounted)
             setState(() {
               data.add(element.data);
               loadingSearch = false;
-
             });
         });
+        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE", Colors.white);
-        if(this.mounted)
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
           setState(() {
             loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
           });
       }
     });
+  }
+
+  void getCategorieWithColor() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "sousCategorie", isEqualTo: sousCategorie).where("couleur", isEqualTo: couleur).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          setState(() {
+            data.add(element.data);
+            loadingSearch = false;
+          });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+
+  void getCategorieWithPriceAndColor(){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (element.data["sousCategorie"] == sousCategorie && element.data["couleur"]==couleur)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+
+  void getCategorieWithSizeAndColor(){
+    Firestore.instance.collection("TousLesProduits").where(
+        "sousCategorie", isEqualTo: sousCategorie).where(
+        "taille", isEqualTo: taille).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (element.data["couleur"]==couleur)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+
+  void getCategorieSizePriceAndColor(){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (element.data["sousCategorie"] == sousCategorie &&
+              element.data["taille"] == taille && element.data["couleur"]==couleur)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+
+  void getCategorieGenreAndColor(String color){
+    Firestore.instance.collection(genre).document(sousCategorie).collection(
+        "Produits").getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (element.data["couleur"]==color)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+  /*void colorOnly() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "couleur", isEqualTo: couleur).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (this.mounted)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }
+
+  void colorGenre() {
+    Firestore.instance.collection("TousLesProduits").where(
+        "couleur", isEqualTo: couleur).where("categorie", isEqualTo: genre).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (this.mounted)
+            setState(() {
+              data.add(element.data);
+              loadingSearch = false;
+            });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        displaySnackBarNom(
+            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
+            Colors.white);
+        if (this.mounted)
+          setState(() {
+            loadingSearch = false;
+            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                .pop(); //close the dialoge
+          });
+      }
+    });
+  }*/
+
+
+
+  void closePopAndNavigateNextPage() {
+    if (data != null && loadingSearch == false) {
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+          .pop(); //close the dialoge
+      Navigator.push(
+          context, MaterialPageRoute(
+          builder: (context) => DisplaySearchResult(data: data,)));
+    }
   }
 
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
@@ -803,153 +1249,37 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
 
   // ignore: missing_return
-  Widget displaySearchResult(){
-    if(data!=null && loadingSearch==false){
-      return  StaggeredGridView.countBuilder(
-        reverse: false,
-        crossAxisCount: 4,
-        itemCount: data.length,
-        itemBuilder: (BuildContext context, index) {
-          return Container(
-            width: largeurPerCent(200, context),
-            margin: EdgeInsets.only(
-                left: largeurPerCent(10, context),
-                right: largeurPerCent(10, context)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ArticleSansTaille(Produit(
-                              id: data[index]["id"],
-                              nomDuProduit: data[index]["nomDuProduit"],
-                              description: data[index]["description"],
-                              image1: data[index]["image1"],
-                              image2: data[index]["image2"],
-                              image3: data[index]["image3"],
-                              selectImage: data[index]["selectImage"],
-                              prix: data[index]["prix"],
-                              numberImages: data[index]["numberImages"],
-                              numberStar: data[index]["numberStar"],
-                              taille: data[index]["taille"],
-                              categorie: data[index]["catagorie"],
-                              sousCategorie: data[index]["sousCategorie"],
-                              expiryBadgeNew: data[index]["expiryBadgeNew"],
-                              idProduitCategorie: data[index]
-                              ["idProduitCategorie"]), Renseignements.emailUser))),
-              child: Card(
-                elevation: 5.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: longueurPerCent(150, context),
-                      width: largeurPerCent(200, context),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10)),
-                        child: CachedNetworkImage(
-                          imageUrl: data[index]["image1"],
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: largeurPerCent(200, context),
-                      ),
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              left: largeurPerCent(10, context),
-                              top: longueurPerCent(10, context)),
-                          child: Text(
-                            "${data[index]["prix"]} FCFA",
-                            style: TextStyle(
-                                color: HexColor("#00CC7b"),
-                                fontSize: 16.5,
-                                fontFamily: "MonseraBold"),
-                          )),
-                    ),
-                    SizedBox(
-                      height: longueurPerCent(5, context),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: largeurPerCent(200, context),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: largeurPerCent(10, context)),
-                        child: Text(
-                          data[index]["nomDuProduit"],
-                          style: TextStyle(
-                              color: HexColor("#909090"),
-                              fontSize: 15,
-                              fontFamily: "MonseraRegular"),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            top: longueurPerCent(10, context),
-                            left: largeurPerCent(4, context)),
-                        child: RatingBar(
-                          initialRating: data[index]["numberStar"]
-                              .ceilToDouble(),
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 3,
-                          itemPadding: EdgeInsets.symmetric(
-                              horizontal: 4.0),
-                          ignoreGestures: true,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 10,
-                          ),
-                          itemSize: 20,
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        )),
-                    SizedBox(
-                      height: longueurPerCent(10, context),
-                    ),
-                    new Container()
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-        staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-        mainAxisSpacing: 10.0,
-        crossAxisSpacing: 10.0,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-      );
-    }
-    else if(noData!=null && loadingSearch==false && data==null)
+  Widget displaySearchResult() {
+    /*if(noData!=null && loadingSearch==false && data==null)
       return Center(child: Text(noData),);
-    else if(loadingSearch==false && emptySearch!=null && data==null && noData==null)
+    else*/ if (loadingSearch == false && emptySearch != null && data == null &&
+        noData == null)
       return Center(child: Text(emptySearch),);
   }
 
 
+  Future<void> showLoadingDialog(BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.white,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 10,),
+                        Text("CHARGEMENT", style: TextStyle(
+                            color: Colors.black, fontFamily: "Bold"),)
+                      ]),
+                    )
+                  ]));
+        });
+  }
 
 }
 
@@ -1051,6 +1381,7 @@ class RadioItem extends StatelessWidget {
     );
   }
 }
+
 
 class RadioModel {
   bool isSelected;
@@ -1229,7 +1560,7 @@ Widget build(BuildContext context, frs.RangeSliderCallback callback) {
                 // Customization of the SliderTheme
                 // based on individual definitions
                 // (see rangeSliders in _RangeSliderSampleState)
-                data: SliderTheme.of(context).copyWith(
+                data: SliderTheme.of(context).copyWith( 
                   overlayColor: overlayColor,
                   activeTickMarkColor: activeTickMarkColor,
                   activeTrackColor: activeTrackColor,
@@ -1256,7 +1587,7 @@ Widget build(BuildContext context, frs.RangeSliderCallback callback) {
                 ),
               ),
             ),
-          ),
+          ),  
           Container(
             constraints: BoxConstraints(
               minWidth: 100.0,

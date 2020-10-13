@@ -5,7 +5,6 @@ import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
 
 // ignore: must_be_immutable
 class Mensuration extends StatefulWidget {

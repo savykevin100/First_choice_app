@@ -145,7 +145,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             boxFit: BoxFit.cover,
             autoplay: true,
             animationCurve: Curves.linearToEaseOut,
-            animationDuration: Duration(seconds: 10),
+            animationDuration: Duration(seconds: 1),
             dotSize: 10.0,
             dotIncreasedColor: Colors.amber,
             dotPosition: DotPosition.bottomCenter,
