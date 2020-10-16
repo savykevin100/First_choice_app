@@ -5,7 +5,6 @@ import 'package:premierchoixapp/Authentification/inscription.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
-import 'package:premierchoixapp/Design/Mensuration.dart';
 import 'package:premierchoixapp/Pages/FirstPage.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
@@ -20,6 +19,7 @@ import 'Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'Navigations_pages/all_navigation_page.dart';
 import 'Navigations_pages/panier.dart';
+import 'Pages/displaySearchResult.dart';
 
 
 void main() => runApp(MyApp());
@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
         DetailsCommandes.id: (context) => DetailsCommandes(),
        ConditionGenerales.id: (context) => ConditionGenerales(),
         APrpos.id: (context) => APrpos(),
-        CustomDialog.id: (context) => CustomDialog()
+        CustomDialog.id: (context) => CustomDialog(),
+        DisplaySearchResult.id: (context) => DisplaySearchResult()
       },
 
     );

@@ -71,8 +71,8 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
             crossAxisCount: 4,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
-              /* expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
-              bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());*/
+               expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
+              bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
               Produit produit = snapshot.data[index];
               return Container(
                 width: largeurPerCent(200, context),
@@ -120,7 +120,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               ),
                           ),
                         ),
-                        /*(displayBadgeNew)? Container(
+                        (displayBadgeNew)? Container(
                           height: longueurPerCent(10, context),
                           width: largeurPerCent(50, context),
                           color: Colors.red,
@@ -137,7 +137,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               ),
                             ),
                           ),
-                        ):Container(),*/
+                        ):Container(),
                         ConstrainedBox(
                           constraints: BoxConstraints(
                             maxWidth:

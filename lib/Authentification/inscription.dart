@@ -84,17 +84,17 @@ class _InscriptionState extends State<Inscription> {
                     try {
                       final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
                       if(user!=null ) {
-                        setState(() {
-                          chargement=true;
-                        });
-                        _auth.currentUser().then((value) {
+                       /* _auth.currentUser().then((value) {
                           value.sendEmailVerification();
                         });
+                        confirmEmail(context, user.user);*/
                         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                           return Renseignements(emailAdress: emailAdress);
                         }));
+                        setState(() {
+                          chargement=false;
+                        });
                       }
-
                     } catch(e){
                       setState(() {
                         chargement = false;
@@ -147,7 +147,45 @@ class _InscriptionState extends State<Inscription> {
       ),
     );
   }
+  Future<FirebaseUser> getUser() async {
+    return await FirebaseAuth.instance.currentUser();
+  }
 
+  confirmEmail(BuildContext context, FirebaseUser user) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Continuer"),
+      onPressed:  () {
+
+        getUser().then((value) {
+          if(value.isEmailVerified){
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+              return Renseignements(emailAdress: emailAdress);
+            }));
+          } else {
+            print("Le compte n'est pas validé");
+          }
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Veuillez consulter votre email pour valider votre inscription"),
+      actions: [
+        cancelButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   showAlertDialog(BuildContext context, String text) {
 

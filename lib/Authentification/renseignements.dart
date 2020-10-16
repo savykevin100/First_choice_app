@@ -45,7 +45,83 @@ class _RenseignementsState extends State<Renseignements> {
   String verificationId;
   String smsCode;
   FirebaseMessaging  _firebaseMessaging = FirebaseMessaging();
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
+
+  final _phoneController = TextEditingController();
+  final _codeController = TextEditingController();
+
+
+  Future<bool> loginUser(String phone, BuildContext context) async{
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    _auth.verifyPhoneNumber(
+        phoneNumber: phone,
+        timeout: Duration(seconds: 60),
+        verificationCompleted: (AuthCredential credential) async{
+          Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+              .pop();
+          AuthResult result = await _auth.signInWithCredential(credential);
+
+          FirebaseUser user = result.user;
+
+          if(user != null){
+            Navigator.of(context).pushNamed(AllNavigationPage.id);
+
+          }else{
+            print("Error");
+          }
+
+          //This callback would gets called when verification is done auto maticlly
+        },
+        verificationFailed: (AuthException exception){
+          print(exception);
+        },
+        codeSent: (String verificationId, [int forceResendingToken]){
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("Give the code?"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextField(
+                        controller: _codeController,
+                      ),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("Confirm"),
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      onPressed: () async{
+                        final code = _codeController.text.trim();
+                        AuthCredential credential = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: code);
+
+                              AuthResult result = await _auth.signInWithCredential(credential);
+
+
+                        FirebaseUser user = result.user;
+
+                        if(user != null){
+                          Navigator.of(context).pushNamed(AllNavigationPage.id);
+                        }else{
+                          print("Error");
+                        }
+                      },
+                    )
+                  ],
+                );
+              }
+          );
+        },
+        codeAutoRetrievalTimeout: null
+    );
+  }
 
   Future<void> _submit() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verId) {
@@ -54,11 +130,14 @@ class _RenseignementsState extends State<Renseignements> {
 
     final PhoneCodeSent phoneCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
+      print(verId+ "Ceci est le code envoyé");
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+          .pop();
       smsCodeDialog(context).then((value) => print("Signed In"));
     };
 
     final PhoneVerificationCompleted verificationSucess = (AuthCredential auth){
-      print("$auth");
+      print("$auth"+" La verification est bonne");
     };
 
     final PhoneVerificationFailed phoneVerificationFailed = (
@@ -68,8 +147,8 @@ class _RenseignementsState extends State<Renseignements> {
 
     await FirebaseAuth.instance.verifyPhoneNumber(
         verificationCompleted: verificationSucess,
-        phoneNumber: '+229'+this.numeroPayement,
-        timeout: const Duration(seconds: 5),
+        phoneNumber: '+229'+numeroPayement,
+        timeout: const Duration(seconds: 20),
         verificationFailed: phoneVerificationFailed,
         codeSent: phoneCodeSent,
         codeAutoRetrievalTimeout: autoRetrievalTimeout
@@ -77,34 +156,7 @@ class _RenseignementsState extends State<Renseignements> {
   }
 
 
-  Future<void> verifyPhone() async{
 
-    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId){
-      this.verificationId = verId;
-    };
-
-    final PhoneCodeSent smsCodeSent= (String verId, [int forceCodeResend]){
-      this.verificationId=verId;
-      smsCodeDialog(context).then((value) => print("Signed In"));
-    };
-
-    final PhoneVerificationCompleted verificationSucess = (AuthCredential auth){
-      print("$auth");
-    };
-    final PhoneVerificationFailed verificationFailed = (AuthException e){
-      print("$e");
-    };
-
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        codeSent: smsCodeSent,
-        timeout: const Duration(seconds:5),
-        phoneNumber: numeroPayement,
-        codeAutoRetrievalTimeout: autoRetrieve,
-        verificationCompleted: verificationSucess,
-        verificationFailed: verificationFailed
-    );
-  }
 
   signIn() async {
 
@@ -133,7 +185,7 @@ class _RenseignementsState extends State<Renseignements> {
       barrierDismissible: false,
       builder: (BuildContext context){
           return AlertDialog(
-            title: Text("Enter sms code"),
+            title: Text("Entrer votre code sms"),
             content: TextField(
               onChanged: (value){
                 this.smsCode = value;
@@ -144,6 +196,7 @@ class _RenseignementsState extends State<Renseignements> {
               FlatButton(onPressed: (){
                 FirebaseAuth.instance.currentUser().then((user) => {
                   if(user!=null){
+                    sendDataUserDb(),
                     Navigator.pop(context),
                     Navigator.of(context).pushNamed(AllNavigationPage.id)
                   }
@@ -152,7 +205,7 @@ class _RenseignementsState extends State<Renseignements> {
                     signIn()
                 }
                 });
-              }, child: Text("Done"))
+              }, child: Text("Continuer"))
             ],
           );
       }
@@ -433,48 +486,12 @@ class _RenseignementsState extends State<Renseignements> {
                         () async {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null) {
-                          _submit();
+                        sendDataUserDb();
+                          Navigator.pop(context);
+                          Navigator.of(context).pushNamed(AllNavigationPage.id);
                         setState(() {
                           chargement = true;
                         });
-                        try {
-                          await FirestoreService().addUtilisateur(
-                              Utilisateur(
-                                  nomComplet: nomComplet,
-                                  sexe: sexe,
-                                  age: age,
-                                  numero: numeroPayement,
-                                  email: widget.emailAdress,
-                                  nbAjoutPanier: 0,
-                                  orderNumber: 0
-                              ),
-                              widget.emailAdress);
-                          /*ajouter([
-                            numeroPayement,
-                            widget.emailAdress,
-                            nomComplet,
-                            age,
-                            sexe
-                          ]);*/
-                          if(tokenUser!=null)
-                            Firestore.instance.collection("TokensUsers").where("token", isEqualTo: tokenUser).getDocuments().then((value) {
-                              if(value.documents.isEmpty){
-                                Firestore.instance.collection("TokensUsers").add({
-                                  "token": tokenUser
-                                });
-                              }   
-                            });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AllNavigationPage()));
-                          setState(() {
-                            chargement = true;
-                          });
-                        } catch (e) {
-                          print(e);
-                        }
-
                       } else {
 
                         displaySnackBarNom(context,
@@ -486,6 +503,66 @@ class _RenseignementsState extends State<Renseignements> {
           ),
         ):CircularProgressIndicator()
     );
+  }
+
+  Future<void> showLoadingDialog(BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.white,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 10,),
+                        Text("Un sms de vérification a été envoyé sur votre numéro", style: TextStyle(
+                            color: Colors.black, fontFamily: "Bold"),)
+                      ]),
+                    )
+                  ]));
+        });
+  }
+
+  Future<void> sendDataUserDb() async{
+    setState(() {
+      chargement = true;
+    });
+    try {
+      await FirestoreService().addUtilisateur(
+          Utilisateur(
+              nomComplet: nomComplet,
+              sexe: sexe,
+              age: age,
+              numero: numeroPayement,
+              email: widget.emailAdress,
+              nbAjoutPanier: 0,
+              orderNumber: 0
+          ),
+          widget.emailAdress);
+
+      if(tokenUser!=null)
+        Firestore.instance.collection("TokensUsers").where("token", isEqualTo: tokenUser).getDocuments().then((value) {
+          if(value.documents.isEmpty){
+            Firestore.instance.collection("TokensUsers").add({
+              "token": tokenUser
+            });
+          }
+        });
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => AllNavigationPage()));
+      setState(() {
+        chargement = true;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   String key = "email_user";
