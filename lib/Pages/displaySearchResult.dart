@@ -16,6 +16,7 @@ import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.
 // ignore: must_be_immutable
 class DisplaySearchResult extends StatefulWidget {
   List<Map<String, dynamic>> data = [];
+  static String id="DisplaySearchResult";
   
   DisplaySearchResult({this.data});
   @override
@@ -147,6 +148,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                           ),
                         ),
                       ),
+                      SizedBox(width: largeurPerCent(10, context),),
                       ConstrainedBox(
                         constraints: BoxConstraints(
                           maxWidth: largeurPerCent(200, context),

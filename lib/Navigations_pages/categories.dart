@@ -87,7 +87,7 @@ class _CategoriesState extends State<Categories> {
                     Padding(
                       padding: EdgeInsets.only(right: largeurPerCent(10, context)),
                       child: Text(
-                        "HOMMES",
+                        "HOMME",
                         style: TextStyle(
                             color: HexColor("#FFC30D"),
                             fontFamily: "MonseraBold",
@@ -104,7 +104,7 @@ class _CategoriesState extends State<Categories> {
                       iconOn: Icons.account_circle,
                       iconOff: Icons.account_circle,
                       textSize: 16.0,
-                      animationDuration: Duration(milliseconds: 3),
+                      animationDuration: Duration(seconds: 1),
                       onChanged: (bool state) {
                         val=state;
                       },

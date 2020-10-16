@@ -1,6 +1,10 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -34,6 +38,8 @@ class _SearchFiltreState extends State<SearchFiltre> {
   String emptySearch;
   bool loadingSearch = false;
   String noData;
+  int notFound=0;
+  int longueur=0;
 
   List<RadioModel> sampleData = new List<RadioModel>();
   List<RadioModelGenre> sampleDataGenre = new List<RadioModelGenre>();
@@ -84,6 +90,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
       });
     });
   }
+
+  Future<FirebaseUser> getUser() async {
+    return await FirebaseAuth.instance.currentUser();
+  }
+
 
   @override
   void initState() {
@@ -259,34 +270,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       ],
                     )
                 ),
-                /* Container(
-                  color: HexColor("#F5F5F5"),
-                  height: longueurPerCent(60, context),
-                  child:  ListView.builder(
-                    shrinkWrap: false,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: sampleDataGenre.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return new InkWell(
-                        splashColor: Colors.blueAccent,
-                        onTap: () {
-                          setState(() {
-                            sampleDataGenre.forEach(
-                                    (element) => element.isSelected = false);
-                            sampleDataGenre[index].isSelected = true;
-                            genre=sampleDataGenre[index].text;
-                          });
-                        },
-                        child: Row(
-                          mainAxisAlignment:MainAxisAlignment.center,
-                          children: [
-                            new RadioItemGenre(sampleDataGenre[index]),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),*/
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 5),
@@ -371,16 +354,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       ),
                       isExpanded: true,
                       iconSize: 30.0,
-                      items: [
-                        'Rouge',
-                        'Orange',
-                        'Jaune',
-                        'Vert',
-                        'Bleu',
-                        'Indigo',
-                        'Violet',
-                        'Noir'
-                      ].map(
+                      items:['Rouge', 'Orange', 'Jaune', 'Vert', 'Bleu', 'Indigo', 'Violet', 'Noir', 'Blanc', 'Gris'].map(
                             (val) {
 
                           return DropdownMenuItem<String>(
@@ -474,7 +448,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
             }
             else {
               setState(() {
-                loadingSearch = true;
                 data = [];
               });
               showLoadingDialog(context, _keyLoader);
@@ -488,7 +461,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 getGenreAndSousCategorie(); // good
               else if (genre != null && prixMax != null && prixMin != null &&
                   taille == null && sousCategorie == null)
-                getGenreAndPrice(genre); // good
+                getGenreAndPrice(genre, prixMin, prixMax); // good
               else
               if (genre != null && taille != null && sousCategorie == null &&
                   prixMax == null && prixMin == null)
@@ -499,7 +472,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 getGenreAndPriceAndSize(
                     genre, prixMax, prixMin, taille); // good
               else if (genre != null && taille != null && sousCategorie != null &&
-                  prixMax != null && prixMin != null)
+                  prixMax != null && prixMin != null && couleur==null)
                 getGenreAndPriceAndSizeAndCategorie(
                     genre, taille, sousCategorie, prixMax, prixMin); // good
 
@@ -529,23 +502,32 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   prixMin == null && taille == null && couleur!=null) {
                 getCategorieWithColor(); // good
               }
-              else
+             else
               if (sousCategorie != null && prixMax != null && prixMin != null &&
-                  genre == null && taille == null)
-                getCategorieWithPriceAndColor();// good
-              else
-              if (sousCategorie != null && taille != null && prixMax == null &&
-                  prixMin == null && genre == null)
-                getCategorieWithSizeAndColor();// good
+                  genre == null && taille == null && couleur!=null)
+                getCategorieWithPriceAndColor(sousCategorie, prixMin, prixMax, couleur);// good
+               else
+              if (sousCategorie!= null && taille != null && prixMax == null &&
+                  prixMin == null && genre == null && couleur!=null )
+                getCategorieWithSizeAndColor(sousCategorie, couleur, taille);// good
               else
               if (sousCategorie != null && taille != null && prixMax != null &&
                   prixMin != null && genre == null)
-                getCategorieAndSizeAndPrice(
-                    sousCategorie, taille, prixMax, prixMin); // good
+                getCategorieAndSizeAndPriceAndColor(
+                    sousCategorie, taille, prixMax, prixMin, couleur); // good
               else
               if (genre != null && sousCategorie != null && prixMax == null &&
                   prixMin == null && taille == null && couleur!=null)
-                getCategorieGenreAndColor(couleur); // good
+                getCategorieGenreAndColor(sousCategorie, genre, couleur);
+              else
+              if (genre != null && sousCategorie != null && prixMax == null &&
+                  prixMin == null && taille != null && couleur!=null)
+                getCategorieGenreAndColorSize(sousCategorie, genre, couleur, taille); // good
+              else if (genre != null && taille != null && sousCategorie != null &&
+                  prixMax != null && prixMin != null && couleur!=null)
+                getGenreAndPriceAndSizeAndCategorieColor(
+                    genre, taille, sousCategorie, prixMax, prixMin, couleur); // good
+
 
               // Price search
               else if (prixMin != null && prixMax == null && genre == null &&
@@ -567,8 +549,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   genre == null && sousCategorie == null) {
                 setState(() {
                   data = null;
-                  loadingSearch = false;
-                  noData = "VOUS N'AVEZ EFFECTUÉ AUCUNE RECHERCHE";
+                  noData = "Vous n'avez effectué aucune recherche";
                 });
                 if (noData != null && loadingSearch == false && data == null) {
                   Navigator.of(_keyLoader.currentContext, rootNavigator: true)
@@ -628,15 +609,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
@@ -653,15 +626,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
   }
@@ -673,20 +638,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
-            loadingSearch = false;
           });
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
   }
@@ -703,15 +659,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+         noResultSearch();
       }
     });
   }
@@ -754,42 +702,30 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
 
-  void getGenreAndPrice(String categorie) {
+  void getGenreAndPrice(String categorie, int min, int max) {
+    print(categorie);
+    print(min);
+    print(max);
     Firestore.instance.collection("TousLesProduits").where(
-        "prix", isGreaterThanOrEqualTo: prixMin).where(
-        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+        "prix", isGreaterThanOrEqualTo: min).where(
+        "prix", isLessThanOrEqualTo: max).getDocuments().then((value) {
+          print(value.documents.length);
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if (element.data["categorie"] == categorie)
-            setState(() {
-              data.add(element.data);
-              loadingSearch = false;
-            });
+           if(element.data["categorie"]==categorie){
+             setState(() {
+               data.add(element.data);
+             });
+             closePopAndNavigateNextPage();
+           }
         });
-        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
   }
@@ -810,15 +746,34 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
+      }
+    });
+  }
+
+  void getGenreAndPriceAndSize(String categorie, int maxPrice, int minPrice, String size) {
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments()
+        .then((value){
+      setState(() {
+        longueur=value.documents.length;
+      });
+      if(value.documents.isNotEmpty){
+        value.documents.forEach((element) {
+          if(element.data["taille"]==size && element.data["categorie"]==categorie){
+            setState(() {
+              data.add(element.data);
+            });
+          } else
+            setState(() {
+              notFound++;
+            });
+        });
+        verificationWithLengthDocumentsSearch();
+
+      } else {
+        noResultSearch();
       }
     });
   }
@@ -828,24 +783,20 @@ class _SearchFiltreState extends State<SearchFiltre> {
         "prix", isGreaterThanOrEqualTo: minPrice).where(
         "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
       if (value.documents.isNotEmpty) {
+        longueur=value.documents.length;
         value.documents.forEach((element) {
-          if (element.data["sousCategorie"] == subCategorie)
+          if (element.data["sousCategorie"] == subCategorie) {
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
+            });
+          } else
+            setState(() {
+              notFound++;
             });
         });
-        closePopAndNavigateNextPage();
+        verificationWithLengthDocumentsSearch();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
@@ -863,15 +814,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
   }
@@ -883,82 +826,47 @@ class _SearchFiltreState extends State<SearchFiltre> {
         "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if (element.data["taille"] == size)
+          if (element.data["taille"] == size) {
+            closePopAndNavigateNextPage();
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
             });
+          } else {
+            displaySearchResult();
+          }
         });
-        closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
 
-  void getGenreAndPriceAndSize(String categorie, int maxPrice, int minPrice,
-      String size) {
-    Firestore.instance.collection("TousLesProduits").where(
-        "prix", isGreaterThanOrEqualTo: minPrice).where(
-        "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
-      if (value.documents.isNotEmpty) {
-        value.documents.forEach((element) {
-          if (element.data["taille"] == size &&
-              element.data["categorie"] == categorie)
-            setState(() {
-              data.add(element.data);
-              loadingSearch = false;
-            });
-        });
-        closePopAndNavigateNextPage();
-      } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
-      }
-    });
-  }
+
 
   void getGenreAndPriceAndSizeAndCategorie(String categorie, String size,
       String subCategorie, int maxPrice, int minPrice) {
     Firestore.instance.collection("TousLesProduits").where(
         "prix", isGreaterThanOrEqualTo: minPrice).where(
         "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+      setState(() {
+        longueur=value.documents.length;
+      });
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           if (element.data["sousCategorie"] == subCategorie &&
               element.data["taille"] == size &&
-              element.data["categorie"] == categorie)
+              element.data["categorie"] == categorie) {
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
             });
-        });
-        closePopAndNavigateNextPage();
-      } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
+            closePopAndNavigateNextPage();
+          } else setState(() {
+            notFound++;
           });
+        });
+        verificationWithLengthDocumentsSearch();
+      } else {
+       noResultSearch();
       }
     });
   }
@@ -968,26 +876,26 @@ class _SearchFiltreState extends State<SearchFiltre> {
     Firestore.instance.collection("TousLesProduits").where(
         "prix", isGreaterThanOrEqualTo: minPrice).where(
         "prix", isLessThanOrEqualTo: maxPrice).getDocuments().then((value) {
+          setState(() {
+            longueur=value.documents.length;
+          });
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
           if (element.data["sousCategorie"] == subCategorie &&
-              element.data["taille"] == size)
+              element.data["taille"] == size) {
+            closePopAndNavigateNextPage();
             setState(() {
               data.add(element.data);
               loadingSearch = false;
             });
+          } else
+           setState(() {
+             notFound++;
+           });
         });
-        closePopAndNavigateNextPage();
+        verificationWithLengthDocumentsSearch();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
@@ -1000,20 +908,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
         value.documents.forEach((element) {
           setState(() {
             data.add(element.data);
-            loadingSearch = false;
           });
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
@@ -1031,15 +930,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
@@ -1056,72 +947,86 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
   }
 
-  void getCategorieWithPriceAndColor(){
+  void getCategorieWithPriceAndColor(String subCategorie, int min, int max, String color){
+    Firestore.instance.collection("TousLesProduits").where(
+        "prix", isGreaterThanOrEqualTo: min).where(
+        "prix", isLessThanOrEqualTo: max).getDocuments().then((value) {
+          setState(() {
+            longueur = value.documents.length;
+          });
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if(element.data["couleur"]==color && element.data["sousCategorie"]==subCategorie){
+            setState(() {
+              data.add(element.data);
+            });
+          } else {
+            notFound++;
+           }
+        });
+        verificationWithLengthDocumentsSearch();
+      } else {
+        noResultSearch();
+      }
+    });
+  }
+
+  void getCategorieWithSizeAndColor(String subCategorie, String color, String size){
+    Firestore.instance.collection("TousLesProduits").where(
+        "sousCategorie", isEqualTo: subCategorie).where(
+        "taille", isEqualTo: size).getDocuments().then((value) {
+      setState(() {
+        longueur = value.documents.length;
+      });
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          if (element.data["couleur"]==color) {
+            setState(() {
+              data.add(element.data);
+            });
+          }else {
+            notFound++;
+          }
+        });
+        verificationWithLengthDocumentsSearch();
+
+      } else {
+       noResultSearch();
+      }
+    });
+  }
+
+  void getCategorieAndSizeAndPriceAndColor(String sousCategorie, String taille, int prixMax, int prixMin, String couleur) {
     Firestore.instance.collection("TousLesProduits").where(
         "prix", isGreaterThanOrEqualTo: prixMin).where(
         "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+          setState(() {
+            longueur=value.documents.length;
+          });
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if (element.data["sousCategorie"] == sousCategorie && element.data["couleur"]==couleur)
+          if (element.data["sousCategorie"] == sousCategorie &&
+              element.data["taille"] == taille && element.data["couleur"]==couleur)
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
+            });
+          else
+            setState(() {
+              notFound++;
             });
         });
-        closePopAndNavigateNextPage();
-      } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+      verificationWithLengthDocumentsSearch();
       }
+      else
+        noResultSearch();
     });
   }
 
-  void getCategorieWithSizeAndColor(){
-    Firestore.instance.collection("TousLesProduits").where(
-        "sousCategorie", isEqualTo: sousCategorie).where(
-        "taille", isEqualTo: taille).getDocuments().then((value) {
-      if (value.documents.isNotEmpty) {
-        value.documents.forEach((element) {
-          if (element.data["couleur"]==couleur)
-            setState(() {
-              data.add(element.data);
-              loadingSearch = false;
-            });
-        });
-        closePopAndNavigateNextPage();
-      } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
-      }
-    });
-  }
 
   void getCategorieSizePriceAndColor(){
     Firestore.instance.collection("TousLesProduits").where(
@@ -1138,100 +1043,105 @@ class _SearchFiltreState extends State<SearchFiltre> {
         });
         closePopAndNavigateNextPage();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+       noResultSearch();
       }
     });
   }
 
-  void getCategorieGenreAndColor(String color){
+  void getCategorieGenreAndColor(String sousCategorie, String genre, String couleur){
     Firestore.instance.collection(genre).document(sousCategorie).collection(
         "Produits").getDocuments().then((value) {
+          setState(() {
+            longueur=value.documents.length;
+          });
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if (element.data["couleur"]==color)
+          if (element.data["couleur"]==couleur)
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
             });
-        });
-        closePopAndNavigateNextPage();
-      } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
-      }
-    });
-  }
-  /*void colorOnly() {
-    Firestore.instance.collection("TousLesProduits").where(
-        "couleur", isEqualTo: couleur).getDocuments().then((value) {
-      if (value.documents.isNotEmpty) {
-        value.documents.forEach((element) {
-          if (this.mounted)
+          else
             setState(() {
-              data.add(element.data);
-              loadingSearch = false;
+              notFound++;
             });
         });
-        closePopAndNavigateNextPage();
+       verificationWithLengthDocumentsSearch();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+      noResultSearch();
       }
     });
   }
 
-  void colorGenre() {
-    Firestore.instance.collection("TousLesProduits").where(
-        "couleur", isEqualTo: couleur).where("categorie", isEqualTo: genre).getDocuments().then((value) {
+  void getCategorieGenreAndColorSize(String categorie, String genre, String couleur, String taille) {
+    Firestore.instance.collection(genre).document(categorie).collection(
+        "Produits").getDocuments().then((value) {
+      setState(() {
+        longueur=value.documents.length;
+      });
       if (value.documents.isNotEmpty) {
         value.documents.forEach((element) {
-          if (this.mounted)
+          if (element.data["couleur"]==couleur && element.data["taille"]==taille)
             setState(() {
               data.add(element.data);
-              loadingSearch = false;
+            });
+          else
+            setState(() {
+              notFound++;
             });
         });
-        closePopAndNavigateNextPage();
+        verificationWithLengthDocumentsSearch();
       } else {
-        displaySnackBarNom(
-            context, "AUCUN ELEMENT NE CORRESPOND À VOTRE RECHERCHE",
-            Colors.white);
-        if (this.mounted)
-          setState(() {
-            loadingSearch = false;
-            Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                .pop(); //close the dialoge
-          });
+        noResultSearch();
       }
     });
-  }*/
+  }
+
+  void getGenreAndPriceAndSizeAndCategorieColor(String genre, String taille, String sousCategorie, int prixMax, int prixMin, String couleur) {
+    Firestore.instance.collection(genre).document(sousCategorie).collection("Produits").where(
+        "prix", isGreaterThanOrEqualTo: prixMin).where(
+        "prix", isLessThanOrEqualTo: prixMax).getDocuments().then((value) {
+          if(value.documents.isNotEmpty) {
+            value.documents.forEach((element) {
+              setState(() {
+                longueur = value.documents.length;
+              });
+                 if(element.data["couleur"]==couleur) {
+                   setState(() {
+                     data.add(element.data);
+                   });
+                 } else
+                   setState(() {
+                     notFound++;
+                   });
+            });
+            verificationWithLengthDocumentsSearch();
+          } else
+            noResultSearch();
+    });
+  }
 
 
 
+
+
+  void verificationWithLengthDocumentsSearch(){
+  if(notFound==longueur) {
+    setState(() {
+      notFound=0;
+      longueur=0;
+    });
+    noResultSearch();
+  }
+  else {
+    setState(() {
+      notFound=0;
+      longueur=0;
+    });
+    closePopAndNavigateNextPage();
+  }
+}
   void closePopAndNavigateNextPage() {
-    if (data != null && loadingSearch == false) {
+    if (data != null) {
       Navigator.of(_keyLoader.currentContext, rootNavigator: true)
           .pop(); //close the dialoge
       Navigator.push(
@@ -1243,6 +1153,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(
       content: Text(text, style: TextStyle(color: couleur, fontSize: 13)),
+      duration: Duration(seconds: 1),
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
@@ -1273,13 +1184,40 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       child: Column(children: [
                         CircularProgressIndicator(),
                         SizedBox(height: 10,),
-                        Text("CHARGEMENT", style: TextStyle(
-                            color: Colors.black, fontFamily: "Bold"),)
+                        Column(
+                          children: [
+                            Text("CHARGEMENT", style: TextStyle(
+                                color: Colors.black, fontFamily: "Bold"),),
+                            SizedBox(height: longueurPerCent(10, context),),
+                            FlatButton(onPressed: (){
+                              Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                                  .pop(); //close
+                              setState(() {
+                                data=[];
+                              });
+                             }, color: Theme.of(context).primaryColor,
+                                child: Text("Annuler", style: TextStyle(color: Colors.white)))
+                          ],
+                        )
                       ]),
                     )
                   ]));
         });
   }
+
+
+  void noResultSearch(){
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+          .pop();
+    });
+    //Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+    displaySnackBarNom(
+        context, "Aucun element ne correspond à votre recherche",
+        Colors.white);
+  }
+
+
 
 }
 
@@ -1389,214 +1327,3 @@ class RadioModel {
 
   RadioModel(this.isSelected, this.buttonText);
 }
-
-/*import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'Composants/firestore_service.dart';
-class MyHomePage extends StatefulWidget {
- static String id="Homepage";
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-class _MyHomePageState extends State<MyHomePage> {
-  var queryResultSet = [];
-  var tempSearchStore = [];
-  initiateSearch(value) {
-    if (value.length == 0) {
-      setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
-      });
-    }
-    var capitalizedValue =
-        value.substring(0, 1).toUpperCase() + value.substring(1);
-    if (queryResultSet.length == 0 && value.length == 1) {
-     FirestoreService().searchByName(value).then((QuerySnapshot docs) {
-        for (int i = 0; i < docs.documents.length; ++i) {
-          queryResultSet.add(docs.documents[i].data);
-        }
-      });
-    } else {
-      tempSearchStore = [];
-      queryResultSet.forEach((element) {
-        if (element['categorie'].startsWith(capitalizedValue)) {
-          setState(() {
-            tempSearchStore.add(element);
-          });
-        }
-      });
-    }
-  }
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: Text('Firestore search'),
-        ),
-        body: ListView(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextField(
-              onChanged: (val) {
-                initiateSearch(val);
-              },
-              decoration: InputDecoration(
-                  prefixIcon: IconButton(
-                    color: Colors.black,
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 20.0,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  contentPadding: EdgeInsets.only(left: 25.0),
-                  hintText: 'Faites une recherche',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0))),
-            ),
-          ),
-          SizedBox(height: 10.0),
-          GridView.count(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-              primary: false,
-              shrinkWrap: true,
-              children: tempSearchStore.map((element) {
-                return buildResultCard(element);
-              }).toList())
-        ]));
-  }
-}
-Widget buildResultCard(data) {
-  return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      elevation: 2.0,
-      child: Container(
-          child: Center(
-              child: Text(data['categorie'],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                ),
-              )
-          )
-      )
-  );
-}*/
-// ---------------------------------------------------
-// Helper class aimed at simplifying the way to
-// automate the creation of a series of RangeSliders,
-// based on various parameters
-//
-// This class is to be used to demonstrate the appearance
-// customization of the RangeSliders
-// ---------------------------------------------------
-/*class RangeSliderData {
-  double min;
-  double max;
-  double lowerValue;
-  double upperValue;
-  int divisions;
-  bool showValueIndicator;
-  int valueIndicatorMaxDecimals;
-  bool forceValueIndicator;
-  Color overlayColor;
-  Color activeTrackColor;
-  Color inactiveTrackColor;
-  Color thumbColor;
-  Color valueIndicatorColor;
-  Color activeTickMarkColor;
-  static const Color defaultActiveTrackColor = const Color(0xFF0175c2);
-  static const Color defaultInactiveTrackColor = const Color(0x3d0175c2);
-  static const Color defaultActiveTickMarkColor = const Color(0x8a0175c2);
-  static const Color defaultThumbColor = const Color(0xFF0175c2);
-  static const Color defaultValueIndicatorColor = const Color(0xFF0175c2);
-  static const Color defaultOverlayColor = const Color(0x290175c2);
-  RangeSliderData({
-    this.min,
-    this.max,
-    this.lowerValue,
-    this.upperValue,
-    this.divisions,
-    this.showValueIndicator: true,
-    this.valueIndicatorMaxDecimals: 500,
-    this.forceValueIndicator: true,
-    this.overlayColor: defaultOverlayColor,
-    this.activeTrackColor: defaultActiveTrackColor,
-    this.inactiveTrackColor: defaultInactiveTrackColor,
-    this.thumbColor: defaultThumbColor,
-    this.valueIndicatorColor: defaultValueIndicatorColor,
-    this.activeTickMarkColor: defaultActiveTickMarkColor,
-  });
-  // Returns the values in text format, with the number
-  // of decimals, limited to the valueIndicatedMaxDecimals
-  //
-  String get lowerValueText =>
-      lowerValue.toStringAsFixed(valueIndicatorMaxDecimals);
-  String get upperValueText =>
-      upperValue.toStringAsFixed(valueIndicatorMaxDecimals);
-// Builds a RangeSlider and customizes the theme
-// based on parameters
-//
-Widget build(BuildContext context, frs.RangeSliderCallback callback) {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        children: <Widget>[
-          Container(
-            constraints: BoxConstraints(
-              minWidth: 70.0,
-              maxWidth: 70.0,
-            ),
-            child: Text(lowerValueText),
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(top: 60,),
-              child: SliderTheme(
-                // Customization of the SliderTheme
-                // based on individual definitions
-                // (see rangeSliders in _RangeSliderSampleState)
-                data: SliderTheme.of(context).copyWith( 
-                  overlayColor: overlayColor,
-                  activeTickMarkColor: activeTickMarkColor,
-                  activeTrackColor: activeTrackColor,
-                  inactiveTrackColor: inactiveTrackColor,
-                  //trackHeight: 8.0,
-                  thumbColor: thumbColor,
-                  valueIndicatorColor: valueIndicatorColor,
-                  showValueIndicator: showValueIndicator
-                      ? ShowValueIndicator.always
-                      : ShowValueIndicator.onlyForDiscrete,
-                ),
-                child: frs.RangeSlider(
-                  min: min,
-                  max: max,
-                  lowerValue: lowerValue,
-                  upperValue: upperValue,
-                  divisions: 500,
-                  showValueIndicator: showValueIndicator,
-                  valueIndicatorMaxDecimals: valueIndicatorMaxDecimals,
-                  onChanged: (double lower, double upper) {
-                    // call
-                    callback(lower, upper);
-                  },
-                ),
-              ),
-            ),
-          ),  
-          Container(
-            constraints: BoxConstraints(
-              minWidth: 100.0,
-              maxWidth: 100.0,
-            ),
-            child: Text(upperValueText + " F CFA"),
-          ),
-        ],
-      ),
-    );
-  }
-}*/

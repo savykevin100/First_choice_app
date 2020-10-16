@@ -123,7 +123,7 @@ class _FavorisState extends State<Favoris> {
                   if (snapshot.hasError || !snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   } else if(snapshot.data.isEmpty){
-                    return elementsVides(context, Icons.favorite, "Pas de favori");
+                    return elementsVides(context, Icons.favorite, "Pas de favoris");
                   }
                   else {
                     return StaggeredGridView.countBuilder(

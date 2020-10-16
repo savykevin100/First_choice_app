@@ -55,7 +55,7 @@ DateTime expiryBadgeNew;
 Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>> askDb){
 
   return Container(
-      height: longueurPerCent(220, context),
+    height: longueurPerCent(200, context),
       child: StreamBuilder(
           stream: askDb,
           builder: (BuildContext context,
@@ -78,146 +78,153 @@ Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>>
                     bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
                     return GestureDetector(
                       onTap: (){
-                        idProduitsFavorisUser(snapshot.data[i], context);
+                        idProduitsFavorisUser(snapshot.data[i], context); 
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
                       },
-                      child: Container(
-                        width: largeurPerCent(180, context),
-                        margin: EdgeInsets.only(
-                            left: largeurPerCent(10, context)),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Card(
-                          elevation: 5.0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height:
-                                longueurPerCent(120, context),
-                                width: largeurPerCent(180, context),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft:
-                                        Radius.circular(10),
-                                        topRight:
-                                        Radius.circular(10)),
-                                    child: CachedNetworkImage(
-                                      imageUrl: snapshot.data[i].image1,
-                                      imageBuilder: (context, imageProvider) => Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                             ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: 250),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minHeight: 200),
+                          child: Container(
+                            width: largeurPerCent(190, context),
+                            margin: EdgeInsets.only(
+                                left: largeurPerCent(10, context)),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Card(
+                              elevation: 5.0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    height:
+                                    longueurPerCent(120, context),
+                                    width: largeurPerCent(180, context),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft:
+                                            Radius.circular(10),
+                                            topRight:
+                                            Radius.circular(10)),
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot.data[i].image1,
+                                          imageBuilder: (context, imageProvider) => Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                 ),
+                                            ),
+                                          ),
+                                          placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+
+                                          ),
+
+                                        ),
+                                      /*Image.network(
+                                         snapshot.data[i].image1,
+                                          loadingBuilder: (context,child, progress){
+                                            return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                          },
+                                          fit: BoxFit.cover,
+                                        )*/
+                                       /* Image.network(
+                                          snapshot.data[i].image1,
+                                          fit: BoxFit.cover,
+                                          loadingBuilder: (context,child, progress){
+                                            return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
+                                          },
+                                        )*/),
+                                  ),
+                                  (displayBadgeNew)? Container(
+                                    height: longueurPerCent(10, context),
+                                    color: Colors.red,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
+                                      child: Text(
+                                        "NOUVEAU",
+                                        textAlign: TextAlign.right,
+                                        style: TextStyle(
+                                            color: HexColor("#FFFFFF"),
+                                            fontSize: 9.0,
+                                            fontFamily: "MontserratBold",
+                                            fontWeight: FontWeight.bold
+
                                         ),
                                       ),
-                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
+                                    ),
+                                  ):Container(),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                      largeurPerCent(200, context),
+                                    ),
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: largeurPerCent(
+                                                10, context),
+                                            top: longueurPerCent(
+                                                5, context)),
+                                        child: PriceWithDot(price:snapshot.data[i].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
+                                  ),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                      largeurPerCent(200, context),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: largeurPerCent(
+                                              10, context),
+                                          top: longueurPerCent(
+                                              5, context)
+                                          ),
+                                      child: Text(
+                                        snapshot.data[i].nomDuProduit,
+                                        style: TextStyle(
+                                            color: HexColor("#909090"),
+                                            fontSize: 15,
+                                            fontFamily:
+                                            "MonseraRegular"),
                                       ),
-
-                                    ),
-                                  /*Image.network(
-                                     snapshot.data[i].image1,
-                                      loadingBuilder: (context,child, progress){
-                                        return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                      },
-                                      fit: BoxFit.cover,
-                                    )*/
-                                   /* Image.network(
-                                      snapshot.data[i].image1,
-                                      fit: BoxFit.cover,
-                                      loadingBuilder: (context,child, progress){
-                                        return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                      },
-                                    )*/),
-                              ),
-                              (displayBadgeNew)? Container(
-                                height: longueurPerCent(10, context),
-                                color: Colors.red,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
-                                  child: Text(
-                                    "NOUVEAU",
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                        color: HexColor("#FFFFFF"),
-                                        fontSize: 9.0,
-                                        fontFamily: "MontserratBold",
-                                        fontWeight: FontWeight.bold
-
                                     ),
                                   ),
-                                ),
-                              ):Container(),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxWidth:
-                                  largeurPerCent(200, context),
-                                ),
-                                child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: largeurPerCent(
-                                            10, context),
-                                        top: longueurPerCent(
-                                            10, context)),
-                                    child: PriceWithDot(price:snapshot.data[i].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
-                              ),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxWidth:
-                                  largeurPerCent(200, context),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: largeurPerCent(
-                                          10, context),
-                                      top: longueurPerCent(
-                                          5, context)),
-                                  child: Text(
-                                    snapshot.data[i].nomDuProduit,
-                                    style: TextStyle(
-                                        color: HexColor("#909090"),
-                                        fontSize: 15,
-                                        fontFamily:
-                                        "MonseraRegular"),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      top:
-                                      longueurPerCent(10, context),
-                                      left: largeurPerCent(4, context)
-                                  ),
-                                  child: RatingBar(
-                                    initialRating: snapshot.data[i].numberStar.ceilToDouble(),
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 3,
-                                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 10,
-                                    ),
-                                    itemSize: 20,
-                                    ignoreGestures: true,
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          top:
+                                          longueurPerCent(5, context),
+                                          left: largeurPerCent(4, context)
+                                      ),
+                                      child: RatingBar(
+                                        initialRating: snapshot.data[i].numberStar.ceilToDouble(),
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 3,
+                                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 10,
+                                        ),
+                                        itemSize: 20,
+                                        ignoreGestures: true,
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      )
                                   )
-                              )
-                            ],
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),

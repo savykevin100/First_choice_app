@@ -643,14 +643,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
                             },
-                            child: Image.network(
-                             imageSelect,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (context,child, progress){
-                                return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                              },
-                            )
-                            /*CachedNetworkImage(
+                            child:
+                            CachedNetworkImage(
                               imageUrl: imageSelect,
                               imageBuilder: (context, imageProvider) => Container(
                                 decoration: BoxDecoration(
@@ -662,7 +656,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               ),
                               placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
                               ),
-                            ),*/
+                            ),
                           ) ,
 
                         ),
