@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -322,7 +324,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
 
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
-              onTap: () => Navigator.of(context).pop(true),
+              onTap: () => exit(0),
               child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
           ),
           SizedBox(height: longueurPerCent(10, context),),

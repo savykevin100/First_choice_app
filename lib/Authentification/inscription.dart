@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,80 +47,88 @@ class _InscriptionState extends State<Inscription> {
           child: Container(
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: longueurPerCent(90, context),
-                      left: largeurPerCent(0, context),
-                      right: largeurPerCent(230, context)
-                  ),
-                  child: Text(
-                    "S'inscrire",
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontFamily: "MonseraBold",
-                        fontSize: 30),
+                FadeInDown(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: longueurPerCent(90, context),
+                        left: largeurPerCent(0, context),
+                        right: largeurPerCent(230, context)
+                    ),
+                    child: Text(
+                      "S'inscrire",
+                      style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontFamily: "MonseraBold",
+                          fontSize: 30),
+                    ),
                   ),
                 ),
                 SizedBox(height: longueurPerCent(70, context),),
-                Container(
-                    child:Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            textField("Email", context, email()),
-                            SizedBox(height: longueurPerCent(20, context),),
-                            textField("Mot de passe", context,password()),
-                            SizedBox(height: longueurPerCent(20, context),),
-                            textField("Confirmation mot de passe", context, confirmPassword()),
-                          ],
-                        )
-                    )
+                FadeInLeft(
+                  child:  Container(
+                      child:Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              textField("Email", context, email()),
+                              SizedBox(height: longueurPerCent(20, context),),
+                              textField("Mot de passe", context,password()),
+                              SizedBox(height: longueurPerCent(20, context),),
+                              textField("Confirmation mot de passe", context, confirmPassword()),
+                            ],
+                          )
+                      )
+                  ),
                 ),
                 SizedBox(height: longueurPerCent(50, context),),
-                button(HexColor("#001C36"), HexColor('#FFC30D'), context, "S'INSCRIRE", () async{
-                  if(_formKey.currentState.validate()) {
-                    setState(() {
-                      chargement=true;
-                    });
-                    try {
-                      final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
-                      if(user!=null ) {
-                       /* _auth.currentUser().then((value) {
-                          value.sendEmailVerification();
-                        });
-                        confirmEmail(context, user.user);*/
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                          return Renseignements(emailAdress: emailAdress);
-                        }));
-                        setState(() {
-                          chargement=false;
-                        });
-                      }
-                    } catch(e){
+                FadeInRight(
+                  child: button(HexColor("#001C36"), HexColor('#FFC30D'), context, "S'INSCRIRE", () async{
+                    if(_formKey.currentState.validate()) {
                       setState(() {
-                        chargement = false;
+                        chargement=true;
                       });
-                      print(e);
-                      showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
+                      try {
+                        final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
+                        if(user!=null ) {
+                         /* _auth.currentUser().then((value) {
+                            value.sendEmailVerification();
+                          });
+                          confirmEmail(context, user.user);*/
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                            return Renseignements(emailAdress: emailAdress);
+                          }));
+                          setState(() {
+                            chargement=false;
+                          });
+                        }
+                      } catch(e){
+                        setState(() {
+                          chargement = false;
+                        });
+                        print(e);
+                        showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
+                      }
                     }
-                  }
-                }),
+                  }),
+                ),
                 SizedBox(height: longueurPerCent(30, context),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Vous avez un compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18,fontFamily: 'MonseraLight'),),
-                    SizedBox(width: largeurPerCent(5, context),),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Connexion.id);
-                      },
-                      child: Text("Connectez-vous",  style:TextStyle(
-                          color: HexColor('#001C36'),
-                          fontSize: 15.0,
-                          fontFamily: 'MonseraBold')),
-                    )
-                  ],
+                FadeInUp(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Vous avez un compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18,fontFamily: 'MonseraLight'),),
+                      SizedBox(width: largeurPerCent(5, context),),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Connexion.id);
+                        },
+                        child: Text("Connectez-vous",  style:TextStyle(
+                            color: HexColor('#001C36'),
+                            fontSize: 15.0,
+                            fontFamily: 'MonseraBold')),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

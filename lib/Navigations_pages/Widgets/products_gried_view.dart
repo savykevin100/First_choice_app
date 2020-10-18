@@ -151,6 +151,13 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                       10, context)),
                               child: PriceWithDot(price:snapshot.data[index].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
                         ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: largeurPerCent(
+                                    10, context),
+                                top: longueurPerCent(
+                                    10, context)),
+                            child: Positioned(child: PriceWithDot(price:snapshot.data[index].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold"))),
                         ConstrainedBox(
                           constraints: BoxConstraints(
                             maxWidth:

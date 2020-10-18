@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -46,7 +48,7 @@ class _CategoriesState extends State<Categories> {
           ),
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
-              onTap: () => Navigator.of(context).pop(true),
+              onTap: () =>exit(0),
               child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
           ),
           SizedBox(width: largeurPerCent(20, context),),

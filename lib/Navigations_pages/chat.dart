@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -53,7 +55,7 @@ class _ChatState extends State<Chat> {
           ),
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
-              onTap: () => Navigator.of(context).pop(true),
+              onTap: () => exit(0),
               child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
           ),
           SizedBox(width: largeurPerCent(20, context),),
