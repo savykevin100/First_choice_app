@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -33,7 +35,7 @@ class _NotificationsState extends State<Notifications> {
           ),
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
-              onTap: () => Navigator.of(context).pop(true),
+              onTap: () => exit(0),
               child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
           ),
           SizedBox(width: largeurPerCent(20, context),),

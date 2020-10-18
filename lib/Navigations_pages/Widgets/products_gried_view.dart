@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 
@@ -50,6 +51,11 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async {
 
 DateTime expiryBadgeNew;
 
+int prixReduit(int prix, int pourcentageReduction){
+  int resultat = ((1-pourcentageReduction/100)*prix).toInt();
+  return resultat;
+}
+
 
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 
@@ -74,6 +80,8 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
               bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
               Produit produit = snapshot.data[index];
+               int prixProduit = produit.prix;
+
               return Container(
                 width: largeurPerCent(200, context),
                 margin: EdgeInsets.only(
@@ -101,23 +109,22 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                           height: longueurPerCent(150, context),
                           width: largeurPerCent(200, context),
                           child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                              child:  CachedNetworkImage(
-                                imageUrl: produit.image1,
-                                imageBuilder: (context, imageProvider) => Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        ),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10)),
+                            child: CachedNetworkImage(
+                              imageUrl: produit.image1,
+                              imageBuilder: (context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
-                                ),
                               ),
+                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                              ),
+                            ),
                           ),
                         ),
                         (displayBadgeNew)? Container(
@@ -138,18 +145,52 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                             ),
                           ),
                         ):Container(),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxWidth:
-                            largeurPerCent(200, context),
-                          ),
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: largeurPerCent(
-                                      10, context),
-                                  top: longueurPerCent(
-                                      10, context)),
-                              child: PriceWithDot(price:snapshot.data[index].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
+                        StreamBuilder(stream: FirestoreService().getReductionCollection(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<ReductionModel>> snapshotReduction) {
+                            if(snapshotReduction.hasError || !snapshotReduction.hasData)
+                              return Text("");
+                            else {
+                              bool appyReduce =false;
+                              int pourcentageReduce = 0;
+                              for(int i =0; i<snapshotReduction.data.length; i++){
+                               if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie ){
+                                 appyReduce = true;
+                                 pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
+                                 produit.prix = prixReduit(prixProduit, pourcentageReduce);
+                               }
+                              }
+
+                              return Column(
+                                children: [
+                                  (appyReduce)? Padding(
+                                    padding: EdgeInsets.only(
+                                        left: largeurPerCent(
+                                            10, context),
+                                        top: longueurPerCent(
+                                            10, context)),
+                                    child: Column(
+                                      children: [
+                                        PriceWithDot(price:prixProduit, couleur: Colors.red, size:14,police: "MonseraBold", decoration: TextDecoration.lineThrough),
+                                        PriceWithDot(price:  prixReduit(prixProduit, pourcentageReduce), couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")
+                                      ],
+                                    ),
+                                  ): Padding(
+                                    padding: EdgeInsets.only(
+                                        left: largeurPerCent(
+                                            10, context),
+                                        top: longueurPerCent(
+                                            10, context)),
+                                    child: Column(
+                                      children: [
+                                        PriceWithDot(price:prixProduit, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                          },
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(
@@ -164,6 +205,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                     5, context)),
                             child: Text(
                               snapshot.data[index].nomDuProduit,
+                              maxLines: 1,
                               style: TextStyle(
                                   color: HexColor("#909090"),
                                   fontSize: 15,

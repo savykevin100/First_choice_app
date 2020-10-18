@@ -9,6 +9,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 
@@ -52,185 +53,208 @@ DateTime expiryBadgeNew;
 
 /*Fin de la fonction*/
 // ignore: non_constant_identifier_names
-Widget scrollabe_products_horizontal(BuildContext context, Stream<List<Produit>> askDb){
+Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
 
-  return Container(
-    height: longueurPerCent(200, context),
-      child: StreamBuilder(
-          stream: askDb,
-          builder: (BuildContext context,
-              AsyncSnapshot<List<Produit>> snapshot) {
-            if (snapshot.hasError || !snapshot.hasData)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            else if (snapshot.data.isEmpty) {
-              return elementsVides(context, Icons.do_not_disturb,
-                  "Pas de nouveaux produits ajoutés");
-            }
-            else {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, i) {
-                    expiryBadgeNew = DateTime.parse(snapshot.data[i].expiryBadgeNew);
-                    bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
-                    return GestureDetector(
-                      onTap: (){
-                        idProduitsFavorisUser(snapshot.data[i], context); 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
-                      },
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: 250),
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(minHeight: 200),
-                          child: Container(
-                            width: largeurPerCent(190, context),
-                            margin: EdgeInsets.only(
-                                left: largeurPerCent(10, context)),
+  return StreamBuilder(
+      stream: askDb,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<Produit>> snapshot) {
+        if (snapshot.hasError || !snapshot.hasData)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        else if (snapshot.data.isEmpty) {
+          return elementsVides(context, Icons.do_not_disturb,
+              "Pas de nouveaux produits ajoutés");
+        }
+        else {
+          return ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, i) {
+                expiryBadgeNew = DateTime.parse(snapshot.data[i].expiryBadgeNew);
+                bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
+                Produit produit = snapshot.data[i];
+                int prixProduit = snapshot.data[i].prix;
+                return GestureDetector(
+                  onTap: (){
+                    idProduitsFavorisUser(snapshot.data[i], context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ArticleSansTaille(snapshot.data[i], Renseignements.emailUser)));
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    width: largeurPerCent(210, context),
+                    margin: EdgeInsets.only(
+                        left: largeurPerCent(10, context)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Card(
+                      elevation: 5.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            height:
+                            longueurPerCent(110, context),
+                            width: largeurPerCent(180, context),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Card(
-                              elevation: 5.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    height:
-                                    longueurPerCent(120, context),
-                                    width: largeurPerCent(180, context),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft:
+                                    Radius.circular(10),
+                                    topRight:
+                                    Radius.circular(10)),
+                                child: CachedNetworkImage(
+                                  imageUrl: snapshot.data[i].image1,
+                                  imageBuilder: (context, imageProvider) => Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft:
-                                            Radius.circular(10),
-                                            topRight:
-                                            Radius.circular(10)),
-                                        child: CachedNetworkImage(
-                                          imageUrl: snapshot.data[i].image1,
-                                          imageBuilder: (context, imageProvider) => Container(
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                 ),
-                                            ),
-                                          ),
-                                          placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
-                                          ),
-
-                                        ),
-                                      /*Image.network(
-                                         snapshot.data[i].image1,
-                                          loadingBuilder: (context,child, progress){
-                                            return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                          },
+                                      image: DecorationImage(
+                                          image: imageProvider,
                                           fit: BoxFit.cover,
-                                        )*/
-                                       /* Image.network(
-                                          snapshot.data[i].image1,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (context,child, progress){
-                                            return progress == null?child:LinearProgressIndicator(backgroundColor:HexColor("EFD807"), );
-                                          },
-                                        )*/),
+                                         ),
+                                    ),
                                   ),
-                                  (displayBadgeNew)? Container(
-                                    height: longueurPerCent(10, context),
-                                    color: Colors.red,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
-                                      child: Text(
-                                        "NOUVEAU",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            color: HexColor("#FFFFFF"),
-                                            fontSize: 9.0,
-                                            fontFamily: "MontserratBold",
-                                            fontWeight: FontWeight.bold
+                                  placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
 
-                                        ),
-                                      ),
-                                    ),
-                                  ):Container(),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth:
-                                      largeurPerCent(200, context),
-                                    ),
-                                    child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: largeurPerCent(
-                                                10, context),
-                                            top: longueurPerCent(
-                                                5, context)),
-                                        child: PriceWithDot(price:snapshot.data[i].prix, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")),
                                   ),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth:
-                                      largeurPerCent(200, context),
-                                    ),
-                                    child: Padding(
+
+                                ),
+                              ),
+                          ),
+                          (displayBadgeNew)? Container(
+                            height: longueurPerCent(10, context),
+                            color: Colors.red,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
+                              child: Text(
+                                "NOUVEAU",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: HexColor("#FFFFFF"),
+                                    fontSize: 9.0,
+                                    fontFamily: "MontserratBold",
+                                    fontWeight: FontWeight.bold
+
+                                ),
+                              ),
+                            ),
+                          ):Container(),
+                          StreamBuilder(stream: FirestoreService().getReductionCollection(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<ReductionModel>> snapshotReduction) {
+                              if(snapshotReduction.hasError || !snapshotReduction.hasData)
+                                return Text("");
+                              else {
+                                bool appyReduce =false;
+                                int pourcentageReduce = 0;
+                                for(int i =0; i<snapshotReduction.data.length; i++){
+                                  if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie ){
+                                    appyReduce = true;
+                                    pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
+                                    produit.prix = prixReduit(prixProduit, pourcentageReduce);
+                                  }
+                                }
+
+                                return Column(
+                                  children: [
+                                    (appyReduce)? Padding(
                                       padding: EdgeInsets.only(
                                           left: largeurPerCent(
                                               10, context),
                                           top: longueurPerCent(
-                                              5, context)
-                                          ),
-                                      child: Text(
-                                        snapshot.data[i].nomDuProduit,
-                                        style: TextStyle(
-                                            color: HexColor("#909090"),
-                                            fontSize: 15,
-                                            fontFamily:
-                                            "MonseraRegular"),
+                                              10, context)),
+                                      child: Column(
+                                        children: [
+                                          PriceWithDot(price:prixProduit, couleur: Colors.red, size:14,police: "MonseraBold", decoration: TextDecoration.lineThrough),
+                                          PriceWithDot(price:  prixReduit(prixProduit, pourcentageReduce), couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
+                                    ): Padding(
                                       padding: EdgeInsets.only(
-                                          top:
-                                          longueurPerCent(5, context),
-                                          left: largeurPerCent(4, context)
+                                          left: largeurPerCent(
+                                              10, context),
+                                          top: longueurPerCent(
+                                              10, context)),
+                                      child: Column(
+                                        children: [
+                                          PriceWithDot(price:prixProduit, couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")
+                                        ],
                                       ),
-                                      child: RatingBar(
-                                        initialRating: snapshot.data[i].numberStar.ceilToDouble(),
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 3,
-                                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 10,
-                                        ),
-                                        itemSize: 20,
-                                        ignoreGestures: true,
-                                        onRatingUpdate: (rating) {
-                                          print(rating);
-                                        },
-                                      )
-                                  )
-                                ],
+                                    )
+                                  ],
+                                );
+                              }
+                            },
+                          ),
+
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth:
+                              largeurPerCent(200, context),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: largeurPerCent(
+                                      10, context),
+                                  top: longueurPerCent(
+                                      5, context)
+                                  ),
+                              child: Text(
+                                snapshot.data[i].nomDuProduit,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    color: HexColor("#909090"),
+                                    fontSize: 15,
+                                    fontFamily:
+                                    "MonseraRegular"),
                               ),
                             ),
                           ),
-                        ),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  top:
+                                  longueurPerCent(5, context),
+                                  left: largeurPerCent(4, context)
+                              ),
+                              child: RatingBar(
+                                initialRating: snapshot.data[i].numberStar.ceilToDouble(),
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 3,
+                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 10,
+                                ),
+                                itemSize: 20,
+                                ignoreGestures: true,
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
+                              )
+                          )
+                        ],
                       ),
-                    );
-                  });
-            }
-          }));
+                    ),
+                  ),
+                );
+              });
+        }
+      });
+}
+
+int prixReduit(int prix, int pourcentageReduction){
+  int resultat = ((1-pourcentageReduction/100)*prix).toInt();
+  return resultat;
 }
 

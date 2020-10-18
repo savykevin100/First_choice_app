@@ -6,6 +6,7 @@ import 'package:premierchoixapp/Models/notifications.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Models/tokens_utilisateurs.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 
@@ -185,6 +186,17 @@ class FirestoreService {
               .toList(),
         );
   }
+
+  Stream<List<ReductionModel>> getReductionCollection() {
+    return _db.collection("Reduction").snapshots().map(
+          (snapshot) => snapshot.documents
+          .map(
+            (doc) => ReductionModel.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
+  }
+
 
   /*Récupération des sous_categories*/
   Stream<List<InfoCategories>> getSousCategories() {

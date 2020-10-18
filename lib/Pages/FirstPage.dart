@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -142,36 +143,43 @@ class _FirstPageState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor("#001C37"),
-      body: new Stack(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
-                  height: longueurPerCent(227.5, context),
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset("assets/images/1er choix-01.png",
-                    fit: BoxFit.cover,),
-                ),
-                SizedBox(height: longueurPerCent(50, context),),
-                Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
-                SizedBox(height: longueurPerCent(50, context),),
-                Container(
-                  margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
-                  child: Center(
-                    child: Text(
-                      "S'habiller n'a jamais été aussi simple",
-                      style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+      body: SingleChildScrollView(
+        child: new Stack(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                  BounceInDown(
+                    duration: Duration(seconds: 5),
+                    child: Container(
+                      margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
+                      height: longueurPerCent(227.5, context),
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset("assets/images/1er choix-01.png",
+                        fit: BoxFit.cover,),
                     ),
                   ),
-                )
-              ],
-            ),
-          )
-        ],
+                  SizedBox(height: longueurPerCent(50, context),),
+                 // Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
+                  SizedBox(height: longueurPerCent(50, context),),
+                  FadeInUpBig(
+                    child: Container(
+                      margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
+                      child: Center(
+                        child: Text(
+                          "S'habiller n'a jamais été aussi simple",
+                          style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
 
