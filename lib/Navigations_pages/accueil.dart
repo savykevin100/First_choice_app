@@ -40,6 +40,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   }
 
 
+  Future<void> getReduction() async {
+    await Firestore.instance.collection("Reduction").getDocuments().then((value) {
+      value.documents.forEach((element) {
+        print(element.data);
+      });
+    });
+  }
+
 
   @override
   void initState() {
@@ -59,6 +67,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             Renseignements.emailUser=value.data["email"];
           });
     });
+    getReduction();
   }
 
   @override
@@ -281,7 +290,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         ),
         Container(
             height: longueurPerCent(220, context),
-            child:scrollabe_products_horizontal(context,  FirestoreService().getProduitRecommandes(),)),
+            child:scrollabe_products_horizontal(FirestoreService().getProduitRecommandes(),)),
         Padding(
           padding: EdgeInsets.only(
               top: longueurPerCent(18, context),

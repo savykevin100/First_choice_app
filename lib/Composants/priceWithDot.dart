@@ -5,12 +5,14 @@ class PriceWithDot extends StatefulWidget{
   final double size;
   final Color couleur;
   final String police;
+  TextDecoration decoration;
 
   PriceWithDot({
     this.price,
     this.size,
     this.couleur,
-    this.police
+    this.police,
+    this.decoration
 });
 
   @override
@@ -24,7 +26,8 @@ class PriceWithDotState extends State<PriceWithDot>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Text(priceWithDot(widget.price) + ' FCFA', textAlign: TextAlign.start, style: TextStyle(color: widget.couleur, fontSize: widget.size, fontFamily: widget.police, fontWeight: FontWeight.bold),);
+    return Text(priceWithDot(widget.price) + ' FCFA', textAlign: TextAlign.start, maxLines: 1, style: TextStyle( color: widget.couleur, fontSize: widget.size,
+        fontFamily: widget.police, fontWeight: FontWeight.bold, decoration: widget.decoration),);
   }
 
   String priceWithDot(int price){
