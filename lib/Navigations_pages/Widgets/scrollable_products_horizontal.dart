@@ -102,7 +102,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                           Container(
                             height:
                             longueurPerCent(110, context),
-                            width: largeurPerCent(180, context),
+                            width: largeurPerCent(210, context),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -156,7 +156,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                 bool appyReduce =false;
                                 int pourcentageReduce = 0;
                                 for(int i =0; i<snapshotReduction.data.length; i++){
-                                  if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie ){
+                                  if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie && snapshotReduction.data[i].numberStar == produit.numberStar){
                                     appyReduce = true;
                                     pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
                                     produit.prix = prixReduit(prixProduit, pourcentageReduce);

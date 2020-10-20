@@ -3,6 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -33,7 +34,7 @@ class _RenseignementsState extends State<Renseignements> {
   String nomComplet;
   String numeroPayement;
   String sexe = '';
-  String age;
+  String age = "Date d'anniversaire";
   String ville;
   String tokenUser;
   int i = 0;
@@ -368,7 +369,49 @@ class _RenseignementsState extends State<Renseignements> {
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
-                            DateTimeField(
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: longueurPerCent(50, context),
+                              padding: EdgeInsets.only(
+                                  left: largeurPerCent(20, context),
+                                  right: largeurPerCent(20, context),
+                                  top: longueurPerCent(15, context),
+                                  bottom:longueurPerCent(05, context) ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7.0),
+                                  ),
+                                  border: Border.all(
+                                      color: HexColor("#919191"), width: 1)),
+                              child:  GestureDetector(
+                                onTap: (){
+                                  DatePicker.showDatePicker(context,
+                                      showTitleActions: true,
+                                      minTime: DateTime(1900, 1, 1),
+                                      maxTime: DateTime(2018, 6, 7), onChanged: (date) {
+                                        setState(() {
+                                          age = date.toString().substring(0, 10);
+                                        });
+                                      }, onConfirm: (date) {
+                                        setState(() {
+                                          age = date.toString().substring(0, 10);
+                                        });
+                                      }, currentTime: DateTime.now(), locale: LocaleType.fr);
+                                },
+                                child: (age == "Date d'anniversaire")?Text(age, style: TextStyle(
+                                    color: HexColor('#919191'),
+                                    fontSize: 18.0,
+                                    fontFamily: 'MonseraLight')): Text(
+                                  age.substring(0, 10),
+                                  style: TextStyle(
+                                      color: HexColor("#001C36"),
+                                      fontSize: 18,
+                                      fontFamily: 'MonseraBold'),
+                                ),
+                               /**/
+                              )
+                            ),
+                           /* DateTimeField(
                               style: TextStyle(
                                   color: HexColor("#001C36"),
                                   fontSize: 18,
@@ -420,7 +463,7 @@ class _RenseignementsState extends State<Renseignements> {
                                   age = "0${value.day}"+ "-${value.month}"+"-${value.year}";
                                 } else  age = "${value.day}"+ "-${value.month}"+"-${value.year}";
                               },
-                            ),
+                            ),*/
 
                             SizedBox(
                               height: longueurPerCent(20, context),
@@ -448,7 +491,14 @@ class _RenseignementsState extends State<Renseignements> {
                                 ),
                                 onChanged: (value) {
                                   numeroPayement = value;
-                                }),
+                                 },
+                              validator: (value){
+                                  // ignore: missing_return
+                                  if(value.length!=8 ){
+                                    return ( "Entrer un numéro valide");
+                                  }
+                               },
+                                ),
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
@@ -485,7 +535,7 @@ class _RenseignementsState extends State<Renseignements> {
                     Colors.white, HexColor("#001C36"), context, "CONFIRMATION ",
                         () async {
                       if (_formKey.currentState.validate() &&
-                          _dropDownValue != null) {
+                          _dropDownValue != null && age!=null) {
                         sendDataUserDb();
                           Navigator.pop(context);
                           Navigator.of(context).pushNamed(AllNavigationPage.id);
@@ -537,7 +587,7 @@ class _RenseignementsState extends State<Renseignements> {
           Utilisateur(
               nomComplet: nomComplet,
               sexe: sexe,
-              age: age,
+              age:   age.substring(0, 10),
               numero: numeroPayement,
               email: widget.emailAdress,
               nbAjoutPanier: 0,

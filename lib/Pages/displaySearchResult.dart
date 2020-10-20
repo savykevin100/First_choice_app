@@ -11,6 +11,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 
 // ignore: must_be_immutable
@@ -54,6 +55,18 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
     }
   }
 
+  int prixReduit(int prix, int pourcentageReduction){
+    int resultat = ((1-pourcentageReduction/100)*prix).toInt();
+    return resultat;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.data);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +83,8 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
           crossAxisCount: 4,
           itemCount: widget.data.length,
           itemBuilder: (BuildContext context, index) {
+            int prixProduit = widget.data[index]["prix"];
+            print(widget.data[index]["categorie"]);
             return Container(
               width: largeurPerCent(200, context),
               margin: EdgeInsets.only(
@@ -149,11 +164,91 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                         ),
                       ),
                       SizedBox(width: largeurPerCent(10, context),),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: largeurPerCent(200, context),
-                        ),
-                        child:PriceWithDot(price: widget.data[index]["prix"], couleur: HexColor("#00CC7b"), size:14,police: "MonseraBold")
+                      StreamBuilder(
+                        stream: FirestoreService()
+                            .getReductionCollection(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<ReductionModel>>
+                            snapshotReduction) {
+                          if (snapshotReduction.hasError ||
+                              !snapshotReduction.hasData)
+                            return Text("");
+                          else {
+                            bool appyReduce = false;
+                            int pourcentageReduce = 0;
+                            for (int i = 0;
+                            i < snapshotReduction.data.length;
+                            i++) {
+                              if (widget.data[index]["sousCategorie"] ==
+                                  snapshotReduction
+                                      .data[i].nomCategorie &&
+                                  !DateTime.parse(snapshotReduction
+                                      .data[i].expiryDate)
+                                      .isBefore(DateTime.now()) &&
+                                  snapshotReduction.data[i].genre ==
+                                      widget.data[index]["categorie"] &&
+                                  snapshotReduction
+                                      .data[i].numberStar ==
+                                      widget.data[index]["numberStar"]) {
+                                appyReduce = true;
+                                pourcentageReduce = snapshotReduction
+                                    .data[i].pourcentageReduction;
+                          widget.data[index]["prix"] = prixReduit(
+                                    prixProduit, pourcentageReduce);
+                              }
+                            }
+
+                            return Column(
+                              children: [
+                                (appyReduce)
+                                    ? Padding(
+                                  padding: EdgeInsets.only(
+                                      left: largeurPerCent(
+                                          10, context),
+                                      top: longueurPerCent(
+                                          10, context)),
+                                  child: Column(
+                                    children: [
+                                      PriceWithDot(
+                                          price: prixProduit,
+                                          couleur: Colors.red,
+                                          size: 14,
+                                          police: "MonseraBold",
+                                          decoration:
+                                          TextDecoration
+                                              .lineThrough),
+                                      PriceWithDot(
+                                          price: prixReduit(
+                                              prixProduit,
+                                              pourcentageReduce),
+                                          couleur: HexColor(
+                                              "#00CC7b"),
+                                          size: 14,
+                                          police: "MonseraBold")
+                                    ],
+                                  ),
+                                )
+                                    : Padding(
+                                  padding: EdgeInsets.only(
+                                      left: largeurPerCent(
+                                          10, context),
+                                      top: longueurPerCent(
+                                          10, context)),
+                                  child: Column(
+                                    children: [
+                                      PriceWithDot(
+                                          price: prixProduit,
+                                          couleur: HexColor(
+                                              "#00CC7b"),
+                                          size: 14,
+                                          police: "MonseraBold")
+                                    ],
+                                  ),
+                                )
+                              ],
+                            );
+                          }
+                        },
                       ),
                       SizedBox(
                         height: longueurPerCent(5, context),
