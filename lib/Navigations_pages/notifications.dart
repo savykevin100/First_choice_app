@@ -77,11 +77,10 @@ class _NotificationsState extends State<Notifications> {
               if (snapshot.hasError || !snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               } else if(snapshot.data.isEmpty)
-                return elementsVides(context, Icons.notifications_none, "PAS DE NOUVEAUX NOTIFICATIONS");
+                return elementsVides(context, Icons.notifications_none, "Pas de nouvelle notification");
               else {
                 return ListView.builder(
                     itemCount: snapshot.data.length,
-                    reverse:true,
                     itemBuilder: (context, i){
                       InformationNotification notification = snapshot.data[i];
                       return Container(

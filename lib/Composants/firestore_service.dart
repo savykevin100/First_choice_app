@@ -214,7 +214,7 @@ class FirestoreService {
 
   /*Récupération des notifications*/
   Stream<List<InformationNotification>> getNotifications() {
-    return _db.collection("Notifications").snapshots().map(
+    return _db.collection("Notifications").orderBy("created", descending: true).snapshots().map(
           (snapshot) => snapshot.documents
           .map(
             (doc) => InformationNotification.fromMap(doc.data, doc.documentID),

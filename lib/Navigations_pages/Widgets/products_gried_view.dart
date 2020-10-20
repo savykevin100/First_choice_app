@@ -154,7 +154,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               bool appyReduce =false;
                               int pourcentageReduce = 0;
                               for(int i =0; i<snapshotReduction.data.length; i++){
-                               if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie ){
+                                if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie && snapshotReduction.data[i].numberStar == produit.numberStar){
                                  appyReduce = true;
                                  pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
                                  produit.prix = prixReduit(prixProduit, pourcentageReduce);
