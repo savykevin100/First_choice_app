@@ -402,7 +402,7 @@ class _Panier1State extends State<Panier1> {
                ) {
              Navigator.of(context).pop(); // To close the dialog
            },
-           child: Text("Annuler",
+           child: Text("ANNULER",
              style: TextStyle(
                  color: HexColor("#001C36"),
                  fontSize: 12.0,
@@ -448,7 +448,7 @@ class _Panier1State extends State<Panier1> {
                         )));
               }
             },
-            child: Text("Continuer",
+            child: Text("CONTINUER",
               style: TextStyle(
                   color: HexColor("#001C36"),
                   fontSize: 12.0,
@@ -504,7 +504,7 @@ class _Panier1State extends State<Panier1> {
                   ) {
                 Navigator.of(context).pop(); // To close the dialog
               },
-              child: Text("Annuler",
+              child: Text("ANNULER",
                 style: TextStyle(
                     color: HexColor("#001C36"),
                     fontSize: 12.0,
@@ -550,7 +550,7 @@ class _Panier1State extends State<Panier1> {
                           )));
                 }
               },
-              child: Text("Continuer",
+              child: Text("CONTINUER",
                 style: TextStyle(
                     color: HexColor("#001C36"),
                     fontSize: 12.0,

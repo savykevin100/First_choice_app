@@ -33,25 +33,25 @@ class IntroScreenState extends State<IntroScreen> {
 
     slides.add(
       new Slide(
-        title: "Achat - Livraison",
+        title: "Bienvenue",
         styleTitle:
-        TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
+        TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontFamily: 'MonseraBold'),
         description:
-        "Commandez vos produits et faites-vous livrez",
+        "Découvrer de la fripperies de bonnes qualité en fonction de votre bourse",
         styleDescription:
-        TextStyle(color: HexColor("#909090"), fontSize: 18.0, fontFamily: 'Regular'),
-        pathImage: "assets/images/images-03.png",
+        TextStyle(color: HexColor("#001C36"), fontSize: 18.0, fontFamily: 'MonseraRegular'),
+        pathImage: "assets/images/images-05.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Retourche sur mesure",
+        title: "Achat-Livraison",
         styleTitle:
-        TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
-        description: "Faites retoucher vos achats sur mesure",
+        TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MonseraBold'),
+        description: "Commandez vos produits et faites-vous livrez",
         styleDescription:
-        TextStyle(color:HexColor("#909090"), fontSize: 18.0,  fontFamily: 'Regular'),
-        pathImage: "assets/images/images-01.png",
+        TextStyle(color:HexColor("#001C36"), fontSize: 18.0,  fontFamily: 'MonseraRegular'),
+        pathImage: "assets/images/images-04.png",
 
       ),
     );
@@ -59,12 +59,12 @@ class IntroScreenState extends State<IntroScreen> {
       new Slide(
         title: "Partage",
         styleTitle:
-        TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MontserratBold'),
+        TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MonseraBold'),
         description:
         "Recommandez un produit à un ami",
         styleDescription:
-        TextStyle(color:HexColor("#909090"), fontSize: 18.0,  fontFamily: 'Regular'),
-        pathImage: "assets/images/images-02.png",
+        TextStyle(color:HexColor("#001C36"), fontSize: 18.0,  fontFamily: 'MonseraRegular'),
+        pathImage: "assets/images/images-06.png",
 
       ),
     );
@@ -80,31 +80,28 @@ class IntroScreenState extends State<IntroScreen> {
 
   Widget renderNextBtn() {
     return Container(
-      width: largeurPerCent(50.0, context),
-      height: longueurPerCent(50.0, context),
-      decoration: BoxDecoration(
-        color:HexColor("#FFC30D"),
-        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-      ),
-      child: Icon(
-        Icons.navigate_next,
-        color:HexColor("#001c36"),
-        size: 35.0,
+      child: CircleAvatar(
+        backgroundColor: HexColor("#FFC30D"),
+        child: Icon(
+          Icons.navigate_next,
+          color:HexColor("#001c36"),
+          size: 40.0,
+        ),
+        radius: 70,
       ),
     );
   }
 
   Widget renderDoneBtn() {
     return Container(
-      width: largeurPerCent(50.0, context),
-      height: longueurPerCent(50.0, context),
-      decoration: BoxDecoration(
-        color: HexColor("#FFC30D"),
-        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-      ),
-      child: Icon(
-        Icons.done,
-        color: HexColor("#001c36"),
+      child: CircleAvatar(
+        backgroundColor: HexColor("#FFC30D"),
+        child: Icon(
+          Icons.done,
+          color:HexColor("#001c36"),
+          size: 40.0,
+        ),
+        radius: 70,
       ),
     );
   }
@@ -147,7 +144,7 @@ class IntroScreenState extends State<IntroScreen> {
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(left: longueurPerCent(70, context),right: longueurPerCent(70, context)),
+                padding: EdgeInsets.only(left: longueurPerCent((50), context),right: longueurPerCent(50, context)),
                 child: Text(
                   currentSlide.description,
                   style: currentSlide.styleDescription,
@@ -176,9 +173,9 @@ class IntroScreenState extends State<IntroScreen> {
       nameSkipBtn: "Passer" ,
       styleNameSkipBtn:
       TextStyle(
-          color: HexColor("#FFFFFF"),
+          color: HexColor("#001C36"),
           fontFamily: " Regular",
-          fontSize: 16
+          fontSize: 15
       ),
 
 
@@ -192,13 +189,13 @@ class IntroScreenState extends State<IntroScreen> {
 
 
       // Dot indicator
-      colorDot: Colors.white,
+      colorDot: HexColor("#001C36"),
       sizeDot: 10.0,
       typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
       // Tabs
       listCustomTabs: this.renderListCustomTabs(),
-      backgroundColorAllSlides: HexColor("#001c36"),
+      backgroundColorAllSlides: HexColor("#FFFFFF"),
       refFuncGoToTab: (refFunc) {
         this.goToTab = refFunc;
       },
