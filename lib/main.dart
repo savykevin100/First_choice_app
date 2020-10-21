@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
+import 'package:premierchoixapp/Authentification/slider.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
+import 'package:premierchoixapp/Design/PageAcceuil.dart';
 import 'package:premierchoixapp/Pages/FirstPage.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
@@ -65,7 +67,9 @@ class MyApp extends StatelessWidget {
        ConditionGenerales.id: (context) => ConditionGenerales(),
         APrpos.id: (context) => APrpos(),
         CustomDialog.id: (context) => CustomDialog(),
-        DisplaySearchResult.id: (context) => DisplaySearchResult()
+        DisplaySearchResult.id: (context) => DisplaySearchResult(),
+        PageAcceuil.id: (context) => PageAcceuil(),
+        IntroScreen.id: (context) => IntroScreen(),
       },
 
     );

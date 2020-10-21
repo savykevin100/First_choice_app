@@ -4,9 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Authentification/slider.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Design/PageAcceuil.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -130,12 +132,10 @@ class _FirstPageState extends State<FirstPage> {
       }
 
 
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => AllNavigationPage()
+      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: AllNavigationPage(),
       ));
     } else{
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) => IntroScreen()
+      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: PageAcceuil(),
       ));
     }
   }
@@ -151,8 +151,8 @@ class _FirstPageState extends State<FirstPage> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
-                  BounceInDown(
-                    duration: Duration(seconds: 5),
+                  FadeInDown(
+                    duration: Duration(seconds: 2),
                     child: Container(
                       margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
                       height: longueurPerCent(227.5, context),
@@ -164,7 +164,9 @@ class _FirstPageState extends State<FirstPage> {
                   SizedBox(height: longueurPerCent(50, context),),
                  // Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
                   SizedBox(height: longueurPerCent(50, context),),
-                  FadeInUpBig(
+                  JelloIn(
+                    duration: Duration(seconds: 1),
+                    delay: Duration(seconds: 2),
                     child: Container(
                       margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                       child: Center(
