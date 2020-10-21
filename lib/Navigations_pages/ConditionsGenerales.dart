@@ -37,7 +37,7 @@ class _ConditionGeneralesState extends State<ConditionGenerales> {
             Center(
               child:
               Container(
-                child: button(Colors.white, HexColor("#001C36"), context,
+                child: button(HexColor("#001C36"), HexColor("#FFC30D"), context,
                     'CONFIRMER', () {
                       Navigator.pushNamed(context, Decision.id);
                     }),

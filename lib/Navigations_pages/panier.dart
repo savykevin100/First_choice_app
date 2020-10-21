@@ -9,6 +9,7 @@ import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
@@ -304,37 +305,40 @@ class _PanierState extends State<Panier> {
 
 
   confirmationPopup(BuildContext dialogContext) {
-    var alertStyle = AlertStyle(
-      animationType: AnimationType.grow,
-      overlayColor: Colors.black87,
-      isCloseButton: true,
-      isOverlayTapDismiss: true,
-      titleStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-      descStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-      animationDuration: Duration(milliseconds: 400),
-    );
-
-    Alert(
-        context: dialogContext,
-        style: alertStyle,
-        title: "IMPORTANT?",
-        desc: "Certains de vos produits ont été déjà commandés. Supprimer ces produits pour continuer l'achat.",
-
-        buttons: [
-          DialogButton(
-            child: Text(
-              "Continuer",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => CustomDialog(
+        title: "Important",
+        description:
+        "Certains de vos produits ont été déjà commandés. Supprimer ces produits pour continuer l'achat.",
+        cancelButton: FlatButton(
+          onPressed: (
+              ) {
+            Navigator.of(context).pop(); // To close the dialog
+          },
+          child: Text("ANNULER",
+            style: TextStyle(
+                color: HexColor("#001C36"),
+                fontSize: 12.0,
+                fontFamily: "MonseraBold"
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              /*Navigator.push(
-                  context, MaterialPageRoute(
-                  builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));*/
-            },
-            color: HexColor("#001C36"),
           ),
-        ]).show();
+        ),
+        nextButton: FlatButton(
+          onPressed: (
+              ) {
+            Navigator.of(context).pop(); // To close the dialog
+          },
+          child: Text("CONTINUER",
+            style: TextStyle(
+                color: HexColor("#001C36"),
+                fontSize: 12.0,
+                fontFamily: "MonseraBold"
+            ),),
+        ),
+        icon: Icon(Icons.dangerous,size: 100,color: HexColor("#001C36")),
+      ),
+    );
   }
 
 
