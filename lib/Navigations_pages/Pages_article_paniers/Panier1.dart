@@ -170,9 +170,8 @@ class _Panier1State extends State<Panier1> {
                                 ? Text(
                               'Lieu de Livraison',
                               style: TextStyle(
-                                  color: Colors.black,
                                   fontSize: 16.0,
-                                  fontFamily: 'MonseraLight'),
+                                  ),
                             )
                                 : Text(
                               _dropDownValue,
@@ -274,9 +273,8 @@ class _Panier1State extends State<Panier1> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   hintText: "Indication",
-                                  hintStyle: TextStyle(
-                                    fontSize: 16.0,
-                                  ),
+                                  hintStyle:  TextStyle(
+                                    fontSize: 16.0,),
                                   fillColor: Colors.white,
                                   contentPadding: EdgeInsets.only(
                                       top: 30, bottom: 5, left: 15),
@@ -329,7 +327,8 @@ class _Panier1State extends State<Panier1> {
                               _dropDownValue2,
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16),
+                                  fontSize: 16.0,
+                                  ),
                             ),
                             isExpanded: true,
                             iconSize: 30.0,

@@ -13,6 +13,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
+import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
@@ -157,7 +158,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 12,
+                                    fontSize: 15,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -182,7 +183,7 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontFamily: "MonseraRegular"
                                       ),
                                     ),
@@ -198,7 +199,7 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 10,
+                                          fontSize: 12,
                                           fontFamily: "MonseraRegular"
                                       ),
                                     ),
@@ -234,7 +235,7 @@ class _Panier2State extends State<Panier2> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: HexColor("#001C36"),
-                                        fontSize: 12,
+                                        fontSize: 15,
                                         fontFamily: "MonseraBold"),
                                   ),
                                 ),
@@ -260,7 +261,7 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: HexColor("#909090"),
-                                          fontSize: 10,
+                                          fontSize: 12,
 
                                           fontFamily: "MonseraRegular"
                                       ),
@@ -288,7 +289,7 @@ class _Panier2State extends State<Panier2> {
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: HexColor("#001C36"),
-                                        fontSize: 12,
+                                        fontSize: 15,
                                         fontFamily: "MonseraBold"),
                                   ),
                                 ),
@@ -312,7 +313,7 @@ class _Panier2State extends State<Panier2> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         fontFamily: "MonseraRegular",
                                       ),
                                     ),
@@ -340,7 +341,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 12,
+                                    fontSize: 15,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -360,7 +361,7 @@ class _Panier2State extends State<Panier2> {
                                       left: longueurPerCent(5, context),
                                       right:
                                       longueurPerCent(5, context),
-                                      top: longueurPerCent(5, context),
+                                      top: longueurPerCent(0, context),
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
@@ -373,13 +374,13 @@ class _Panier2State extends State<Panier2> {
                                         //Set this field to enable or disable (true or flase)
                                         enabled: !_isEnabled,
                                         style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 13,
                                             fontFamily: "MonseraBold"),
                                         decoration: InputDecoration(
                                           prefixIcon: Padding(
                                             padding: EdgeInsets.only(
                                                 top: longueurPerCent(
-                                                    5, context),
+                                                    0, context),
                                                 bottom: longueurPerCent(
                                                     5, context),
                                                 right: largeurPerCent(
@@ -392,7 +393,7 @@ class _Panier2State extends State<Panier2> {
                                                   longueurPerCent(
                                                       40, context),
                                                   child: Image.asset(
-                                                      "assets/images/images-03.png")),
+                                                      "assets/images/icone moyen de paiement-01.png")),
                                             ),
                                           ),
                                           suffixIcon:
@@ -418,11 +419,9 @@ class _Panier2State extends State<Panier2> {
                                               : Text(""),
                                           hintText: "Espèce",
                                           hintStyle: TextStyle(
-                                              color:
-                                              HexColor("#909090"),
-                                              fontSize: 15.0,
-                                              fontFamily:
-                                              'MonseraBold'),
+                                              color: Colors.red,
+                                              fontSize: 12.0,
+                                              fontFamily: 'MonseraBold'),
                                           fillColor: Colors.white,
                                           contentPadding:
                                           EdgeInsets.only(
@@ -467,11 +466,11 @@ class _Panier2State extends State<Panier2> {
                                           fontFamily: "Montserrat_Light"),
                                       decoration: InputDecoration(
                                         hintText:
-                                        "Saisir numéro Mobile Money",
+                                        "Saisisssez un numéro Mobile Money",
                                         prefixIcon: Padding(
                                           padding: EdgeInsets.only(
                                               top: longueurPerCent(
-                                                  5, context),
+                                                  0, context),
                                               bottom: longueurPerCent(
                                                   5, context),
                                               right: largeurPerCent(
@@ -483,14 +482,14 @@ class _Panier2State extends State<Panier2> {
                                                 height: longueurPerCent(
                                                     40, context),
                                                 child: Image.asset(
-                                                    "assets/images/new_logo_mtn_momo1.jpg")),
+                                                    "assets/images/icone moyen de paiement-02.png")),
                                           ),
                                         ),
 
                                         hintStyle: TextStyle(
                                             color: Colors.red,
                                             fontSize: 12.0,
-                                            fontFamily: 'MonseraLight'),
+                                            fontFamily: 'MonseraBold'),
 
                                         fillColor: Colors.white,
                                         contentPadding: EdgeInsets.only(
@@ -537,7 +536,7 @@ class _Panier2State extends State<Panier2> {
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
-                                    fontSize: 12,
+                                    fontSize: 15,
                                     fontFamily: "MonseraBold"),
                               ),
                             ),
@@ -626,7 +625,7 @@ class _Panier2State extends State<Panier2> {
                                                                   "#909090"),
                                                               fontSize: 12,
                                                               fontFamily:
-                                                              "Regular"),
+                                                              "Monserat_Regular"),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -649,7 +648,7 @@ class _Panier2State extends State<Panier2> {
                                                                 "#001C36"),
                                                             fontSize: 10,
                                                             fontFamily:
-                                                            "MontserratBold",
+                                                            "MonseraBold",
                                                             fontWeight:
                                                             FontWeight
                                                                 .bold,
@@ -671,7 +670,7 @@ class _Panier2State extends State<Panier2> {
                                                             size: 12,
                                                             couleur: HexColor(
                                                                 "#00CC7b"),
-                                                            police: "MontserratBold",
+                                                            police: "MonseraBold",
                                                           )
                                                       ),
                                                     ],
@@ -736,7 +735,7 @@ class _Panier2State extends State<Panier2> {
                                         PriceWithDot(price: widget.total,
                                           size: 12,
                                           couleur: HexColor("#909090"),
-                                          police: "MontserratBold",
+                                          police: "MonseraBold",
                                         ),
                                       ],
                                     ),
@@ -769,7 +768,7 @@ class _Panier2State extends State<Panier2> {
                                           price: widget.prixLivraison,
                                           size: 12,
                                           couleur: HexColor("#909090"),
-                                          police: "MontserratBold",
+                                          police: "MonseraBold",
                                         ),
                                       ],
                                     ),
@@ -918,7 +917,44 @@ class _Panier2State extends State<Panier2> {
               "Veuillez entrer un numéro de téléphone valide",
               Colors.white);
       } else {
-        commandAction();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CustomDialog(
+            title: "Commande",
+            description:
+            "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
+            cancelButton: FlatButton(
+              onPressed: (
+                  ) {
+                Navigator.of(context).pop(); // To close the dialog
+              },
+              child: Text("ANNULER",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 12.0,
+                    fontFamily: "MonseraBold"
+                ),
+              ),
+            ),
+            nextButton: FlatButton(
+              onPressed: (
+                  ) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CommandeSend()));
+                commandAction();
+              },
+              child: Text("CONTINUER",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 12.0,
+                    fontFamily: "MonseraBold"
+                ),),
+            ),
+            icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
+          ),
+        );
       }
   }
 

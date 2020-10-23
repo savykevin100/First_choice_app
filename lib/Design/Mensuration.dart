@@ -118,7 +118,7 @@ class _MensurationState extends State<Mensuration> {
                 padding:EdgeInsets.all(10),
                 child: Text("NB: Les différentes tailles recommandées mentionnées ci-dessous le sont juste à titre indicatif. Elles se basent sur une silhouette régulière.",
                   style: TextStyle(
-                    fontSize: 12
+                    fontSize: 11
                   ),
                 ),
               ),
@@ -250,10 +250,10 @@ class _MensurationState extends State<Mensuration> {
                           ),
                           Center(
                             child: DataTable(
-                              columnSpacing: 30,
+                              columnSpacing: 20,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Taille',
+                                    child: Text('T. de Taille',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -367,10 +367,10 @@ class _MensurationState extends State<Mensuration> {
                           ),
                           Center(
                             child: DataTable(
-                              columnSpacing: 30,
+                              columnSpacing: 20,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Taille',
+                                    child: Text('T. de Taille',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),
@@ -694,7 +694,7 @@ class _MensurationState extends State<Mensuration> {
                               columnSpacing: 40,
                               columns: [
                                 DataColumn(label: Container(
-                                    child: Text('Taille en cm',
+                                    child: Text('Tour de Taille',
                                       style: TextStyle(
                                           fontSize: 15
                                       ),

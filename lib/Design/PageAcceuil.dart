@@ -23,8 +23,8 @@ class _PageAcceuilState extends State<PageAcceuil> {
       body: DecoratedBox(decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(
-                  "assets/images/femme3.png"
-              ),fit: BoxFit.cover
+                  "assets/images/femme3.jpg",
+              ),fit: BoxFit.fitHeight,
           )
       ),
           child: Container(
@@ -46,7 +46,18 @@ class _PageAcceuilState extends State<PageAcceuil> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context),top: longueurPerCent((100), context)),
-                  child: Text("Bienvenue dans 1er Choix",
+                  child: Text("Bienvenue dans",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontFamily: "MonseraBold",
+
+                    ),
+                  ),
+                ),Padding(
+                  padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context),top: longueurPerCent((10  ), context)),
+                  child: Text("1er Choix",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -58,7 +69,7 @@ class _PageAcceuilState extends State<PageAcceuil> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),top: longueurPerCent((10), context),bottom: longueurPerCent((10), context)),
-                  child: Text("La première application d'achat de fripperies en ligne",
+                  child: Text("La première application mobile d'achat de friperie au Bénin.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
