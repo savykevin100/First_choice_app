@@ -94,17 +94,6 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
-          /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
-            print(value.data);
-            ajouter([
-              value.data["numero"],
-              value.data["email"],
-              value.data["nomComplet"],
-              value.data["age"],
-              value.data["sexe"],
-            ]);
-
-          });*/
           print(value.email);
          setState(()  {
             currentUser=true;
@@ -130,8 +119,6 @@ class _FirstPageState extends State<FirstPage> {
       for(int i=0; i<panierItems.length; i++){
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
       }
-
-
       Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: AllNavigationPage(),
       ));
     } else{
