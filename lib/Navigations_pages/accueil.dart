@@ -55,91 +55,91 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     super.initState();
     getUser().then((value) {
       if(value!=null)
-          Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
-            if(this.mounted)
-              ajouter([
-                value.data["numero"],
-                value.data["email"],
-                value.data["nomComplet"],
-                value.data["age"],
-                value.data["sexe"],
-              ]);
-            Renseignements.emailUser=value.data["email"];
-          });
+        Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+          if(this.mounted)
+            ajouter([
+              value.data["numero"],
+              value.data["email"],
+              value.data["nomComplet"],
+              value.data["age"],
+              value.data["sexe"],
+            ]);
+          Renseignements.emailUser=value.data["email"];
+        });
     });
     getReduction();
   }
 
   @override
   Widget build(BuildContext context) {
-      return (Renseignements.userData!=null)?Scaffold(
-        backgroundColor: HexColor("#F5F5F5"),
-        appBar:ScrollAppBar(
-          controller: controller,
-          backgroundColor: HexColor("#001c36"),
-          title:Image.asset("assets/images/1er choix-02.png", height: 100, width: 100,),
-          iconTheme: IconThemeData(color: Colors.white),
-          actions: <Widget>[
-            Badge(
-              badgeContent:StreamBuilder(
-                  stream: FirestoreService().getUtilisateurs(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Utilisateur>> snapshot) {
-                    if(snapshot.hasError || !snapshot.hasData){
-                      return Text("");
-                    } else {
-                      for(int i=0; i<snapshot.data.length; i++){
-                        if(snapshot.data[i].email == Renseignements.emailUser){
-                          nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
-                        }
+    return (Renseignements.userData!=null)?Scaffold(
+      backgroundColor: HexColor("#F5F5F5"),
+      appBar:ScrollAppBar(
+        controller: controller,
+        backgroundColor: HexColor("#001c36"),
+        title:Image.asset("assets/images/1er choix-02.png", height: 100, width: 100,),
+        iconTheme: IconThemeData(color: Colors.white),
+        actions: <Widget>[
+          Badge(
+            badgeContent:StreamBuilder(
+                stream: FirestoreService().getUtilisateurs(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Utilisateur>> snapshot) {
+                  if(snapshot.hasError || !snapshot.hasData){
+                    return Text("");
+                  } else {
+                    for(int i=0; i<snapshot.data.length; i++){
+                      if(snapshot.data[i].email == Renseignements.emailUser){
+                        nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
                       }
-                      return Text("$nombreAjoutPanier");}
-                  }
-              ),
-              toAnimate: true,
-              position: BadgePosition.topRight(top:   0,  right: 0),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.local_grocery_store,
-                    color: Colors.white,
-                  ),
-                  onPressed: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Panier  ()));
-                  }),
-            )
+                    }
+                    return Text("$nombreAjoutPanier");}
+                }
+            ),
+            toAnimate: true,
+            position: BadgePosition.topEnd(top:   0,  end: 0),
+            child: IconButton(
+                icon: Icon(
+                  Icons.local_grocery_store,
+                  color: Colors.white,
+                ),
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Panier  ()));
+                }),
+          )
 
-          ],
-        ),
-        drawer: (Renseignements.userData.length==5)?ProfileSettings(
-            userCurrent: Renseignements.userData[1],
-            firstLetter:Renseignements.userData[2][0]
-        ):ProfileSettings(
+        ],
+      ),
+      drawer: (Renseignements.userData.length==5)?ProfileSettings(
+          userCurrent: Renseignements.userData[1],
+          firstLetter:Renseignements.userData[2][0]
+      ):ProfileSettings(
         userCurrent: "",
         firstLetter: "",
       ),
-        body: WillPopScope(
-            onWillPop: _onBackPressed,
-            child: ConnexionState(body: bodyAccueil(),)),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SearchFiltre ()));
-            },
-            child: Icon(
-              Icons.search,
-              color:Colors.white,
-              size: 30,
-            ),
-            backgroundColor: Theme.of(context).primaryColor
-        ),
-      ):Scaffold(body: Center(child: CircularProgressIndicator(),),);
+      body: WillPopScope(
+          onWillPop: _onBackPressed,
+          child: ConnexionState(body: bodyAccueil(),)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SearchFiltre ()));
+          },
+          child: Icon(
+            Icons.search,
+            color:Colors.white,
+            size: 30,
+          ),
+          backgroundColor: Theme.of(context).primaryColor
+      ),
+    ):Scaffold(body: Center(child: CircularProgressIndicator(),),);
   }
 
   Snap bodyAccueil(){
@@ -165,26 +165,26 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             dotBgColor: Colors.red.withOpacity(0),
             images: [
               StreamBuilder(
-                stream: FirestoreService().getImageCaroussel(),
+                  stream: FirestoreService().getImageCaroussel(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<InformationsGenerales>> snapshot) {
-                   if(snapshot.hasError || !snapshot.hasData)
-                     return Center(child:CircularProgressIndicator());
-                         else {
-                     return CachedNetworkImage(
-                       imageUrl: snapshot.data[0].image1,
-                       imageBuilder: (context, imageProvider) => Container(
-                         decoration: BoxDecoration(
-                           image: DecorationImage(
-                             image: imageProvider,
-                             fit: BoxFit.cover,
-                           ),
-                         ),
-                       ),
-                       placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                       ),
-                     );
-                   }
+                    if(snapshot.hasError || !snapshot.hasData)
+                      return Center(child:CircularProgressIndicator());
+                    else {
+                      return CachedNetworkImage(
+                        imageUrl: snapshot.data[0].image1,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                        ),
+                      );
+                    }
                   }
               ),
               StreamBuilder(
@@ -322,19 +322,25 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     return showDialog(
       context: context,
       builder: (context) => new AlertDialog(
-        title: new Text("Fermer l'application",  style: TextStyle(fontFamily: "MonseraBold")),
+        title: new Text("Fermer l'application",  style: TextStyle( color: HexColor("#001C36"),
+            fontSize: 15.0,
+            fontFamily: "MonseraBold")),
         content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
         actions: <Widget>[
           new GestureDetector(
               onTap: () => Navigator.of(context).pop(false),
-              child: Text("Non", style: TextStyle(fontFamily: "MonseraBold"),)
+              child: Text("NON", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
           ),
           SizedBox(height: longueurPerCent(10, context),),
 
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
               onTap: () => exit(0),
-              child: Text("Oui", style: TextStyle(fontFamily: "MonseraBold"),)
+              child: Text("OUI", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
           ),
           SizedBox(height: longueurPerCent(10, context),),
           SizedBox(width: largeurPerCent(20, context),),
@@ -343,7 +349,6 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     ) ??
         false;
   }
-
 
 
   String key = "email_user";

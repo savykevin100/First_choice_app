@@ -94,6 +94,17 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
+          /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+            print(value.data);
+            ajouter([
+              value.data["numero"],
+              value.data["email"],
+              value.data["nomComplet"],
+              value.data["age"],
+              value.data["sexe"],
+            ]);
+
+          });*/
           print(value.email);
          setState(()  {
             currentUser=true;
@@ -119,6 +130,8 @@ class _FirstPageState extends State<FirstPage> {
       for(int i=0; i<panierItems.length; i++){
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
       }
+
+
       Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: AllNavigationPage(),
       ));
     } else{
@@ -161,6 +174,16 @@ class _FirstPageState extends State<FirstPage> {
                           "S'habiller n'a jamais été aussi simple",
                           style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
                         ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: longueurPerCent(40, context),),
+                  Container(
+                    margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
+                    child: Center(
+                      child: Text(
+                        "Version 1.00",
+                        style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
                       ),
                     ),
                   )

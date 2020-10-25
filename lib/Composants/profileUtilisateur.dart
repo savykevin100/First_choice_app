@@ -60,7 +60,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               }),
           drawerItem(
               icon: Icons.description,
-              text: "Tableau Mensurations",
+              text: "Tableau des Mensurations",
               onTap: () {
                 Navigator.push(
                     context,
@@ -151,7 +151,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text,
               style: TextStyle(
                   color: HexColor('#001C36'),
-                  fontSize: 18.0,
+                  fontSize: 17.0,
                   fontFamily: 'Regular'),
             ),
           )

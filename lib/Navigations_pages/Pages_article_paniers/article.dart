@@ -182,7 +182,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
+                          padding:  EdgeInsets.only(top: longueurPerCent(20, context), left: largeurPerCent(10, context),right: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
                           child: Text(widget.produit.nomDuProduit, style: TextStyle(color: HexColor("#909090"), fontSize: 22),),
                         ),
                         Padding(
@@ -685,7 +685,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
           widget.produit.image1));
       var response = await request.close();
       Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: 'My optional text.');
+      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! Regarde ce que j'ai trouvé sur 1er Choix. Je pense que tu aimeras l'article: " + widget.produit.nomDuProduit);
       setState(() {
         chargement=false;
       });
