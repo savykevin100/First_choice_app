@@ -57,6 +57,7 @@ class Panier2 extends StatefulWidget {
 class _Panier2State extends State<Panier2> {
   TextEditingController _textFieldControllerNumero = TextEditingController();
   TextEditingController _textFieldController = TextEditingController();
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   bool _isEnabledPayement = true;
   bool _isEnabled = true;
@@ -851,60 +852,102 @@ class _Panier2State extends State<Panier2> {
       if (widget.moyenDePayement ==
           "Mobile Money") {
         if (numeroDePayement.length == 8) {
-
-          String username = 'QSUSR168';
-          String password = 'jf0Midq2LIdkAv4Ugi1B';
-          String transref = DateTime.now().toString().substring(10);
-
-
-          var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
-
-          final ioc = new HttpClient();
-          ioc.badCertificateCallback =
-              (X509Certificate cert, String host, int port) => true;
-          final http = new IOClient(ioc);
-
-          //RequestPayment Request
-
-          http.post('https://qosic.net:8443/QosicBridge/user/requestpayment',
-              headers: {HttpHeaders.authorizationHeader: auth,
-                "Content-Type": "application/json"
-              },
-              body:  jsonEncode({
-                "msisdn": "229$numeroDePayement",
-                "amount": totalPlusLivraison,
-                "nameUser": widget.nomComplet,
-                "transref": transref,
-                "clientid": "1erChoix8S"
-              })
-          ).then(
-                  (response) {
-                    if(response.statusCode == 202)
-                      commandAction();
-                print("Reponse status : ${response.statusCode}");
-                print("Response body : ${response.body}");
-              });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => CustomDialog(
+              title: "Commande",
+              description:
+              "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
+              cancelButton: FlatButton(
+                onPressed: (
+                    ) {
+                  Navigator.of(context).pop(); // To close the dialog
+                },
+                child: Text("ANNULER",
+                  style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 12.0,
+                      fontFamily: "MonseraBold"
+                  ),
+                ),
+              ),
+              nextButton: FlatButton(
+                onPressed: (
+                    ) {
+                  Navigator.pop(context);
+                  String username = 'QSUSR168';
+                  String password = 'jf0Midq2LIdkAv4Ugi1B';
+                  String transref = DateTime.now().toString().substring(10);
 
 
-          // Get RequestPayement status
+                  var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
+                  bool getStatusTransfer=false;
 
-          http.post('https://qosic.net:8443/QosicBridge/user/gettransactionstatus',
-              headers: {HttpHeaders.authorizationHeader: auth,
-                "Content-Type": "application/json"
-              },
-              body:  jsonEncode({                                                                                                                                                                                                   
-                "transref": transref,
-                "clientid": "1erChoix8S"
-              })
-          ).then(
-                  (response) {
-                    if(response.statusCode == 200 )
-                      commandAction();
-                print("Reponse status : ${response.statusCode}");
-                print("Response body : ${response.body}");
-              });
+                  final ioc = new HttpClient();
+                  ioc.badCertificateCallback =
+                      (X509Certificate cert, String host, int port) => true;
+                  final http = new IOClient(ioc);
 
+                  //RequestPayment Request
 
+                  http.post('https://qosic.net:8443/QosicBridge/user/requestpayment',
+                      headers: {HttpHeaders.authorizationHeader: auth,
+                        "Content-Type": "application/json"
+                      },
+                      body:  jsonEncode({
+                        "msisdn": "229$numeroDePayement",
+                        "amount": totalPlusLivraison,
+                        "nameUser": widget.nomComplet,
+                        "transref": transref,
+                        "clientid": "1erChoix8S"
+                      })
+                  ).then(
+                          (response) {
+                        if(response.statusCode == 202) {
+                            http.post('https://qosic.net:8443/QosicBridge/user/gettransactionstatus',
+                                headers: {HttpHeaders.authorizationHeader: auth,
+                                  "Content-Type": "application/json"
+                                },
+                                body:  jsonEncode({
+                                  "transref": transref,
+                                  "clientid": "1erChoix8S"
+                                })
+                            ).then(
+                                    (response) {
+                                  if(response.statusCode == 200 ) {
+                                    setState(() {
+                                      getStatusTransfer = true;
+                                    });
+
+                                    /*showLoadingDialog(context, _keyLoader);
+                                    commandAction();
+                                    Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                                        .pop();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CommandeSend()));*/
+                                  }
+                                  print("Reponse status pour le get status du payement: ${response.statusCode}");
+                                  print("Response body : ${response.body}");
+                                });
+                        }
+                         // commandAction();
+                        print("Reponse status pour le request : ${response.statusCode}");
+                        print("Response body : ${response.body}");
+                      });
+
+                },
+                child: Text("CONTINUER",
+                  style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 12.0,
+                      fontFamily: "MonseraBold"
+                  ),),
+              ),
+              icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
+            ),
+          );
 
         } else if (numeroDePayement == "0") {
           displaySnackBarNom(
@@ -939,11 +982,14 @@ class _Panier2State extends State<Panier2> {
             nextButton: FlatButton(
               onPressed: (
                   ) {
+                showLoadingDialog(context, _keyLoader);
+                commandAction();
+                Navigator.of(_keyLoader.currentContext, rootNavigator: true)
+                    .pop();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => CommandeSend()));
-                commandAction();
               },
               child: Text("CONTINUER",
                 style: TextStyle(
@@ -959,11 +1005,39 @@ class _Panier2State extends State<Panier2> {
   }
 
 
+  Future<void> showLoadingDialog(BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.white,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(),
+                        SizedBox(height: 10,),
+                        Column(
+                          children: [
+                            Text("CHARGEMENT", style: TextStyle(
+                                color: Colors.black, fontFamily: "Bold"),),
+                            SizedBox(height: longueurPerCent(10, context),),
+                          ],
+                        )
+                      ]),
+                    )
+                  ]));
+        });
+  }
+
+
+
   Future<void> commandAction() async {
 
-    setState(() {
-      chargement=true;
-    });
+
     for(int i=0; i<panierItems.length; i++){
       setState(() {
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
@@ -1053,9 +1127,6 @@ class _Panier2State extends State<Panier2> {
             idCommandeUser: idCommandeUser,
             livrer: "En cours"),
       );
-      setState(() {
-        chargement=false;
-      });
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => CommandeSend()));
     } catch (e) {

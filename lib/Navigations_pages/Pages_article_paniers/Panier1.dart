@@ -90,7 +90,7 @@ class _Panier1State extends State<Panier1> {
         ),
       ),
       body: (quartiersDb != null)
-          ? ConnexionState(body: SingleChildScrollView(
+          ? SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
@@ -370,7 +370,7 @@ class _Panier1State extends State<Panier1> {
             ],
           ),
         ),
-      ),)
+      )
           : Center(
         child: CircularProgressIndicator(),
       ),

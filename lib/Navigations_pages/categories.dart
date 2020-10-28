@@ -86,7 +86,7 @@ class _CategoriesState extends State<Categories> {
       ),
       body: WillPopScope(
         onWillPop: _onBackPressed,
-        child: ConnexionState(body: SingleChildScrollView(
+        child:  SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -332,7 +332,7 @@ class _CategoriesState extends State<Categories> {
               )
             ],
           ),
-        ),),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 
@@ -49,5 +49,5 @@ class _ConnexionStateState extends State<ConnexionState> {
     );
   }
 }
-
+*/
 
