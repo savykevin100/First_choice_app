@@ -151,7 +151,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text,
               style: TextStyle(
                   color: HexColor('#001C36'),
-                  fontSize: 17.0,
+                  fontSize: 15.0,
                   fontFamily: 'Regular'),
             ),
           )
