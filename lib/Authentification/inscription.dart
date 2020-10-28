@@ -105,7 +105,7 @@ class _InscriptionState extends State<Inscription> {
                         setState(() {
                           chargement = false;
                         });
-                        print(e);
+                        print(e.toString());
                         showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
                       }
                     }

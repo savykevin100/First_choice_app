@@ -135,7 +135,7 @@ class _PanierState extends State<Panier> {
                   fontSize: 18,
                   fontFamily: "MonseraBold"),)
           ),
-          body: ConnexionState(body: (produitsPaniers.length==0)?elementsVides(context, Icons.shopping_cart,
+          body:  (produitsPaniers.length==0)?elementsVides(context, Icons.shopping_cart,
               "Pas de nouveaux produits ajoutés"):
           ListView.builder(
               shrinkWrap: true,
@@ -267,7 +267,7 @@ class _PanierState extends State<Panier> {
                     (produitsPaniers.length-1==index)?SizedBox(height: longueurPerCent(100, context),):Text("")
                   ],
                 );
-              }),),
+              }),
           floatingActionButton:
           (produitsPaniers!=null)?Center(
             child: Container(

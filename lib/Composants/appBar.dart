@@ -56,7 +56,7 @@ class AppBarClasse extends StatefulWidget{
               }
           ),
           toAnimate: true,
-          position: BadgePosition.topEnd(top:   0,  end: 0),
+          position: BadgePosition(top: 0, right: 0),
           child: IconButton(
               icon: Icon(
                 Icons.local_grocery_store,

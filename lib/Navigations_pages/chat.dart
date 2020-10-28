@@ -106,7 +106,7 @@ class _ChatState extends State<Chat> {
         ),
         body:WillPopScope(
           onWillPop: _onBackPressed,
-          child: ConnexionState(body:  Container(
+          child:  Container(
             height: MediaQuery.of(context).size.height/1.5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -208,7 +208,7 @@ class _ChatState extends State<Chat> {
                 ),*/
               ],
             ),
-          ),),
+          ),
         )
     );
   }

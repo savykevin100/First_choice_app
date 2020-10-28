@@ -26,7 +26,7 @@ int taille;
         .collection("Utilisateurs")
         .document(Renseignements.emailUser)
         .collection("Commandes")
-        .orderBy("created")
+        .orderBy("created", descending: true)
         .getDocuments()
         .then((QuerySnapshot snapshot) {
          if(snapshot.documents.isNotEmpty){
@@ -56,12 +56,11 @@ int taille;
           appBar: AppBar(
             title: Text("Liste des commandes"),
           ),
-          body: ConnexionState(body:
+          body:
           Center(
               child: Container(
                   margin: EdgeInsets.only(top: longueurPerCent(30, context), left: largeurPerCent(20, context), right: largeurPerCent(20, context), ),
                   child: ListView.builder(
-                      reverse: true,
                       itemCount:commandes.length,
                       itemBuilder: (context, i){
                         return  Container(
@@ -215,7 +214,7 @@ int taille;
                       }
                   )
               )
-          ),)
+          ),
       );
     } else if(loading!=taille && taille!=0){
       return Scaffold(

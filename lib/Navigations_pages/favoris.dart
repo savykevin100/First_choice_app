@@ -117,8 +117,7 @@ class _FavorisState extends State<Favoris> {
         ),
         body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)? WillPopScope(
           onWillPop: _onBackPressed,
-          child: ConnexionState(
-            body: StreamBuilder(
+          child:  StreamBuilder(
                 stream: FirestoreService().getFavoris(Renseignements.emailUser),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Produit>> snapshot) {
@@ -278,7 +277,7 @@ class _FavorisState extends State<Favoris> {
                       shrinkWrap: true,
                     );
                   }
-                }),),
+                }),
         )
             :Center(child: CircularProgressIndicator(),)
     );

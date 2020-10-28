@@ -19,6 +19,7 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'Panier1.dart';
 
 
@@ -172,7 +173,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
-        body: ConnexionState(body: (panierItems!=null)?ListView(
+        body:  (panierItems!=null)?ListView(
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -366,9 +367,22 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                     fontSize: 15) ),
               ),
             ),
-
+            SizedBox(height: longueurPerCent(40,context),),
+            Padding(
+              padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
+              child: Text("Produits de la même catégorie ",
+                  style: TextStyle(
+                      color: HexColor("#001c36"),
+                      fontFamily: "MonseraBold",
+                      fontSize: 15)),
+            ),
+            Container(
+                height: longueurPerCent(220, context),
+                width: double.infinity,
+                child: scrollabe_products_horizontal(FirestoreService().getSousCategoriesProducts(widget.produit.categorie, widget.produit.sousCategorie))),
+            SizedBox(height: longueurPerCent(100,context),),
           ],
-        ): Center(child: CircularProgressIndicator())),
+        ): Center(child: CircularProgressIndicator()),
 
         floatingActionButton: Center(
           child: Container(
@@ -641,7 +655,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                           width: largeurPerCent(262, context),
                           child:GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect) ,),),);
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect), ),),);
                             },
                             child:
                             CachedNetworkImage(
@@ -723,18 +737,20 @@ class HeroPhotoViewRouteWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(
-        height: MediaQuery.of(context).size.height,
-      ),
-      child: PhotoView(
-        imageProvider: imageProvider,
-        loadingBuilder: loadingBuilder,
-        backgroundDecoration: backgroundDecoration,
-        minScale: minScale,
-        maxScale: maxScale,
-        heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
-      ),
+    return Scaffold(
+      body:  Container(
+        constraints: BoxConstraints.expand(
+          height: MediaQuery.of(context).size.height,
+        ),
+        child: PhotoView(
+          imageProvider: imageProvider,
+          loadingBuilder: loadingBuilder,
+          backgroundDecoration: backgroundDecoration,
+          minScale: minScale,
+          maxScale: maxScale,
+          heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+        ),
+      )
     );
   }
 }

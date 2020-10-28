@@ -53,8 +53,37 @@ class _RenseignementsState extends State<Renseignements> {
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
 
+  Future<void> verifyPhone() async{
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId){
+      this.verificationId = verId;
+    };
 
-  Future<bool> loginUser(String phone, BuildContext context) async{
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) async{
+      this.verificationId = verId;
+      smsCodeDialog(context).then((value) {
+        print("Code sent");
+      });
+
+    };
+    final PhoneVerificationCompleted verifiedSucess = (AuthCredential auth){
+
+    };
+    final PhoneVerificationFailed phoneVerificationFailed = (
+        AuthException exception) {
+      print("${exception.message}");
+    };
+
+    await _auth.verifyPhoneNumber(
+        phoneNumber: '+229'+numeroPayement,
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: verifiedSucess,
+        verificationFailed: phoneVerificationFailed,
+        codeSent: smsCodeSent,
+        codeAutoRetrievalTimeout: autoRetrieve
+    );
+  }
+
+  /*Future<bool> loginUser(String phone, BuildContext context) async{
     FirebaseAuth _auth = FirebaseAuth.instance;
 
     _auth.verifyPhoneNumber(
@@ -65,7 +94,7 @@ class _RenseignementsState extends State<Renseignements> {
               .pop();
           AuthResult result = await _auth.signInWithCredential(credential);
 
-          FirebaseUser user = result.user;
+          FirebaseUser  user = result.user;
 
           if(user != null){
             Navigator.of(context).pushNamed(AllNavigationPage.id);
@@ -122,9 +151,9 @@ class _RenseignementsState extends State<Renseignements> {
         },
         codeAutoRetrievalTimeout: null
     );
-  }
+  }*/
 
-  Future<void> _submit() async {
+ /* Future<void> _submit() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verId) {
       this.verificationId = verId;
     };
@@ -154,7 +183,7 @@ class _RenseignementsState extends State<Renseignements> {
         codeSent: phoneCodeSent,
         codeAutoRetrievalTimeout: autoRetrievalTimeout
     );
-  }
+  }*/
 
 
 
@@ -197,9 +226,10 @@ class _RenseignementsState extends State<Renseignements> {
               FlatButton(onPressed: (){
                 FirebaseAuth.instance.currentUser().then((user) => {
                   if(user!=null){
-                    sendDataUserDb(),
+                    /*sendDataUserDb(),
                     Navigator.pop(context),
-                    Navigator.of(context).pushNamed(AllNavigationPage.id)
+                    Navigator.of(context).pushNamed(AllNavigationPage.id)*/
+                    print("L'autentification a resussi")
                   }
                   else {
                     Navigator.pop(context),
@@ -411,60 +441,6 @@ class _RenseignementsState extends State<Renseignements> {
                                /**/
                               )
                             ),
-                           /* DateTimeField(
-                              style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 18,
-                                  fontFamily: "MonseraBold"
-                              ),
-                              format: DateFormat("dd-MM-yyyy"),
-                              decoration: InputDecoration(
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: longueurPerCent(5, context),
-                                      bottom: longueurPerCent(5, context),
-                                      right: largeurPerCent(10, context),
-                                      left: largeurPerCent(18, context)),
-                                  child: Icon(
-                                    Icons.calendar_today,
-                                    color: HexColor('#001C36'),
-                                    size: 30.0,
-                                  ),
-                                ),
-                                labelText: "Date d'anniversaire",
-                                labelStyle: TextStyle(
-                                    color: HexColor('#919191'),
-                                    fontSize: 18.0,
-                                    fontFamily: 'MonseraLight'),
-                                hintText: "10/06/2000",
-                                hintStyle: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 17.0,
-                                    fontFamily: 'MonseraLight'),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(7.0)),
-                                    borderSide: BorderSide(
-                                        width: 1, style: BorderStyle.none)),
-                              ),
-                              onShowPicker: (context, currentValue) {
-                                return showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(1900),
-                                    initialDate: currentValue ?? DateTime.now(),
-                                    lastDate: DateTime(2100));
-                              },
-                              onChanged: (value){
-                                if(value.day.toString().length==1 && value.month.toString().length==1){
-                                  age = "0${value.day}"+ "-0${value.month}"+"-${value.year}";
-                                } else if(value.day.toString().length!=1 && value.month.toString().length==1){
-                                  age = "${value.day}"+ "-0${value.month}"+"-${value.year}";
-                                } else if(value.day.toString().length==1 && value.month.toString().length!=1){
-                                  age = "0${value.day}"+ "-${value.month}"+"-${value.year}";
-                                } else  age = "${value.day}"+ "-${value.month}"+"-${value.year}";
-                              },
-                            ),*/
-
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
@@ -536,12 +512,13 @@ class _RenseignementsState extends State<Renseignements> {
                         () async {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null && age!=null) {
-                        sendDataUserDb();
+                     /*   sendDataUserDb();
                           Navigator.pop(context);
-                          Navigator.of(context).pushNamed(AllNavigationPage.id);
-                        setState(() {
+                          Navigator.of(context).pushNamed(AllNavigationPage.id);*/
+                         verifyPhone();
+                       /* setState(() {
                           chargement = true;
-                        });
+                        });*/
                       } else {
 
                         displaySnackBarNom(context,

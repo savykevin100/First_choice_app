@@ -22,9 +22,21 @@ import 'Navigations_pages/Widgets/DetailsCommandes.dart';
 import 'Navigations_pages/all_navigation_page.dart';
 import 'Navigations_pages/panier.dart';
 import 'Pages/displaySearchResult.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 
-void main() => runApp(MyApp());
+void _enablePlatformOverrideForDesktop() {
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
+
+void main() {
+  _enablePlatformOverrideForDesktop();
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
