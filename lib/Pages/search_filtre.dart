@@ -354,7 +354,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       ),
                       isExpanded: true,
                       iconSize: 30.0,
-                      items:['Rouge', 'Orange', 'Jaune', 'Vert', 'Bleu', 'Indigo', 'Violet', 'Noir', 'Blanc', 'Gris'].map(
+                      items:['Rouge', 'Orange', 'Jaune', 'Vert', 'Bleu', 'Indigo', 'Violet', 'Noir', 'Blanc', 'Gris','Rose','Marron'].map(
                             (val) {
 
                           return DropdownMenuItem<String>(

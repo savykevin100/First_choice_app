@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,8 +84,8 @@ class _FirstPageState extends State<FirstPage> {
     DatabaseClient().readPanierData().then((value) {
       if(this.mounted)
         setState(() {
-        panierItems=value;
-      });
+          panierItems=value;
+        });
     });
   }
   @override
@@ -94,7 +95,7 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
-          /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+        /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
             print(value.data);
             ajouter([
               value.data["numero"],
@@ -103,17 +104,16 @@ class _FirstPageState extends State<FirstPage> {
               value.data["age"],
               value.data["sexe"],
             ]);
-
           });*/
-          print(value.email);
-         setState(()  {
-            currentUser=true;
-            utilisateurConnecte=value.email;
-          });
-          Firestore.instance
-              .collection("Utilisateurs")
-              .document(value.email)
-              .updateData({"nbAjoutPanier": 0});
+        print(value.email);
+        setState(()  {
+          currentUser=true;
+          utilisateurConnecte=value.email;
+        });
+        Firestore.instance
+            .collection("Utilisateurs")
+            .document(value.email)
+            .updateData({"nbAjoutPanier": 0});
       }
     });
     StarTimer();
@@ -121,7 +121,7 @@ class _FirstPageState extends State<FirstPage> {
 
   // ignore: non_constant_identifier_names
   StarTimer() async {
-    var duration = Duration(seconds: 5);
+    var duration = Duration(seconds: 7);
     return Timer(duration, route);
   }
 
@@ -162,18 +162,30 @@ class _FirstPageState extends State<FirstPage> {
                     ),
                   ),
                   SizedBox(height: longueurPerCent(50, context),),
-                 // Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
+                  // Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
                   SizedBox(height: longueurPerCent(50, context),),
-                  JelloIn(
-                    duration: Duration(seconds: 1),
-                    delay: Duration(seconds: 2),
-                    child: Container(
-                      margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
-                      child: Center(
-                        child: Text(
+                  Container(
+                    margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
+                    child: Center(
+                      child: FadeAnimatedTextKit(
+                        onTap: (){
+
+                        },
+                        text: [
+                          "S'habiller",
+                          "n'a jamais été",
+                          "aussi simple",
                           "S'habiller n'a jamais été aussi simple",
-                          style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 16.0, fontWeight: FontWeight.bold ),
+                        ],
+                        textStyle: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "MonseraBold",
+                          color: Colors.white
                         ),
+                        textAlign: TextAlign.start,
+                          alignment: AlignmentDirectional.topStart,
+                        isRepeatingAnimation: false,
+                        duration: Duration(milliseconds: 1000),
                       ),
                     ),
                   ),
