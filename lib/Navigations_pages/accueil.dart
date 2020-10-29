@@ -102,7 +102,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 }
             ),
             toAnimate: true,
-            position: BadgePosition(top: 0, right: 0),
+            position: BadgePosition(top: 0, end: 0),
             child: IconButton(
                 icon: Icon(
                   Icons.local_grocery_store,
