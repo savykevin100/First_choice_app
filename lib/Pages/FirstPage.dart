@@ -33,6 +33,7 @@ class _FirstPageState extends State<FirstPage> {
 
   bool currentUser=false;
   bool ajoue=false;
+  bool isEnd=false;
   List<Map<String, dynamic>> produits=[];
   List<Map<String, dynamic>> produitsFavorisUsers=[];
   String utilisateurConnecte;
@@ -121,7 +122,7 @@ class _FirstPageState extends State<FirstPage> {
 
   // ignore: non_constant_identifier_names
   StarTimer() async {
-    var duration = Duration(seconds: 7);
+    var duration = Duration(seconds: 11);
     return Timer(duration, route);
   }
 
@@ -161,9 +162,7 @@ class _FirstPageState extends State<FirstPage> {
                         fit: BoxFit.cover,),
                     ),
                   ),
-                  SizedBox(height: longueurPerCent(50, context),),
-                  // Center(child: CircularProgressIndicator(backgroundColor: Colors.white,),),
-                  SizedBox(height: longueurPerCent(50, context),),
+                  SizedBox(height: longueurPerCent(100, context),),
                   Container(
                     margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                     child: Center(
@@ -172,6 +171,7 @@ class _FirstPageState extends State<FirstPage> {
 
                         },
                         text: [
+                          "",
                           "S'habiller",
                           "n'a jamais été",
                           "aussi simple",
@@ -186,6 +186,7 @@ class _FirstPageState extends State<FirstPage> {
                           alignment: AlignmentDirectional.topStart,
                         isRepeatingAnimation: false,
                         duration: Duration(milliseconds: 1000),
+                        pause: Duration(milliseconds: 1200),
                       ),
                     ),
                   ),
