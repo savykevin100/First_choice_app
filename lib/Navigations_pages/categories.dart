@@ -34,7 +34,6 @@ class _CategoriesState extends State<Categories> {
     nombre=1;
   }
 
-
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
@@ -54,7 +53,7 @@ class _CategoriesState extends State<Categories> {
 
           SizedBox(width: largeurPerCent(50, context),),
           new GestureDetector(
-              onTap: () =>exit(0),
+              onTap: () => exit(0),
               child: Text("OUI", style: TextStyle( color: HexColor("#001C36"),
                   fontSize: 12.0,
                   fontFamily: "MonseraBold"),)

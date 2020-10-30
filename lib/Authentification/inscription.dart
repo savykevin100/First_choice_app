@@ -140,7 +140,7 @@ class _InscriptionState extends State<Inscription> {
         child: Column(
           children: <Widget>[
             Image.asset(
-              'assets/images/logo.png',
+              "assets/images/1er choix-02.png",
               height: 197,
               width: 278,
             ),

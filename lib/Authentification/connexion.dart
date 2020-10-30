@@ -176,7 +176,7 @@ class _ConnexionState extends State<Connexion> {
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
         child: Column(
           children: <Widget>[
-            Image.asset('assets/images/logo.png',
+            Image.asset("assets/images/1er choix-02.png",
               height: 197,
               width: 278,
             ),

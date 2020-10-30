@@ -10,7 +10,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
@@ -145,7 +144,13 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
           ),
           backgroundColor: Theme.of(context).primaryColor
       ),
-    ):Scaffold(body: Test(displayContains: Center(child: CircularProgressIndicator(),),));
+    ):Scaffold(
+        appBar: AppBar(
+          title:Image.asset("assets/images/1er choix-02.png", height: 100, width: 100,),
+        ),
+        drawer: Drawer(),
+        body: Test(
+          displayContains: Center(child: CircularProgressIndicator(),),));
   }
 
   Snap bodyAccueil(){

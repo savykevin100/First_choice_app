@@ -16,7 +16,7 @@ class HeroExample extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => const HeroPhotoViewRouteWrapper(
-                  imageProvider: AssetImage("assets/images/logo.png"),
+                  imageProvider: AssetImage("assets/images/1er choix-02.png"),
                 ),
               ),
             );
@@ -24,7 +24,7 @@ class HeroExample extends StatelessWidget {
           child: Container(
             child: Hero(
               tag: "customBackground",
-              child: Image.asset("assets/images/logo.png", width: 150.0),
+              child: Image.asset("assets/images/1er choix-02.png", width: 150.0),
             ),
           ),
         ),
