@@ -102,7 +102,6 @@ class _FavorisState extends State<Favoris> {
         false;
   }
 
-
   @override
   void initState() {
     // TODO: implement initState

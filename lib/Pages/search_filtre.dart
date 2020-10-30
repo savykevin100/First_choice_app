@@ -27,6 +27,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
   bool prix = false;
   String taille;
+  String color;
   bool sizeChekbox = false;
   int prixMax;
   int prixMin;
@@ -43,6 +44,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
   List<RadioModel> sampleData = new List<RadioModel>();
   List<RadioModelGenre> sampleDataGenre = new List<RadioModelGenre>();
+  List<RadioModelColor> sampleDataColor = new List<RadioModelColor>();
   List<RadioModelGenre> sampleDataSousCategorie = new List<RadioModelGenre>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -101,6 +103,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
     // TODO: implement initState
     super.initState();
 
+    //Display Size of products
     sampleData.add(new RadioModel(false, 'XS'));
     sampleData.add(new RadioModel(false, 'S',));
     sampleData.add(new RadioModel(false, 'M',));
@@ -121,8 +124,23 @@ class _SearchFiltreState extends State<SearchFiltre> {
     sampleData.add(new RadioModel(false, '50',));
 
 
+    //Display Genre
     sampleDataGenre.add(new RadioModelGenre(false, '', 'Hommes',));
     sampleDataGenre.add(new RadioModelGenre(false, '', 'Femmes',));
+
+    //Display Color
+    sampleDataColor.add(new RadioModelColor(false, 'Vert',Colors.green));
+    sampleDataColor.add(new RadioModelColor(false, 'Jaune',Colors.yellow));
+    sampleDataColor.add(new RadioModelColor(false, 'Rouge',Colors.red));
+    sampleDataColor.add(new RadioModelColor(false, 'Bleu',Colors.blue));
+    sampleDataColor.add(new RadioModelColor(false, 'Orange',Colors.orange));
+    sampleDataColor.add(new RadioModelColor(false, 'Blanc',Colors.white));
+    sampleDataColor.add(new RadioModelColor(false, 'Noir',Colors.black));
+    sampleDataColor.add(new RadioModelColor(false, 'Violet',Colors.purple));
+    sampleDataColor.add(new RadioModelColor(false, 'Marron',Colors.brown));
+    sampleDataColor.add(new RadioModelColor(false, 'Rose',Colors.pink));
+    sampleDataColor.add(new RadioModelColor(false, 'Gris',Colors.grey));
+
 
     getSousCategorie();
   }
@@ -239,6 +257,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 Container(
                     color: HexColor("#F5F5F5"),
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 0.0, right: 0.0),
+                    margin: const EdgeInsets.only(
+                        top: 0.0, left: 20.0, right: 20.0),
                     height: longueurPerCent(60, context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -284,6 +306,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 ),
                 Container(
                   color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 0.0, right: 0.0),
+                  margin: const EdgeInsets.only(
+                      top: 0.0, left: 20.0, right: 20.0),
                   height: longueurPerCent(200, context),
                   child: StaggeredGridView.countBuilder(
                     reverse: false,
@@ -320,62 +346,52 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   ),
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
-                (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?Center(
-                  child: Container(
-                    width: largeurPerCent(347.0, context),
-                    height: longueurPerCent(40, context),
-                    padding: EdgeInsets.only(
-                        left: largeurPerCent(10, context),
-                        right: largeurPerCent(20, context),
-                        top: longueurPerCent(0, context)),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(7.0),
-                        ),
-                        border: Border.all(color: Colors.grey, width: 1)),
-                    child: DropdownButton(
-                      underline: Text(""),
-                      hint: _dropDownValue4 == null
-                          ? Text(
-                        'Couleurs',
-                          style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 12,
-                            fontFamily: "MonseraRegular",
-                          ),
-                      )
-                          : Text(
-                        _dropDownValue4,
-                          style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 12,
-                            fontFamily: "MonseraRegular",
-                          ),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      items:['Rouge', 'Orange', 'Jaune', 'Vert', 'Bleu', 'Indigo', 'Violet', 'Noir', 'Blanc', 'Gris','Rose','Marron'].map(
-                            (val) {
-
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(val,  style: TextStyle(
+                (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?
+                Container(
+                  color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 30.0, right: 0.0),
+                  margin: const EdgeInsets.only(
+                      top: 0.0, left: 20.0, right: 20.0),
+                  height: longueurPerCent(230, context),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0, right: longueurPerCent(260, context)),
+                        child: Text(
+                            "Couleurs",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
                               color: HexColor("#001C36"),
-                              fontSize: 12,
-                              fontFamily: "MonseraRegular",
-                            ),),
+                              fontSize: 15,
+                              fontFamily: "MonseraBold",
+                            )
+                        ),
+                      ),
+                      SizedBox(height: longueurPerCent(20, context),),
+                      StaggeredGridView.countBuilder(
+                        reverse: false,
+                        crossAxisCount: 10,
+                        itemCount: sampleDataColor.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return InkWell(
+                            splashColor: Colors.blueAccent,
+                            onTap: () {
+                              setState(() {
+                                sampleDataColor.forEach(
+                                        (element) => element.isSelected = false);
+                                sampleDataColor[index].isSelected = true;
+                                couleur = sampleDataColor[index].buttonText;
+                              });
+                            },
+                            child: new RadioItemColor(sampleDataColor[index]),
                           );
                         },
-                      ).toList(),
-                      onChanged: (val) {
-                        setState(
-                              () {
-                            _dropDownValue4 = val;
-                            couleur = val;
-                          },
-                        );
-                      },
-                    ),
+                        staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                      ),
+                    ],
                   ),
                 ):Text(""),
                 SizedBox(height: longueurPerCent(20, context),),
@@ -1279,7 +1295,6 @@ class RadioModelGenre {
   RadioModelGenre(this.isSelected, this.buttonText, this.text);
 }
 
-
 class RadioItem extends StatelessWidget {
   final RadioModel _item;
   RadioItem(this._item);
@@ -1291,8 +1306,8 @@ class RadioItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           new Container(
-            height: 30.0,
-            width: 30.0,
+            height: 40.0,
+            width: 40.0,
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
@@ -1326,4 +1341,54 @@ class RadioModel {
   final String buttonText;
 
   RadioModel(this.isSelected, this.buttonText);
+}
+
+class RadioItemColor extends StatelessWidget {
+  final RadioModelColor _item;
+  RadioItemColor(this._item);
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      margin: new EdgeInsets.all(10.0),
+      child: new Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          new Container(
+            height: 55.0,
+            width: 55.0,
+            child: new Center(
+              child: new Text(_item.buttonText,
+                  style: new TextStyle(
+                    color:
+                    _item.isSelected ? _item.myColor :  _item.myColor,fontSize: 12,
+                    fontFamily: "MonseraRegular",
+                    //fontWeight: FontWeight.bold,
+                  )),
+            ),
+            decoration: new BoxDecoration(
+              color: _item.isSelected
+                  ? _item.myColor
+                  : _item.myColor,
+              border: new Border.all(
+                  width: _item.isSelected?
+                  3.0 :1.0,
+                  color: _item.isSelected
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey),
+              borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class RadioModelColor {
+  bool isSelected;
+  final String buttonText;
+  Color myColor;
+
+  RadioModelColor(this.isSelected, this.buttonText, this.myColor);
 }

@@ -21,7 +21,6 @@ class _NotificationsState extends State<Notifications> {
   int nombreAjoutPanier;
   final controller = ScrollController();
 
-
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
