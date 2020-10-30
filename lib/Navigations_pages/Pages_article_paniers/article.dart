@@ -368,7 +368,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               ),
             ),
             SizedBox(height: longueurPerCent(40,context),),
-            Padding(
+            /*Padding(
               padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
               child: Text("Produits de la même catégorie ",
                   style: TextStyle(
@@ -380,7 +380,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 height: longueurPerCent(220, context),
                 width: double.infinity,
                 child: scrollabe_products_horizontal(FirestoreService().getSousCategoriesProducts(widget.produit.categorie, widget.produit.sousCategorie))),
-            SizedBox(height: longueurPerCent(100,context),),
+            SizedBox(height: longueurPerCent(100,context),),*/
           ],
         ): Center(child: CircularProgressIndicator()),
 

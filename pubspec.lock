@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.3"
+  animated_text_kit:
+    dependency: "direct main"
+    description:
+      name: animated_text_kit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.5.1"
   archive:
     dependency: transitive
     description:
@@ -107,12 +114,12 @@ packages:
     source: hosted
     version: "1.15.0-nullsafety.2"
   connectivity:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: connectivity
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.9+2"
+    version: "2.0.0"
   connectivity_for_web:
     dependency: transitive
     description:
@@ -307,13 +314,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.5"
-  flutter_offline:
-    dependency: "direct main"
-    description:
-      name: flutter_offline
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   flutter_range_slider:
     dependency: "direct main"
     description:

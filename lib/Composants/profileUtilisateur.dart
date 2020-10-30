@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Design/Mensuration.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/APrpos.dart';
 import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
+import 'package:premierchoixapp/Navigations_pages/affichage_commandes.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
@@ -49,7 +50,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text: "Mon compte",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => UserProfil()));
+                    context, MaterialPageRoute(builder: (context) => AffichageCommandes()));
               }),
           drawerItem(
               icon: Icons.local_grocery_store,
