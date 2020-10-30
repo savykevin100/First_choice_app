@@ -41,6 +41,7 @@ class _Panier1State extends State<Panier1> {
   Map<String, Widget> widgets;
   List<String> quartiersDb = [];
   int stopSommeLivraisonRetour = 0;
+  List<String> listMoyenPayement = ['Mobile Money', 'Espèce'];
 
   Future<void> fetchNameNumUser() async {
     await _db
@@ -61,9 +62,10 @@ class _Panier1State extends State<Panier1> {
     await _db.collection("Zones").getDocuments().then((value) {
       value.documents.forEach((element) {
         element.data.forEach((key, value) {
-          setState(() {
-            quartiersDb.add(value);
-          });
+         if(this.mounted)
+           setState(() {
+             quartiersDb.add(value);
+           });
         });
       });
     });
@@ -223,6 +225,18 @@ class _Panier1State extends State<Panier1> {
                                   setState(() {
                                     quartier = value;
                                   });
+                                  _db.collection("Zones").getDocuments().then((value) {
+                                    /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
+                                    for (int i = 0; i < value.documents.length; i++) {
+                                      if (value.documents[i].data.containsValue(quartier)) {
+                                       if(int.tryParse(value.documents[i].documentID.toString())>1000){
+                                         setState(() {
+                                           listMoyenPayement=['Mobile Money'];
+                                         });
+                                       }
+                                      }
+                                    }
+                                  });
                                 },
                                 selectedItem: quartier,
                                 showClearButton: true,
@@ -333,7 +347,7 @@ class _Panier1State extends State<Panier1> {
                             isExpanded: true,
                             iconSize: 30.0,
                             items:
-                            ['Mobile Money', 'Espèce'].map(
+                            listMoyenPayement.map(
                                   (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -489,74 +503,71 @@ class _Panier1State extends State<Panier1> {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         showDialog(
           context: context,
-          builder: (BuildContext context) =>
-
-
-
-
-              CustomDialog(
+          builder: (BuildContext context) => CustomDialog(
             title: "Livraison",
             description:
-            "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
+                "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
             cancelButton: FlatButton(
-              onPressed: (
-                  ) {
+              onPressed: () {
                 Navigator.of(context).pop(); // To close the dialog
               },
-              child: Text("ANNULER",
+              child: Text(
+                "ANNULER",
                 style: TextStyle(
                     color: HexColor("#001C36"),
                     fontSize: 12.0,
-                    fontFamily: "MonseraBold"
-                ),
+                    fontFamily: "MonseraBold"),
               ),
             ),
             nextButton: FlatButton(
-              onPressed: (
-                  ) {
-                if(lieu=="En Agence"){
+              onPressed: () {
+                if (lieu == "En Agence") {
                   Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Panier2(
-                            prixLivraison: prixLivraison,
-                            total: widget.total,
-                            nomComplet: name,
-                            telephone: numUser,
-                            moyenDePayement: moyenDePayement,
-                            lieuDeLivraison: lieu,
-                            dateHeureDeLivraison: dateHeureDeLivraison,
-                            produitsCommander: widget.produitsPanier,
-                          )));
-                }
-                else{
+                                prixLivraison: prixLivraison,
+                                total: widget.total,
+                                nomComplet: name,
+                                telephone: numUser,
+                                moyenDePayement: moyenDePayement,
+                                lieuDeLivraison: lieu,
+                                dateHeureDeLivraison: dateHeureDeLivraison,
+                                produitsCommander: widget.produitsPanier,
+                              )));
+                } else {
                   Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Panier2(
-                            prixLivraison: prixLivraison,
-                            total: widget.total,
-                            nomComplet: name,
-                            telephone: numUser,
-                            lieuDeLivraison: lieu,
-                            moyenDePayement: moyenDePayement,
-                            dateHeureDeLivraison: dateHeureDeLivraison,
-                            indication: indication,
-                            quartier: quartier,
-                            produitsCommander: widget.produitsPanier,
-                          )));
+                                prixLivraison: prixLivraison,
+                                total: widget.total,
+                                nomComplet: name,
+                                telephone: numUser,
+                                lieuDeLivraison: lieu,
+                                moyenDePayement: moyenDePayement,
+                                dateHeureDeLivraison: dateHeureDeLivraison,
+                                indication: indication,
+                                quartier: quartier,
+                                produitsCommander: widget.produitsPanier,
+                              )));
                 }
               },
-              child: Text("CONTINUER",
+              child: Text(
+                "CONTINUER",
                 style: TextStyle(
                     color: HexColor("#001C36"),
                     fontSize: 12.0,
-                    fontFamily: "MonseraBold"
-                ),),
+                    fontFamily: "MonseraBold"),
+              ),
             ),
-            icon: Icon(Icons.local_shipping,size: 100,color:HexColor("#001C36"),),
+            icon: Icon(
+              Icons.local_shipping,
+              size: 100,
+              color: HexColor("#001C36"),
+            ),
           ),
         );
       });
@@ -565,6 +576,4 @@ class _Panier1State extends State<Panier1> {
           context, "Veuillez remplir tous les champs ", Colors.white);
     }
   }
-
-
 }
