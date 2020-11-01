@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Design/Mensuration.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/APrpos.dart';
 import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
+import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales1.dart';
 import 'package:premierchoixapp/Navigations_pages/affichage_commandes.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
@@ -68,11 +69,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     MaterialPageRoute(builder: (context) => Mensuration()));
               }),
           drawerItem(
-              icon: Icons.local_gas_station,
+              icon: Icons.exit_to_app_outlined,
               text: "Deconnexion",
               onTap: () async {
                 await _auth.signOut();
-                print("Reussie");
                 Navigator.pushNamed(context, Connexion.id);
               }),
           drawerItem(
@@ -144,7 +144,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
         children: <Widget>[
           Icon(
             icon,
-            color: Colors.grey,
+            color:HexColor("#FFC30D"),
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
