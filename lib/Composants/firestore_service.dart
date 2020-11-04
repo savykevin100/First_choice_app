@@ -111,8 +111,8 @@ class FirestoreService {
 
 
   /* Récupération des commandes de la base de données*/
-  Stream<List<Commandes>> getUserOrder(String id) {
-    return _db.collection("Utilisateurs").document(id).collection("Commandes") .orderBy("created", descending: true).snapshots().map(
+  Stream<List<Commandes>>   getUserOrder(String id) {
+    return _db.collection("Utilisateurs").document(id).collection("Commandes").orderBy("created", descending: true).snapshots().map(
           (snapshot) => snapshot.documents
           .map(
             (doc) => Commandes.fromMap(doc.data, doc.documentID),

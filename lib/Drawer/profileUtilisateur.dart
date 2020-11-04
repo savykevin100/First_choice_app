@@ -4,17 +4,15 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
-import 'package:premierchoixapp/Design/Mensuration.dart';
+import 'package:premierchoixapp/Drawer/Mensuration.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/Navigations_pages/APrpos.dart';
-import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
-import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales1.dart';
-import 'package:premierchoixapp/Navigations_pages/affichage_commandes.dart';
+import 'package:premierchoixapp/Drawer/APrpos.dart';
+import 'package:premierchoixapp/Drawer/ConditionsGenerales.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
 import 'package:premierchoixapp/Navigations_pages/chat.dart';
-import 'package:premierchoixapp/Navigations_pages/mes_commandes.dart';
-import 'package:premierchoixapp/Navigations_pages/profile.dart';
-import 'hexadecimal.dart';
+import 'package:premierchoixapp/Drawer/Commande/mes_commandes.dart';
+import 'package:premierchoixapp/Drawer/profile.dart';
+import '../Composants/hexadecimal.dart';
 
 // ignore: must_be_immutable
 class ProfileSettings extends StatefulWidget {
@@ -51,14 +49,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               text: "Mon compte",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => AffichageCommandes()));
+                    context, MaterialPageRoute(builder: (context) => UserProfil()));
               }),
           drawerItem(
               icon: Icons.local_grocery_store,
               text: "Mes commandes",
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => MesCommandes()));
+                    context, MaterialPageRoute(builder: (context) =>MesCommandes()));
               }),
           drawerItem(
               icon: Icons.description,

@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
+import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
 
 class MesCommandes extends StatefulWidget {
   @override

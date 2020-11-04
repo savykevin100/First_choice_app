@@ -8,10 +8,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 

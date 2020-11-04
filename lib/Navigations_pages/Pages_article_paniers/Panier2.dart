@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/io_client.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -19,7 +19,7 @@ import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 
-import 'commande_send.dart';
+import '../../Drawer/Commande/commande_send.dart';
 
 
 // ignore: must_be_immutable
@@ -70,6 +70,8 @@ class _Panier2State extends State<Panier2> {
   String numeroDePayement = "0";
   bool chargement = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  String lieuAgence;
+
 
   // Table qui contient les éléments du panier
   List<PanierClasseSqflite> panierItems = [];
@@ -108,6 +110,8 @@ class _Panier2State extends State<Panier2> {
         setState(() {
           numberOrder = value.data["nombreCommande"]+1;
           print(numberOrder);
+         if(widget.indication==null)
+           widget.indication=value.data["agence"];
         });
       }
     });
@@ -115,7 +119,7 @@ class _Panier2State extends State<Panier2> {
 
   @override
   Widget build(BuildContext context) {
-    if (chargement == false && idProduitsPanier != null) {
+    if (widget.indication!=null) {
       return Scaffold(
           backgroundColor: HexColor("#F5F5F5"),
           key: _scaffoldKey,
@@ -310,7 +314,7 @@ class _Panier2State extends State<Panier2> {
                                         top: longueurPerCent(
                                             6, context)),
                                     child: Text(
-                                      "Jonquet en face pharmacie. Immeuble blanc, 2ème étage.",
+                                      widget.indication,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
@@ -580,10 +584,21 @@ class _Panier2State extends State<Panier2> {
                                                 width: largeurPerCent(
                                                     80, context),
                                                 child: Card(
-                                                  child: Image.network(widget
-                                                      .produitsCommander[
-                                                  i]["image1"],
-                                                    fit: BoxFit.cover,),
+                                                  child: CachedNetworkImage(
+                                                  imageUrl: widget
+                                                          .produitsCommander[i]
+                                                      ["image1"],
+                                                  imageBuilder: (context, imageProvider) => Container(
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                                                    ),
+                                                  )
                                                 )),
                                             Expanded(
                                               child: Container(
@@ -682,7 +697,6 @@ class _Panier2State extends State<Panier2> {
                                         ));
                                   }),
                             ),
-                            //Mettre un singlescrollview ici
                           ],
                         ),
                       ),
@@ -824,26 +838,14 @@ class _Panier2State extends State<Panier2> {
           ));
     } else {
       return Scaffold(
-        backgroundColor: HexColor("#001C36"),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
-          child: Column(
-            children: <Widget>[
-              Image.asset(
-                'assets/images/logo.png',
-                height: 197,
-                width: 278,
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              SpinKitThreeBounce(
-                color: HexColor('#FFFFFF'),
-                size: 60,
-              )
-            ],
+        appBar:  AppBar(
+          backgroundColor: HexColor("#001c36"),
+          title: Text(
+            "Confirmation",
+            style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
           ),
         ),
+        body: Center(child: CircularProgressIndicator(),),
       );
     }
   }
@@ -881,7 +883,6 @@ class _Panier2State extends State<Panier2> {
 
 
                   var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
-                  bool getStatusTransfer=false;
 
                   final ioc = new HttpClient();
                   ioc.badCertificateCallback =
@@ -916,7 +917,6 @@ class _Panier2State extends State<Panier2> {
                                     (response) {
                                   if(response.statusCode == 200 ) {
                                     setState(() {
-                                      getStatusTransfer = true;
                                     });
 
                                     /*showLoadingDialog(context, _keyLoader);

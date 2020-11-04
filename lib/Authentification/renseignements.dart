@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Renseignements extends StatefulWidget {
@@ -46,12 +44,11 @@ class _RenseignementsState extends State<Renseignements> {
   String verificationId;
   String smsCode;
   FirebaseMessaging  _firebaseMessaging = FirebaseMessaging();
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
 
-  final _phoneController = TextEditingController();
-  final _codeController = TextEditingController();
+  /*final _phoneController = TextEditingController();
+  final _codeController = TextEditingController();*/
 
   Future<void> verifyPhone() async{
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId){
@@ -468,6 +465,7 @@ class _RenseignementsState extends State<Renseignements> {
                                 onChanged: (value) {
                                   numeroPayement = value;
                                  },
+                              // ignore: missing_return
                               validator: (value){
                                   // ignore: missing_return
                                   if(value.length!=8 ){

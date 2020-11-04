@@ -4,7 +4,7 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/Navigations_pages/panier.dart';
+import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/panier.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 
 

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
-import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Authentification/slider.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/IntroPages/slider.dart';
 import '../Composants/calcul.dart';
 import '../Composants/hexadecimal.dart';
 
@@ -43,9 +41,10 @@ class _PageAcceuilState extends State<PageAcceuil> {
                       1.0
                     ])),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context),top: longueurPerCent((100), context)),
+                  padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context),),
                   child: Text("Bienvenue dans",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -56,7 +55,7 @@ class _PageAcceuilState extends State<PageAcceuil> {
                     ),
                   ),
                 ),Padding(
-                  padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context),top: longueurPerCent((10  ), context)),
+                  padding: EdgeInsets.only(left: longueurPerCent(30, context),right: longueurPerCent(30, context)),
                   child: Text("1er Choix",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -89,6 +88,7 @@ class _PageAcceuilState extends State<PageAcceuil> {
                         }),
                   ),
                 ),
+                SizedBox(height: longueurPerCent(20, context))
               ],
             ),
           )

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'Composants/hexadecimal.dart';
 import 'Design/CustomDialog.dart';
 
+// ignore: must_be_immutable
 class Test extends StatefulWidget {
   static String id = "Test";
   Widget displayContains;

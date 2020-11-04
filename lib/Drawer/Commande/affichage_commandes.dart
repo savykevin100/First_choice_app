@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -8,7 +7,7 @@ import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 
-import 'Widgets/DetailsCommandes.dart';
+import 'DetailsCommandes.dart';
 
 class AffichageCommandes extends StatefulWidget {
   @override

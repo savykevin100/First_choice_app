@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 
@@ -18,11 +17,7 @@ class _APrposState extends State<APrpos> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    AppBarClasse _appBar = AppBarClasse(
-        titre: "A Propos",
-        controller: controller,
-        context: context,
-        );
+
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: AppBar(
@@ -234,36 +229,32 @@ class _APrposState extends State<APrpos> {
                 ),
               ],
             ),
-            SizedBox(height: longueurPerCent(10.0, context),),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text("Développeur",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: HexColor("#001C36"),
-                  fontSize: 16,
-                  fontFamily: "MonseraBold",
-                ),
-              ),
-            ),
-            SizedBox(height: longueurPerCent(5.0, context),),
+            SizedBox(height: longueurPerCent(40.0, context),),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10,right: 10,bottom: 40),
+                  padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
                   child: Text("Développeurs:",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: HexColor("#001C36"),
                       fontSize: 16,
-                      fontFamily: "MonseraRegular",
+                      fontFamily: "MonseraBold",
                       decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Text("SAVY Kévin, HOUEGBELO Amour",
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: largeurPerCent(10, context),),
+                  Text("SAVY Kévin ",
+                    maxLines: 1,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: HexColor("#001C36"),
@@ -271,8 +262,26 @@ class _APrposState extends State<APrpos> {
                       fontFamily: "MonseraRegular",
                     ),
                   ),
-                ),
-              ],
+                  Text("et",
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 16,
+                      fontFamily: "MonseraRegular",
+                    ),
+                  ),
+                  Text(" HOUEGBELO Amour",
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: HexColor("#001C36"),
+                      fontSize: 16,
+                      fontFamily: "MonseraRegular",
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

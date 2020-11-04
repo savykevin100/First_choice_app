@@ -12,12 +12,12 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/profileUtilisateur.dart';
+import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/informations_generales.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.dart';
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
-import 'package:premierchoixapp/Navigations_pages/panier.dart';
+import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/panier.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
 import 'package:premierchoixapp/test.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
@@ -101,7 +101,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 }
             ),
             toAnimate: true,
-            position: BadgePosition(top: 0, end: 0),
+            position: BadgePosition(top: 0, right: 0),
             child: IconButton(
                 icon: Icon(
                   Icons.local_grocery_store,
@@ -192,8 +192,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                        ),
+                        placeholder: (context, url) =>  CircularProgressIndicator()
                       );
                     }
                   }
@@ -215,8 +214,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                        ),
+                        placeholder: (context, url) =>  CircularProgressIndicator()
                       );
                     }
                   }
@@ -238,8 +236,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                        ),
+                        placeholder: (context, url) => CircularProgressIndicator()
                       );
                     }
                   }

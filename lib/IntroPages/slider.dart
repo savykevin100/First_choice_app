@@ -4,7 +4,7 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Navigations_pages/ConditionsGenerales.dart';
+import 'package:premierchoixapp/IntroPages/ConditionsGenerales1.dart';
 
 
 
@@ -71,7 +71,7 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() {
-    Navigator.pushNamed(context, ConditionGenerales.id);
+    Navigator.pushNamed(context, ConditionGenerales1.id);
   }
 
   void onTabChangeCompleted(index) {

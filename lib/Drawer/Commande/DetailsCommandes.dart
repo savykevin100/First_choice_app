@@ -115,7 +115,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               padding:
                               EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
                               child:  (widget.commande["lieuDeLivraison"]=="En Agence")? Text(
-                                "Jonquet en face pharmacie. Immeuble blanc, 2ème étage.",
+                                widget.commande["indication"],
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   color: HexColor("#001C36"),

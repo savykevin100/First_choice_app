@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
@@ -42,6 +41,7 @@ class _Panier1State extends State<Panier1> {
   List<String> quartiersDb = [];
   int stopSommeLivraisonRetour = 0;
   List<String> listMoyenPayement = ['Mobile Money', 'Espèce'];
+  List<Map<String, dynamic>> priceAndQuartiers=[];
 
   Future<void> fetchNameNumUser() async {
     await _db
@@ -58,25 +58,42 @@ class _Panier1State extends State<Panier1> {
     });
   }
 
-  Future<void> fetchZones() async {
-    await _db.collection("Zones").getDocuments().then((value) {
+
+  Future<void> fetchZonesTest()async{
+    await _db.collection("ZonesTest").getDocuments().then((value) {
       value.documents.forEach((element) {
-        element.data.forEach((key, value) {
-         if(this.mounted)
-           setState(() {
-             quartiersDb.add(value);
-           });
+        priceAndQuartiers.add(element.data);
+        List<String> listQuartiers = List<String>.from(element.data["quartiers"]);
+        listQuartiers.forEach((quar) {
+          if(this.mounted)
+            setState(() {
+              quartiersDb.add(quar);
+            });
         });
       });
     });
   }
 
+
+  Future<void> fetchZones() async {
+    await _db.collection("Zones").getDocuments().then((value) {
+      value.documents.forEach((element) {
+        element.data.forEach((key, value) {
+          if(this.mounted)
+            setState(() {
+              quartiersDb.add(value);
+            });
+        });
+      });
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    //fetchZones();
     fetchNameNumUser();
-    fetchZones();
+    fetchZonesTest();
   }
 
 
@@ -225,7 +242,26 @@ class _Panier1State extends State<Panier1> {
                                   setState(() {
                                     quartier = value;
                                   });
-                                  _db.collection("Zones").getDocuments().then((value) {
+                                  priceAndQuartiers.forEach((element) {
+                                    var variable = List<String>.from(element["quartiers"]);
+                                   variable.forEach((value) {
+                                     if(quartier==value) {
+                                       setState(() {
+                                         prixLivraison=element['prix'];
+                                       });
+                                       if(element["prix"]>1000)
+                                         setState(() {
+                                           listMoyenPayement=['Mobile Money'];
+                                         });
+                                       else
+                                         setState(() {
+                                           listMoyenPayement = ['Mobile Money', 'Espèce'];
+                                         });
+                                     }
+
+                                   });
+                                  });
+                                  /*_db.collection("Zones").getDocuments().then((value) {
                                     /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
                                     for (int i = 0; i < value.documents.length; i++) {
                                       if (value.documents[i].data.containsValue(quartier)) {
@@ -236,7 +272,7 @@ class _Panier1State extends State<Panier1> {
                                        }
                                       }
                                     }
-                                  });
+                                  });*/
                                 },
                                 selectedItem: quartier,
                                 showClearButton: true,
@@ -474,7 +510,91 @@ class _Panier1State extends State<Panier1> {
 
     } else if (lieu == "A domicile" && indication != null && quartier != null &&
         moyenDePayement != null) {
-      _db.collection("Zones").getDocuments().then((value) {
+      if (stopSommeLivraisonRetour == 0) {
+        if (DateTime
+            .now()
+            .weekday == 7) {
+          setState(() {
+            prixLivraison = prixLivraison*2;
+            stopSommeLivraisonRetour++;
+          });
+        } else {
+          setState(() {
+            stopSommeLivraisonRetour++;
+          });
+        }
+      }
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          title: "Livraison",
+          description:
+          "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
+          cancelButton: FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // To close the dialog
+            },
+            child: Text(
+              "ANNULER",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),
+            ),
+          ),
+          nextButton: FlatButton(
+            onPressed: () {
+              if (lieu == "En Agence") {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Panier2(
+                          prixLivraison: prixLivraison,
+                          total: widget.total,
+                          nomComplet: name,
+                          telephone: numUser,
+                          moyenDePayement: moyenDePayement,
+                          lieuDeLivraison: lieu,
+                          dateHeureDeLivraison: dateHeureDeLivraison,
+                          produitsCommander: widget.produitsPanier,
+                        )));
+              } else {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Panier2(
+                          prixLivraison: prixLivraison,
+                          total: widget.total,
+                          nomComplet: name,
+                          telephone: numUser,
+                          lieuDeLivraison: lieu,
+                          moyenDePayement: moyenDePayement,
+                          dateHeureDeLivraison: dateHeureDeLivraison,
+                          indication: indication,
+                          quartier: quartier,
+                          produitsCommander: widget.produitsPanier,
+                        )));
+              }
+            },
+            child: Text(
+              "CONTINUER",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),
+            ),
+          ),
+          icon: Icon(
+            Icons.local_shipping,
+            size: 100,
+            color: HexColor("#001C36"),
+          ),
+        ),
+      );
+     /* _db.collection("Zones").getDocuments().then((value) {
         /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
         for (int i = 0; i < value.documents.length; i++) {
           if (value.documents[i].data.containsValue(quartier)) {
@@ -498,79 +618,7 @@ class _Panier1State extends State<Panier1> {
             }
           }
         }
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => CustomDialog(
-            title: "Livraison",
-            description:
-                "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
-            cancelButton: FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // To close the dialog
-              },
-              child: Text(
-                "ANNULER",
-                style: TextStyle(
-                    color: HexColor("#001C36"),
-                    fontSize: 12.0,
-                    fontFamily: "MonseraBold"),
-              ),
-            ),
-            nextButton: FlatButton(
-              onPressed: () {
-                if (lieu == "En Agence") {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Panier2(
-                                prixLivraison: prixLivraison,
-                                total: widget.total,
-                                nomComplet: name,
-                                telephone: numUser,
-                                moyenDePayement: moyenDePayement,
-                                lieuDeLivraison: lieu,
-                                dateHeureDeLivraison: dateHeureDeLivraison,
-                                produitsCommander: widget.produitsPanier,
-                              )));
-                } else {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Panier2(
-                                prixLivraison: prixLivraison,
-                                total: widget.total,
-                                nomComplet: name,
-                                telephone: numUser,
-                                lieuDeLivraison: lieu,
-                                moyenDePayement: moyenDePayement,
-                                dateHeureDeLivraison: dateHeureDeLivraison,
-                                indication: indication,
-                                quartier: quartier,
-                                produitsCommander: widget.produitsPanier,
-                              )));
-                }
-              },
-              child: Text(
-                "CONTINUER",
-                style: TextStyle(
-                    color: HexColor("#001C36"),
-                    fontSize: 12.0,
-                    fontFamily: "MonseraBold"),
-              ),
-            ),
-            icon: Icon(
-              Icons.local_shipping,
-              size: 100,
-              color: HexColor("#001C36"),
-            ),
-          ),
-        );
-      });
+      });*/
     } else {
       displaySnackBarNom(
           context, "Veuillez remplir tous les champs ", Colors.white);

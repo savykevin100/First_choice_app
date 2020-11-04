@@ -1,19 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
-import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/Models/reduction.dart';
-import 'package:premierchoixapp/Pages/elements_vides.dart';
-import 'Pages_article_paniers/article.dart';
 import 'Widgets/products_gried_view.dart';
 
 // ignore: must_be_immutable

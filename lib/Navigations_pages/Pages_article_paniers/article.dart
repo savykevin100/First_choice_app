@@ -10,7 +10,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
@@ -19,7 +18,6 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'Panier1.dart';
 
 
@@ -368,19 +366,6 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               ),
             ),
             SizedBox(height: longueurPerCent(40,context),),
-            /*Padding(
-              padding:  EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-              child: Text("Produits de la même catégorie ",
-                  style: TextStyle(
-                      color: HexColor("#001c36"),
-                      fontFamily: "MonseraBold",
-                      fontSize: 15)),
-            ),
-            Container(
-                height: longueurPerCent(220, context),
-                width: double.infinity,
-                child: scrollabe_products_horizontal(FirestoreService().getSousCategoriesProducts(widget.produit.categorie, widget.produit.sousCategorie))),
-            SizedBox(height: longueurPerCent(100,context),),*/
           ],
         ): Center(child: CircularProgressIndicator()),
 
@@ -713,8 +698,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(
       content: Text(text, style: TextStyle(color: couleur)),
+      duration: Duration(seconds: 1),
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    _scaffoldKey.currentState.showSnackBar(snackBar, );
   }
 
 }

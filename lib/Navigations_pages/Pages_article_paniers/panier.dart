@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
-import 'package:premierchoixapp/Composants/connexion_state.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
@@ -13,7 +13,6 @@ import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 class Panier extends StatefulWidget {
@@ -165,9 +164,18 @@ class _PanierState extends State<Panier> {
                               height: longueurPerCent(
                                   100, context),
                               width: largeurPerCent(80, context),
-                              child: Image.network(
-                                produitsPaniers[index]["image1"],
-                                fit: BoxFit.cover,
+                              child: CachedNetworkImage(
+                                imageUrl: produitsPaniers[index]["image1"],
+                                imageBuilder: (context, imageProvider) => Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                                ),
                               ),
                             ),
                             Expanded(

@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
-import 'package:premierchoixapp/Authentification/slider.dart';
+import 'package:premierchoixapp/IntroPages/slider.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/Design/Article.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
-import 'package:premierchoixapp/Design/PageAcceuil.dart';
-import 'package:premierchoixapp/Pages/FirstPage.dart';
-import 'package:premierchoixapp/Navigations_pages/Widgets/DetailsCommandes.dart';
+import 'package:premierchoixapp/IntroPages/PageAcceuil.dart';
+import 'package:premierchoixapp/IntroPages/FirstPage.dart';
+import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
 import 'Authentification/renisialisation_passwd.dart';
 import 'Authentification/renseignements.dart';
 import 'Composants/hexadecimal.dart';
-import 'Navigations_pages/APrpos.dart';
-import 'Navigations_pages/ConditionsGenerales.dart';
+import 'IntroPages/ConditionsGenerales1.dart';
+import 'Drawer/APrpos.dart';
+import 'Drawer/ConditionsGenerales.dart';
 import 'Navigations_pages/Pages_article_paniers/Panier1.dart';
-import 'Navigations_pages/Widgets/DetailsCommandes.dart';
+import 'Drawer/Commande/DetailsCommandes.dart';
 import 'Navigations_pages/all_navigation_page.dart';
-import 'Navigations_pages/panier.dart';
+import 'Navigations_pages/Pages_article_paniers/panier.dart';
 import 'Pages/displaySearchResult.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -65,7 +65,6 @@ class MyApp extends StatelessWidget {
         Connexion.id: (context) => Connexion(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
         Inscription.id: (context) => Inscription(),
-        Article.id: (context) => Article(),
         Panier.id: (context) => Panier(),
         Panier1.id: (context) => Panier1(),
         ResetPasswd.id: (context) => ResetPasswd(),
@@ -77,6 +76,7 @@ class MyApp extends StatelessWidget {
         //Mensuration.id: (context) => Mensuration(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
        ConditionGenerales.id: (context) => ConditionGenerales(),
+       ConditionGenerales1.id: (context) => ConditionGenerales1(),
         APrpos.id: (context) => APrpos(),
         CustomDialog.id: (context) => CustomDialog(),
         DisplaySearchResult.id: (context) => DisplaySearchResult(),
