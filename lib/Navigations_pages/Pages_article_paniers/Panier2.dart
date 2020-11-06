@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
+import 'package:kkiapay_flutter_sdk/kkiapayWebview.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -314,7 +315,7 @@ class _Panier2State extends State<Panier2> {
                                         top: longueurPerCent(
                                             6, context)),
                                     child: Text(
-                                      widget.indication,
+                                      "$widget.indication",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
@@ -877,7 +878,7 @@ class _Panier2State extends State<Panier2> {
                 onPressed: (
                     ) {
                   Navigator.pop(context);
-                  String username = 'QSUSR168';
+                  /*String username = 'QSUSR168';
                   String password = 'jf0Midq2LIdkAv4Ugi1B';
                   String transref = DateTime.now().toString().substring(10);
 
@@ -935,7 +936,21 @@ class _Panier2State extends State<Panier2> {
                          // commandAction();
                         print("Reponse status pour le request : ${response.statusCode}");
                         print("Response body : ${response.body}");
-                      });
+                      });*/
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  KKiaPay(
+                      amount: totalPlusLivraison,
+                      phone: '61000000',
+                      data: 'hello world',
+                      sandbox: true,
+                      apikey: '5eff6ca0203711eba0637f280536fc17',
+                      callback: sucessCallback,
+                      name: widget.nomComplet,
+                      theme: "#E30E25",
+                    )),
+                  );
 
                 },
                 child: Text("CONTINUER",
@@ -982,10 +997,8 @@ class _Panier2State extends State<Panier2> {
             nextButton: FlatButton(
               onPressed: (
                   ) {
-                showLoadingDialog(context, _keyLoader);
                 commandAction();
-                Navigator.of(_keyLoader.currentContext, rootNavigator: true)
-                    .pop();
+                showLoadingDialog(context, _keyLoader);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -1127,8 +1140,6 @@ class _Panier2State extends State<Panier2> {
             idCommandeUser: idCommandeUser,
             livrer: "En cours"),
       );
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => CommandeSend()));
     } catch (e) {
       print(e);
     }
@@ -1137,7 +1148,25 @@ class _Panier2State extends State<Panier2> {
     displaySnackBarNom(BuildContext context, String text, Color couleur) {
       final snackBar = SnackBar(
         content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
+        duration: Duration(seconds: 1),
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
     }
+
+  void sucessCallback(response, context) {
+    print(response);
+    commandAction();
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CommandeSend()
+      ),
+    );
   }
+
+}
+
+
+
+
