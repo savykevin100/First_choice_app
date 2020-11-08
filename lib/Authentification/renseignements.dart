@@ -82,7 +82,6 @@ class _RenseignementsState extends State<Renseignements> {
 
   /*Future<bool> loginUser(String phone, BuildContext context) async{
     FirebaseAuth _auth = FirebaseAuth.instance;
-
     _auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 60),
@@ -90,16 +89,12 @@ class _RenseignementsState extends State<Renseignements> {
           Navigator.of(_keyLoader.currentContext, rootNavigator: true)
               .pop();
           AuthResult result = await _auth.signInWithCredential(credential);
-
           FirebaseUser  user = result.user;
-
           if(user != null){
             Navigator.of(context).pushNamed(AllNavigationPage.id);
-
           }else{
             print("Error");
           }
-
           //This callback would gets called when verification is done auto maticlly
         },
         verificationFailed: (AuthException exception){
@@ -128,12 +123,8 @@ class _RenseignementsState extends State<Renseignements> {
                       onPressed: () async{
                         final code = _codeController.text.trim();
                         AuthCredential credential = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: code);
-
                               AuthResult result = await _auth.signInWithCredential(credential);
-
-
                         FirebaseUser user = result.user;
-
                         if(user != null){
                           Navigator.of(context).pushNamed(AllNavigationPage.id);
                         }else{
@@ -150,11 +141,10 @@ class _RenseignementsState extends State<Renseignements> {
     );
   }*/
 
- /* Future<void> _submit() async {
+  /* Future<void> _submit() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrievalTimeout = (String verId) {
       this.verificationId = verId;
     };
-
     final PhoneCodeSent phoneCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
       print(verId+ "Ceci est le code envoyé");
@@ -162,16 +152,13 @@ class _RenseignementsState extends State<Renseignements> {
           .pop();
       smsCodeDialog(context).then((value) => print("Signed In"));
     };
-
     final PhoneVerificationCompleted verificationSucess = (AuthCredential auth){
       print("$auth"+" La verification est bonne");
     };
-
     final PhoneVerificationFailed phoneVerificationFailed = (
         AuthException exception) {
       print("${exception.message}");
     };
-
     await FirebaseAuth.instance.verifyPhoneNumber(
         verificationCompleted: verificationSucess,
         phoneNumber: '+229'+numeroPayement,
@@ -209,8 +196,8 @@ class _RenseignementsState extends State<Renseignements> {
   Future<bool> smsCodeDialog(BuildContext context){
     return showDialog(
         context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context){
+        barrierDismissible: false,
+        builder: (BuildContext context){
           return AlertDialog(
             title: Text("Entrer votre code sms"),
             content: TextField(
@@ -231,12 +218,12 @@ class _RenseignementsState extends State<Renseignements> {
                   else {
                     Navigator.pop(context),
                     signIn()
-                }
+                  }
                 });
               }, child: Text("Continuer"))
             ],
           );
-      }
+        }
     );
   }
 
@@ -246,11 +233,11 @@ class _RenseignementsState extends State<Renseignements> {
   void initState() {
     super.initState();
     _firebaseMessaging.getToken().then((token){
-    if(this.mounted)
-      setState(() {
-       tokenUser=token;
-       print(token);
-     });
+      if(this.mounted)
+        setState(() {
+          tokenUser=token;
+          print(token);
+        });
     });
   }
 
@@ -345,7 +332,7 @@ class _RenseignementsState extends State<Renseignements> {
                                   left: largeurPerCent(20, context),
                                   right: largeurPerCent(20, context),
                                   top: longueurPerCent(05, context),
-                              bottom:longueurPerCent(05, context) ),
+                                  bottom:longueurPerCent(05, context) ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(7.0),
@@ -371,7 +358,7 @@ class _RenseignementsState extends State<Renseignements> {
                                 ),
                                 isExpanded: true,
                                 underline: Text(
-                                  ""
+                                    ""
                                 ),
                                 iconSize: 30.0,
                                 style: TextStyle(color: HexColor("#919191")),
@@ -397,82 +384,82 @@ class _RenseignementsState extends State<Renseignements> {
                               height: longueurPerCent(20, context),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: longueurPerCent(50, context),
-                              padding: EdgeInsets.only(
-                                  left: largeurPerCent(20, context),
-                                  right: largeurPerCent(20, context),
-                                  top: longueurPerCent(15, context),
-                                  bottom:longueurPerCent(05, context) ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(7.0),
+                                width: MediaQuery.of(context).size.width,
+                                height: longueurPerCent(50, context),
+                                padding: EdgeInsets.only(
+                                    left: largeurPerCent(20, context),
+                                    right: largeurPerCent(20, context),
+                                    top: longueurPerCent(15, context),
+                                    bottom:longueurPerCent(05, context) ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(7.0),
+                                    ),
+                                    border: Border.all(
+                                        color: HexColor("#919191"), width: 1)),
+                                child:  GestureDetector(
+                                  onTap: (){
+                                    DatePicker.showDatePicker(context,
+                                        showTitleActions: true,
+                                        minTime: DateTime(1900, 1, 1),
+                                        maxTime: DateTime(2018, 6, 7), onChanged: (date) {
+                                          setState(() {
+                                            age = date.toString().substring(0, 10);
+                                          });
+                                        }, onConfirm: (date) {
+                                          setState(() {
+                                            age = date.toString().substring(0, 10);
+                                          });
+                                        }, currentTime: DateTime.now(), locale: LocaleType.fr);
+                                  },
+                                  child: (age == "Date d'anniversaire")?Text(age, style: TextStyle(
+                                      color: HexColor('#919191'),
+                                      fontSize: 18.0,
+                                      fontFamily: 'MonseraLight')): Text(
+                                    age.substring(0, 10),
+                                    style: TextStyle(
+                                        color: HexColor("#001C36"),
+                                        fontSize: 18,
+                                        fontFamily: 'MonseraBold'),
                                   ),
-                                  border: Border.all(
-                                      color: HexColor("#919191"), width: 1)),
-                              child:  GestureDetector(
-                                onTap: (){
-                                  DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      minTime: DateTime(1900, 1, 1),
-                                      maxTime: DateTime(2018, 6, 7), onChanged: (date) {
-                                        setState(() {
-                                          age = date.toString().substring(0, 10);
-                                        });
-                                      }, onConfirm: (date) {
-                                        setState(() {
-                                          age = date.toString().substring(0, 10);
-                                        });
-                                      }, currentTime: DateTime.now(), locale: LocaleType.fr);
-                                },
-                                child: (age == "Date d'anniversaire")?Text(age, style: TextStyle(
-                                    color: HexColor('#919191'),
-                                    fontSize: 18.0,
-                                    fontFamily: 'MonseraLight')): Text(
-                                  age.substring(0, 10),
-                                  style: TextStyle(
-                                      color: HexColor("#001C36"),
-                                      fontSize: 18,
-                                      fontFamily: 'MonseraBold'),
-                                ),
-                               /**/
-                              )
+                                  /**/
+                                )
                             ),
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
                             TextFormField(
-                                style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 18,
-                                    fontFamily: "MonseraBold"
-                                ),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  hintText: "Numero de Téléphone",
-                                  hintStyle: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight'),
-                                  contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 24),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, style: BorderStyle.none)),
-                                ),
-                                onChanged: (value) {
-                                  numeroPayement = value;
-                                 },
+                              style: TextStyle(
+                                  color: HexColor("#001C36"),
+                                  fontSize: 18,
+                                  fontFamily: "MonseraBold"
+                              ),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Numero de Téléphone",
+                                hintStyle: TextStyle(
+                                    color: HexColor('#919191'),
+                                    fontSize: 18.0,
+                                    fontFamily: 'MonseraLight'),
+                                contentPadding: EdgeInsets.only(
+                                    top: 30, bottom: 5, left: 24),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(7.0)),
+                                    borderSide: BorderSide(
+                                        width: 1, style: BorderStyle.none)),
+                              ),
+                              onChanged: (value) {
+                                numeroPayement = value;
+                              },
                               // ignore: missing_return
                               validator: (value){
-                                  // ignore: missing_return
-                                  if(value.length!=8 ){
-                                    return ( "Entrer un numéro valide");
-                                  }
-                               },
-                                ),
+                                // ignore: missing_return
+                                if(value.length!=8 ){
+                                  return ( "Entrer un numéro valide");
+                                }
+                              },
+                            ),
                             SizedBox(
                               height: longueurPerCent(20, context),
                             ),
@@ -511,8 +498,8 @@ class _RenseignementsState extends State<Renseignements> {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null && age!=null) {
                         sendDataUserDb();
-                          Navigator.pop(context);
-                          Navigator.of(context).pushNamed(AllNavigationPage.id);
+                        Navigator.pop(context);
+                        Navigator.of(context).pushNamed(AllNavigationPage.id);
                         // verifyPhone();
                         setState(() {
                           chargement = true;

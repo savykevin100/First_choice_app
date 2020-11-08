@@ -1,4 +1,3 @@
-
 class ReductionModel {
   String genre;
   String nomCategorie;

@@ -12,7 +12,7 @@ import 'package:premierchoixapp/Models/utilisateurs.dart';
 
 class FirestoreService {
   static final FirestoreService _firestoreService =
-      FirestoreService._internal();
+  FirestoreService._internal();
   Firestore _db = Firestore.instance;
 
   FirestoreService._internal();
@@ -48,9 +48,9 @@ class FirestoreService {
 
   ///Ici on ajoute la commande de l'utilisateur dans ces commandes persos
   Future<void> addCommande(
-    Commandes commande,
-    String document,
-  ) {
+      Commandes commande,
+      String document,
+      ) {
     return _db
         .collection("Utilisateurs")
         .document(document)
@@ -76,11 +76,10 @@ class FirestoreService {
   }
 
   ///Fin de la fonction
-
   /// Ici on ajoute la commande de l'utilisateur chez l'admin
   Future<void> addCommandeToAdmin(
-    Commandes commande,
-  ) {
+      Commandes commande,
+      ) {
     return _db.collection("Commandes").add(commande.toMap()).then((value) {
       this
           ._db
@@ -91,7 +90,6 @@ class FirestoreService {
   }
 
   ///Fin de la fonction
-
   Future<void> addToken(Tokens tokens) {
     return _db.collection("Tokens").add(tokens.toMap());
   }
@@ -100,11 +98,11 @@ class FirestoreService {
   Stream<List<Utilisateur>> getUtilisateurs() {
     return _db.collection("Utilisateurs").snapshots().map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Utilisateur.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Utilisateur.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
 /* Fin de la récupération des catégories de la base de données*/
@@ -162,11 +160,11 @@ class FirestoreService {
   Stream<List<Produit>> getProduit() {
     return _db.collection("produit").snapshots().map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Produit.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
 
@@ -180,11 +178,11 @@ class FirestoreService {
   Stream<List<InfoCategories>> getSousCategoriesNoms(String nom) {
     return _db.collection(nom).snapshots().map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
   Stream<List<ReductionModel>> getReductionCollection() {
@@ -202,11 +200,11 @@ class FirestoreService {
   Stream<List<InfoCategories>> getSousCategories() {
     return _db.collection("sous-categories").snapshots().map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => InfoCategories.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
   /*Fin de la récupération*/
@@ -232,11 +230,11 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => ProduitsFavorisUser.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => ProduitsFavorisUser.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
   Stream<List<PanierClasse>> getProduitPanier(String id) {
@@ -247,11 +245,11 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => PanierClasse.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => PanierClasse.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -263,11 +261,11 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Produit.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
 
@@ -291,15 +289,14 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Produit.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
-
   Future<void> addFavoris(Produit produit, String document) {
     return _db
         .collection("Utilisateurs")
@@ -332,9 +329,9 @@ class FirestoreService {
         .document(document)
         .collection("Panier")
         .add(produit.toMap()).then((value) {
-          this._db.collection("Utilisateurs").document(document).collection("Panier").document(value.documentID)
-              .updateData({"id":value.documentID});
-        });
+      this._db.collection("Utilisateurs").document(document).collection("Panier").document(value.documentID)
+          .updateData({"id":value.documentID});
+    });
   }
 
   /// Cette fonction permettra de refuser à l'utilisateur d'ajouter des produits déjà ajouté dans le panier d'un autre utilisateur chez lui
@@ -361,11 +358,11 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Produit.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Produit.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
   Stream<List<Commandes>> getCommandes(String id) {
@@ -376,11 +373,11 @@ class FirestoreService {
         .snapshots()
         .map(
           (snapshot) => snapshot.documents
-              .map(
-                (doc) => Commandes.fromMap(doc.data, doc.documentID),
-              )
-              .toList(),
-        );
+          .map(
+            (doc) => Commandes.fromMap(doc.data, doc.documentID),
+      )
+          .toList(),
+    );
   }
 
 /* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/
@@ -401,9 +398,6 @@ class FirestoreService {
           ).toList(),
     );
   }
-
-
-
 /*Récupération categories*/
 Stream<List<InfoCategories>> getCategories() {
     return _db.collection("Catégories").snapshots().map(
@@ -414,7 +408,6 @@ Stream<List<InfoCategories>> getCategories() {
     );
   }
   /*Fin de la récupération*/
-
 /*Récupération des sous_categories*/
 Stream<List<InfoCategories>> getSousCategories() {
     return _db.collection("sous-categories").snapshots().map(
@@ -424,9 +417,8 @@ Stream<List<InfoCategories>> getSousCategories() {
           ).toList(),
     );
   }
-  
-  /*Fin de la récupération*/
 
+  /*Fin de la récupération*/
 /*Recuperation du produit*/
 Stream<List<Produit>> getProduit() {
     return _db.collection("produit").snapshots().map(
@@ -436,7 +428,6 @@ Stream<List<Produit>> getProduit() {
           ).toList(),
     );
   }
-
   Stream<List<ProduitsFavorisUser>> getProduitsFavorisUser(String id) {
     return _db.collection("Utilisateurs").document(id).collection("ProduitsFavoirsUser").snapshots().map(
           (snapshot) =>
@@ -445,7 +436,6 @@ Stream<List<Produit>> getProduit() {
           ).toList(),
     );
   }
-
   Stream<List<PanierClasse>> getProduitPanier(String id) {
     return _db.collection("Utilisateurs").document(id).collection("Panier").snapshots().map(
           (snapshot) =>
@@ -454,23 +444,17 @@ Stream<List<Produit>> getProduit() {
           ).toList(),
     );
   }
-
-
-
 /* Fonction qui permet d'ajouter les variables spécifiques aux utilisateurs*/
 Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document){
     return _db.collection("Utilisateurs").document(document).collection("ProduitsFavoirsUser").add(produit.toMap());
   }
-
   Future<void> addFavoris(Produit produit, String document){
     return _db.collection("Utilisateurs").document(document).collection("Favoris").add(produit.toMap());
   }
-
   Future<void> deleteFavoris(String document, String document1){
     return _db.collection("Utilisateurs").document(document)
         .collection("Favoris").document(document1).delete();
   }
-
   Stream<List<Produit>> getFavoris(String document) {
     return _db.collection("Utilisateurs").document(document).collection(
         "Favoris").snapshots().map(
@@ -479,12 +463,9 @@ Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document)
       ).toList(),
     );
   }
-
   Future<void> addPanier(PanierClasse produit, String document, String id){
     return _db.collection("Utilisateurs").document(document).collection("Panier").document(id).setData(produit.toMap());
   }
-
-
   Future<void> addPanierSansId(PanierClasse produit, String document){
     return _db.collection("Utilisateurs").document(document).collection("Panier").add(produit.toMap());
   }
@@ -497,28 +478,15 @@ Future<void> addProduitFavorisUser(ProduitsFavorisUser produit, String document)
           ).toList(),
     );
   }
-
-
-
-
-
-
-
 Future<void> updateUtilisateur(String document, Utilisateur utilisateur){
     return _db.collection("Utilisateurs").document(document).updateData(utilisateur.toMap());
 }
-
-
-
- 
 
   /// Fonction pour ajouter les messages
    Future<void> addMessage(Messages messages){
     return _db.collection("Messages").document().setData((messages.toMap()));
    }
-
  /// Fonction pour obtenir les messages
-
  /* Stream<List<Messages>> getMessages(String document) {
     return _db.collection("Utilisateurs").document(document).collection(
         "Messages").snapshots().map(
@@ -527,11 +495,8 @@ Future<void> updateUtilisateur(String document, Utilisateur utilisateur){
       ).toList(),
     );
   }*/
-
-
  /// Fonction pour l'ajout des favoris pour la vérification de l'etat ajout ou non des produits
 
-  
  Stream<List<Favories>> getEtat(String document ) {
     return _db.collection("Utilisateurs").document(document).collection("EtatProduit").snapshots().map(
           (snapshot) => snapshot.documents.map(
@@ -539,22 +504,9 @@ Future<void> updateUtilisateur(String document, Utilisateur utilisateur){
       ).toList(),
     );
   }
-
-
-
-
-
   Future<void> updateEtatFavoris(String document, Favories favories){
     return _db.collection("Utilisateurs").document(document).updateData(favories.toMap());
   }
-
-
-
-
-
-
-
-
   Stream<List<Messages>> getMessages() {
     return _db.collection("Messages").snapshots().map(
           (snapshot) => snapshot.documents.map(

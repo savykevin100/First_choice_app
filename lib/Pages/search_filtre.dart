@@ -349,23 +349,26 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?
                 Container(
                   color: HexColor("#F5F5F5"),
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 30.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
                   height: longueurPerCent(230, context),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          "Couleurs",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: HexColor("#001C36"),
-                            fontSize: 15,
-                            fontFamily: "MonseraBold",
-                          )
+                      Padding(
+                        padding: EdgeInsets.only(left: 0, right: longueurPerCent(260, context)),
+                        child: Text(
+                            "Couleurs",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: HexColor("#001C36"),
+                              fontSize: 15,
+                              fontFamily: "MonseraBold",
+                            )
+                        ),
                       ),
-                      SizedBox(height: longueurPerCent(10, context),),
+                      SizedBox(height: longueurPerCent(20, context),),
                       StaggeredGridView.countBuilder(
                         reverse: false,
                         crossAxisCount: 10,
@@ -1303,8 +1306,8 @@ class RadioItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           new Container(
-            height: 30.0,
-            width: 30.0,
+            height: 40.0,
+            width: 40.0,
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
@@ -1351,8 +1354,8 @@ class RadioItemColor extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           new Container(
-            height: 30.0,
-            width: 30.0,
+            height: 55.0,
+            width: 55.0,
             child: new Center(
               child: new Text(_item.buttonText,
                   style: new TextStyle(
