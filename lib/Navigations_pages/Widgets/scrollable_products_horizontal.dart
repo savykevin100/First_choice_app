@@ -50,7 +50,6 @@ DateTime expiryBadgeNew;
 
 
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
-
 /*Fin de la fonction*/
 // ignore: non_constant_identifier_names
 Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
@@ -107,27 +106,27 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topLeft:
-                                    Radius.circular(10),
-                                    topRight:
-                                    Radius.circular(10)),
-                                child: CachedNetworkImage(
-                                  imageUrl: snapshot.data[i].image1,
-                                  imageBuilder: (context, imageProvider) => Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
-                                         ),
+                              borderRadius: BorderRadius.only(
+                                  topLeft:
+                                  Radius.circular(10),
+                                  topRight:
+                                  Radius.circular(10)),
+                              child: CachedNetworkImage(
+                                imageUrl: snapshot.data[i].image1,
+                                imageBuilder: (context, imageProvider) => Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
-                                  ),
+                                ),
+                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
 
                                 ),
+
                               ),
+                            ),
                           ),
                           (displayBadgeNew)? Container(
                             height: longueurPerCent(10, context),
@@ -206,7 +205,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                       10, context),
                                   top: longueurPerCent(
                                       5, context)
-                                  ),
+                              ),
                               child: Text(
                                 snapshot.data[i].nomDuProduit,
                                 maxLines: 1,
@@ -257,4 +256,3 @@ int prixReduit(int prix, int pourcentageReduction){
   int resultat = ((1-pourcentageReduction/100)*prix).toInt();
   return resultat;
 }
-

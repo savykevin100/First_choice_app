@@ -21,7 +21,6 @@ import 'package:premierchoixapp/Pages/elements_vides.dart';
 /// Cette fonction permet d'ajouter un produit dans ProduitsFavorisUser(collection composant le produit personnel
 ///de l'utilisateur pour la selection des images et l'ajout des favoris, cette collection est utilisée pour enregister les
 ///produits sur lesquels ils cliquent ce qui aide permet d'ajouter dans la table le produit avec les informations
-
 void idProduitsFavorisUser(Produit produit, BuildContext context) async {
   if (Renseignements.emailUser != null) {
     try {
@@ -58,7 +57,6 @@ int prixReduit(int prix, int pourcentageReduction){
 
 
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
-
 // ignore: non_constant_identifier_names
 Widget product_grid_view(Stream<List<Produit>> askDb){
   return  StreamBuilder(
@@ -77,10 +75,10 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
             crossAxisCount: 4,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
-               expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
+              expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
               bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
               Produit produit = snapshot.data[index];
-               int prixProduit = produit.prix;
+              int prixProduit = produit.prix;
 
               return Container(
                 width: largeurPerCent(200, context),
@@ -155,10 +153,10 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                               int pourcentageReduce = 0;
                               for(int i =0; i<snapshotReduction.data.length; i++){
                                 if(produit.sousCategorie == snapshotReduction.data[i].nomCategorie && !DateTime.parse(snapshotReduction.data[i].expiryDate).isBefore(DateTime.now()) && snapshotReduction.data[i].genre == produit.categorie && snapshotReduction.data[i].numberStar == produit.numberStar){
-                                 appyReduce = true;
-                                 pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
-                                 produit.prix = prixReduit(prixProduit, pourcentageReduce);
-                               }
+                                  appyReduce = true;
+                                  pourcentageReduce = snapshotReduction.data[i].pourcentageReduction;
+                                  produit.prix = prixReduit(prixProduit, pourcentageReduce);
+                                }
                               }
 
                               return Column(

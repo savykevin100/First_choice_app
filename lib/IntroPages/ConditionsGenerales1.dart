@@ -982,15 +982,22 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
               ),
             ),
           ),
-          Center(
-            child: button(HexColor("#001C36"), HexColor("#FFC30D"), context,
-                'ACCEPTER', () {
-                  Navigator.pushNamed(context, Decision.id);
-                }),
-          ),
         ],
       ),
       ),
+      floatingActionButton: Center(
+        child: Container(
+          margin: EdgeInsets.only(
+              top: MediaQuery
+                  .of(context)
+                  .size
+                  .height - 60,left: 30),
+          child: button(HexColor("#001C36"), HexColor("#FFC30D"), context,
+              'ACCEPTER', () {
+                Navigator.pushNamed(context, Decision.id);
+              }),
+        ),
+      ) ,
     );
   }
 }

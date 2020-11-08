@@ -653,7 +653,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("#001C36"),
                               ),
                             ),
                           ) ,
