@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
@@ -220,9 +221,18 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                    height: longueurPerCent(
                                        60, context),
                                    width: largeurPerCent(80, context),
-                                   child: Image.network(
-                                     widget.commande["produitsCommander"][i]["image1"],
-                                     fit: BoxFit.cover,
+                                   child:CachedNetworkImage(
+                                     imageUrl:  widget.commande["produitsCommander"][i]["image1"],
+                                     imageBuilder: (context, imageProvider) => Container(
+                                       decoration: BoxDecoration(
+                                         image: DecorationImage(
+                                           image: imageProvider,
+                                           fit: BoxFit.cover,
+                                         ),
+                                       ),
+                                     ),
+                                     placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                                     ),
                                    ),
                                  ),
                                  Expanded(

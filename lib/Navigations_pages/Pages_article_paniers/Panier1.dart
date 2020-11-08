@@ -258,7 +258,6 @@ class _Panier1State extends State<Panier1> {
                                            listMoyenPayement = ['Mobile Money', 'Espèce'];
                                          });
                                      }
-
                                    });
                                   });
                                   /*_db.collection("Zones").getDocuments().then((value) {
@@ -321,6 +320,7 @@ class _Panier1State extends State<Panier1> {
                             child: Container(
                               width: largeurPerCent(347, context),
                               child: TextFormField(
+                                maxLines: null,
                                 decoration: InputDecoration(
                                   hintText: "Indication",
                                   hintStyle:  TextStyle(

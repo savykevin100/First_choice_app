@@ -510,15 +510,14 @@ class _RenseignementsState extends State<Renseignements> {
                         () async {
                       if (_formKey.currentState.validate() &&
                           _dropDownValue != null && age!=null) {
-                     /*   sendDataUserDb();
+                        sendDataUserDb();
                           Navigator.pop(context);
-                          Navigator.of(context).pushNamed(AllNavigationPage.id);*/
-                         verifyPhone();
-                       /* setState(() {
+                          Navigator.of(context).pushNamed(AllNavigationPage.id);
+                        // verifyPhone();
+                        setState(() {
                           chargement = true;
-                        });*/
+                        });
                       } else {
-
                         displaySnackBarNom(context,
                             "Veuillez remplir tous les champs", Colors.red);
                       }

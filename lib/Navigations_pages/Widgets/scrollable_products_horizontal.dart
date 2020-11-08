@@ -88,7 +88,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                   },
                   child: Container(
                     height: double.infinity,
-                    width: largeurPerCent(210, context),
+                    width: largeurPerCent(190, context),
                     margin: EdgeInsets.only(
                         left: largeurPerCent(10, context)),
                     decoration: BoxDecoration(
