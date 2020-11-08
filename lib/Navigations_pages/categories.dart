@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Navigations_pages/produits_categorie.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
+import 'package:premierchoixapp/test.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -82,7 +83,7 @@ class _CategoriesState extends State<Categories> {
           userCurrent: Renseignements.userData[1],
           firstLetter:Renseignements.userData[2][0]
       ),
-      body: WillPopScope(
+      body: Test(displayContains: WillPopScope(
         onWillPop: _onBackPressed,
         child:  SingleChildScrollView(
           child: Column(
@@ -331,18 +332,20 @@ class _CategoriesState extends State<Categories> {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchFiltre()));
-          },
-          child: Icon(
-            Icons.search,
-            color: Colors.white,
-            size: 30,
-          ),
-          backgroundColor: Theme.of(context).primaryColor),
+      ),),
+      floatingActionButton: FloatingButton(
+        displayContains: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchFiltre()));
+            },
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 30,
+            ),
+            backgroundColor: Theme.of(context).primaryColor),
+      )
     );
   }
 

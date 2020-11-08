@@ -5,6 +5,7 @@ import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
+import 'package:premierchoixapp/test.dart';
 import 'components/decoration_text_field_container.dart';
 
 class ResetPasswd extends StatefulWidget {
@@ -26,51 +27,53 @@ class _ResetPasswdState extends State<ResetPasswd> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
-        body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: longueurPerCent(90, context),
+        body: Test(
+          displayContains: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: longueurPerCent(90, context),
+                    ),
+                    child: Text(
+                      "Mot de passe oublié ",
+                      style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontFamily: "MonseraBold",
+                          fontSize: 30),
+                    ),
                   ),
-                  child: Text(
-                    "Mot de passe oublié ",
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontFamily: "MonseraBold",
-                        fontSize: 30),
+                  SizedBox(height: longueurPerCent(150, context),),
+                  Container(
+                      child:Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              textField("Email", context, email()),
+                              SizedBox(height: longueurPerCent(20, context),),
+                            ],
+                          )
+                      )
                   ),
-                ),
-                SizedBox(height: longueurPerCent(150, context),),
-                Container(
-                    child:Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            textField("Email", context, email()),
-                            SizedBox(height: longueurPerCent(20, context),),
-                          ],
-                        )
-                    )
-                ),
-                SizedBox(height: longueurPerCent(50, context),),
+                  SizedBox(height: longueurPerCent(50, context),),
 
-                button(HexColor("#001C36"), HexColor('#FFC30D'), context, "RENITIALISER",  () async{
-                  if(_formKey.currentState.validate()) {
-                    try{
-                      displaySnackBarNom(context, "Veuillez consulter votre boîter pour rénitialiser votre mot de passe", Colors.green);
-                      await _auth.sendPasswordResetEmail(email: emailAdresse);
-                      Navigator.pushNamed(context,Connexion.id);
-                      setState(() {
-                        /// Renseignement1.infos_utilisateur_connnecte=emailAdresse;
-                      });
-                    } catch (e) {
-                      print(e);
+                  button(HexColor("#001C36"), HexColor('#FFC30D'), context, "RENITIALISER",  () async{
+                    if(_formKey.currentState.validate()) {
+                      try{
+                        displaySnackBarNom(context, "Veuillez consulter votre boîter pour rénitialiser votre mot de passe", Colors.green);
+                        await _auth.sendPasswordResetEmail(email: emailAdresse);
+                        Navigator.pushNamed(context,Connexion.id);
+                        setState(() {
+                          /// Renseignement1.infos_utilisateur_connnecte=emailAdresse;
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
                     }
-                  }
-                }),
-              ],
+                  }),
+                ],
+              ),
             ),
           ),
         )

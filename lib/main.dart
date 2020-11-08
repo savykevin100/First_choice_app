@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
-import 'package:premierchoixapp/Drawer/Mensuration.dart';
 import 'package:premierchoixapp/IntroPages/slider.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
@@ -10,6 +9,7 @@ import 'package:premierchoixapp/IntroPages/PageAcceuil.dart';
 import 'package:premierchoixapp/IntroPages/FirstPage.dart';
 import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
+import 'package:premierchoixapp/test1.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
 import 'Authentification/renisialisation_passwd.dart';
@@ -26,7 +26,6 @@ import 'Pages/displaySearchResult.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
-
 void _enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
@@ -38,19 +37,13 @@ void main() {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
-
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
-
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -61,7 +54,7 @@ class MyApp extends StatelessWidget {
         accentColor: HexColor("#001C36"),
         colorScheme: ColorScheme.light(primary: HexColor("#001C36")),
       ),
-      initialRoute:   FirstPage.id,
+      initialRoute: FirstPage.id,
       routes: {
         Connexion.id: (context) => Connexion(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
@@ -74,7 +67,8 @@ class MyApp extends StatelessWidget {
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
         Test.id: (context) => Test(),
-        Mensuration.id: (context) => Mensuration(),
+        Test1.id: (context) => Test1(),
+        //Mensuration.id: (context) => Mensuration(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
         ConditionGenerales.id: (context) => ConditionGenerales(),
         ConditionGenerales1.id: (context) => ConditionGenerales1(),
@@ -84,7 +78,6 @@ class MyApp extends StatelessWidget {
         PageAcceuil.id: (context) => PageAcceuil(),
         IntroScreen.id: (context) => IntroScreen(),
       },
-
     );
   }
 }

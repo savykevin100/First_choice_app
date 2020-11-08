@@ -19,6 +19,7 @@ import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
+import 'package:premierchoixapp/test.dart';
 
 import '../../Drawer/Commande/commande_send.dart';
 
@@ -131,7 +132,7 @@ class _Panier2State extends State<Panier2> {
               style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
             ),
           ),
-          body: SingleChildScrollView(
+          body: Test(displayContains: SingleChildScrollView(
             child: Center(
               child: Container(
                 height: MediaQuery
@@ -585,21 +586,21 @@ class _Panier2State extends State<Panier2> {
                                                 width: largeurPerCent(
                                                     80, context),
                                                 child: Card(
-                                                  child: CachedNetworkImage(
-                                                  imageUrl: widget
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: widget
                                                           .produitsCommander[i]
                                                       ["image1"],
-                                                  imageBuilder: (context, imageProvider) => Container(
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                          image: imageProvider,
-                                                          fit: BoxFit.cover,
+                                                      imageBuilder: (context, imageProvider) => Container(
+                                                        decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                            image: imageProvider,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                                                    ),
-                                                  )
+                                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
+                                                      ),
+                                                    )
                                                 )),
                                             Expanded(
                                               child: Container(
@@ -836,7 +837,7 @@ class _Panier2State extends State<Panier2> {
                 ),
               ),
             ),
-          ));
+          ),));
     } else {
       return Scaffold(
         appBar:  AppBar(

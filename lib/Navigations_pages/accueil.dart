@@ -101,7 +101,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 }
             ),
             toAnimate: true,
-            position: BadgePosition(top: 0, end: 0),
+            position: BadgePosition(top: 0, right: 0),
             child: IconButton(
                 icon: Icon(
                   Icons.local_grocery_store,
@@ -129,21 +129,23 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
           onWillPop: _onBackPressed,
           child:  Test(displayContains: bodyAccueil(),)
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        SearchFiltre ()));
-          },
-          child: Icon(
-            Icons.search,
-            color:Colors.white,
-            size: 30,
-          ),
-          backgroundColor: Theme.of(context).primaryColor
-      ),
+      floatingActionButton: FloatingButton(
+        displayContains: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SearchFiltre ()));
+            },
+            child: Icon(
+              Icons.search,
+              color:Colors.white,
+              size: 30,
+            ),
+            backgroundColor: Theme.of(context).primaryColor
+        ),
+      )
     ):Scaffold(
         appBar: AppBar(
           title:Image.asset("assets/images/1er choix-02.png", height: 100, width: 100,),
@@ -241,43 +243,6 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                     }
                   }
               ),
-              /*CachedNetworkImage(
-                imageUrl:imagesCarousel[0],
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                ),
-              ),CachedNetworkImage(
-                imageUrl:imagesCarousel[1],
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                ),
-              ),CachedNetworkImage(
-                imageUrl:imagesCarousel[2],
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                ),
-              ),*/
             ],
           ),
         ),

@@ -11,6 +11,7 @@ import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
+import 'package:premierchoixapp/test.dart';
 import 'components/decoration_text_field_container.dart';
 import 'components/firebase_auth_services.dart';
 
@@ -73,28 +74,28 @@ class _ConnexionState extends State<Connexion> {
     return (chargement==false)?Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
-        body: WillPopScope(
+        body: Test(displayContains: WillPopScope(
           onWillPop: _onBackPressed,
           child: SingleChildScrollView(
             child: Container(
               child: Column(
                 children: <Widget>[
                   FadeInDown(
-                   child:  Padding(
-                     padding: EdgeInsets.only(
-                         top: longueurPerCent(90, context),
-                         left: largeurPerCent(0, context),
-                         right: largeurPerCent(152, context)
-                     ),
-                     child: Text(
-                       "Se connecter ",
-                       style: TextStyle(
-                           color: HexColor("#001C36"),
-                           fontFamily: "MonseraBold",
-                           fontSize: 30),
-                     ),
-                   ),
-                 ),
+                    child:  Padding(
+                      padding: EdgeInsets.only(
+                          top: longueurPerCent(90, context),
+                          left: largeurPerCent(0, context),
+                          right: largeurPerCent(152, context)
+                      ),
+                      child: Text(
+                        "Se connecter ",
+                        style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontFamily: "MonseraBold",
+                            fontSize: 30),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: longueurPerCent(70, context),),
                   FadeInLeft(
                     child: Container(
@@ -111,24 +112,24 @@ class _ConnexionState extends State<Connexion> {
                     ),
                   ),
                   SizedBox(height: longueurPerCent(50, context),),
-                 FadeInRight(
-                   child:  InkWell(
-                     onTap: (){
-                       Navigator.pushNamed(context, ResetPasswd.id);
-                     },
-                     child: Container(
-                       margin: EdgeInsets.only(left: largeurPerCent(190, context)),
-                       child:Column(
-                         children: <Widget>[
-                           Text("Mot de passe oublié",style:TextStyle(
-                             color: HexColor('#9B9B9B'),
-                             fontSize: 15.0,
-                             fontFamily: 'MonseraLight',  decoration: TextDecoration.underline,),),
-                         ],
-                       ),
-                     ),
-                   ),
-                 ),
+                  FadeInRight(
+                    child:  InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, ResetPasswd.id);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: largeurPerCent(190, context)),
+                        child:Column(
+                          children: <Widget>[
+                            Text("Mot de passe oublié",style:TextStyle(
+                              color: HexColor('#9B9B9B'),
+                              fontSize: 15.0,
+                              fontFamily: 'MonseraLight',  decoration: TextDecoration.underline,),),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: longueurPerCent(50, context),),
                   FadeInRight(
                     child: button(HexColor("#001C36"), HexColor('#FFC30D'), context, "SE CONNECTER",  () async{
@@ -157,29 +158,29 @@ class _ConnexionState extends State<Connexion> {
                     }),
                   ),
                   SizedBox(height: longueurPerCent(30, context),),
-                FadeInUpBig(
-                  child:   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Pas de compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18),),
-                      SizedBox(width: largeurPerCent(5, context),),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, Inscription.id);
-                        },
-                        child: Text("Inscrivez-vous",  style:TextStyle(
-                            color: HexColor('#001C36'),
-                            fontSize: 15.0,
-                            fontFamily: 'MonseraBold')),
-                      )
-                    ],
-                  ),
-                )
+                  FadeInUpBig(
+                    child:   Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Pas de compte?", style: TextStyle(color: HexColor("#9B9B9B"), fontSize: 18),),
+                        SizedBox(width: largeurPerCent(5, context),),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, Inscription.id);
+                          },
+                          child: Text("Inscrivez-vous",  style:TextStyle(
+                              color: HexColor('#001C36'),
+                              fontSize: 15.0,
+                              fontFamily: 'MonseraBold')),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
-        )
+        ),)
     ):Scaffold(
       backgroundColor: HexColor("#001C36"),
       body: Padding(

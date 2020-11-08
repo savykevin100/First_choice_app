@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
+import 'package:premierchoixapp/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Renseignements extends StatefulWidget {
@@ -264,7 +265,7 @@ class _RenseignementsState extends State<Renseignements> {
     ) : Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
-        body: (produits!=null)?SingleChildScrollView(
+        body: (produits!=null)?Test(displayContains: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -512,7 +513,7 @@ class _RenseignementsState extends State<Renseignements> {
               ],
             ),
           ),
-        ):CircularProgressIndicator()
+        ),):CircularProgressIndicator()
     );
   }
 

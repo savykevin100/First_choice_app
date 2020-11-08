@@ -13,6 +13,7 @@ import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:premierchoixapp/test.dart';
 
 
 class Panier extends StatefulWidget {
@@ -135,8 +136,7 @@ class _PanierState extends State<Panier> {
                   fontFamily: "MonseraBold"),)
           ),
           body:  (produitsPaniers.length==0)?elementsVides(context, Icons.shopping_cart,
-              "Pas de nouveaux produits ajoutés"):
-          ListView.builder(
+              "Pas de nouveaux produits ajoutés"):Test(displayContains:  ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               itemCount: produitsPaniers.length,
@@ -275,9 +275,9 @@ class _PanierState extends State<Panier> {
                     (produitsPaniers.length-1==index)?SizedBox(height: longueurPerCent(100, context),):Text("")
                   ],
                 );
-              }),
+              }),),
           floatingActionButton:
-          (produitsPaniers!=null)?Center(
+          (produitsPaniers!=null)?FloatingButton(displayContains: Center(
             child: Container(
                 margin: EdgeInsets.only(
                     left: longueurPerCent(20, context),  top: MediaQuery
@@ -300,7 +300,7 @@ class _PanierState extends State<Panier> {
                   }
                 })
             ),
-          ):Center(child: CircularProgressIndicator(),)
+          ),):Center(child: CircularProgressIndicator(),)
       );
     }
     else {

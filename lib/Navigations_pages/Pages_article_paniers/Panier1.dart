@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
+import 'package:premierchoixapp/test.dart';
 
 
 // ignore: must_be_immutable
@@ -109,7 +110,7 @@ class _Panier1State extends State<Panier1> {
         ),
       ),
       body: (quartiersDb != null)
-          ? SingleChildScrollView(
+          ? Test(displayContains: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
@@ -147,7 +148,7 @@ class _Panier1State extends State<Panier1> {
                   padding: EdgeInsets.all(longueurPerCent(10, context)),
                   child: Center(
                     child: Text(
-                        Renseignements.userData[0],
+                      Renseignements.userData[0],
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: HexColor("#001C36"),
@@ -189,8 +190,8 @@ class _Panier1State extends State<Panier1> {
                                 ? Text(
                               'Lieu de Livraison',
                               style: TextStyle(
-                                  fontSize: 16.0,
-                                  ),
+                                fontSize: 16.0,
+                              ),
                             )
                                 : Text(
                               _dropDownValue,
@@ -244,21 +245,21 @@ class _Panier1State extends State<Panier1> {
                                   });
                                   priceAndQuartiers.forEach((element) {
                                     var variable = List<String>.from(element["quartiers"]);
-                                   variable.forEach((value) {
-                                     if(quartier==value) {
-                                       setState(() {
-                                         prixLivraison=element['prix'];
-                                       });
-                                       if(element["prix"]>1000)
-                                         setState(() {
-                                           listMoyenPayement=['Mobile Money'];
-                                         });
-                                       else
-                                         setState(() {
-                                           listMoyenPayement = ['Mobile Money', 'Espèce'];
-                                         });
-                                     }
-                                   });
+                                    variable.forEach((value) {
+                                      if(quartier==value) {
+                                        setState(() {
+                                          prixLivraison=element['prix'];
+                                        });
+                                        if(element["prix"]>1000)
+                                          setState(() {
+                                            listMoyenPayement=['Mobile Money'];
+                                          });
+                                        else
+                                          setState(() {
+                                            listMoyenPayement = ['Mobile Money', 'Espèce'];
+                                          });
+                                      }
+                                    });
                                   });
                                   /*_db.collection("Zones").getDocuments().then((value) {
                                     /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
@@ -376,9 +377,9 @@ class _Panier1State extends State<Panier1> {
                                 : Text(
                               _dropDownValue2,
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  ),
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
                             ),
                             isExpanded: true,
                             iconSize: 30.0,
@@ -420,7 +421,7 @@ class _Panier1State extends State<Panier1> {
             ],
           ),
         ),
-      )
+      ),)
           : Center(
         child: CircularProgressIndicator(),
       ),
