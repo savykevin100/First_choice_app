@@ -315,7 +315,7 @@ class _Panier2State extends State<Panier2> {
                                         top: longueurPerCent(
                                             6, context)),
                                     child: Text(
-                                      "$widget.indication",
+                                      "${widget.indication}",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
