@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/notifications.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:premierchoixapp/test.dart';
 
 
 class Notifications extends StatefulWidget {
@@ -76,7 +77,7 @@ class _NotificationsState extends State<Notifications> {
           userCurrent: Renseignements.userData[1],
           firstLetter:Renseignements.userData[2][0]
       ),
-      body: WillPopScope(
+      body: Test(displayContains: WillPopScope(
         onWillPop:_onBackPressed,
         child:StreamBuilder(
             stream: FirestoreService().getNotifications(),
@@ -160,7 +161,7 @@ class _NotificationsState extends State<Notifications> {
                 );
               }
             }),
-      ),
+      ),)
     );
 
   }

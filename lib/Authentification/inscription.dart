@@ -11,6 +11,7 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
+import 'package:premierchoixapp/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -43,7 +44,7 @@ class _InscriptionState extends State<Inscription> {
   Widget build(BuildContext context) {
     return (chargement==false)?Scaffold(
         backgroundColor: HexColor("#F5F5F5"),
-        body: SingleChildScrollView(
+        body:Test(displayContains: SingleChildScrollView(
           child: Container(
             child: Column(
               children: <Widget>[
@@ -90,16 +91,17 @@ class _InscriptionState extends State<Inscription> {
                       try {
                         final user= await _auth.createUserWithEmailAndPassword(email: emailAdress, password: motDePass);
                         if(user!=null ) {
-                         /* _auth.currentUser().then((value) {
+                           _auth.currentUser().then((value) {
                             value.sendEmailVerification();
                           });
-                          confirmEmail(context, user.user);*/
+                           setState(() {
+                             chargement=false;
+                           });
+                          //confirmEmail(context, user.user);
                           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
                             return Renseignements(emailAdress: emailAdress);
                           }));
-                          setState(() {
-                            chargement=false;
-                          });
+
                         }
                       } catch(e){
                         setState(() {
@@ -133,7 +135,7 @@ class _InscriptionState extends State<Inscription> {
               ],
             ),
           ),
-        )): Scaffold(
+        ),)): Scaffold(
       backgroundColor: HexColor("#001C36"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),
@@ -166,22 +168,15 @@ class _InscriptionState extends State<Inscription> {
     Widget cancelButton = FlatButton(
       child: Text("Continuer"),
       onPressed:  () {
-
-        getUser().then((value) {
-          if(value.isEmailVerified){
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-              return Renseignements(emailAdress: emailAdress);
-            }));
-          } else {
-            print("Le compte n'est pas validé");
-          }
-        });
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+          return Renseignements(emailAdress: emailAdress);
+        }));
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Veuillez consulter votre email pour valider votre inscription"),
+      content: Text("Un email de vérification a été envoyé à votre address mail, veuillez confirmer votre email pour vous connecter"),
       actions: [
         cancelButton,
       ],

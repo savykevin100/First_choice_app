@@ -38,7 +38,8 @@ class _CommandeSendState extends State<CommandeSend> {
                   child: Text(
                     "Votre commande bien été envoyer",
                     style: TextStyle(
-
+                     fontFamily: "MonseraBold",
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ),

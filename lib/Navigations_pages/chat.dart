@@ -74,19 +74,6 @@ class _ChatState extends State<Chat> {
   }
 
 
-  Future<void> fetchDataUser(String id) async {
-    await Firestore.instance
-        .collection("Utilisateurs")
-        .document(id)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          nameUser = value.data["nomComplet"];
-        });
-      }
-    });
-  }
 
 
   int ajoutPanier;
@@ -96,7 +83,6 @@ class _ChatState extends State<Chat> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchDataUser(Renseignements.emailUser);
 
   }
   @override
@@ -154,6 +140,7 @@ class _ChatState extends State<Chat> {
                       elevation: 7.0,
                       child: Center(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
                               margin: EdgeInsets.only(left: longueurPerCent(10, context)),

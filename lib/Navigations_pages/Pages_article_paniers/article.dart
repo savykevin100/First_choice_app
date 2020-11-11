@@ -18,6 +18,7 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:premierchoixapp/test.dart';
 import 'Panier1.dart';
 
 
@@ -171,7 +172,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
         backgroundColor: HexColor("#F5F5F5"),
         key: _scaffoldKey,
         appBar: _appBar.appBarFunctionStream(),
-        body:  (panierItems!=null)?ListView(
+        body:  (panierItems!=null)?Test(displayContains: ListView(
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -367,9 +368,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
             SizedBox(height: longueurPerCent(40,context),),
           ],
-        ): Center(child: CircularProgressIndicator()),
+        ),): Center(child: CircularProgressIndicator()),
 
-        floatingActionButton: Center(
+        floatingActionButton: FloatingButton(displayContains: Center(
           child: Container(
             margin: EdgeInsets.only(
                 top: MediaQuery
@@ -444,7 +445,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
               ],
             ),
           ),
-        )
+        ),)
     );
 
   }
