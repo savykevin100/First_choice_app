@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/inscription.dart';
+import 'package:premierchoixapp/Drawer/Mensuration.dart';
 import 'package:premierchoixapp/IntroPages/slider.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
@@ -9,7 +10,6 @@ import 'package:premierchoixapp/IntroPages/PageAcceuil.dart';
 import 'package:premierchoixapp/IntroPages/FirstPage.dart';
 import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
 import 'package:premierchoixapp/test.dart';
-import 'package:premierchoixapp/test1.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
 import 'Authentification/renisialisation_passwd.dart';
@@ -67,8 +67,7 @@ class MyApp extends StatelessWidget {
         Decision.id: (context) => Decision(),
         FirstPage.id: (context) => FirstPage(),
         Test.id: (context) => Test(),
-        Test1.id: (context) => Test1(),
-        //Mensuration.id: (context) => Mensuration(),
+        Mensuration.id: (context) => Mensuration(),
         DetailsCommandes.id: (context) => DetailsCommandes(),
         ConditionGenerales.id: (context) => ConditionGenerales(),
         ConditionGenerales1.id: (context) => ConditionGenerales1(),

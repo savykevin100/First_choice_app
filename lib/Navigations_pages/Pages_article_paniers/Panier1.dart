@@ -446,7 +446,7 @@ class _Panier1State extends State<Panier1> {
         builder: (BuildContext context) => CustomDialog(
           title: "Localisation",
           description:
-          "L'agence est située à Joncquet  en face de la pharmacie. Immeuble blanc, 2ème étage. Heure d'ouverture: 10H - 18H.",
+          "L'agence est située à Joncquet  en face de la pharmacie. Immeuble blanc, 2ème étage. Nous sommes ouvert du Lundi au Samedi de 09H à 20H.",
          cancelButton: FlatButton(
            onPressed: (
                ) {
