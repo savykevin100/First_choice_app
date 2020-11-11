@@ -37,7 +37,7 @@ class IntroScreenState extends State<IntroScreen> {
         styleTitle:
         TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontFamily: 'MonseraBold'),
         description:
-        "Découvrer de la fripperies de bonnes qualité en fonction de votre bourse",
+        "Découvrez une des plus grandes galeries numériques de friperie du Bénin. ",
         styleDescription:
         TextStyle(color: HexColor("#001C36"), fontSize: 18.0, fontFamily: 'MonseraRegular'),
         pathImage: "assets/images/images-05.png",
@@ -48,7 +48,7 @@ class IntroScreenState extends State<IntroScreen> {
         title: "Achat-Livraison",
         styleTitle:
         TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MonseraBold'),
-        description: "Commandez vos produits et faites-vous livrez",
+        description: "Achetez vos articles où vous voulez, quand vous voulez et faîtes-vous livrer partout dans le Bénin.",
         styleDescription:
         TextStyle(color:HexColor("#001C36"), fontSize: 18.0,  fontFamily: 'MonseraRegular'),
         pathImage: "assets/images/images-04.png",
@@ -61,7 +61,7 @@ class IntroScreenState extends State<IntroScreen> {
         styleTitle:
         TextStyle(color: HexColor("#001C36"), fontSize: 25.0, fontWeight: FontWeight.bold, fontFamily: 'MonseraBold'),
         description:
-        "Recommandez un produit à un ami",
+        "Vous pensez à un proche? Recommandez-lui un produit qui lui irait comme un gant.",
         styleDescription:
         TextStyle(color:HexColor("#001C36"), fontSize: 18.0,  fontFamily: 'MonseraRegular'),
         pathImage: "assets/images/images-06.png",
@@ -144,7 +144,7 @@ class IntroScreenState extends State<IntroScreen> {
                     )),
               ),
               Container(
-                padding: EdgeInsets.only(left: longueurPerCent((50), context),right: longueurPerCent(50, context)),
+                padding: EdgeInsets.only(left: longueurPerCent((20), context),right: longueurPerCent(20, context)),
                 child: Text(
                   currentSlide.description,
                   style: currentSlide.styleDescription,

@@ -121,7 +121,7 @@ class _FirstPageState extends State<FirstPage> {
 
   // ignore: non_constant_identifier_names
   StarTimer() async {
-    var duration = Duration(seconds: 11);
+    var duration = Duration(seconds: 9);
     return Timer(duration, route);
   }
 
@@ -174,7 +174,6 @@ class _FirstPageState extends State<FirstPage> {
                           "S'habiller",
                           "n'a jamais été",
                           "aussi simple",
-                          "S'habiller n'a jamais été aussi simple",
                         ],
                         textStyle: TextStyle(
                           fontSize: 16,

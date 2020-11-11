@@ -68,7 +68,7 @@ class _PageAcceuilState extends State<PageAcceuil> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),top: longueurPerCent((10), context),bottom: longueurPerCent((10), context)),
-                  child: Text("La première application mobile d'achat de friperie au Bénin.",
+                  child: Text("Votre appliation mobile de friperie.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,

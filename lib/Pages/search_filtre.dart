@@ -140,6 +140,8 @@ class _SearchFiltreState extends State<SearchFiltre> {
     sampleDataColor.add(new RadioModelColor(false, 'Marron',Colors.brown));
     sampleDataColor.add(new RadioModelColor(false, 'Rose',Colors.pink));
     sampleDataColor.add(new RadioModelColor(false, 'Gris',Colors.grey));
+    sampleDataColor.add(new RadioModelColor(false, 'Gris',Colors.grey));
+
 
 
     getSousCategorie();
