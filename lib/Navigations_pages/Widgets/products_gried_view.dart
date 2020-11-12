@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -201,9 +202,10 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                     10, context),
                                 top: longueurPerCent(
                                     5, context)),
-                            child: Text(
+                            child: AutoSizeText(
                               snapshot.data[index].nomDuProduit,
-                              maxLines: 1,
+                              minFontSize: 12,
+                              maxLines: 2,
                               style: TextStyle(
                                   color: HexColor("#909090"),
                                   fontSize: 15,
@@ -215,7 +217,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                         Padding(
                             padding: EdgeInsets.only(
                                 top: longueurPerCent(10, context),left: largeurPerCent(4, context)),
-                            child:  RatingBar(
+                            child:  RatingBar.builder(
                               initialRating:  produit.numberStar.ceilToDouble(),
                               minRating: 1,
                               direction: Axis.horizontal,

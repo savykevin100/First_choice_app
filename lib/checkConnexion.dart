@@ -107,6 +107,7 @@ class _TestState extends State<Test> {
 }
 
 
+// ignore: must_be_immutable
 class FloatingButton extends StatefulWidget {
   Widget displayContains;
 

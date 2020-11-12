@@ -18,7 +18,7 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:premierchoixapp/test.dart';
+import '../../checkConnexion.dart';
 import 'Panier1.dart';
 
 
@@ -190,7 +190,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             child: PriceWithDot(price: widget.produit.prix, couleur: HexColor("#00CC7b"), police: "MonseraBold", size: 20,)),
                         Padding(
                           padding:  EdgeInsets.only(left: largeurPerCent(5, context), bottom: longueurPerCent(5, context)),
-                          child: RatingBar(
+                          child: RatingBar.builder(
                             initialRating: widget.produit.numberStar.ceilToDouble(),
                             minRating: 1,
                             direction: Axis.horizontal,

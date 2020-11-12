@@ -8,7 +8,8 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier2.dart';
-import 'package:premierchoixapp/test.dart';
+
+import '../../checkConnexion.dart';
 
 
 // ignore: must_be_immutable
@@ -237,7 +238,7 @@ class _Panier1State extends State<Panier1> {
                               child: DropdownSearch<String>(
                                 mode: Mode.BOTTOM_SHEET,
                                 maxHeight: 450,
-                                hint: "Sélectionner un quartier",
+                                hint: "Sélectionner une zone",
                                 items: quartiersDb.toList(),
                                 onChanged: (value) {
                                   setState(() {
@@ -261,18 +262,6 @@ class _Panier1State extends State<Panier1> {
                                       }
                                     });
                                   });
-                                  /*_db.collection("Zones").getDocuments().then((value) {
-                                    /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
-                                    for (int i = 0; i < value.documents.length; i++) {
-                                      if (value.documents[i].data.containsValue(quartier)) {
-                                       if(int.tryParse(value.documents[i].documentID.toString())>1000){
-                                         setState(() {
-                                           listMoyenPayement=['Mobile Money'];
-                                         });
-                                       }
-                                      }
-                                    }
-                                  });*/
                                 },
                                 selectedItem: quartier,
                                 showClearButton: true,
@@ -280,7 +269,7 @@ class _Panier1State extends State<Panier1> {
                                 searchBoxDecoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.only(left: longueurPerCent(50, context), right: longueurPerCent(50, context)),
-                                  hintText: "Rechercher un quartier",
+                                  hintText: "Rechercher une zone",
                                   hintStyle: TextStyle(
                                       fontSize: 15.0,
                                       fontFamily: 'MonseraLight'),
@@ -296,7 +285,7 @@ class _Panier1State extends State<Panier1> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'Quartier',
+                                      'Zone',
                                       style: TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
@@ -323,7 +312,7 @@ class _Panier1State extends State<Panier1> {
                               child: TextFormField(
                                 maxLines: null,
                                 decoration: InputDecoration(
-                                  hintText: "Indication",
+                                  hintText: "Indication du lieu de livraison",
                                   hintStyle:  TextStyle(
                                     fontSize: 16.0,),
                                   fillColor: Colors.white,

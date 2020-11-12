@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -193,7 +194,6 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                               }
                             },
                           ),
-
                           ConstrainedBox(
                             constraints: BoxConstraints(
                               maxWidth:
@@ -206,9 +206,10 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   top: longueurPerCent(
                                       5, context)
                               ),
-                              child: Text(
+                              child: AutoSizeText(
                                 snapshot.data[i].nomDuProduit,
-                                maxLines: 1,
+                                minFontSize: 12,
+                                maxLines: 2,
                                 style: TextStyle(
                                     color: HexColor("#909090"),
                                     fontSize: 15,
@@ -223,7 +224,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   longueurPerCent(5, context),
                                   left: largeurPerCent(4, context)
                               ),
-                              child: RatingBar(
+                              child: RatingBar.builder(
                                 initialRating: snapshot.data[i].numberStar.ceilToDouble(),
                                 minRating: 1,
                                 direction: Axis.horizontal,

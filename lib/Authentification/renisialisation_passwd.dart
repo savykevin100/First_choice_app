@@ -5,7 +5,7 @@ import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
-import 'package:premierchoixapp/test.dart';
+import '../checkConnexion.dart';
 import 'components/decoration_text_field_container.dart';
 
 class ResetPasswd extends StatefulWidget {

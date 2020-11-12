@@ -14,7 +14,7 @@ class AppBarClasse extends StatefulWidget{
   BuildContext context;
   String titre;
   ScrollController controller = ScrollController();
-  int nbAjoutPanier;
+  int nbAjoutPanier=0;
   AppBarClasse({this.titre, this.context , this.controller, this.nbAjoutPanier});
 
 
@@ -45,18 +45,18 @@ class AppBarClasse extends StatefulWidget{
               builder: (BuildContext context,
                   AsyncSnapshot<List<Utilisateur>> snapshot) {
                 if(snapshot.hasError || !snapshot.hasData){
-                  return Text("");
+                  return Text("0");
                 } else {
                   for(int i=0; i<snapshot.data.length; i++){
                     if(snapshot.data[i].email == Renseignements.emailUser){
                       nbAjoutPanier=snapshot.data[i].nbAjoutPanier;
                     }
                   }
-                  return Text("$nbAjoutPanier");}
+                  return Text((nbAjoutPanier==0)?"0":nbAjoutPanier);}
               }
           ),
           toAnimate: true,
-          position: BadgePosition(top: 0, right: 0),
+          position: BadgePosition(top: 0, end: 0),
           child: IconButton(
               icon: Icon(
                 Icons.local_grocery_store,

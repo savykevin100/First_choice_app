@@ -11,8 +11,9 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
-import 'package:premierchoixapp/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../checkConnexion.dart';
 
 
 

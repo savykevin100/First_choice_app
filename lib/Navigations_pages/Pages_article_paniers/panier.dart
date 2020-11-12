@@ -13,7 +13,8 @@ import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/Panier1.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
-import 'package:premierchoixapp/test.dart';
+
+import '../../checkConnexion.dart';
 
 
 class Panier extends StatefulWidget {

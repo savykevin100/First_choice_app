@@ -19,9 +19,10 @@ import 'package:premierchoixapp/Navigations_pages/Widgets/products_gried_view.da
 import 'package:premierchoixapp/Navigations_pages/Widgets/scrollable_products_horizontal.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/panier.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
-import 'package:premierchoixapp/test.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../checkConnexion.dart';
 
 
 class Accueil extends StatefulWidget {
@@ -32,7 +33,7 @@ class Accueil extends StatefulWidget {
 class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   final controller = ScrollController();
   List<String> imagesCarousel=[];
-  int nombreAjoutPanier;
+  int nombreAjoutPanier=0;
 
 
   Future<FirebaseUser> getUser() async {
@@ -90,14 +91,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Utilisateur>> snapshot) {
                   if(snapshot.hasError || !snapshot.hasData){
-                    return Text("");
+                    return Text("0");
                   } else {
                     for(int i=0; i<snapshot.data.length; i++){
                       if(snapshot.data[i].email == Renseignements.emailUser){
                         nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
                       }
                     }
-                    return Text("$nombreAjoutPanier");}
+                    return Text((nombreAjoutPanier==0)?"0":nombreAjoutPanier);}
                 }
             ),
             toAnimate: true,

@@ -13,8 +13,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
-import 'package:premierchoixapp/test.dart';
 
+import '../checkConnexion.dart';
 import 'Pages_article_paniers/article.dart';
 
 class Favoris extends StatefulWidget {
@@ -24,7 +24,7 @@ class Favoris extends StatefulWidget {
 
 class _FavorisState extends State<Favoris> {
   final controller = ScrollController();
-  int ajoutPanier;
+  int ajoutPanier=0;
   Firestore  _db = Firestore.instance;
   List<String> idProduitsFavoris=[];
   List<String> identifiantDocumentsFavorisUser=[];
@@ -228,7 +228,7 @@ class _FavorisState extends State<Favoris> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: longueurPerCent(0, context),left: largeurPerCent(5, context)),
-                                      child:  RatingBar(
+                                      child:  RatingBar.builder(
                                         initialRating:  produit.numberStar.ceilToDouble(),
                                         minRating: 1,
                                         direction: Axis.horizontal,
