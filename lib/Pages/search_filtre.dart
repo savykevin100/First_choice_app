@@ -52,38 +52,39 @@ class _SearchFiltreState extends State<SearchFiltre> {
   TextEditingController _prixMinController = TextEditingController();
 
 
-  List<String> sousCategorieHommes = [];
-  List<String> sousCategorieFemmes = [];
   List<String> sousCategorieHommesEtFemmes = [];
   int somme = 0;
   int verificationLength = 0;
   bool pressSearchButton = false;
 
 
-  String _dropDownValue4;
   String couleur;
 
   Future<void> getSousCategorie() async {
+
+
     await Firestore.instance.collection("Hommes").getDocuments().then((value) {
       value.documents.forEach((element) {
-        if (this.mounted) {
-          setState(() {
-            somme++;
-            verificationLength++;
-            sampleDataSousCategorie.add(
-                RadioModelGenre(false, "", element.data["nomCategorie"]));
-          });
-        }
-      });
-    });
-
-
-    await Firestore.instance.collection("Femmes").getDocuments().then((value) {
-      value.documents.forEach((element) {
-        if (sampleDataSousCategorie.contains(element.data['nomCategorie'])) {
           if (this.mounted) {
             setState(() {
               somme++;
+              verificationLength++;
+              sousCategorieHommesEtFemmes.add(element.data["nomCategorie"]);
+              sampleDataSousCategorie.add(
+                  RadioModelGenre(false, "", element.data["nomCategorie"]));
+            });
+          }
+      });
+    });
+
+    await Firestore.instance.collection("Femmes").getDocuments().then((value) {
+      value.documents.forEach((element) {
+        print(element.data["nomCategorie"]);
+        if (!sousCategorieHommesEtFemmes.contains(element.data["nomCategorie"])) {
+          if (this.mounted) {
+            setState(() {
+              somme++;
+              verificationLength++;
               sampleDataSousCategorie.add(
                   RadioModelGenre(false, "", element.data["nomCategorie"]));
             });
@@ -139,7 +140,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
     sampleDataColor.add(new RadioModelColor(false, 'Violet',Colors.purple));
     sampleDataColor.add(new RadioModelColor(false, 'Marron',Colors.brown));
     sampleDataColor.add(new RadioModelColor(false, 'Rose',Colors.pink));
-    sampleDataColor.add(new RadioModelColor(false, 'Gris',Colors.grey));
     sampleDataColor.add(new RadioModelColor(false, 'Gris',Colors.grey));
 
 
@@ -312,89 +312,95 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       top: 10.0, left: 0.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(200, context),
-                  child: StaggeredGridView.countBuilder(
-                    reverse: false,
-                    crossAxisCount: 4,
-                    itemCount: sampleDataSousCategorie.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            splashColor: Colors.blueAccent,
-                            onTap: () {
-                              setState(() {
-                                sampleDataSousCategorie.forEach(
-                                        (element) =>
-                                    element.isSelected = false);
-                                sampleDataSousCategorie[index].isSelected =
-                                true;
-                                sousCategorie =
-                                    sampleDataSousCategorie[index].text;
-                              });
-                            },
-                            child: new RadioItemGenre(
-                                sampleDataSousCategorie[index]),
-                          ),
-                        ],
-                      );
-                    },
-                    staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                    mainAxisSpacing: 0.0,
-                    crossAxisSpacing: 10.0,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                  height: longueurPerCent(250, context),
+                  child: Center(
+                    child: StaggeredGridView.countBuilder(
+                      reverse: false,
+                      crossAxisCount: 4,
+                      itemCount: sampleDataSousCategorie.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              splashColor: Colors.blueAccent,
+                              onTap: () {
+                                setState(() {
+                                  sampleDataSousCategorie.forEach(
+                                          (element) =>
+                                      element.isSelected = false);
+                                  sampleDataSousCategorie[index].isSelected =
+                                  true;
+                                  sousCategorie =
+                                      sampleDataSousCategorie[index].text;
+                                });
+                              },
+                              child: new RadioItemGenre(
+                                  sampleDataSousCategorie[index]),
+                            ),
+                          ],
+                        );
+                      },
+                      staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                      mainAxisSpacing: 0.0,
+                      crossAxisSpacing: 10.0,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
                   ),
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
-                (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?
-                Container(
-                  color: HexColor("#F5F5F5"),
-                  padding: const EdgeInsets.only(
-                      top: 10.0, left: 30.0, right: 0.0),
-                  margin: const EdgeInsets.only(
-                      top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(230, context),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0, right: longueurPerCent(260, context)),
-                        child: Text(
-                            "Couleurs",
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: HexColor("#001C36"),
-                              fontSize: 15,
-                              fontFamily: "MonseraBold",
-                            )
-                        ),
+                      (sousCategorie!="ACCESSOIRES" && sousCategorie!=null)?
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, bottom: 5),
+                      child: Text("Couleurs",
+                          style: TextStyle(
+                            color: HexColor("#001C36"),
+                            fontSize: 15,
+                            fontFamily: "MonseraBold",
+                          )),
+                    ),
+                    Container(
+                      color: HexColor("#F5F5F5"),
+                      padding: const EdgeInsets.only(
+                          top: 10.0, left: 10.0, right: 0.0),
+                      margin: const EdgeInsets.only(
+                          top: 0.0, left: 20.0, right: 20.0),
+                      height: longueurPerCent(250, context),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: StaggeredGridView.countBuilder(
+                              reverse: false,
+                              crossAxisCount: 10,
+                              itemCount: sampleDataColor.length,
+                              itemBuilder: (BuildContext context, index) {
+                                return InkWell(
+                                  splashColor: Colors.blueAccent,
+                                  onTap: () {
+                                    setState(() {
+                                      sampleDataColor.forEach(
+                                              (element) => element.isSelected = false);
+                                      sampleDataColor[index].isSelected = true;
+                                      couleur = sampleDataColor[index].buttonText;
+                                    });
+                                  },
+                                  child: new RadioItemColor(sampleDataColor[index]),
+                                );
+                              },
+                              staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: longueurPerCent(20, context),),
-                      StaggeredGridView.countBuilder(
-                        reverse: false,
-                        crossAxisCount: 10,
-                        itemCount: sampleDataColor.length,
-                        itemBuilder: (BuildContext context, index) {
-                          return InkWell(
-                            splashColor: Colors.blueAccent,
-                            onTap: () {
-                              setState(() {
-                                sampleDataColor.forEach(
-                                        (element) => element.isSelected = false);
-                                sampleDataColor[index].isSelected = true;
-                                couleur = sampleDataColor[index].buttonText;
-                              });
-                            },
-                            child: new RadioItemColor(sampleDataColor[index]),
-                          );
-                        },
-                        staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ):Text(""),
                 SizedBox(height: longueurPerCent(20, context),),
                 Padding(
@@ -414,28 +420,30 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       top: 10.0, left: 30.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(200, context),
-                  child: StaggeredGridView.countBuilder(
-                    reverse: false,
-                    crossAxisCount: 10,
-                    itemCount: sampleData.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return InkWell(
-                        splashColor: Colors.blueAccent,
-                        onTap: () {
-                          setState(() {
-                            sampleData.forEach(
-                                    (element) => element.isSelected = false);
-                            sampleData[index].isSelected = true;
-                            taille = sampleData[index].buttonText;
-                          });
-                        },
-                        child: new RadioItem(sampleData[index]),
-                      );
-                    },
-                    staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                  height: longueurPerCent(250, context),
+                  child: Center(
+                    child: StaggeredGridView.countBuilder(
+                      reverse: false,
+                      crossAxisCount: 10,
+                      itemCount: sampleData.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return InkWell(
+                          splashColor: Colors.blueAccent,
+                          onTap: () {
+                            setState(() {
+                              sampleData.forEach(
+                                      (element) => element.isSelected = false);
+                              sampleData[index].isSelected = true;
+                              taille = sampleData[index].buttonText;
+                            });
+                          },
+                          child: new RadioItem(sampleData[index]),
+                        );
+                      },
+                      staggeredTileBuilder: (_) => StaggeredTile.fit(2),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                    ),
                   ),
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
@@ -583,7 +591,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 _prixMinController.text = "";
                 sousCategorie = null;
                 couleur=null;
-                _dropDownValue4=null;
                 sizeChekbox = false;
                 prix = false;
                 taille = null;
@@ -1212,6 +1219,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                                   .pop(); //close
                               setState(() {
                                 data=[];
+                                couleur=null;
                               });
                              }, color: Theme.of(context).primaryColor,
                                 child: Text("Annuler", style: TextStyle(color: Colors.white)))
@@ -1303,9 +1311,10 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.all(10.0),
+      margin: new EdgeInsets.only(bottom: 10),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Container(
             height: 40.0,
@@ -1351,11 +1360,12 @@ class RadioItemColor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.all(10.0),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Container(
+            margin: EdgeInsets.only(bottom: 10),
             height: 55.0,
             width: 55.0,
             child: new Center(

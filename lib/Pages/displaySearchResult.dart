@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -260,12 +261,15 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                           child: Padding(
                             padding: EdgeInsets.only(
                                 left: largeurPerCent(10, context)),
-                            child: Text(
+                            child: AutoSizeText(
                               widget.data[index]["nomDuProduit"],
+                              minFontSize: 12,
+                              maxLines: 2,
                               style: TextStyle(
                                   color: HexColor("#909090"),
                                   fontSize: 15,
-                                  fontFamily: "MonseraRegular"),
+                                  fontFamily:
+                                  "MonseraRegular"),
                             ),
                           ),
                         ),
@@ -273,7 +277,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                             padding: EdgeInsets.only(
                                 top: longueurPerCent(10, context),
                                 left: largeurPerCent(4, context)),
-                            child: RatingBar(
+                            child: RatingBar.builder(
                               initialRating: widget.data[index]["numberStar"]
                                   .ceilToDouble(),
                               minRating: 1,

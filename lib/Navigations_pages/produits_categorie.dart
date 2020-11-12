@@ -6,7 +6,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
-import 'package:premierchoixapp/test.dart';
+import '../checkConnexion.dart';
 import 'Widgets/products_gried_view.dart';
 
 // ignore: must_be_immutable
@@ -21,7 +21,7 @@ class ProduitsCategorie extends StatefulWidget {
 }
 
 class _ProduitsCategorieState extends State<ProduitsCategorie> {
-  int ajoutPanier;
+  int ajoutPanier=0;
   ScrollController controller = ScrollController();
 
   @override

@@ -53,7 +53,9 @@ int taille;
     if(loading==taille){
       return Scaffold(
           appBar: AppBar(
-            title: Text("Liste des commandes"),
+            title: Text("Liste des commandes",
+              style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
+            ),
           ),
           body:
           Center(

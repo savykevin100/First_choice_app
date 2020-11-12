@@ -11,7 +11,7 @@ import 'package:premierchoixapp/Authentification/renisialisation_passwd.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
-import 'package:premierchoixapp/test.dart';
+import '../checkConnexion.dart';
 import 'components/decoration_text_field_container.dart';
 import 'components/firebase_auth_services.dart';
 
@@ -182,6 +182,7 @@ class _ConnexionState extends State<Connexion> {
           ),
         ),)
     ):Scaffold(
+
       backgroundColor: HexColor("#001C36"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 100.0, vertical: 100.0),

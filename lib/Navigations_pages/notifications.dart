@@ -10,7 +10,8 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/notifications.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
-import 'package:premierchoixapp/test.dart';
+
+import '../checkConnexion.dart';
 
 
 class Notifications extends StatefulWidget {
@@ -19,7 +20,7 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  int nombreAjoutPanier;
+  int nombreAjoutPanier=0;
   final controller = ScrollController();
 
   Future<bool> _onBackPressed() {

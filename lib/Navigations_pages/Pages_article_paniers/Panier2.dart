@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/io_client.dart';
 import 'package:kkiapay_flutter_sdk/kkiapayWebview.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -19,9 +16,9 @@ import 'package:premierchoixapp/Models/commandes.dart';
 import 'package:premierchoixapp/Models/panier_classe.dart';
 import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
-import 'package:premierchoixapp/test.dart';
 
 import '../../Drawer/Commande/commande_send.dart';
+import '../../checkConnexion.dart';
 
 
 // ignore: must_be_immutable
@@ -31,7 +28,7 @@ class Panier2 extends StatefulWidget {
   String telephone;
   String lieuDeLivraison;
   String quartier;
-  String indication;
+  String indication ="";
   String dateHeureDeLivraison;
   int total;
   int prixLivraison;
@@ -316,7 +313,7 @@ class _Panier2State extends State<Panier2> {
                                         top: longueurPerCent(
                                             6, context)),
                                     child: Text(
-                                      "${widget.indication}",
+                                      widget.indication,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
@@ -938,21 +935,19 @@ class _Panier2State extends State<Panier2> {
                         print("Reponse status pour le request : ${response.statusCode}");
                         print("Response body : ${response.body}");
                       });*/
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) =>  KKiaPay(
-                      amount: totalPlusLivraison,
+                      amount: (totalPlusLivraison-(totalPlusLivraison*0.019)).toInt(),
                       phone: '61000000',
                       data: 'hello world',
                       sandbox: true,
                       apikey: '5eff6ca0203711eba0637f280536fc17',
                       callback: sucessCallback,
                       name: widget.nomComplet,
-                      theme: "#E30E25",
+                      theme: "#001c36",
                     )),
                   );
-
                 },
                 child: Text("CONTINUER",
                   style: TextStyle(

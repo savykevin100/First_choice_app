@@ -10,15 +10,22 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
-import 'package:premierchoixapp/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../checkConnexion.dart';
 
 class Renseignements extends StatefulWidget {
   static final String id = "Renseignement";
   static String emailUser;
-  static List<String> userData;
+  static List<String> userData=["000000"," " ," "," ", "M"];
   static int nombreAjoutPanier = 0;
   final String emailAdress;
+
+  /*  value.data["numero"],
+               value.data["email"],
+               value.data["nomComplet"],
+               value.data["age"],
+               value.data["sexe"],*/
 
   Renseignements({this.emailAdress});
 
