@@ -47,7 +47,6 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                     etatIconeFavoris: false,
                     etatSurMesure: false),
                 Renseignements.emailUser);
-            print("L'ajout a été fait avant le onap");
           }
         });
       } catch (e) {
@@ -85,7 +84,6 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
             itemCount: widget.data.length,
             itemBuilder: (BuildContext context, index) {
               int prixProduit = widget.data[index]["prix"];
-              print(widget.data[index]["categorie"]);
               return Container(
                 width: largeurPerCent(200, context),
                 margin: EdgeInsets.only(
@@ -294,7 +292,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                               ),
                               itemSize: 20,
                               onRatingUpdate: (rating) {
-                                print(rating);
+                                print(rating);                                                                                                                                                                  
                               },
                             )),
                         SizedBox(

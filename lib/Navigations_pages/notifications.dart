@@ -74,10 +74,12 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(
+      drawer: (Renseignements.userData.length==5)?ProfileSettings(
           userCurrent: Renseignements.userData[1],
           firstLetter:Renseignements.userData[2][0]
-      ),
+      ):ProfileSettings(
+          userCurrent: "",
+          firstLetter: ""),
       body: Test(displayContains: WillPopScope(
         onWillPop:_onBackPressed,
         child:StreamBuilder(

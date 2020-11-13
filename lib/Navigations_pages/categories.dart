@@ -80,10 +80,12 @@ class _CategoriesState extends State<Categories> {
         nbAjoutPanier: ajoutPanier);
     return Scaffold(
       appBar: _appBar.appBarFunctionStream(),
-      drawer: ProfileSettings(
-          userCurrent: Renseignements.userData[1],
-          firstLetter:Renseignements.userData[2][0]
-      ),
+      drawer:(Renseignements.userData.length==5)?ProfileSettings(
+      userCurrent: Renseignements.userData[1],
+      firstLetter:Renseignements.userData[2][0]
+      ):ProfileSettings(
+      userCurrent: "",
+      firstLetter: ""),
       body: Test(displayContains: WillPopScope(
         onWillPop: _onBackPressed,
         child:  SingleChildScrollView(
