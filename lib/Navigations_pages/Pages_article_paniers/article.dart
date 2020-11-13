@@ -641,10 +641,13 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                           width: largeurPerCent(262, context),
                           child:GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect), ),),);
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect),
+                              loadingBuilder: (BuildContext context, ImageChunkEvent loadingProgress){
+                                return Center(child: CircularProgressIndicator(),);
+                              },
+                              ),),);
                             },
-                            child:
-                            CachedNetworkImage(
+                            child: CachedNetworkImage(
                               imageUrl: imageSelect,
                               imageBuilder: (context, imageProvider) => Container(
                                 decoration: BoxDecoration(
@@ -658,10 +661,8 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                               ),
                             ),
                           ) ,
-
                         ),
                       );
-
                     }
                   }
                   return null;

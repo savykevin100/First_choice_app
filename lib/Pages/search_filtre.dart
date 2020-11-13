@@ -595,6 +595,11 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 prix = false;
                 taille = null;
                 genre = null;
+                sampleDataColor.forEach((element) {
+                  setState(() {
+                    element.isSelected = false;
+                  });
+                });
                 sampleData.forEach((element) {
                   setState(() {
                     element.isSelected = false;

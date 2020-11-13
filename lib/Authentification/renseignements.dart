@@ -17,7 +17,7 @@ import '../checkConnexion.dart';
 class Renseignements extends StatefulWidget {
   static final String id = "Renseignement";
   static String emailUser;
-  static List<String> userData;
+  static List<String> userData=[];
   static int nombreAjoutPanier = 0;
   final String emailAdress;
 
