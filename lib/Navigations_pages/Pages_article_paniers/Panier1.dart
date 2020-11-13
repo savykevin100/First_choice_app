@@ -42,7 +42,7 @@ class _Panier1State extends State<Panier1> {
   Map<String, Widget> widgets;
   List<String> quartiersDb = [];
   int stopSommeLivraisonRetour = 0;
-  List<String> listMoyenPayement = ['Mobile Money', 'Espèce'];
+  List<String> listMoyenPayement = ['Mobile Money ou Moov Money', 'Espèce'];
   List<Map<String, dynamic>> priceAndQuartiers=[];
 
   Future<void> fetchNameNumUser() async {
@@ -253,11 +253,11 @@ class _Panier1State extends State<Panier1> {
                                         });
                                         if(element["prix"]>1000)
                                           setState(() {
-                                            listMoyenPayement=['Mobile Money'];
+                                            listMoyenPayement=['Mobile Money ou Moov Money'];
                                           });
                                         else
                                           setState(() {
-                                            listMoyenPayement = ['Mobile Money', 'Espèce'];
+                                            listMoyenPayement = ['Mobile Money ou Moov Money', 'Espèce'];
                                           });
                                       }
                                     });

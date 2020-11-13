@@ -87,7 +87,7 @@ class _Panier2State extends State<Panier2> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.moyenDePayement == "Mobile Money") {
+    if (widget.moyenDePayement == "Mobile Money ou Moov Money") {
       setState(() {
         _isEnabledPayement = false;
       });
@@ -359,7 +359,7 @@ class _Panier2State extends State<Panier2> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  (widget.moyenDePayement != "Mobile Money")
+                                  (widget.moyenDePayement != "Mobile Money ou Moov Money")
                                       ? Container(
                                     margin: EdgeInsets.only(
                                       left: longueurPerCent(5, context),
@@ -381,7 +381,7 @@ class _Panier2State extends State<Panier2> {
                                             fontSize: 13,
                                             fontFamily: "MonseraBold"),
                                         decoration: InputDecoration(
-                                          prefixIcon: Padding(
+                                          suffixIcon: Padding(
                                             padding: EdgeInsets.only(
                                                 top: longueurPerCent(
                                                     0, context),
@@ -390,7 +390,7 @@ class _Panier2State extends State<Panier2> {
                                                 right: largeurPerCent(
                                                     10, context),
                                                 left: largeurPerCent(
-                                                    10, context)),
+                                                    0, context)),
                                             child: Card(
                                               child: Container(
                                                   height:
@@ -400,9 +400,9 @@ class _Panier2State extends State<Panier2> {
                                                       "assets/images/icone moyen de paiement-01.png")),
                                             ),
                                           ),
-                                          suffixIcon:
+                                          prefixIcon:
                                           (widget.moyenDePayement !=
-                                              "Mobile Money")
+                                              "Mobile Money ou Moov Money")
                                               ? Padding(
                                             padding: EdgeInsets.only(
                                                 top: longueurPerCent(
@@ -424,7 +424,7 @@ class _Panier2State extends State<Panier2> {
                                           hintText: "Espèce",
                                           hintStyle: TextStyle(
                                               color: Colors.red,
-                                              fontSize: 12.0,
+                                              fontSize: 15.0,
                                               fontFamily: 'MonseraBold'),
                                           fillColor: Colors.white,
                                           contentPadding:
@@ -471,7 +471,7 @@ class _Panier2State extends State<Panier2> {
                                       decoration: InputDecoration(
                                         hintText:
                                         "Saisisssez un numéro Mobile Money",
-                                        prefixIcon: Padding(
+                                        suffixIcon: Padding(
                                           padding: EdgeInsets.only(
                                               top: longueurPerCent(
                                                   0, context),
@@ -480,14 +480,13 @@ class _Panier2State extends State<Panier2> {
                                               right: largeurPerCent(
                                                   10, context),
                                               left: largeurPerCent(
-                                                  17, context)),
-                                          child: Card(
-                                            child: Container(
-                                                height: longueurPerCent(
-                                                    40, context),
-                                                child: Image.asset(
-                                                    "assets/images/icone moyen de paiement-02.png")),
-                                          ),
+                                                  0, context)),
+                                          child:Container(
+                                              height:
+                                              longueurPerCent(
+                                                  40, context),
+                                              child: Image.asset(
+                                                  "assets/images/MobileMoov.png")),
                                         ),
 
                                         hintStyle: TextStyle(
@@ -499,7 +498,7 @@ class _Panier2State extends State<Panier2> {
                                         contentPadding: EdgeInsets.only(
                                             top: 30,
                                             bottom: 5,
-                                            left: 30),
+                                            left: 12),
                                         border: OutlineInputBorder(
                                             borderRadius:
                                             BorderRadius.all(
@@ -851,7 +850,7 @@ class _Panier2State extends State<Panier2> {
 
   Future<void> checkSendCommand() async {
       if (widget.moyenDePayement ==
-          "Mobile Money") {
+          "Mobile Money ou Moov Money") {
         if (numeroDePayement.length == 8) {
           showDialog(
             context: context,
