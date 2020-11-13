@@ -28,18 +28,21 @@ class _CommandeSendState extends State<CommandeSend> {
                   child: GestureDetector(
                       child: Image.asset(
                         "assets/images/images-07.png",
-                        height: 500.0,
+                        height: 350.0,
                         fit: BoxFit.fitHeight,
                       )),
                 ),
                 SizedBox(height: longueurPerCent(5, context),),
                 Padding(
                     padding: EdgeInsets.all(5),
-                  child: Text(
-                    "Votre commande a bien été envoyée",
-                    style: TextStyle(
-                     fontFamily: "MonseraBold",
-                      fontWeight: FontWeight.bold
+                  child: Center(
+                    child: Text(
+                      "Votre commande a bien été envoyée",
+                      style: TextStyle(
+                       fontFamily: "MonseraBold",
+                        color: HexColor('#001C36'),
+                        fontSize: 15
+                      ),
                     ),
                   ),
                 ),
