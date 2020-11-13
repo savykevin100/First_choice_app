@@ -91,14 +91,14 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Utilisateur>> snapshot) {
                   if(snapshot.hasError || !snapshot.hasData){
-                    return Text("0");
+                    return Text("");
                   } else {
                     for(int i=0; i<snapshot.data.length; i++){
                       if(snapshot.data[i].email == Renseignements.emailUser){
                         nombreAjoutPanier=snapshot.data[i].nbAjoutPanier;
                       }
                     }
-                    return Text((nombreAjoutPanier==0)?"0":nombreAjoutPanier);}
+                    return Text("$nombreAjoutPanier");}
                 }
             ),
             toAnimate: true,

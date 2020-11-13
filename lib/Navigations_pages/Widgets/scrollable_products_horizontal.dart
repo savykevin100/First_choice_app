@@ -123,9 +123,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   ),
                                 ),
                                 placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
                                 ),
-
                               ),
                             ),
                           ),

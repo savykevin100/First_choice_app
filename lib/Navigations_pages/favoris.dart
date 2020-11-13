@@ -119,10 +119,12 @@ class _FavorisState extends State<Favoris> {
     return Scaffold(
         backgroundColor: HexColor("#F5F5F5"),
         appBar: _appBar.appBarFunctionStream(),
-        drawer: ProfileSettings(
+        drawer:(Renseignements.userData.length==5)?ProfileSettings(
             userCurrent: Renseignements.userData[1],
             firstLetter:Renseignements.userData[2][0]
-        ),
+        ):ProfileSettings(
+            userCurrent: "",
+            firstLetter: ""),
         body:(identifiantDocumentsFavorisUser!=null && idProduitsFavoris!=null && etatFavoris!=null)?Test(displayContains: WillPopScope(
           onWillPop: _onBackPressed,
           child:  StreamBuilder(

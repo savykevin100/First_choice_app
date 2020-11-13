@@ -938,7 +938,7 @@ class _Panier2State extends State<Panier2> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) =>  KKiaPay(
-                      amount: (totalPlusLivraison-(totalPlusLivraison*0.019)).toInt(),
+                      amount: (totalPlusLivraison*(1-0.019)).toInt()+1,
                       phone: '61000000',
                       data: 'hello world',
                       sandbox: true,
