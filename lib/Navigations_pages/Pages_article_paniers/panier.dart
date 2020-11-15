@@ -296,7 +296,6 @@ class _PanierState extends State<Panier> {
                       Navigator.push(
                           context, MaterialPageRoute(
                           builder: (context) => Panier1(total: total,produitsPanier: produitsPaniers,)));
-                      print(produitsPaniers);
                     }
                   }
                 })

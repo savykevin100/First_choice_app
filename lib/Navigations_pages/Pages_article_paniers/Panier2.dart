@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +34,7 @@ class Panier2 extends StatefulWidget {
   Produit unSeulProduit;
   List<Map<String, dynamic>> produitsCommander;
   String moyenDePayement;
+  String localisationMagazin;
 
   Panier2(
       {this.unSeulProduit,
@@ -47,6 +47,7 @@ class Panier2 extends StatefulWidget {
         this.indication,
         this.dateHeureDeLivraison,
         this.moyenDePayement,
+        this.localisationMagazin,
         this.produitsCommander});
 
   @override
@@ -109,8 +110,10 @@ class _Panier2State extends State<Panier2> {
         setState(() {
           numberOrder = value.data["nombreCommande"]+1;
           print(numberOrder);
-         if(widget.indication==null)
-           widget.indication=value.data["agence"];
+          if(widget.indication==null)
+            setState(() {
+              widget.indication=value.data["agence"];
+            });
         });
       }
     });
@@ -313,7 +316,7 @@ class _Panier2State extends State<Panier2> {
                                         top: longueurPerCent(
                                             6, context)),
                                     child: Text(
-                                      widget.indication,
+                                      widget.localisationMagazin,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#909090"),
@@ -849,46 +852,41 @@ class _Panier2State extends State<Panier2> {
   }
 
   Future<void> checkSendCommand() async {
-      if (widget.moyenDePayement ==
-          "Mobile Money ou Moov Money") {
-        if (numeroDePayement.length == 8) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => CustomDialog(
-              title: "Commande",
-              description:
-              "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
-              cancelButton: FlatButton(
-                onPressed: (
-                    ) {
-                  Navigator.of(context).pop(); // To close the dialog
-                },
-                child: Text("ANNULER",
-                  style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 12.0,
-                      fontFamily: "MonseraBold"
-                  ),
+    if (widget.moyenDePayement ==
+        "Mobile Money ou Moov Money") {
+      if (numeroDePayement.length == 8) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => CustomDialog(
+            title: "Commande",
+            description:
+            "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
+            cancelButton: FlatButton(
+              onPressed: (
+                  ) {
+                Navigator.of(context).pop(); // To close the dialog
+              },
+              child: Text("ANNULER",
+                style: TextStyle(
+                    color: HexColor("#001C36"),
+                    fontSize: 12.0,
+                    fontFamily: "MonseraBold"
                 ),
               ),
-              nextButton: FlatButton(
-                onPressed: (
-                    ) {
-                  Navigator.pop(context);
-                  /*String username = 'QSUSR168';
+            ),
+            nextButton: FlatButton(
+              onPressed: (
+                  ) {
+                Navigator.pop(context);
+                /*String username = 'QSUSR168';
                   String password = 'jf0Midq2LIdkAv4Ugi1B';
                   String transref = DateTime.now().toString().substring(10);
-
-
                   var auth = 'Basic '+base64Encode(utf8.encode('$username:$password'));
-
                   final ioc = new HttpClient();
                   ioc.badCertificateCallback =
                       (X509Certificate cert, String host, int port) => true;
                   final http = new IOClient(ioc);
-
                   //RequestPayment Request
-
                   http.post('https://qosic.net:8443/QosicBridge/user/requestpayment',
                       headers: {HttpHeaders.authorizationHeader: auth,
                         "Content-Type": "application/json"
@@ -916,7 +914,6 @@ class _Panier2State extends State<Panier2> {
                                   if(response.statusCode == 200 ) {
                                     setState(() {
                                     });
-
                                     /*showLoadingDialog(context, _keyLoader);
                                     commandAction();
                                     Navigator.of(_keyLoader.currentContext, rootNavigator: true)
@@ -934,70 +931,19 @@ class _Panier2State extends State<Panier2> {
                         print("Reponse status pour le request : ${response.statusCode}");
                         print("Response body : ${response.body}");
                       });*/
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  KKiaPay(
-                      amount: (totalPlusLivraison*(1-0.019)).toInt()+1,
-                      phone: '61000000',
-                      data: 'hello world',
-                      sandbox: true,
-                      apikey: '5eff6ca0203711eba0637f280536fc17',
-                      callback: sucessCallback,
-                      name: widget.nomComplet,
-                      theme: "#001c36",
-                    )),
-                  );
-                },
-                child: Text("CONTINUER",
-                  style: TextStyle(
-                      color: HexColor("#001C36"),
-                      fontSize: 12.0,
-                      fontFamily: "MonseraBold"
-                  ),),
-              ),
-              icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
-            ),
-          );
-
-        } else if (numeroDePayement == "0") {
-          displaySnackBarNom(
-              context,
-              "Veuillez entrer votre numéro de payement",
-              Colors.white);
-        } else if (numeroDePayement.length != 8)
-          displaySnackBarNom(
-              context,
-              "Veuillez entrer un numéro de téléphone valide",
-              Colors.white);
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => CustomDialog(
-            title: "Commande",
-            description:
-            "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
-            cancelButton: FlatButton(
-              onPressed: (
-                  ) {
-                Navigator.of(context).pop(); // To close the dialog
-              },
-              child: Text("ANNULER",
-                style: TextStyle(
-                    color: HexColor("#001C36"),
-                    fontSize: 12.0,
-                    fontFamily: "MonseraBold"
-                ),
-              ),
-            ),
-            nextButton: FlatButton(
-              onPressed: (
-                  ) {
-                commandAction();
-                showLoadingDialog(context, _keyLoader);
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CommandeSend()));
+                  context,
+                  MaterialPageRoute(builder: (context) =>  KKiaPay(
+                    amount: (totalPlusLivraison*(1-0.019)).toInt()+1,
+                    phone: '61000000',
+                    data: 'hello world',
+                    sandbox: true,
+                    apikey: '5eff6ca0203711eba0637f280536fc17',
+                    callback: sucessCallback,
+                    name: widget.nomComplet,
+                    theme: "#001c36",
+                  )),
+                );
               },
               child: Text("CONTINUER",
                 style: TextStyle(
@@ -1009,7 +955,58 @@ class _Panier2State extends State<Panier2> {
             icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
           ),
         );
-      }
+
+      } else if (numeroDePayement == "0") {
+        displaySnackBarNom(
+            context,
+            "Veuillez entrer votre numéro de payement",
+            Colors.white);
+      } else if (numeroDePayement.length != 8)
+        displaySnackBarNom(
+            context,
+            "Veuillez entrer un numéro de téléphone valide",
+            Colors.white);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CustomDialog(
+          title: "Commande",
+          description:
+          "Une fois la commande lancée, vous ne pourrez plus l'annuler.",
+          cancelButton: FlatButton(
+            onPressed: (
+                ) {
+              Navigator.of(context).pop(); // To close the dialog
+            },
+            child: Text("ANNULER",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"
+              ),
+            ),
+          ),
+          nextButton: FlatButton(
+            onPressed: (
+                ) {
+              commandAction();
+              showLoadingDialog(context, _keyLoader);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CommandeSend()));
+            },
+            child: Text("CONTINUER",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"
+              ),),
+          ),
+          icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
+        ),
+      );
+    }
   }
 
 
@@ -1140,13 +1137,13 @@ class _Panier2State extends State<Panier2> {
     }
   }
 
-    displaySnackBarNom(BuildContext context, String text, Color couleur) {
-      final snackBar = SnackBar(
-        content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
-        duration: Duration(seconds: 1),
-      );
-      _scaffoldKey.currentState.showSnackBar(snackBar);
-    }
+  displaySnackBarNom(BuildContext context, String text, Color couleur) {
+    final snackBar = SnackBar(
+      content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
+      duration: Duration(seconds: 1),
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
 
   void sucessCallback(response, context) {
     print(response);
@@ -1161,7 +1158,3 @@ class _Panier2State extends State<Panier2> {
   }
 
 }
-
-
-
-

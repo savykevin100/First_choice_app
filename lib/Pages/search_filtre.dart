@@ -1,5 +1,6 @@
 
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,24 +107,75 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
     //Display Size of products
     sampleData.add(new RadioModel(false, 'XS'));
-    sampleData.add(new RadioModel(false, 'S',));
-    sampleData.add(new RadioModel(false, 'M',));
-    sampleData.add(new RadioModel(false, 'L',));
+    sampleData.add(new RadioModel(
+      false,
+      'S',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      'M',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      'L',
+    ));
     sampleData.add(new RadioModel(false, 'XL'));
-    sampleData.add(new RadioModel(false, 'XXL',));
-    sampleData.add(new RadioModel(false, '28',));
-    sampleData.add(new RadioModel(false, '30',));
+    sampleData.add(new RadioModel(
+      false,
+      'XXL',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      '28',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      '30',
+    ));
     sampleData.add(new RadioModel(false, '32'));
-    sampleData.add(new RadioModel(false, '34',));
-    sampleData.add(new RadioModel(false, '36',));
-    sampleData.add(new RadioModel(false, '38',));
+    sampleData.add(new RadioModel(
+      false,
+      '34',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      '36',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      '37',
+    ));
+    sampleData.add(new RadioModel(
+      false,
+      '38',
+    ));
+    sampleData.add(new RadioModel(false, '39'));
     sampleData.add(new RadioModel(false, '40'));
-    sampleData.add(new RadioModel(false, '42',));
-    sampleData.add(new RadioModel(false, '44',));
-    sampleData.add(new RadioModel(false, '46',));
-    sampleData.add(new RadioModel(false, '48',));
-    sampleData.add(new RadioModel(false, '50',));
-
+    sampleData.add(new RadioModel(false, '41'));
+    sampleData.add(new RadioModel(
+      false,
+      '42',
+    ));
+    sampleData.add(new RadioModel(false, '43'));
+    sampleData.add(new RadioModel(
+      false,
+      '44',
+    ));
+    sampleData.add(new RadioModel(false, '45'));
+    sampleData.add(new RadioModel(
+      false,
+      '46',
+    ));
+    sampleData.add(new RadioModel(false, '47'));
+    sampleData.add(new RadioModel(
+      false,
+      '48',
+    ));
+    sampleData.add(new RadioModel(false, '49'));
+    sampleData.add(new RadioModel(
+      false,
+      '50',
+    ));
 
     //Display Genre
     sampleDataGenre.add(new RadioModelGenre(false, '', 'Hommes',));
@@ -279,6 +331,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                           },
                           child: new RadioItemGenre(sampleDataGenre[0]),
                         ),
+                        SizedBox(width: 10,),
                         InkWell(
                           splashColor: Colors.blueAccent,
                           onTap: () {
@@ -309,10 +362,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 Container(
                   color: HexColor("#F5F5F5"),
                   padding: const EdgeInsets.only(
-                      top: 0.0, left: 10.0, right: 10.0),
+                      top: 10.0, left: 0.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(200, context),
+                  height: longueurPerCent(250, context),
                   child: Center(
                     child: StaggeredGridView.countBuilder(
                       reverse: false,
@@ -342,8 +395,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                         );
                       },
                       staggeredTileBuilder: (_) => StaggeredTile.fit(2),
-                      mainAxisSpacing: 0.0,
-                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing:10.0,
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                     ),
@@ -420,7 +472,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       top: 10.0, left: 30.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(250, context),
+                  height: 250,
                   child: Center(
                     child: StaggeredGridView.countBuilder(
                       reverse: false,
@@ -1258,46 +1310,46 @@ class RadioItemGenre extends StatelessWidget {
   RadioItemGenre(this._item);
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: new EdgeInsets.only(left: 10,bottom: 10,top: 10),
-      child: new Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          new Container(
-            height: 20.0,
-            width: 20.0,
-            child: new Center(
-              child: new Text(_item.buttonText,
-                  style: new TextStyle(
-                    color:
-                    _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
-                    fontFamily: "MonseraRegular",
-                    //fontWeight: FontWeight.bold,
-                  )),
-            ),
-            decoration: new BoxDecoration(
-              color: _item.isSelected
-                  ? HexColor("#FFC30D")
-                  : Colors.transparent,
-              border: new Border.all(
-                  width: 1.0,
-                  color: _item.isSelected
-                      ? Colors.blueAccent
-                      : Colors.grey),
-              borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
-            ),
-          ),
-          new Container(
-            margin: new EdgeInsets.only(left: 10.0),
-            child: new Text(_item.text,
-                style: TextStyle(
-                  color: HexColor("#001C36"),
-                  fontSize: 12,
+    return new Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Container(
+          height: 15.0,
+          width: 15.0,
+          child: new Center(
+            child: new Text(_item.buttonText,
+                style: new TextStyle(
+                  color:
+                  _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
                   fontFamily: "MonseraRegular",
+                  //fontWeight: FontWeight.bold,
                 )),
-          )
-        ],
-      ),
+          ),
+          decoration: new BoxDecoration(
+            color: _item.isSelected
+                ? HexColor("#FFC30D")
+                : Colors.transparent,
+            border: new Border.all(
+                width: 1.0,
+                color: _item.isSelected
+                    ? Colors.blueAccent
+                    : Colors.grey),
+            borderRadius: const BorderRadius.all(const Radius.circular(25.0)),
+          ),
+        ),
+        SizedBox(width: 5,),
+        AutoSizeText(
+          _item.text,
+          minFontSize: 9,
+          maxLines: 1,
+          style: TextStyle(
+              color: HexColor("#909090"),
+              fontSize:10,
+              fontFamily:
+              "MonseraRegular"),
+        )
+      ],
     );
   }
 }
@@ -1316,7 +1368,7 @@ class RadioItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.only(bottom: 10),
+      margin: new EdgeInsets.only(top: 10),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

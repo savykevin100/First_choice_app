@@ -67,6 +67,8 @@ dependencies:
   connectivity: ^2.0.0
   animated_text_kit: ^2.5.1
   kkiapay_flutter_sdk: ^1.0.4
+  progressive_image: ^1.0.1
+
 
 
 
