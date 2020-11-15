@@ -309,10 +309,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 Container(
                   color: HexColor("#F5F5F5"),
                   padding: const EdgeInsets.only(
-                      top: 10.0, left: 0.0, right: 0.0),
+                      top: 0.0, left: 10.0, right: 10.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 20.0, right: 20.0),
-                  height: longueurPerCent(250, context),
+                  height: longueurPerCent(200, context),
                   child: Center(
                     child: StaggeredGridView.countBuilder(
                       reverse: false,
@@ -1259,7 +1259,7 @@ class RadioItemGenre extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: new EdgeInsets.all(15.0),
+      margin: new EdgeInsets.only(left: 10,bottom: 10,top: 10),
       child: new Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[

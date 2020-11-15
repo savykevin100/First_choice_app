@@ -889,7 +889,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
             child: Text("12. RESPONSABILITE",
               textAlign: TextAlign.left,
               style: TextStyle(
-                color: Colors.red,
+                color: HexColor("#001C36"),
                 fontSize: 16,
                 fontFamily: "MonseraBold",
                 decoration: TextDecoration.underline,
@@ -900,7 +900,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
             padding: const EdgeInsets.only(left: 10,top: 5),
             child: Text("Le choix et l'achat d'une marchandise sont faits sous la seule et unique responsabilité du Client. Par conséquent, l'impossibilité totale ou partielle d'utiliser les produits notamment pour des causes d'incompatibilité ou de mauvaises mesures ou de manque de savoir-faire à l’installation des produits ne saurait donner lieu à aucun dédommagement, remboursement ou mise en cause de la responsabilité de 1ER CHOIX.",
               style: TextStyle(
-                color: Colors.red,
+                color: HexColor("#001C36"),
                 fontSize: 15,
                 fontFamily: "Monsera_Light",
               ),
@@ -910,7 +910,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
             padding: const EdgeInsets.only(left: 10,top: 5),
             child: Text("Le Client est responsable de l’exhaustivité, la véracité des renseignements qu’il fournit à 1ER CHOIX notamment lors du choix du produit, de la saisie des mesures ou de l’adresse de livraison ; par conséquent, 1ER CHOIX ne peut être tenue pour responsable d’éventuelles erreurs de saisie à l’origine d’erreurs de livraison ou autres problèmes. La Plateforme ne peut également être tenue responsable d’éventuelles erreurs commises par le Client et/ou du non-respect par le Client des modalités de livraison et rendez-vous qu’il aura lui-même fixé avec le transporteur. Le cas échéant, les frais nécessaires pour la réexpédition et le stockage des produits seront à la charge du Client. ",
               style: TextStyle(
-                color: Colors.red,
+                color: HexColor("#001C36"),
                 fontSize: 15,
                 fontFamily: "Monsera_Light",
               ),
@@ -920,7 +920,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
             padding: const EdgeInsets.only(left: 10,top: 5),
             child: Text("Sans écarter les paragraphes précédents, la responsabilité de 1ER CHOIX aux termes des présentes Conditions Générales de Vente ne saurait excéder une somme égale aux sommes payées ou payables lors de la transaction à l'origine de ladite responsabilité, quelle que soit la cause ou la forme de l'action concernée. Sont considérés comme cas fortuit ou force majeure exonératoires de responsabilité tous les faits ou circonstances irrésistibles, imprévisibles et indépendants de la volonté des Parties notamment en cas de grève totale ou partielle de transporteurs et de catastrophes naturelles telles que les inondations ou incendies. ",
               style: TextStyle(
-                color: Colors.red,
+                color: HexColor("#001C36"),
                 fontSize: 15,
                 fontFamily: "Monsera_Light",
               ),
