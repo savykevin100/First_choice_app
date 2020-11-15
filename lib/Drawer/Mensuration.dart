@@ -358,7 +358,7 @@ class _MensurationState extends State<Mensuration> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 10,bottom:10),
                                     child: Text(
-                                      'Jeans',
+                                      'Jeans/Short/Shorty',
                                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                                     ),
                                   )
@@ -390,27 +390,9 @@ class _MensurationState extends State<Mensuration> {
                               ],
                               rows: [
                                 DataRow(cells: [
-                                  DataCell(Center(child: Text('55/59'))),
-                                  DataCell(Center(child: Text('84/88'))),
-                                  DataCell(Center(child: Text('XS',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))),
-                                ]),
-                                DataRow(cells: [
-                                  DataCell(Center(child: Text('59/63'))),
-                                  DataCell(Center(child: Text('88/92'))),
-                                  DataCell(Center(child: Text('S',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))),
-                                ]),
-                                DataRow(cells: [
                                   DataCell(Center(child: Text('63/67'))),
                                   DataCell(Center(child: Text('92/96'))),
-                                  DataCell(Center(child: Text('M',
+                                  DataCell(Center(child: Text('38',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -419,7 +401,7 @@ class _MensurationState extends State<Mensuration> {
                                 DataRow(cells: [
                                   DataCell(Center(child: Text('67/71'))),
                                   DataCell(Center(child: Text('96/100'))),
-                                  DataCell(Center(child: Text('L',
+                                  DataCell(Center(child: Text('40',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -428,7 +410,7 @@ class _MensurationState extends State<Mensuration> {
                                 DataRow(cells: [
                                   DataCell(Center(child: Text('71/75'))),
                                   DataCell(Center(child: Text('100/104'))),
-                                  DataCell(Center(child: Text('XL',
+                                  DataCell(Center(child: Text('42',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -437,7 +419,57 @@ class _MensurationState extends State<Mensuration> {
                                 DataRow(cells: [
                                   DataCell(Center(child: Text('75/79'))),
                                   DataCell(Center(child: Text('104/108'))),
-                                  DataCell(Center(child: Text('XXL',
+                                  DataCell(Center(child: Text('44',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]),
+                                DataRow(cells: [
+                                  DataCell(Center(child: Text('79/84'))),
+                                  DataCell(Center(child: Text('108/112'))),
+                                  DataCell(Center(child: Text('46',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]),
+                                DataRow(cells: [
+                                  DataCell(Center(child: Text('84/89'))),
+                                  DataCell(Center(child: Text('112/116'))),
+                                  DataCell(Center(child: Text('48',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]), DataRow(cells: [
+                                  DataCell(Center(child: Text('89/94'))),
+                                  DataCell(Center(child: Text('116/122'))),
+                                  DataCell(Center(child: Text('50',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]), DataRow(cells: [
+                                  DataCell(Center(child: Text('94/99'))),
+                                  DataCell(Center(child: Text('122/128'))),
+                                  DataCell(Center(child: Text('52',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]), DataRow(cells: [
+                                  DataCell(Center(child: Text('99/104'))),
+                                  DataCell(Center(child: Text('128/134'))),
+                                  DataCell(Center(child: Text('54',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))),
+                                ]), DataRow(cells: [
+                                  DataCell(Center(child: Text('104/109'))),
+                                  DataCell(Center(child: Text('134/160'))),
+                                  DataCell(Center(child: Text('56',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
