@@ -9,7 +9,6 @@ import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Drawer/APrpos.dart';
 import 'package:premierchoixapp/Drawer/ConditionsGenerales.dart';
 import 'package:premierchoixapp/Navigations_pages/all_navigation_page.dart';
-import 'package:premierchoixapp/Navigations_pages/chat.dart';
 import 'package:premierchoixapp/Drawer/Commande/mes_commandes.dart';
 import 'package:premierchoixapp/Drawer/profile.dart';
 import '../Composants/hexadecimal.dart';
@@ -73,13 +72,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 await _auth.signOut();
                 Navigator.pushNamed(context, Connexion.id);
               }),
-          drawerItem(
+          /*drawerItem(
               icon: Icons.share,
               text: "Partager l'application",
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Chat()));
-              }),
+              }),*/
           Divider(),
          drawerItem(
               icon: Icons.library_books,

@@ -64,7 +64,6 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.data);
   }
 
 

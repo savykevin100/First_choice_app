@@ -44,21 +44,8 @@ class _Panier1State extends State<Panier1> {
   int stopSommeLivraisonRetour = 0;
   List<String> listMoyenPayement = ['Mobile Money ou Moov Money', 'Espèce'];
   List<Map<String, dynamic>> priceAndQuartiers=[];
+  String locationMagasin;
 
-  Future<void> fetchNameNumUser() async {
-    await _db
-        .collection("Utilisateurs")
-        .document(Renseignements.emailUser)
-        .get()
-        .then((value) {
-      if (this.mounted) {
-        setState(() {
-          name = value.data["nomComplet"];
-          numUser = value.data["numero"];
-        });
-      }
-    });
-  }
 
 
   Future<void> fetchZonesTest()async{
@@ -77,25 +64,24 @@ class _Panier1State extends State<Panier1> {
   }
 
 
-  Future<void> fetchZones() async {
-    await _db.collection("Zones").getDocuments().then((value) {
-      value.documents.forEach((element) {
-        element.data.forEach((key, value) {
-          if(this.mounted)
-            setState(() {
-              quartiersDb.add(value);
-            });
+  Future<void> getLocalisationMagazin() async {
+    await _db
+        .collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh")
+        .get()
+        .then((value) {
+      if (this.mounted) {
+        setState(() {
+           locationMagasin = value.data["agence"];
         });
-      });
+      }
     });
   }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //fetchZones();
-    fetchNameNumUser();
     fetchZonesTest();
+    getLocalisationMagazin();
   }
 
 
@@ -426,7 +412,7 @@ class _Panier1State extends State<Panier1> {
   }
 
   checkInformationsComplete(context) {
-    if (lieu == 'En Agence' && moyenDePayement != null) {
+    if (lieu == 'En Agence' && moyenDePayement != null ) {
       setState(() {
         prixLivraison = 0;
       });
@@ -435,24 +421,24 @@ class _Panier1State extends State<Panier1> {
         builder: (BuildContext context) => CustomDialog(
           title: "Localisation",
           description:
-          "L'agence est située à Joncquet  en face de la pharmacie. Immeuble blanc, 2ème étage. Nous sommes ouvert du Lundi au Samedi de 09H à 20H.",
-         cancelButton: FlatButton(
-           onPressed: (
-               ) {
-             Navigator.of(context).pop(); // To close the dialog
-           },
-           child: Text("ANNULER",
-             style: TextStyle(
-                 color: HexColor("#001C36"),
-                 fontSize: 12.0,
-                 fontFamily: "MonseraBold"
-             ),
-           ),
-         ),
+          "L'agence est située à $locationMagasin. Nous sommes ouvert du Lundi au Samedi de 09H à 20H.",
+          cancelButton: FlatButton(
+            onPressed: (
+                ) {
+              Navigator.of(context).pop(); // To close the dialog
+            },
+            child: Text("ANNULER",
+              style: TextStyle(
+                  color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"
+              ),
+            ),
+          ),
           nextButton: FlatButton(
             onPressed: (
                 ) {
-              if(lieu=="En Agence"){
+              if(lieu=="En Agence" && locationMagasin!=null){
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -460,12 +446,13 @@ class _Panier1State extends State<Panier1> {
                         builder: (context) => Panier2(
                           prixLivraison: prixLivraison,
                           total: widget.total,
-                          nomComplet: name,
-                          telephone: numUser,
+                          nomComplet:  Renseignements.userData[2],
+                          telephone:  Renseignements.userData[0],
                           moyenDePayement: moyenDePayement,
                           lieuDeLivraison: lieu,
                           dateHeureDeLivraison: dateHeureDeLivraison,
                           produitsCommander: widget.produitsPanier,
+                          localisationMagazin: locationMagasin,
                         )));
               }
               else{
@@ -476,14 +463,15 @@ class _Panier1State extends State<Panier1> {
                         builder: (context) => Panier2(
                           prixLivraison: prixLivraison,
                           total: widget.total,
-                          nomComplet: name,
-                          telephone: numUser,
+                          nomComplet:  Renseignements.userData[2],
+                          telephone:  Renseignements.userData[0],
                           lieuDeLivraison: lieu,
                           moyenDePayement: moyenDePayement,
                           dateHeureDeLivraison: dateHeureDeLivraison,
                           indication: indication,
                           quartier: quartier,
                           produitsCommander: widget.produitsPanier,
+                          localisationMagazin: locationMagasin,
                         )));
               }
             },
@@ -535,7 +523,7 @@ class _Panier1State extends State<Panier1> {
           ),
           nextButton: FlatButton(
             onPressed: () {
-              if (lieu == "En Agence") {
+              if (lieu == "En Agence" && locationMagasin!=null) {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -543,12 +531,13 @@ class _Panier1State extends State<Panier1> {
                         builder: (context) => Panier2(
                           prixLivraison: prixLivraison,
                           total: widget.total,
-                          nomComplet: name,
-                          telephone: numUser,
+                          nomComplet:  Renseignements.userData[2],
+                          telephone:  Renseignements.userData[0],
                           moyenDePayement: moyenDePayement,
                           lieuDeLivraison: lieu,
                           dateHeureDeLivraison: dateHeureDeLivraison,
                           produitsCommander: widget.produitsPanier,
+                          localisationMagazin: locationMagasin,
                         )));
               } else {
                 Navigator.pop(context);
@@ -558,14 +547,15 @@ class _Panier1State extends State<Panier1> {
                         builder: (context) => Panier2(
                           prixLivraison: prixLivraison,
                           total: widget.total,
-                          nomComplet: name,
-                          telephone: numUser,
+                          nomComplet:  Renseignements.userData[2],
+                          telephone:  Renseignements.userData[0],
                           lieuDeLivraison: lieu,
                           moyenDePayement: moyenDePayement,
                           dateHeureDeLivraison: dateHeureDeLivraison,
                           indication: indication,
                           quartier: quartier,
                           produitsCommander: widget.produitsPanier,
+                          localisationMagazin: locationMagasin,
                         )));
               }
             },
@@ -584,31 +574,6 @@ class _Panier1State extends State<Panier1> {
           ),
         ),
       );
-     /* _db.collection("Zones").getDocuments().then((value) {
-        /// Ici on parcourt les zones écrites dans le Zones et on fait une comparaison en vue de retrouver le prix du quariter sélectionnné
-        for (int i = 0; i < value.documents.length; i++) {
-          if (value.documents[i].data.containsValue(quartier)) {
-            if (stopSommeLivraisonRetour == 0) {
-              if (DateTime
-                  .now()
-                  .weekday == 7) {
-                setState(() {
-                  prixLivraison =
-                      int.tryParse(value.documents[i].documentID.toString()) *
-                          2;
-                  stopSommeLivraisonRetour++;
-                });
-              } else {
-                setState(() {
-                  prixLivraison =
-                      int.tryParse(value.documents[i].documentID.toString());
-                  stopSommeLivraisonRetour++;
-                });
-              }
-            }
-          }
-        }
-      });*/
     } else {
       displaySnackBarNom(
           context, "Veuillez remplir tous les champs ", Colors.white);

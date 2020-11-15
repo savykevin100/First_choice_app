@@ -332,9 +332,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     List<String> liste = sharedPreferences.getStringList(key);
     if (liste != null) {
-      setState(() {
-        Renseignements.userData = liste;
-      });
+      if(this.mounted)
+        setState(() {
+          Renseignements.userData = liste;
+        });
     }
   }
 

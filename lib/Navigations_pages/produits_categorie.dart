@@ -6,6 +6,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Pages/search_filtre.dart';
 import '../checkConnexion.dart';
 import 'Widgets/products_gried_view.dart';
 
@@ -85,7 +86,19 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
           ),
           product_grid_view(FirestoreService().getSousCategoriesProducts(widget.genre, widget.titreCategorie))
         ],
-      ),)
-    );
+      ),),
+        floatingActionButton: FloatingButton(
+          displayContains: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchFiltre()));
+              },
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 30,
+              ),
+              backgroundColor: Theme.of(context).primaryColor),
+        ));
   }
 }

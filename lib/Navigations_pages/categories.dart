@@ -336,19 +336,7 @@ class _CategoriesState extends State<Categories> {
           ),
         ),
       ),),
-      floatingActionButton: FloatingButton(
-        displayContains: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchFiltre()));
-            },
-            child: Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 30,
-            ),
-            backgroundColor: Theme.of(context).primaryColor),
-      )
+
     );
   }
 

@@ -40,7 +40,6 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async {
                   etatIconeFavoris: false,
                   etatSurMesure: false),
               Renseignements.emailUser);
-          print("L'ajout a été fait avant le onap");
         }
       });
     } catch (e) {
@@ -92,7 +91,6 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                 child: InkWell(
                   onTap: () {
                     idProduitsFavorisUser(produit, context);
-                    print(produit.nomDuProduit);
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -38,7 +38,6 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async {
                   etatIconeFavoris: false,
                   etatSurMesure: false),
               Renseignements.emailUser);
-          print("L'ajout a été fait avant le onap");
         }
       });
     } catch (e) {
