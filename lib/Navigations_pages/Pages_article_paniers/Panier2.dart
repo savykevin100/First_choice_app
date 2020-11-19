@@ -365,7 +365,7 @@ class _Panier2State extends State<Panier2> {
                                   (widget.moyenDePayement != "Mobile Money ou Moov Money")
                                       ? Container(
                                     margin: EdgeInsets.only(
-                                      left: longueurPerCent(5, context),
+                                      left: longueurPerCent(0, context),
                                       right:
                                       longueurPerCent(5, context),
                                       top: longueurPerCent(0, context),
@@ -434,7 +434,7 @@ class _Panier2State extends State<Panier2> {
                                           EdgeInsets.only(
                                               top: 30,
                                               bottom: 5,
-                                              left: 30),
+                                              left: 0),
                                           border: OutlineInputBorder(
                                               borderRadius:
                                               BorderRadius.all(
@@ -934,11 +934,11 @@ class _Panier2State extends State<Panier2> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>  KKiaPay(
-                    amount: (totalPlusLivraison*(1-0.019)).toInt()+1,
-                    phone: '61000000',
+                    amount: totalPlusLivraison,
+                    phone: numeroDePayement,
                     data: 'hello world',
-                    sandbox: true,
-                    apikey: '5eff6ca0203711eba0637f280536fc17',
+                    sandbox: false,
+                    apikey: '5cbf40a0203711ebbec8c3d1da3201d0',
                     callback: sucessCallback,
                     name: widget.nomComplet,
                     theme: "#001c36",

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -230,6 +232,38 @@ class _RenseignementsState extends State<Renseignements> {
   }
 
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text("Fermer l'application",  style: TextStyle( color: HexColor("#001C36"),
+            fontSize: 15.0,
+            fontFamily: "MonseraBold")),
+        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
+        actions: <Widget>[
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(false),
+              child: Text("NON", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(height: longueurPerCent(10, context),),
+
+          SizedBox(width: largeurPerCent(50, context),),
+          new GestureDetector(
+              onTap: () => exit(0),
+              child: Text("OUI", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(height: longueurPerCent(10, context),),
+          SizedBox(width: largeurPerCent(20, context),),
+        ],
+      ),
+    ) ??
+        false;
+  }
+
 
 
   void initState() {
@@ -266,132 +300,76 @@ class _RenseignementsState extends State<Renseignements> {
     ) : Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
-        body: (produits!=null)?Test(displayContains: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.only(
-                top: longueurPerCent(80, context),
-                left: largeurPerCent(10, context),
-                right: largeurPerCent(10, context)),
-            height: longueurPerCent(600, context),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: longueurPerCent(20, context),
-                      left: largeurPerCent(17, context),
-                      bottom: longueurPerCent(40, context)),
-                  child: Text(
-                    "Paramètres du compte",
-                    style: TextStyle(
-                        color: HexColor("#001C36"),
-                        fontSize: 25,
-                        fontFamily: "MonseraBold"),
+        body: (produits!=null)?Test(displayContains: WillPopScope(
+          onWillPop: _onBackPressed,
+          child: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Colors.white,
+              ),
+              margin: EdgeInsets.only(
+                  top: longueurPerCent(80, context),
+                  left: largeurPerCent(10, context),
+                  right: largeurPerCent(10, context)),
+              height: longueurPerCent(600, context),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: longueurPerCent(20, context),
+                        left: largeurPerCent(17, context),
+                        bottom: longueurPerCent(40, context)),
+                    child: Text(
+                      "Paramètres du compte",
+                      style: TextStyle(
+                          color: HexColor("#001C36"),
+                          fontSize: 25,
+                          fontFamily: "MonseraBold"),
+                    ),
                   ),
-                ),
-                Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: largeurPerCent(17, context)),
-                    child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                                keyboardType: TextInputType.emailAddress,
-                                style: TextStyle(
-                                    color: HexColor("#001C36"),
-                                    fontSize: 18,
-                                    fontFamily: "MonseraBold"
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: "Nom Complet",
-                                  hintStyle: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight'),
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.only(
-                                      top: 30, bottom: 5, left: 20),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.0)),
-                                      borderSide: BorderSide(
-                                          width: 1, style: BorderStyle.none)),
-                                ),
-                                onChanged: (value) {
-                                  nomComplet = value;
-                                }),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  left: largeurPerCent(20, context),
-                                  right: largeurPerCent(20, context),
-                                  top: longueurPerCent(05, context),
-                                  bottom:longueurPerCent(05, context) ),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(7.0),
-                                  ),
-                                  border: Border.all(
-                                      color: HexColor("#919191"), width: 1)),
-                              child: DropdownButton(
-
-                                hint: _dropDownValue == null
-                                    ? Text(
-                                  'Genre',
-                                  style: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight'),
-                                )
-                                    : Text(
-                                  _dropDownValue,
+                  Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: largeurPerCent(17, context)),
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
                                   style: TextStyle(
                                       color: HexColor("#001C36"),
                                       fontSize: 18,
-                                      fontFamily: 'MonseraBold'),
-                                ),
-                                isExpanded: true,
-                                underline: Text(
-                                    ""
-                                ),
-                                iconSize: 30.0,
-                                style: TextStyle(color: HexColor("#919191")),
-                                items: ['Masculin', 'Féminin'].map(
-                                      (val) {
-                                    return DropdownMenuItem<String>(
-                                      value: val,
-                                      child: Text(val),
-                                    );
-                                  },
-                                ).toList(),
-                                onChanged: (val) {
-                                  setState(
-                                        () {
-                                      _dropDownValue = val;
-                                      sexe = _dropDownValue;
-                                    },
-                                  );
-                                },
+                                      fontFamily: "MonseraBold"
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: "Nom Complet",
+                                    hintStyle: TextStyle(
+                                        color: HexColor('#919191'),
+                                        fontSize: 18.0,
+                                        fontFamily: 'MonseraLight'),
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.only(
+                                        top: 30, bottom: 5, left: 20),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7.0)),
+                                        borderSide: BorderSide(
+                                            width: 1, style: BorderStyle.none)),
+                                  ),
+                                  onChanged: (value) {
+                                    nomComplet = value;
+                                  }),
+                              SizedBox(
+                                height: longueurPerCent(20, context),
                               ),
-                            ),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: longueurPerCent(50, context),
+                              Container(
                                 padding: EdgeInsets.only(
                                     left: largeurPerCent(20, context),
                                     right: largeurPerCent(20, context),
-                                    top: longueurPerCent(15, context),
+                                    top: longueurPerCent(05, context),
                                     bottom:longueurPerCent(05, context) ),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(
@@ -399,81 +377,104 @@ class _RenseignementsState extends State<Renseignements> {
                                     ),
                                     border: Border.all(
                                         color: HexColor("#919191"), width: 1)),
-                                child:  GestureDetector(
-                                  onTap: (){
-                                    DatePicker.showDatePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(1900, 1, 1),
-                                        maxTime: DateTime(2018, 6, 7), onChanged: (date) {
-                                          setState(() {
-                                            age = date.toString().substring(0, 10);
-                                          });
-                                        }, onConfirm: (date) {
-                                          setState(() {
-                                            age = date.toString().substring(0, 10);
-                                          });
-                                        }, currentTime: DateTime.now(), locale: LocaleType.fr);
-                                  },
-                                  child: (age == "Date d'anniversaire")?Text(age, style: TextStyle(
-                                      color: HexColor('#919191'),
-                                      fontSize: 18.0,
-                                      fontFamily: 'MonseraLight')): Text(
-                                    age.substring(0, 10),
+                                child: DropdownButton(
+
+                                  hint: _dropDownValue == null
+                                      ? Text(
+                                    'Genre',
+                                    style: TextStyle(
+                                        color: HexColor('#919191'),
+                                        fontSize: 18.0,
+                                        fontFamily: 'MonseraLight'),
+                                  )
+                                      : Text(
+                                    _dropDownValue,
                                     style: TextStyle(
                                         color: HexColor("#001C36"),
                                         fontSize: 18,
                                         fontFamily: 'MonseraBold'),
                                   ),
-                                  /**/
-                                )
-                            ),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
-                            TextFormField(
-                              style: TextStyle(
-                                  color: HexColor("#001C36"),
-                                  fontSize: 18,
-                                  fontFamily: "MonseraBold"
+                                  isExpanded: true,
+                                  underline: Text(
+                                      ""
+                                  ),
+                                  iconSize: 30.0,
+                                  style: TextStyle(color: HexColor("#919191")),
+                                  items: ['Masculin', 'Féminin'].map(
+                                        (val) {
+                                      return DropdownMenuItem<String>(
+                                        value: val,
+                                        child: Text(val),
+                                      );
+                                    },
+                                  ).toList(),
+                                  onChanged: (val) {
+                                    setState(
+                                          () {
+                                        _dropDownValue = val;
+                                        sexe = _dropDownValue;
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: "Numero de Téléphone",
-                                hintStyle: TextStyle(
-                                    color: HexColor('#919191'),
-                                    fontSize: 18.0,
-                                    fontFamily: 'MonseraLight'),
-                                contentPadding: EdgeInsets.only(
-                                    top: 30, bottom: 5, left: 24),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(7.0)),
-                                    borderSide: BorderSide(
-                                        width: 1, style: BorderStyle.none)),
+                              SizedBox(
+                                height: longueurPerCent(20, context),
                               ),
-                              onChanged: (value) {
-                                numeroPayement = value;
-                              },
-                              // ignore: missing_return
-                              validator: (value){
-                                // ignore: missing_return
-                                if(value.length!=8 ){
-                                  return ( "Entrer un numéro valide");
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: longueurPerCent(20, context),
-                            ),
-                            TextFormField(
+                              Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: longueurPerCent(50, context),
+                                  padding: EdgeInsets.only(
+                                      left: largeurPerCent(20, context),
+                                      right: largeurPerCent(20, context),
+                                      top: longueurPerCent(15, context),
+                                      bottom:longueurPerCent(05, context) ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(7.0),
+                                      ),
+                                      border: Border.all(
+                                          color: HexColor("#919191"), width: 1)),
+                                  child:  GestureDetector(
+                                    onTap: (){
+                                      DatePicker.showDatePicker(context,
+                                          showTitleActions: true,
+                                          minTime: DateTime(1900, 1, 1),
+                                          maxTime: DateTime(2003, 12, 1), onChanged: (date) {
+                                            setState(() {
+                                              age = date.toString().substring(0, 10);
+                                            });
+                                          }, onConfirm: (date) {
+                                            setState(() {
+                                              age = date.toString().substring(0, 10);
+                                            });
+                                          }, currentTime: DateTime.now(), locale: LocaleType.fr);
+                                    },
+                                    child: (age == "Date d'anniversaire")?Text(age, style: TextStyle(
+                                        color: HexColor('#919191'),
+                                        fontSize: 18.0,
+                                        fontFamily: 'MonseraLight')): Text(
+                                      age.substring(0, 10),
+                                      style: TextStyle(
+                                          color: HexColor("#001C36"),
+                                          fontSize: 18,
+                                          fontFamily: 'MonseraBold'),
+                                    ),
+                                    /**/
+                                  )
+                              ),
+                              SizedBox(
+                                height: longueurPerCent(20, context),
+                              ),
+                              TextFormField(
                                 style: TextStyle(
                                     color: HexColor("#001C36"),
                                     fontSize: 18,
                                     fontFamily: "MonseraBold"
                                 ),
-                                keyboardType: TextInputType.emailAddress,
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
-                                  hintText: "Ville",
+                                  hintText: "Numero de Téléphone",
                                   hintStyle: TextStyle(
                                       color: HexColor('#919191'),
                                       fontSize: 18.0,
@@ -487,31 +488,67 @@ class _RenseignementsState extends State<Renseignements> {
                                           width: 1, style: BorderStyle.none)),
                                 ),
                                 onChanged: (value) {
-                                  ville = value;
-                                }),
-                          ],
-                        ))),
-                SizedBox(
-                  height: longueurPerCent(60, context),
-                ),
-                button(
-                    Colors.white, HexColor("#001C36"), context, "CONFIRMATION ",
-                        () async {
-                      if (_formKey.currentState.validate() &&
-                          _dropDownValue != null && age!=null) {
-                        sendDataUserDb();
-                        Navigator.pop(context);
-                        Navigator.of(context).pushNamed(AllNavigationPage.id);
-                        // verifyPhone();
-                        setState(() {
-                          chargement = true;
-                        });
-                      } else {
-                        displaySnackBarNom(context,
-                            "Veuillez remplir tous les champs", Colors.red);
-                      }
-                    })
-              ],
+                                  numeroPayement = value;
+                                },
+                                // ignore: missing_return
+                                validator: (value){
+                                  // ignore: missing_return
+                                  if(value.length!=8 ){
+                                    return ( "Entrer un numéro valide");
+                                  }
+                                },
+                              ),
+                              SizedBox(
+                                height: longueurPerCent(20, context),
+                              ),
+                              TextFormField(
+                                  style: TextStyle(
+                                      color: HexColor("#001C36"),
+                                      fontSize: 18,
+                                      fontFamily: "MonseraBold"
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    hintText: "Ville",
+                                    hintStyle: TextStyle(
+                                        color: HexColor('#919191'),
+                                        fontSize: 18.0,
+                                        fontFamily: 'MonseraLight'),
+                                    contentPadding: EdgeInsets.only(
+                                        top: 30, bottom: 5, left: 24),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7.0)),
+                                        borderSide: BorderSide(
+                                            width: 1, style: BorderStyle.none)),
+                                  ),
+                                  onChanged: (value) {
+                                    ville = value;
+                                  }),
+                            ],
+                          ))),
+                  SizedBox(
+                    height: longueurPerCent(60, context),
+                  ),
+                  button(
+                      Colors.white, HexColor("#001C36"), context, "CONFIRMATION ",
+                          () async {
+                        if (_formKey.currentState.validate() &&
+                            _dropDownValue != null && age!=null) {
+                          sendDataUserDb();
+                          Navigator.pop(context);
+                          Navigator.of(context).pushNamed(AllNavigationPage.id);
+                          // verifyPhone();
+                          setState(() {
+                            chargement = true;
+                          });
+                        } else {
+                          displaySnackBarNom(context,
+                              "Veuillez remplir tous les champs", Colors.red);
+                        }
+                      })
+                ],
+              ),
             ),
           ),
         ),):CircularProgressIndicator()

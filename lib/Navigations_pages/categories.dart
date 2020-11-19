@@ -13,7 +13,6 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Navigations_pages/produits_categorie.dart';
-import 'package:premierchoixapp/Pages/search_filtre.dart';
 
 import '../checkConnexion.dart';
 

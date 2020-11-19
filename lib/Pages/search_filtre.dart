@@ -233,8 +233,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   color: HexColor("#F5F5F5"),
                   padding: const EdgeInsets.only(
                       top: 10.0, left: 30.0, right: 30.0, bottom: 10),
-                  margin: const EdgeInsets.only(
-                      top: 0.0, left: 20.0, right: 20.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -312,39 +310,38 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 Container(
                     color: HexColor("#F5F5F5"),
                     padding: const EdgeInsets.only(
-                        top: 10.0, left: 0.0, right: 0.0),
-                    margin: const EdgeInsets.only(
-                        top: 0.0, left: 20.0, right: 20.0),
-                    height: longueurPerCent(60, context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          splashColor: Colors.blueAccent,
-                          onTap: () {
-                            setState(() {
-                              sampleDataGenre.forEach(
-                                      (element) => element.isSelected = false);
-                              sampleDataGenre[0].isSelected = true;
-                              genre = sampleDataGenre[0].text;
-                            });
-                          },
-                          child: new RadioItemGenre(sampleDataGenre[0]),
-                        ),
-                        SizedBox(width: 10,),
-                        InkWell(
-                          splashColor: Colors.blueAccent,
-                          onTap: () {
-                            setState(() {
-                              sampleDataGenre.forEach(
-                                      (element) => element.isSelected = false);
-                              sampleDataGenre[1].isSelected = true;
-                              genre = sampleDataGenre[1].text;
-                            });
-                          },
-                          child: new RadioItemGenre(sampleDataGenre[1]),
-                        )
-                      ],
+                        top: 10.0, left: 0.0, right: 0.0,bottom: 10),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            splashColor: Colors.blueAccent,
+                            onTap: () {
+                              setState(() {
+                                sampleDataGenre.forEach(
+                                        (element) => element.isSelected = false);
+                                sampleDataGenre[0].isSelected = true;
+                                genre = sampleDataGenre[0].text;
+                              });
+                            },
+                            child: new RadioItemGenre(sampleDataGenre[0]),
+                          ),
+                          SizedBox(width: 10,),
+                          InkWell(
+                            splashColor: Colors.blueAccent,
+                            onTap: () {
+                              setState(() {
+                                sampleDataGenre.forEach(
+                                        (element) => element.isSelected = false);
+                                sampleDataGenre[1].isSelected = true;
+                                genre = sampleDataGenre[1].text;
+                              });
+                            },
+                            child: new RadioItemGenre(sampleDataGenre[1]),
+                          )
+                        ],
+                      ),
                     )
                 ),
                 SizedBox(height: longueurPerCent(20, context),),
@@ -362,9 +359,9 @@ class _SearchFiltreState extends State<SearchFiltre> {
                 Container(
                   color: HexColor("#F5F5F5"),
                   padding: const EdgeInsets.only(
-                      top: 10.0, left: 0.0, right: 0.0),
+                      top: 10.0, left: 20.0, right: 0.0),
                   margin: const EdgeInsets.only(
-                      top: 0.0, left: 20.0, right: 20.0),
+                      top: 0.0, left: 0.0, right: 0.0),
                   height: longueurPerCent(250, context),
                   child: Center(
                     child: StaggeredGridView.countBuilder(
@@ -380,6 +377,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                               onTap: () {
                                 setState(() {
                                   sampleDataSousCategorie.forEach(
+
                                           (element) =>
                                       element.isSelected = false);
                                   sampleDataSousCategorie[index].isSelected =
@@ -419,9 +417,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       color: HexColor("#F5F5F5"),
                       padding: const EdgeInsets.only(
                           top: 10.0, left: 10.0, right: 0.0),
-                      margin: const EdgeInsets.only(
-                          top: 0.0, left: 20.0, right: 20.0),
-                      height: longueurPerCent(250, context),
+                      height: longueurPerCent(300, context),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -470,9 +466,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   color: HexColor("#F5F5F5"),
                   padding: const EdgeInsets.only(
                       top: 10.0, left: 30.0, right: 0.0),
-                  margin: const EdgeInsets.only(
-                      top: 0.0, left: 20.0, right: 20.0),
-                  height: 250,
+                  height: longueurPerCent(300, context),
                   child: Center(
                     child: StaggeredGridView.countBuilder(
                       reverse: false,
@@ -498,7 +492,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                     ),
                   ),
                 ),
-                SizedBox(height: longueurPerCent(20, context),),
+                SizedBox(height: longueurPerCent(100, context),),
               ],
             ) : CircularProgressIndicator()
         ),
@@ -553,6 +547,10 @@ class _SearchFiltreState extends State<SearchFiltre> {
                   prixMax != null && prixMin != null && couleur==null)
                 getGenreAndPriceAndSizeAndCategorie(
                     genre, taille, sousCategorie, prixMax, prixMin); // good
+              else
+              if (genre != null && sousCategorie != null && prixMax == null &&
+                  prixMin == null && taille != null && couleur==null)
+                getGenreAndCategorieAndSize(genre, sousCategorie, taille);
 
               // categorie search
               else
@@ -1178,6 +1176,24 @@ class _SearchFiltreState extends State<SearchFiltre> {
     });
   }
 
+  void getGenreAndCategorieAndSize(String genre, String sousCategorie, String taille) {
+    Firestore.instance.collection(genre).document(sousCategorie).collection("Produits").where(
+        "taille", isEqualTo: taille).getDocuments().then((value) {
+      if (value.documents.isNotEmpty) {
+        value.documents.forEach((element) {
+          setState(() {
+            data.add(element.data);
+            loadingSearch = false;
+          });
+        });
+        closePopAndNavigateNextPage();
+      } else {
+        noResultSearch();
+      }
+    });
+  }
+
+
   void getGenreAndPriceAndSizeAndCategorieColor(String genre, String taille, String sousCategorie, int prixMax, int prixMin, String couleur) {
     Firestore.instance.collection(genre).document(sousCategorie).collection("Produits").where(
         "prix", isGreaterThanOrEqualTo: prixMin).where(
@@ -1302,6 +1318,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
 
 
+
 }
 
 
@@ -1315,13 +1332,13 @@ class RadioItemGenre extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         new Container(
-          height: 15.0,
-          width: 15.0,
+          height: 20.0,
+          width: 20.0,
           child: new Center(
             child: new Text(_item.buttonText,
                 style: new TextStyle(
                   color:
-                  _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 15,
+                  _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 16,
                   fontFamily: "MonseraRegular",
                   //fontWeight: FontWeight.bold,
                 )),
@@ -1345,7 +1362,7 @@ class RadioItemGenre extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(
               color: HexColor("#909090"),
-              fontSize:10,
+              fontSize:12,
               fontFamily:
               "MonseraRegular"),
         )
@@ -1380,7 +1397,7 @@ class RadioItem extends StatelessWidget {
               child: new Text(_item.buttonText,
                   style: new TextStyle(
                     color:
-                    _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 12,
+                    _item.isSelected ? Colors.white : HexColor("#001C36"),fontSize: 16,
                     fontFamily: "MonseraRegular",
                     //fontWeight: FontWeight.bold,
                   )),

@@ -215,23 +215,37 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                         Padding(
                             padding: EdgeInsets.only(
                                 top: longueurPerCent(10, context),left: largeurPerCent(4, context)),
-                            child:  RatingBar.builder(
-                              initialRating:  produit.numberStar.ceilToDouble(),
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 3,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                              ignoreGestures: true,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 10,
-                              ),
-                              itemSize: 20,
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
+                            child:  Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RatingBar.builder(
+                                  initialRating:  produit.numberStar.ceilToDouble(),
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 3,
+                                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                  ignoreGestures: true,
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 10,
+                                  ),
+                                  itemSize: 20,
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right:10),
+                                  child: Text(produit.taille, style:TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 15,
+                                      fontFamily:
+                                      "MonseraBold"),),
+                                )
+                              ],
                             )
                         ),
                         SizedBox(height: longueurPerCent(10, context),),

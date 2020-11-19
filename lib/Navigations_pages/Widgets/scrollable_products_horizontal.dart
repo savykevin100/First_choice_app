@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -221,23 +222,37 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   longueurPerCent(5, context),
                                   left: largeurPerCent(4, context)
                               ),
-                              child: RatingBar.builder(
-                                initialRating: snapshot.data[i].numberStar.ceilToDouble(),
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 3,
-                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 10,
-                                ),
-                                itemSize: 20,
-                                ignoreGestures: true,
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RatingBar.builder(
+                                    initialRating: snapshot.data[i].numberStar.ceilToDouble(),
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 3,
+                                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 10,
+                                    ),
+                                    itemSize: 20,
+                                    ignoreGestures: true,
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right:10),
+                                    child: Text(snapshot.data[i].taille, style:TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 15,
+                                        fontFamily:
+                                        "MonseraBold"),),
+                                  )
+                                ],
                               )
                           )
                         ],

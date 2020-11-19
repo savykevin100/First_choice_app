@@ -508,7 +508,7 @@ class _Panier1State extends State<Panier1> {
         builder: (BuildContext context) => CustomDialog(
           title: "Livraison",
           description:
-          "Le temps estimatif de la livraison est entre 60 et 90 minutes. Nos heures de livraison sont entre 10H - 18H",
+          "Le temps estimatif de la livraison est entre 90 et 120 minutes à Cotonou et Calavi. Nos heures de livraison sont entre 10H - 18H.",
           cancelButton: FlatButton(
             onPressed: () {
               Navigator.of(context).pop(); // To close the dialog

@@ -274,25 +274,39 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                             padding: EdgeInsets.only(
                                 top: longueurPerCent(10, context),
                                 left: largeurPerCent(4, context)),
-                            child: RatingBar.builder(
-                              initialRating: widget.data[index]["numberStar"]
-                                  .ceilToDouble(),
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 3,
-                              itemPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.0),
-                              ignoreGestures: true,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 10,
-                              ),
-                              itemSize: 20,
-                              onRatingUpdate: (rating) {
-                                print(rating);                                                                                                                                                                  
-                              },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RatingBar.builder(
+                                  initialRating: widget.data[index]["numberStar"]
+                                      .ceilToDouble(),
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 3,
+                                  itemPadding: EdgeInsets.symmetric(
+                                      horizontal: 4.0),
+                                  ignoreGestures: true,
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 10,
+                                  ),
+                                  itemSize: 20,
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right:10),
+                                  child: Text(widget.data[index]["taille"], style:TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 15,
+                                      fontFamily:
+                                      "MonseraBold"),),
+                                )
+                              ],
                             )),
                         SizedBox(
                           height: longueurPerCent(10, context),
