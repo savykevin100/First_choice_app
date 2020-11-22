@@ -296,16 +296,17 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                                   itemSize: 20,
                                   onRatingUpdate: (rating) {
                                     print(rating);
+
                                   },
                                 ),
-                                Padding(
+                                /*Padding(
                                   padding: EdgeInsets.only(right:10),
                                   child: Text(widget.data[index]["taille"], style:TextStyle(
                                       color: Colors.blue,
                                       fontSize: 15,
                                       fontFamily:
                                       "MonseraBold"),),
-                                )
+                                )*/
                               ],
                             )),
                         SizedBox(

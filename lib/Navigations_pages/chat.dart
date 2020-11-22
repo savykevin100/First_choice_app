@@ -24,7 +24,7 @@ class _ChatState extends State<Chat> {
     String url ="https://api.whatsapp.com/send?phone="+phone;
 
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(url, headers: {"message": "Je viens de l'appplication 1er choix"});
     } else {
       throw 'Could not launch $url';
     }
@@ -133,7 +133,7 @@ class _ChatState extends State<Chat> {
                   height: longueurPerCent(50.0, context),
                   child: GestureDetector(
                     onTap: () {
-                      launchWhatsApp("22996184655");
+                      launchWhatsApp("229952062071");
                     },
                     child: Material(
                       borderRadius: BorderRadius.circular(7.0),

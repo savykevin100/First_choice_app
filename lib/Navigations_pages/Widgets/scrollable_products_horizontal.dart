@@ -13,7 +13,7 @@ import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
-import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:random_color/random_color.dart';
 
 
 /***************************************************************************************************/
@@ -50,6 +50,9 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async {
 DateTime expiryBadgeNew;
 
 
+RandomColor _randomColor = RandomColor();
+
+
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 /*Fin de la fonction*/
 // ignore: non_constant_identifier_names
@@ -64,8 +67,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
             child: CircularProgressIndicator(),
           );
         else if (snapshot.data.isEmpty) {
-          return elementsVides(context, Icons.do_not_disturb,
-              "Pas de nouveaux produits ajoutés");
+          return Center();
         }
         else {
           return ListView.builder(
@@ -73,6 +75,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data.length,
               itemBuilder: (context, i) {
+                Color _color = _randomColor.randomColor();
                 expiryBadgeNew = DateTime.parse(snapshot.data[i].expiryBadgeNew);
                 bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
                 Produit produit = snapshot.data[i];
@@ -122,14 +125,14 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                     ),
                                   ),
                                 ),
-                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                                ),
+                                placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                               ),
                             ),
                           ),
                           (displayBadgeNew)? Container(
                             height: longueurPerCent(10, context),
                             color: Colors.red,
+
                             child: Padding(
                               padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
                               child: Text(
@@ -137,7 +140,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                     color: HexColor("#FFFFFF"),
-                                    fontSize: 9.0,
+                                    fontSize:  9.0,
                                     fontFamily: "MontserratBold",
                                     fontWeight: FontWeight.bold
 
@@ -244,14 +247,14 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                       print(rating);
                                     },
                                   ),
-                                  Padding(
+                                  /*Padding(
                                     padding: EdgeInsets.only(right:10),
                                     child: Text(snapshot.data[i].taille, style:TextStyle(
                                         color: Colors.blue,
                                         fontSize: 15,
                                         fontFamily:
                                         "MonseraBold"),),
-                                  )
+                                  )*/
                                 ],
                               )
                           )

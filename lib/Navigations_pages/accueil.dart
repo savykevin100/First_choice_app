@@ -41,13 +41,6 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   }
 
 
-  Future<void> getReduction() async {
-    await Firestore.instance.collection("Reduction").getDocuments().then((value) {
-      value.documents.forEach((element) {
-        print(element.data);
-      });
-    });
-  }
 
 
   @override
@@ -72,12 +65,11 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         print(e.toString());
        }
     });
-    getReduction();
   }
 
   @override
   Widget build(BuildContext context) {
-    return (Renseignements.userData!=null)?Scaffold(
+    return (Renseignements.userData.length==5)?Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar:ScrollAppBar(
         controller: controller,
@@ -170,7 +162,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             boxFit: BoxFit.cover,
             autoplay: true,
             animationCurve: Curves.linearToEaseOut,
-            animationDuration: Duration(seconds: 1),
+            animationDuration: Duration(seconds: 2),
             dotSize: 10.0,
             dotIncreasedColor: Colors.amber,
             dotPosition: DotPosition.bottomCenter,

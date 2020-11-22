@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:random_color/random_color.dart';
 
 
 
@@ -55,6 +56,8 @@ int prixReduit(int prix, int pourcentageReduction){
   return resultat;
 }
 
+RandomColor _randomColor = RandomColor();
+
 
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 // ignore: non_constant_identifier_names
@@ -75,11 +78,11 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
             crossAxisCount: 4,
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, index) {
+              Color _color = _randomColor.randomColor();
               expiryBadgeNew = DateTime.parse(snapshot.data[index].expiryBadgeNew);
               bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
               Produit produit = snapshot.data[index];
               int prixProduit = produit.prix;
-
               return Container(
                 width: largeurPerCent(200, context),
                 margin: EdgeInsets.only(
@@ -119,8 +122,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                              ),
+                              placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                             ),
                           ),
                         ),
@@ -237,14 +239,14 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                     print(rating);
                                   },
                                 ),
-                                Padding(
+                                /*Padding(
                                   padding: EdgeInsets.only(right:10),
                                   child: Text(produit.taille, style:TextStyle(
                                       color: Colors.blue,
                                       fontSize: 15,
                                       fontFamily:
                                       "MonseraBold"),),
-                                )
+                                )*/
                               ],
                             )
                         ),

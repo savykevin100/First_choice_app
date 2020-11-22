@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/databaseClient.dart';
 import 'package:premierchoixapp/IntroPages/PageAcceuil.dart';
@@ -30,15 +29,15 @@ class _FirstPageState extends State<FirstPage> {
   }
 
 
+
   bool currentUser=false;
-  bool ajoue=false;
-  bool isEnd=false;
   List<Map<String, dynamic>> produits=[];
   List<Map<String, dynamic>> produitsFavorisUsers=[];
   String utilisateurConnecte;
-
+  bool validateInscription=true;
   // Table qui contient les éléments du panier
   List<PanierClasseSqflite> panierItems = [];
+  int taille;
 
   String key = "email_user";
 
@@ -47,9 +46,8 @@ class _FirstPageState extends State<FirstPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     List<String> liste = sharedPreferences.getStringList(key);
     if (liste != null) {
-      if(this.mounted)setState(() {
+      if(this.mounted)
         Renseignements.userData = liste;
-      });
     }
   }
 
@@ -59,26 +57,6 @@ class _FirstPageState extends State<FirstPage> {
     await sharedPreferences.setStringList(key, Renseignements.userData);
     obtenir();
   }
-
-
-/*  String keyAjoutPanier="numberAjout";
-  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
-  Future<void> obtenirNumberPanier() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    int liste = sharedPreferences.getInt(keyAjoutPanier);
-    if (liste != null) {
-      setState(() {
-        Renseignements.nombreAjoutPanier = liste;
-      });
-    }
-  }
-  Future<void> ajouterNumberPanier(int value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Renseignements.nombreAjoutPanier = value;
-    await sharedPreferences.setInt(key, Renseignements.nombreAjoutPanier);
-    obtenirNumberPanier();
-  }*/
-
 
   void getDataPanier(){
     DatabaseClient().readPanierData().then((value) {
@@ -95,25 +73,41 @@ class _FirstPageState extends State<FirstPage> {
     getDataPanier();
     getUser().then((value){
       if(value!=null){
-        /*Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
-            print(value.data);
-            ajouter([
-              value.data["numero"],
-              value.data["email"],
-              value.data["nomComplet"],
-              value.data["age"],
-              value.data["sexe"],
-            ]);
-          });*/
-        print(value.email);
-        setState(()  {
+          Firestore.instance.collection("Utilisateurs").document(value.email).get().then((value) {
+            try {
+              ajouter([
+                value.data["numero"],
+                value.data["email"],
+                value.data["nomComplet"],
+                value.data["age"],
+                value.data["sexe"],
+              ]);
+            } catch (e){
+              print("Erreur");
+              setState(() {
+                validateInscription=false;
+              });
+              print(validateInscription);
+            }
+          });
+
+        setState(() {
           currentUser=true;
           utilisateurConnecte=value.email;
+          Renseignements.emailUser=value.email;
         });
-        Firestore.instance
-            .collection("Utilisateurs")
-            .document(value.email)
-            .updateData({"nbAjoutPanier": 0});
+
+        try {
+          Firestore.instance
+              .collection("Utilisateurs")
+              .document(value.email)
+              .updateData({"nbAjoutPanier": 0});
+        } catch (e){
+          print("Il a trouvé une erreur");
+          /*setState(() {
+            validateInscription=true;
+          });*/
+        }
       }
     });
     StarTimer();
@@ -126,17 +120,17 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   route (){
-    if(currentUser ){
+    if(currentUser && validateInscription){
       for(int i=0; i<panierItems.length; i++){
         DatabaseClient().deleteItemPanier(panierItems[i].id , "panier");
       }
-
-
-      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: AllNavigationPage(),
-      ));
-    } else{
-      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 750),child: PageAcceuil(),
-      ));
+      Navigator.pushNamed(context, AllNavigationPage.id);
+    } else if(currentUser && validateInscription==false){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) =>Renseignements(emailAdress: utilisateurConnecte,)));
+    } else if(currentUser==false){
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) =>PageAcceuil()));
     }
   }
   @override
@@ -193,7 +187,7 @@ class _FirstPageState extends State<FirstPage> {
                     margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                     child: Center(
                       child: Text(
-                        "Version 1.00",
+                        "Version 1.0.1",
                         style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
                       ),
                     ),
@@ -207,4 +201,32 @@ class _FirstPageState extends State<FirstPage> {
     );
 
   }
+
+
+  /*String validateInscriptionKey = "validation_inscription";
+
+  /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
+  Future<void> obtenirValidateInscription() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool valeur = sharedPreferences.getBool(validateInscriptionKey);
+    if (valeur != null) {
+      if(this.mounted)
+        setState(() {
+          validateInscription = valeur;
+        });
+    }
+  }
+
+  /* Fin de la fonction */
+
+  /* Cette fonction permet d'ajouter les informations*/
+
+  Future<void> ajouterValidateInscription(bool str) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      validateInscription = str;
+    });
+    await sharedPreferences.setBool(validateInscriptionKey, validateInscription);
+    obtenirValidateInscription();
+  }*/
 }

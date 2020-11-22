@@ -191,7 +191,7 @@ class _Panier1State extends State<Panier1> {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16),
-                            items: ['En Agence', 'A domicile'].map(
+                            items: ['Point de retrait', 'A domicile'].map(
                                   (val) {
                                 return DropdownMenuItem<String>(
                                   value: val,
@@ -237,7 +237,7 @@ class _Panier1State extends State<Panier1> {
                                         setState(() {
                                           prixLivraison=element['prix'];
                                         });
-                                        if(element["prix"]>1000)
+                                        if(element["prix"]>=1000)
                                           setState(() {
                                             listMoyenPayement=['Mobile Money ou Moov Money'];
                                           });
@@ -407,12 +407,15 @@ class _Panier1State extends State<Panier1> {
   displaySnackBarNom(BuildContext context, String text, Color couleur) {
     final snackBar = SnackBar(
       content: Text(text, style: TextStyle(color: couleur, fontSize: 15)),
+
+
+
     );
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   checkInformationsComplete(context) {
-    if (lieu == 'En Agence' && moyenDePayement != null ) {
+    if (lieu == 'Point de retrait' && moyenDePayement != null ) {
       setState(() {
         prixLivraison = 0;
       });
@@ -421,7 +424,7 @@ class _Panier1State extends State<Panier1> {
         builder: (BuildContext context) => CustomDialog(
           title: "Localisation",
           description:
-          "L'agence est située à $locationMagasin. Nous sommes ouvert du Lundi au Samedi de 09H à 20H.",
+          "Le point de retrait est située à $locationMagasin. Nous sommes ouvert du Lundi au Samedi de 09H à 20H.",
           cancelButton: FlatButton(
             onPressed: (
                 ) {
@@ -438,7 +441,7 @@ class _Panier1State extends State<Panier1> {
           nextButton: FlatButton(
             onPressed: (
                 ) {
-              if(lieu=="En Agence" && locationMagasin!=null){
+              if(lieu=="Point de retrait" && locationMagasin!=null){
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -489,18 +492,9 @@ class _Panier1State extends State<Panier1> {
     } else if (lieu == "A domicile" && indication != null && quartier != null &&
         moyenDePayement != null) {
       if (stopSommeLivraisonRetour == 0) {
-        if (DateTime
-            .now()
-            .weekday == 7) {
-          setState(() {
-            prixLivraison = prixLivraison*2;
-            stopSommeLivraisonRetour++;
-          });
-        } else {
           setState(() {
             stopSommeLivraisonRetour++;
           });
-        }
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       showDialog(

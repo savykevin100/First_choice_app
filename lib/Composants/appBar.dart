@@ -52,7 +52,8 @@ class AppBarClasse extends StatefulWidget{
                       nbAjoutPanier=snapshot.data[i].nbAjoutPanier;
                     }
                   }
-                  return Text("$nbAjoutPanier");}
+                  return (nbAjoutPanier<0)?Text("0"):Text('$nbAjoutPanier');
+                }
               }
           ),
           toAnimate: true,

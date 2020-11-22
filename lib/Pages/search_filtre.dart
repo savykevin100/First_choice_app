@@ -80,7 +80,6 @@ class _SearchFiltreState extends State<SearchFiltre> {
 
     await Firestore.instance.collection("Femmes").getDocuments().then((value) {
       value.documents.forEach((element) {
-        print(element.data["nomCategorie"]);
         if (!sousCategorieHommesEtFemmes.contains(element.data["nomCategorie"])) {
           if (this.mounted) {
             setState(() {
@@ -362,7 +361,7 @@ class _SearchFiltreState extends State<SearchFiltre> {
                       top: 10.0, left: 20.0, right: 0.0),
                   margin: const EdgeInsets.only(
                       top: 0.0, left: 0.0, right: 0.0),
-                  height: longueurPerCent(250, context),
+                  height: longueurPerCent(280, context),
                   child: Center(
                     child: StaggeredGridView.countBuilder(
                       reverse: false,

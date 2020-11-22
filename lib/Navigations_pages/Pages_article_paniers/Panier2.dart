@@ -404,37 +404,13 @@ class _Panier2State extends State<Panier2> {
                                             ),
                                           ),
                                           prefixIcon:
-                                          (widget.moyenDePayement !=
-                                              "Mobile Money ou Moov Money")
-                                              ? Padding(
-                                            padding: EdgeInsets.only(
-                                                top: longueurPerCent(
-                                                    5,
-                                                    context),
-                                                bottom:
-                                                longueurPerCent(
-                                                    5,
-                                                    context),
-                                                right: largeurPerCent(
-                                                    10,
-                                                    context),
-                                                left: largeurPerCent(
-                                                    10,
-                                                    context)),
-
-                                          )
-                                              : Text(""),
+                                               Text(""),
                                           hintText: "Espèce",
                                           hintStyle: TextStyle(
                                               color: Colors.red,
                                               fontSize: 15.0,
                                               fontFamily: 'MonseraBold'),
                                           fillColor: Colors.white,
-                                          contentPadding:
-                                          EdgeInsets.only(
-                                              top: 30,
-                                              bottom: 5,
-                                              left: 0),
                                           border: OutlineInputBorder(
                                               borderRadius:
                                               BorderRadius.all(

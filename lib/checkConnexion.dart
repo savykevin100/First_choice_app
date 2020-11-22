@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,39 @@ class _TestState extends State<Test> {
   String _connectionStatus = 'Unknown';
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text("Fermer l'application",  style: TextStyle( color: HexColor("#001C36"),
+            fontSize: 15.0,
+            fontFamily: "MonseraBold")),
+        content: new Text("Voulez-vous quitter l'application?",  style: TextStyle(fontFamily: "MonseraLight")),
+        actions: <Widget>[
+          new GestureDetector(
+              onTap: () => Navigator.of(context).pop(false),
+              child: Text("NON", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(height: longueurPerCent(10, context),),
+
+          SizedBox(width: largeurPerCent(50, context),),
+          new GestureDetector(
+              onTap: () => exit(0),
+              child: Text("OUI", style: TextStyle( color: HexColor("#001C36"),
+                  fontSize: 12.0,
+                  fontFamily: "MonseraBold"),)
+          ),
+          SizedBox(height: longueurPerCent(10, context),),
+          SizedBox(width: largeurPerCent(20, context),),
+        ],
+      ),
+    ) ??
+        false;
+  }
+
 
   @override
   void initState() {
@@ -65,16 +99,19 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: (_connectionStatus == "ConnectivityResult.none")?
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.signal_cellular_connected_no_internet_4_bar_sharp, size: 50, color: Colors.red,),
-                SizedBox(height: longueurPerCent(40, context),),
-                Text(
-                  "Veuillez vérifier votre connexion internet",
-                  style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
-                ),              ],
+          WillPopScope(
+            onWillPop: _onBackPressed,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.signal_cellular_connected_no_internet_4_bar_sharp, size: 50, color: Colors.red,),
+                  SizedBox(height: longueurPerCent(40, context),),
+                  Text(
+                    "Veuillez vérifier votre connexion internet",
+                    style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
+                  ),              ],
+              ),
             ),
           ):widget.displayContains,
     );
