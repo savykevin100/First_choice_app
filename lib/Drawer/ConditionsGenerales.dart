@@ -741,7 +741,7 @@ class _ConditionGeneralesState extends State<ConditionGenerales> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10,top:5),
-                  child: Text("Un délai compris entre 60-120 minutes est sera prévu pour toute livraison.  ",
+                  child: Text("Un délai compris entre 90-120 minutes est sera prévu pour toute livraison.  ",
                     style: TextStyle(
                       color: HexColor("#001C36"),
                       fontSize: 15,

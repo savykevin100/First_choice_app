@@ -133,7 +133,7 @@ class _ChatState extends State<Chat> {
                   height: longueurPerCent(50.0, context),
                   child: GestureDetector(
                     onTap: () {
-                      launchWhatsApp("229952062071");
+                      launchWhatsApp("22952062071");
                     },
                     child: Material(
                       borderRadius: BorderRadius.circular(7.0),

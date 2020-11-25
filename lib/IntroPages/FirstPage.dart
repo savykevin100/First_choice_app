@@ -115,7 +115,7 @@ class _FirstPageState extends State<FirstPage> {
 
   // ignore: non_constant_identifier_names
   StarTimer() async {
-    var duration = Duration(seconds: 9);
+    var duration = Duration(seconds: 7);
     return Timer(duration, route);
   }
 
@@ -187,7 +187,7 @@ class _FirstPageState extends State<FirstPage> {
                     margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                     child: Center(
                       child: Text(
-                        "Version 1.0.1",
+                        "Version 1.0.2",
                         style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
                       ),
                     ),

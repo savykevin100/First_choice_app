@@ -133,10 +133,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             },
             child: Icon(
               Icons.search,
-              color:Colors.white,
+              color: HexColor("#001C36"),
               size: 30,
             ),
-            backgroundColor: Theme.of(context).primaryColor
+            backgroundColor: HexColor("#FFC30D")
         ),
       )
     ):Scaffold(
@@ -276,7 +276,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
         //display all the products
         product_grid_view(FirestoreService().getTousLesProduits()),
         SizedBox(
-          height: longueurPerCent(18, context),
+          height: longueurPerCent(28, context),
 
         ),
       ]),

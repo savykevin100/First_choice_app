@@ -4,6 +4,7 @@ import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
+import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
@@ -90,15 +91,19 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
         floatingActionButton: FloatingButton(
           displayContains: FloatingActionButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SearchFiltre()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SearchFiltre ()));
               },
               child: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: HexColor("#001C36"),
                 size: 30,
               ),
-              backgroundColor: Theme.of(context).primaryColor),
+              backgroundColor: HexColor("#FFC30D")
+          ),
         ));
   }
 }
