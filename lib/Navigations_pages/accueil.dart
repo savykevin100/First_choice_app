@@ -611,17 +611,17 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                       /* Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => ProduitsRecommandes()));*/
                     },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 100),
-                         height: 30,
-                          width: 100,
-                      child: Center(
-                        child: Text("Voir plus", style: TextStyle(
+                    child: Positioned(
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: HexColor("#FFC30D"),
+                        child: Center(
+                          child: Icon(Icons.navigate_next,
+                            size: 40,
                             color: HexColor("#001C36"),
-                            fontSize: 16,
-                            fontFamily: "MonseraBold"),),
+                          )
+                        ),
                       ),
-                      color: HexColor("#FFC30D"),
                     ),
                   ),
                 ):Text("")
@@ -910,16 +910,17 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
               });
           },
           child: Center(
-            child: Container(
-              height: 30,
-              width: 100,
-              child: Center(
-                child: Text("Voir plus", style: TextStyle(
-                    color: HexColor("#001C36"),
-                    fontSize: 16,
-                    fontFamily: "MonseraBold"),),
+            child: Positioned(
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: HexColor("#FFC30D"),
+                child: Center(
+                    child: Icon(Icons.arrow_drop_down_sharp,
+                      size: 40,
+                      color: HexColor("#001C36"),
+                    )
+                ),
               ),
-              color: HexColor("#FFC30D"),
             ),
           ),
         ):Text(""),
