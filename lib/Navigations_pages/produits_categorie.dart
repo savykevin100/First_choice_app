@@ -1,14 +1,17 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
-import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
+import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
+import 'package:scroll_app_bar/scroll_app_bar.dart';
 import '../checkConnexion.dart';
+import 'Pages_article_paniers/panier.dart';
 import 'Widgets/products_gried_view.dart';
 
 // ignore: must_be_immutable
@@ -23,7 +26,7 @@ class ProduitsCategorie extends StatefulWidget {
 }
 
 class _ProduitsCategorieState extends State<ProduitsCategorie> {
-  int ajoutPanier=0;
+  int ajoutPanier = 0;
   ScrollController controller = ScrollController();
 
   @override
@@ -72,38 +75,67 @@ class _ProduitsCategorieState extends State<ProduitsCategorie> {
 
   @override
   Widget build(BuildContext context) {
-    AppBarClasse _appBar = AppBarClasse(
-      titre: widget.titreCategorie,
-      controller: controller,
-      context: context,
-    );
+
     return Scaffold(
-      appBar: _appBar.appBarFunctionStream(),
-      body: Test(displayContains: ListView(
+      appBar: ScrollAppBar(
         controller: controller,
-        children: <Widget>[
-          SizedBox(
-            height: longueurPerCent(30, context),
-          ),
-          product_grid_view(FirestoreService().getSousCategoriesProducts(widget.genre, widget.titreCategorie))
-        ],
-      ),),
-        floatingActionButton: FloatingButton(
-          displayContains: FloatingActionButton(
+        backgroundColor: HexColor("#001c36"),
+        title: Image.asset(
+          "assets/images/1er choix-02.png",
+          height: 100,
+          width: 100,
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              iconSize: 30,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SearchFiltre ()));
-              },
-              child: Icon(
-                Icons.search,
-                color: HexColor("#001C36"),
-                size: 30,
-              ),
-              backgroundColor: HexColor("#FFC30D")
-          ),
-        ));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchFiltre()));
+              }),
+          Badge(
+            badgeContent: StreamBuilder(
+                stream: FirestoreService().getUtilisateurs(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Utilisateur>> snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text("");
+                  } else {
+                    for (int i = 0; i < snapshot.data.length; i++) {
+                      if (snapshot.data[i].email == Renseignements.emailUser) {
+                        ajoutPanier = snapshot.data[i].nbAjoutPanier;
+                      }
+                    }
+                    return Text("$ajoutPanier");
+                  }
+                }),
+            toAnimate: true,
+            position: BadgePosition(top: 0, end: 0),
+            child: IconButton(
+                icon: Icon(
+                  Icons.local_grocery_store,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Panier()));
+                }),
+          )
+        ],
+      ),
+      body: Test(
+        displayContains: ListView(
+          controller: controller,
+          children: <Widget>[
+            SizedBox(
+              height: longueurPerCent(30, context),
+            ),
+            product_grid_view(FirestoreService()
+                .getSousCategoriesProducts(widget.genre, widget.titreCategorie))
+          ],
+        ),
+      ),
+    );
   }
 }

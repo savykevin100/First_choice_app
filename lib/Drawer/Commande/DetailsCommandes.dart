@@ -339,7 +339,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: HexColor("#001C36"),
-                                      fontSize: 15,
+                                      fontSize: 11,
                                       fontFamily: "MonseraBold"),
                                 ),
                                 Text(

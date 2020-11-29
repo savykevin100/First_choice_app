@@ -412,9 +412,16 @@ class _RenseignementsState extends State<Renseignements> {
               numero: numeroPayement,
               email: widget.emailAdress,
               nbAjoutPanier: 0,
-              orderNumber: 0
+              orderNumber: 0,
           ),
           widget.emailAdress);
+      ajouter([
+        numeroPayement,
+        widget.emailAdress,
+        nomComplet,
+        age.substring(0, 10),
+       sexe,
+      ]);
       if(tokenUser!=null)
         Firestore.instance.collection("TokensUsers").where("token", isEqualTo: tokenUser).getDocuments().then((value) {
           if(value.documents.isEmpty){

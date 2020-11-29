@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -67,7 +68,11 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
       builder: (BuildContext context,
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: Center(child: SpinKitFadingCircle(
+              color: HexColor("#001c36"),
+              size: 30,)),
+          );
         } else if (snapshot.data.isEmpty) {
           return elementsVides(context, Icons.do_not_disturb,
               "Pas de nouveaux produits ajoutés");
@@ -114,14 +119,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                 topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
                               imageUrl: produit.image1,
-                              imageBuilder: (context, imageProvider) => Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+                              fit: BoxFit.cover,
                               placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                             ),
                           ),

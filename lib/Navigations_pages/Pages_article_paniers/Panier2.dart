@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kkiapay_flutter_sdk/kkiapayWebview.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -822,7 +823,9 @@ class _Panier2State extends State<Panier2> {
             style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
           ),
         ),
-        body: Center(child: CircularProgressIndicator(),),
+        body:  Center(child: SpinKitFadingCircle(
+          color: HexColor("#001c36"),
+          size: 30,)),
       );
     }
   }

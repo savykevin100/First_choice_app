@@ -688,7 +688,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
       Uint8List bytes = await consolidateHttpClientResponseBytes(response);
       await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! Regarde ce que j'ai trouvé sur 1er Choix. Je pense qu'il t'irait comme un gant. Catégorie: "+ widget.produit.sousCategorie+
           ", Nom " + widget.produit.nomDuProduit +
-          ". Tu n'as pas l'appli? Télécharge le shap shap : https://play.google.com/store/apps/details?id=com.followme.premierchoix");
+          ". Tu n'as pas l'appli? Télécharge la shap shap : https://play.google.com/store/apps/details?id=com.followme.premierchoix");
       setState(() {
         chargement=false;
       });

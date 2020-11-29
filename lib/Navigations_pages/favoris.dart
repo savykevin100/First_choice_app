@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
@@ -132,7 +133,9 @@ class _FavorisState extends State<Favoris> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<Produit>> snapshot) {
                 if (snapshot.hasError || !snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
+                  return  Center(child: SpinKitFadingCircle(
+                    color: HexColor("#001c36"),
+                    size: 30,));
                 } else if(snapshot.data.isEmpty){
                   return elementsVides(context, Icons.favorite, "Pas de favoris");
                 }

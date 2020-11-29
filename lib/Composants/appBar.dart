@@ -39,6 +39,7 @@ class AppBarClasse extends StatefulWidget{
       ),
       iconTheme: IconThemeData(color: Colors.white),
       actions: <Widget>[
+
         Badge(
           badgeContent:StreamBuilder(
               stream: FirestoreService().getUtilisateurs(),

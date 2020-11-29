@@ -8,6 +8,7 @@ import 'package:premierchoixapp/Design/CustomDialog.dart';
 import 'package:premierchoixapp/IntroPages/PageAcceuil.dart';
 import 'package:premierchoixapp/IntroPages/FirstPage.dart';
 import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
+import 'package:premierchoixapp/Navigations_pages/accueil.dart';
 import 'Authentification/Decision.dart';
 import 'Authentification/connexion.dart';
 import 'Authentification/renisialisation_passwd.dart';
@@ -32,7 +33,7 @@ void _enablePlatformOverrideForDesktop() {
   }
 }
 
-void main() {
+Future<void> main() async {
   _enablePlatformOverrideForDesktop();
   runApp(MyApp());
 }
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
         CustomDialog.id: (context) => CustomDialog(),
         DisplaySearchResult.id: (context) => DisplaySearchResult(),
         PageAcceuil.id: (context) => PageAcceuil(),
+        Accueil.id: (context) => Accueil(),
         IntroScreen.id: (context) => IntroScreen(),
       },
     );

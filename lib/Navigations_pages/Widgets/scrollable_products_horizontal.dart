@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -63,19 +64,21 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
       builder: (BuildContext context,
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData)
-          return Center(
-            child: CircularProgressIndicator(),
+          return  Center(
+            child: Center(child: SpinKitFadingCircle(
+              color: HexColor("#001c36"),
+              size: 30,)),
           );
         else if (snapshot.data.isEmpty) {
           return Center();
         }
         else {
+          Color _color = _randomColor.randomColor();
           return ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data.length,
               itemBuilder: (context, i) {
-                Color _color = _randomColor.randomColor();
                 expiryBadgeNew = DateTime.parse(snapshot.data[i].expiryBadgeNew);
                 bool displayBadgeNew = !expiryBadgeNew.isBefore(DateTime.now());
                 Produit produit = snapshot.data[i];
@@ -91,7 +94,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                   },
                   child: Container(
                     height: double.infinity,
-                    width: largeurPerCent(190, context),
+                    width: largeurPerCent(90, context),
                     margin: EdgeInsets.only(
                         left: largeurPerCent(10, context)),
                     decoration: BoxDecoration(
@@ -117,14 +120,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   Radius.circular(10)),
                               child: CachedNetworkImage(
                                 imageUrl: snapshot.data[i].image1,
-                                imageBuilder: (context, imageProvider) => Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
+                                fit: BoxFit.cover,
                                 placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                               ),
                             ),

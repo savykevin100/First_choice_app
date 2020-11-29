@@ -174,8 +174,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
           "https://firebasestorage.googleapis.com/v0/b/marketeurfollomme.appspot.com/o/Untitled-2.jpg?alt=media&token=a1cbb03c-1e96-4fb7-b3e3-184f3c387f0e"));
       var response = await request.close();
       Uint8List bytes = await consolidateHttpClientResponseBytes(response);
-      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! T'a déjà la nouvelle appli tendance de vente de vêtements de fripérie? Sinon"
-          " Télécharge le shap shap: https://play.google.com/store/apps/details?id=com.followme.premierchoix");
+      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! T'as déjà la nouvelle appli tendance de vente de vêtements de friperie? Sinon"
+          " Télécharge la shap shap: https://play.google.com/store/apps/details?id=com.followme.premierchoix");
       setState(() {
         chargement=false;
       });

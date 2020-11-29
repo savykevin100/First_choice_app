@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -166,7 +167,11 @@ class _CategoriesState extends State<Categories> {
                     builder: (BuildContext context,
                         AsyncSnapshot<List<InfoCategories>> snapshot) {
                       if (snapshot.hasError || !snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return  Center(
+                          child: Center(child: SpinKitFadingCircle(
+                            color: HexColor("#001c36"),
+                            size: 30,)),
+                        );
                       } else {
                         return StaggeredGridView.countBuilder(
                           crossAxisCount: 4,
@@ -252,7 +257,11 @@ class _CategoriesState extends State<Categories> {
                     builder: (BuildContext context,
                         AsyncSnapshot<List<InfoCategories>> snapshot) {
                       if (snapshot.hasError || !snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(
+                          child: Center(child: SpinKitFadingCircle(
+                            color: HexColor("#001c36"),
+                            size: 30,)),
+                        );
                       } else {
                         return StaggeredGridView.countBuilder(
                           crossAxisCount: 4,
