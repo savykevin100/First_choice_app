@@ -15,9 +15,7 @@ import 'accueil.dart';
 // ignore: must_be_immutable
 class AllNavigationPage extends StatefulWidget {
   static String id = 'all_navigation_pages';
-  List<Map<String, dynamic>> produits=[];
-  String email;
-  AllNavigationPage({this.produits, this.email});
+
 
   @override
   _AllNavigationPageState createState() => _AllNavigationPageState();
@@ -67,6 +65,7 @@ Widget build(BuildContext context) {
   return Scaffold(
       backgroundColor: Colors.white,
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: <Widget>[
           Accueil(),
@@ -81,7 +80,8 @@ Widget build(BuildContext context) {
       ),
       bottomNavigationBar: Container(
         child: CurvedNavigationBar(
-
+            animationCurve:  Curves.decelerate,
+            animationDuration: Duration(milliseconds: 10),
             backgroundColor: Colors.white.withOpacity(0.9),
             index: bottomSelectedIndex,
             items: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
@@ -312,7 +313,9 @@ if(name!=null){
     appBar: AppBar(
       title: Text("Mon compte", style: TextStyle(color: Colors.white, fontFamily: "MontserratBold",fontSize: 24.0,fontWeight: FontWeight.bold),),
     ),
-    body: Center(child: CircularProgressIndicator(),),
+    body: Center(child: SpinKitFadingCircle(
+      color: HexColor("#001c36"),
+      size: 30,)),
   );
 }
 

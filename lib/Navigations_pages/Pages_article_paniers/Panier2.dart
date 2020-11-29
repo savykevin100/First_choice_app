@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kkiapay_flutter_sdk/kkiapayWebview.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
@@ -365,7 +366,7 @@ class _Panier2State extends State<Panier2> {
                                   (widget.moyenDePayement != "Mobile Money ou Moov Money")
                                       ? Container(
                                     margin: EdgeInsets.only(
-                                      left: longueurPerCent(5, context),
+                                      left: longueurPerCent(0, context),
                                       right:
                                       longueurPerCent(5, context),
                                       top: longueurPerCent(0, context),
@@ -404,37 +405,13 @@ class _Panier2State extends State<Panier2> {
                                             ),
                                           ),
                                           prefixIcon:
-                                          (widget.moyenDePayement !=
-                                              "Mobile Money ou Moov Money")
-                                              ? Padding(
-                                            padding: EdgeInsets.only(
-                                                top: longueurPerCent(
-                                                    5,
-                                                    context),
-                                                bottom:
-                                                longueurPerCent(
-                                                    5,
-                                                    context),
-                                                right: largeurPerCent(
-                                                    10,
-                                                    context),
-                                                left: largeurPerCent(
-                                                    10,
-                                                    context)),
-
-                                          )
-                                              : Text(""),
+                                               Text(""),
                                           hintText: "Espèce",
                                           hintStyle: TextStyle(
                                               color: Colors.red,
                                               fontSize: 15.0,
                                               fontFamily: 'MonseraBold'),
                                           fillColor: Colors.white,
-                                          contentPadding:
-                                          EdgeInsets.only(
-                                              top: 30,
-                                              bottom: 5,
-                                              left: 30),
                                           border: OutlineInputBorder(
                                               borderRadius:
                                               BorderRadius.all(
@@ -846,7 +823,9 @@ class _Panier2State extends State<Panier2> {
             style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
           ),
         ),
-        body: Center(child: CircularProgressIndicator(),),
+        body:  Center(child: SpinKitFadingCircle(
+          color: HexColor("#001c36"),
+          size: 30,)),
       );
     }
   }
@@ -934,11 +913,11 @@ class _Panier2State extends State<Panier2> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>  KKiaPay(
-                    amount: (totalPlusLivraison*(1-0.019)).toInt()+1,
-                    phone: '61000000',
+                    amount: totalPlusLivraison,
+                    phone: numeroDePayement,
                     data: 'hello world',
-                    sandbox: true,
-                    apikey: '5eff6ca0203711eba0637f280536fc17',
+                    sandbox: false,
+                    apikey: '5cbf40a0203711ebbec8c3d1da3201d0',
                     callback: sucessCallback,
                     name: widget.nomComplet,
                     theme: "#001c36",

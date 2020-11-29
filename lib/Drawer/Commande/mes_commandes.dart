@@ -5,6 +5,7 @@ import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
 import 'package:premierchoixapp/Drawer/Commande/DetailsCommandes.dart';
+import 'package:premierchoixapp/Pages/elements_vides.dart';
 
 class MesCommandes extends StatefulWidget {
   @override
@@ -53,181 +54,191 @@ int taille;
     if(loading==taille){
       return Scaffold(
           appBar: AppBar(
-            title: Text("Liste des commandes",
-              style: TextStyle(color: Colors.white, fontFamily: "MonseraBold"),
+            title: Text(
+              "Liste des commandes",
+              style: TextStyle(color: Colors.white, fontFamily: "MonseraBold",fontSize: 16),
             ),
           ),
-          body:
+          body:(loading!=0)?
           Center(
               child: Container(
                   margin: EdgeInsets.only(top: longueurPerCent(30, context), left: largeurPerCent(20, context), right: largeurPerCent(20, context), ),
                   child: ListView.builder(
                       itemCount:commandes.length,
                       itemBuilder: (context, i){
-                        return  Container(
-                          margin: EdgeInsets.only(bottom: longueurPerCent(20, context)),
-                          width: largeurPerCent(360.0, context),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.white,
-                            elevation: 7.0,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Material(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
-                                    color: HexColor("#FFC30D"),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(longueurPerCent(10, context)),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                         /* Text(
+                         return  Container(
+                           margin: EdgeInsets.only(bottom: longueurPerCent(20, context)),
+                           width: largeurPerCent(360.0, context),
+                           child: Material(
+                             borderRadius: BorderRadius.circular(7),
+                             color: Colors.white,
+                             elevation: 7.0,
+                             child: Column(
+                               children: <Widget>[
+                                 Container(
+                                   width: MediaQuery.of(context).size.width,
+                                   child: Material(
+                                     borderRadius: BorderRadius.only(topLeft: Radius.circular(7),topRight: Radius.circular(7),),
+                                     color: HexColor("#FFC30D"),
+                                     child: Padding(
+                                       padding: EdgeInsets.all(longueurPerCent(10, context)),
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         children: [
+                                           /* Text(
                                             "${commandes[i]["numberOrder"]}",
                                             style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 15.0, fontWeight: FontWeight.bold ),
                                           ),*/
-                                         // Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
-                                          Text(commandes[i]["created"],   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: longueurPerCent(10, context),),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: longueurPerCent(0.0, context),
-                                          right: longueurPerCent(0.0, context),
-                                          left: longueurPerCent(10.0, context)),
-                                      child: Text(
-                                        "Nbre de produits",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            color: HexColor("#909090"),
-                                            fontSize: 12,
-                                            fontFamily: "MonseraBold"),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 7,
-                                      child: Padding(
-                                        padding:
-                                        EdgeInsets.only(right: largeurPerCent(12, context)),
-                                        child: Text(
-                                          "${commandes[i]["produitsCommander"].length}",
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            color: HexColor("#001C36"),
-                                            fontSize: 12,
-                                            fontFamily: "MontserratBold",
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: longueurPerCent(10, context),),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: longueurPerCent(0.0, context),
-                                          right: longueurPerCent(0.0, context),
-                                          left: longueurPerCent(10.0, context)),
-                                      child: Text(
-                                        "Total        ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: HexColor("#909090"),
-                                            fontSize: 12,
-                                            fontFamily: "MonseraBold"),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      EdgeInsets.only(right: longueurPerCent(12, context)),
-                                      child: PriceWithDot(price: commandes[i]["sousTotal"], size:12 ,
-                                        couleur: HexColor("#001C36"), police:  "MontserratBold",
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: longueurPerCent(10, context),),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          top: longueurPerCent(0.0, context),
-                                          right: longueurPerCent(0.0, context),
-                                          left: longueurPerCent(10.0, context)),
-                                      child: Text(
-                                        "Statut",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: HexColor("#909090"),
-                                            fontSize: 12,
-                                            fontFamily: "MonseraBold"),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 7,
-                                      child: Padding(
-                                          padding:
-                                          EdgeInsets.only(right: longueurPerCent(12, context)),
-                                          child:statutCommande((commandes[i]["livrer"]))
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height:longueurPerCent(20.0, context)),
-                                Container(
-                                  margin: EdgeInsets.only(bottom: longueurPerCent(10, context), ),
-                                  height: longueurPerCent(30.0, context),
-                                  width: largeurPerCent(100.0, context),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                                        return DetailsCommandes(commande:commandes[i], longueur: commandes[i]["produitsCommander"].length);
-                                      }));
-                                    },
-                                    child: Material(
-                                      borderRadius: BorderRadius.circular(3.0),
-                                      color: HexColor("#001C36"),
-                                      elevation: 7.0,
-                                      child: Center(
-                                        child: Text(
-                                          'VOIR',
-                                          style: TextStyle(color: HexColor("#FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                                           // Text(commandes[i]["created"].toString().substring(0, 19),   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
+                                           Text(commandes[i]["created"],   style: TextStyle(color: HexColor("#001C36"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),)
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                                 SizedBox(height: longueurPerCent(10, context),),
+                                 Row(
+                                   children: <Widget>[
+                                     Container(
+                                       margin: EdgeInsets.only(
+                                           top: longueurPerCent(0.0, context),
+                                           right: longueurPerCent(0.0, context),
+                                           left: longueurPerCent(10.0, context)),
+                                       child: Text(
+                                         "Nbre de produits",
+                                         textAlign: TextAlign.right,
+                                         style: TextStyle(
+                                             color: HexColor("#909090"),
+                                             fontSize: 12,
+                                             fontFamily: "MonseraBold"),
+                                       ),
+                                     ),
+                                     Expanded(
+                                       flex: 7,
+                                       child: Padding(
+                                         padding:
+                                         EdgeInsets.only(right: largeurPerCent(12, context)),
+                                         child: Text(
+                                           "${commandes[i]["produitsCommander"].length}",
+                                           textAlign: TextAlign.right,
+                                           style: TextStyle(
+                                             color: HexColor("#001C36"),
+                                             fontSize: 12,
+                                             fontFamily: "MontserratBold",
+                                             fontWeight: FontWeight.bold,
+                                           ),
+                                         ),
+                                       ),
+                                     ),
+                                   ],
+                                 ),
+                                 SizedBox(height: longueurPerCent(10, context),),
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                   children: <Widget>[
+                                     Container(
+                                       margin: EdgeInsets.only(
+                                           top: longueurPerCent(0.0, context),
+                                           right: longueurPerCent(0.0, context),
+                                           left: longueurPerCent(10.0, context)),
+                                       child: Text(
+                                         "Total        ",
+                                         textAlign: TextAlign.left,
+                                         style: TextStyle(
+                                             color: HexColor("#909090"),
+                                             fontSize: 12,
+                                             fontFamily: "MonseraBold"),
+                                       ),
+                                     ),
+                                     Padding(
+                                       padding:
+                                       EdgeInsets.only(right: longueurPerCent(12, context)),
+                                       child: PriceWithDot(price: commandes[i]["sousTotal"], size:12 ,
+                                         couleur: HexColor("#001C36"), police:  "MontserratBold",
+                                       ),
+                                     ),
+                                   ],
+                                 ),
+                                 SizedBox(height: longueurPerCent(10, context),),
+                                 Row(
+                                   children: <Widget>[
+                                     Container(
+                                       margin: EdgeInsets.only(
+                                           top: longueurPerCent(0.0, context),
+                                           right: longueurPerCent(0.0, context),
+                                           left: longueurPerCent(10.0, context)),
+                                       child: Text(
+                                         "Statut",
+                                         textAlign: TextAlign.left,
+                                         style: TextStyle(
+                                             color: HexColor("#909090"),
+                                             fontSize: 12,
+                                             fontFamily: "MonseraBold"),
+                                       ),
+                                     ),
+                                     Expanded(
+                                       flex: 7,
+                                       child: Padding(
+                                           padding:
+                                           EdgeInsets.only(right: longueurPerCent(12, context)),
+                                           child:statutCommande((commandes[i]["livrer"]))
+                                       ),
+                                     ),
+                                   ],
+                                 ),
+                                 SizedBox(height:longueurPerCent(20.0, context)),
+                                 Container(
+                                   margin: EdgeInsets.only(bottom: longueurPerCent(10, context), ),
+                                   height: longueurPerCent(30.0, context),
+                                   width: largeurPerCent(100.0, context),
+                                   child: GestureDetector(
+                                     onTap: () {
+                                       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                                         return DetailsCommandes(commande:commandes[i], longueur: commandes[i]["produitsCommander"].length);
+                                       }));
+                                     },
+                                     child: Material(
+                                       borderRadius: BorderRadius.circular(3.0),
+                                       color: HexColor("#001C36"),
+                                       elevation: 7.0,
+                                       child: Center(
+                                         child: Text(
+                                           'VOIR',
+                                           style: TextStyle(color: HexColor("#FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
+                                         ),
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ],
+                             ),
+                           ),
+                         );
                       }
                   )
               )
+          ):Center(
+            child: elementsVides(context, Icons.remove_shopping_cart_sharp,
+                "Pas de commandes effectuées"),
           ),
       );
     } else if(loading!=taille && taille!=0){
       return Scaffold(
         appBar:AppBar(
-          title: Text("Liste des commandes"),
+          title:Text(
+            "Liste des commandes",
+            style: TextStyle(color: Colors.white, fontFamily: "MonseraBold",fontSize: 16),
+          ),
         ),
         body:  Center(child: CircularProgressIndicator(),),
       );
-    } else if(taille==0){
+    } else if(loading!=taille){
       return Scaffold(
         appBar: AppBar(
-          title: Text("Liste des commandes"),
+          title:Text(
+            "Liste des commandes",
+            style: TextStyle(color: Colors.white, fontFamily: "MonseraBold",fontSize: 16),
+          ),
         ),
         body: Center(
           child: Text("Pas de commande"),
@@ -271,4 +282,3 @@ int taille;
       }
 
 }
-/*     */

@@ -115,7 +115,7 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                             child: Padding(
                               padding:
                               EdgeInsets.only(right: largeurPerCent(10, context),left: largeurPerCent(20, context)),
-                              child:  (widget.commande["lieuDeLivraison"]=="En Agence")? Text(
+                              child:  (widget.commande["lieuDeLivraison"]=="Point de retrait")? Text(
                                 widget.commande["indication"],
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -335,11 +335,11 @@ class _DetailsCommandesState extends State<DetailsCommandes> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Mobile Money: ",
+                                  "Mobile Money ou Moov Money: ",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: HexColor("#001C36"),
-                                      fontSize: 15,
+                                      fontSize: 11,
                                       fontFamily: "MonseraBold"),
                                 ),
                                 Text(

@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
@@ -12,7 +14,7 @@ import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
-import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:random_color/random_color.dart';
 
 
 /***************************************************************************************************/
@@ -49,6 +51,9 @@ void idProduitsFavorisUser(Produit produit, BuildContext context) async {
 DateTime expiryBadgeNew;
 
 
+RandomColor _randomColor = RandomColor();
+
+
 ////////////////////////////////////////////////////////////////////Fin de la fonction //////////////////////////////////////////////////////////
 /*Fin de la fonction*/
 // ignore: non_constant_identifier_names
@@ -59,14 +64,16 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
       builder: (BuildContext context,
           AsyncSnapshot<List<Produit>> snapshot) {
         if (snapshot.hasError || !snapshot.hasData)
-          return Center(
-            child: CircularProgressIndicator(),
+          return  Center(
+            child: Center(child: SpinKitFadingCircle(
+              color: HexColor("#001c36"),
+              size: 30,)),
           );
         else if (snapshot.data.isEmpty) {
-          return elementsVides(context, Icons.do_not_disturb,
-              "Pas de nouveaux produits ajoutés");
+          return Center();
         }
         else {
+          Color _color = _randomColor.randomColor();
           return ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -87,7 +94,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                   },
                   child: Container(
                     height: double.infinity,
-                    width: largeurPerCent(190, context),
+                    width: largeurPerCent(90, context),
                     margin: EdgeInsets.only(
                         left: largeurPerCent(10, context)),
                     decoration: BoxDecoration(
@@ -113,22 +120,15 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   Radius.circular(10)),
                               child: CachedNetworkImage(
                                 imageUrl: snapshot.data[i].image1,
-                                imageBuilder: (context, imageProvider) => Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                                ),
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                               ),
                             ),
                           ),
                           (displayBadgeNew)? Container(
                             height: longueurPerCent(10, context),
                             color: Colors.red,
+
                             child: Padding(
                               padding: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context),),
                               child: Text(
@@ -136,7 +136,7 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                     color: HexColor("#FFFFFF"),
-                                    fontSize: 9.0,
+                                    fontSize:  9.0,
                                     fontFamily: "MontserratBold",
                                     fontWeight: FontWeight.bold
 
@@ -221,23 +221,37 @@ Widget scrollabe_products_horizontal( Stream<List<Produit>> askDb){
                                   longueurPerCent(5, context),
                                   left: largeurPerCent(4, context)
                               ),
-                              child: RatingBar.builder(
-                                initialRating: snapshot.data[i].numberStar.ceilToDouble(),
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 3,
-                                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 10,
-                                ),
-                                itemSize: 20,
-                                ignoreGestures: true,
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  RatingBar.builder(
+                                    initialRating: snapshot.data[i].numberStar.ceilToDouble(),
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 3,
+                                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 10,
+                                    ),
+                                    itemSize: 20,
+                                    ignoreGestures: true,
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
+                                  /*Padding(
+                                    padding: EdgeInsets.only(right:10),
+                                    child: Text(snapshot.data[i].taille, style:TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 15,
+                                        fontFamily:
+                                        "MonseraBold"),),
+                                  )*/
+                                ],
                               )
                           )
                         ],

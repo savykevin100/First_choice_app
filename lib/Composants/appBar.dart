@@ -39,6 +39,7 @@ class AppBarClasse extends StatefulWidget{
       ),
       iconTheme: IconThemeData(color: Colors.white),
       actions: <Widget>[
+
         Badge(
           badgeContent:StreamBuilder(
               stream: FirestoreService().getUtilisateurs(),
@@ -52,7 +53,8 @@ class AppBarClasse extends StatefulWidget{
                       nbAjoutPanier=snapshot.data[i].nbAjoutPanier;
                     }
                   }
-                  return Text("$nbAjoutPanier");}
+                  return (nbAjoutPanier<0)?Text("0"):Text('$nbAjoutPanier');
+                }
               }
           ),
           toAnimate: true,
@@ -77,3 +79,5 @@ class AppBarClasse extends StatefulWidget{
 
 
 }
+
+/*com.example.marketeur_follow_me*/

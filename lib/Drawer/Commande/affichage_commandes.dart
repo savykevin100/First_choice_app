@@ -18,7 +18,10 @@ class _AffichageCommandesState extends State<AffichageCommandes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Liste des commandes"),
+        title:Text(
+          "Tableaux des Mensurations",
+          style: TextStyle(color: Colors.white, fontFamily: "MonseraBold",fontSize: 16),
+        ),
       ),
       body: Center(
         child: StreamBuilder(
@@ -26,10 +29,10 @@ class _AffichageCommandesState extends State<AffichageCommandes> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<Commandes>> snapshot) {
               if (snapshot.hasError || !snapshot.hasData) {
-                print(snapshot.hasData);
+                print(snapshot.hasError.toString());
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.data.isEmpty) {
-                return elementsVides(context, Icons.local_grocery_store,
+                return elementsVides(context, Icons.remove_shopping_cart_sharp,
                     "Pas de commandes effectuées");
               } else {
                 return Container(

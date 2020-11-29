@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -87,7 +88,9 @@ class _NotificationsState extends State<Notifications> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<InformationNotification>> snapshot) {
               if (snapshot.hasError || !snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return  Center(child: SpinKitFadingCircle(
+                  color: HexColor("#001c36"),
+                  size: 30,));
               } else if(snapshot.data.isEmpty)
                 return elementsVides(context, Icons.notifications_none, "Pas de nouvelle notification");
               else {

@@ -71,7 +71,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10,top:5),
-            child: Text("Les présentes dispositions ci-après désignées sous les vocables ‘’Conditions Générales d’Utilisation’’ ou ‘’CGU’’ sont réputées établies afin régir les usages et rapports entre les internautes ci-après désignés sous le vocable ‘’Utilisateur’’ accédant ponctuellement ou de façon récurrente à 1er CHOIX, ci-après désigné sous le vocable ‘’Plateforme’’ et ladite Plateforme.",
+            child: Text("Les présentes dispositions ci-après désignées sous les vocables ‘’Conditions Générales d’Utilisation’’ ou ‘’CGU’’ sont réputées établies afin de régir les usages et rapports entre les internautes ci-après désignés sous le vocable ‘’Utilisateur’’ accédant ponctuellement ou de façon récurrente à 1er CHOIX, ci-après désigné sous le vocable ‘’Plateforme’’ et ladite Plateforme.",
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: HexColor("#001C36"),
@@ -190,7 +190,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10,top: 5),
-            child: Text("L’utilisateur en saisissant son e-mail peu donc accéder à un espace dont l’accès lui est exclusivement réservé en complément de la saisie de son mot de passe.",
+            child: Text("L’utilisateur en saisissant son e-mail peut donc accéder à un espace dont l’accès lui est exclusivement réservé en complément de la saisie de son mot de passe.",
               style: TextStyle(
                 color: HexColor("#001C36"),
                 fontSize: 15,
@@ -741,7 +741,7 @@ class _ConditionGenerales1State extends State<ConditionGenerales1> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10,top:5),
-            child: Text("Un délai compris entre 60-120 minutes est sera prévu pour toute livraison.  ",
+            child: Text("Un délai compris entre 90-120 minutes est sera prévu pour toute livraison.  ",
               style: TextStyle(
                 color: HexColor("#001C36"),
                 fontSize: 15,

@@ -109,7 +109,10 @@ class _InscriptionState extends State<Inscription> {
                           chargement = false;
                         });
                         print(e.toString());
-                        showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
+                        if(e.toString()=="PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)")
+                          showAlertDialog(context, "Veuillez vérifier votre connexion internet");
+                          else
+                          showAlertDialog(context, "Votre email est déjà utilisé par un autre compte");
                       }
                     }
                   }),

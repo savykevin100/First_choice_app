@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -28,6 +33,7 @@ class ProfileSettings extends StatefulWidget {
 class _ProfileSettingsState extends State<ProfileSettings> {
   final _auth = FirebaseAuth.instance;
   Utilisateur donneesUtilisateurConnecte;
+  bool chargement=false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,13 +78,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                 await _auth.signOut();
                 Navigator.pushNamed(context, Connexion.id);
               }),
-          /*drawerItem(
+          drawerItem(
               icon: Icons.share,
               text: "Partager l'application",
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Chat()));
-              }),*/
+                 _shareImageFromUrl();
+
+              }),
           Divider(),
          drawerItem(
               icon: Icons.library_books,
@@ -139,7 +145,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(
+          (chargement && text=="Partager l'application")?CircularProgressIndicator(): Icon(
             icon,
             color:HexColor("#FFC30D"),
           ),
@@ -157,5 +163,24 @@ class _ProfileSettingsState extends State<ProfileSettings> {
       ),
       onTap: onTap,
     );
+  }
+
+  Future<void> _shareImageFromUrl() async {
+    try {
+      setState(() {
+        chargement=true;
+      });
+      var request = await HttpClient().getUrl(Uri.parse(
+          "https://firebasestorage.googleapis.com/v0/b/marketeurfollomme.appspot.com/o/Untitled-2.jpg?alt=media&token=a1cbb03c-1e96-4fb7-b3e3-184f3c387f0e"));
+      var response = await request.close();
+      Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! T'as déjà la nouvelle appli tendance de vente de vêtements de friperie? Sinon"
+          " Télécharge la shap shap: https://play.google.com/store/apps/details?id=com.followme.premierchoix");
+      setState(() {
+        chargement=false;
+      });
+    } catch (e) {
+      print('error: $e');
+    }
   }
 }

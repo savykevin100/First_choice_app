@@ -39,6 +39,9 @@ class _ConnexionState extends State<Connexion> {
 
 
 
+
+
+
     Future<bool> _onBackPressed() {
       return showDialog(
         context: context,
@@ -152,6 +155,8 @@ class _ConnexionState extends State<Connexion> {
                           print(e);
                           if(e.toString()=="PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)")
                             showAlertDialog(context, "Mot de passe incorrect");
+                          else if(e.toString()=="PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)")
+                            showAlertDialog(context, "Veuillez vérifier votre connexion internet");
                           else  showAlertDialog(context, "Aucun email ne correspond à l'email entré");
                         }
                       }

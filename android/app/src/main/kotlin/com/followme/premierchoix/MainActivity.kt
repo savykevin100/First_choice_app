@@ -1,4 +1,4 @@
-package com.example.premierchoixapp
+package com.followme.premierchoix
 
 import io.flutter.embedding.android.FlutterActivity
 
