@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -188,7 +189,7 @@ class _FirstPageState extends State<FirstPage> {
               child: Column(
                 children: <Widget>[
                   FadeInDown(
-                    duration: Duration(seconds: 5),
+                    duration: Duration(seconds: 2),
                     child: Container(
                       margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
                       height: longueurPerCent(227.5, context),
@@ -201,11 +202,27 @@ class _FirstPageState extends State<FirstPage> {
                   Container(
                     margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                     child: Center(
-                      child: Text("S'habiller n'a jamais été aussi simple", style: TextStyle(
+                      child: TyperAnimatedTextKit(
+
+                          text: [
+                            " ",
+                            " ",
+                            "S'habiller n'a jamais été aussi simple",
+                          ],
+                          textStyle: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "MonseraBold",
+                              color: Colors.white
+                          ),
+                          textAlign: TextAlign.start,
+                          alignment: AlignmentDirectional.topStart ,// or Alignment.topLeft
+                          isRepeatingAnimation: false,
+                      ),
+                      /*Text("S'habiller n'a jamais été aussi simple", style: TextStyle(
                           fontSize: 16,
                           fontFamily: "MonseraBold",
                           color: Colors.white
-                      ),)/*FadeAnimatedTextKit(
+                      ),)FadeAnimatedTextKit(
                         onTap: (){
 
                         },
@@ -226,6 +243,7 @@ class _FirstPageState extends State<FirstPage> {
                         duration: Duration(milliseconds: 1000),
                         pause: Duration(milliseconds: 1200),
                       ),*/
+
                     ),
                   ),
                   SizedBox(height: longueurPerCent(40, context),),
