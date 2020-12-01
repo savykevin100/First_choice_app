@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
+import 'package:random_color/random_color.dart';
 
 import '../checkConnexion.dart';
 import 'Pages_article_paniers/article.dart';
@@ -31,6 +32,8 @@ class _FavorisState extends State<Favoris> {
   List<String> identifiantDocumentsFavorisUser=[];
   List<String> etatFavoris=[];
   String nameUser;
+  RandomColor _randomColor = RandomColor();
+
 
   /// Cette fonction permet d'avoir l'identifiant du produit dans les favoris pour pouvoir faciliter le suppression de ce produit
   /// des favoris
@@ -186,8 +189,7 @@ class _FavorisState extends State<Favoris> {
                                           ),
                                         ),
                                       ),
-                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                                      ),
+                                      placeholder: (context, url) =>Container(color:_randomColor.randomColor(), height: longueurPerCent(150, context), width: largeurPerCent(210, context),),
                                     ),),
                                 ),
                                 ConstrainedBox(

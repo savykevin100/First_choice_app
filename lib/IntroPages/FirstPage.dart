@@ -50,7 +50,6 @@ class _FirstPageState extends State<FirstPage> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
-  bool _flexibleUpdateAvailable = false;
 
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -59,7 +58,6 @@ class _FirstPageState extends State<FirstPage> {
       setState(() {
         _updateInfo = info;
       });
-      print(_updateInfo.updateAvailable);
     }).catchError((e) => _showError(e));
   }
 
@@ -102,31 +100,8 @@ class _FirstPageState extends State<FirstPage> {
    // getDataPanier();
     checkForUpdate();
     getUser().then((emailUser){
-     /* Firestore.instance.collection("Informations_générales").document("78k1bDeNwVHCzMy8hMGh").get().then((value) {
-        setState(() {
-          versionActuelle=value.data["version"];
-        });
-        print(versionActuelle);
-      });*/
       if(emailUser!=null){
           Firestore.instance.collection("Utilisateurs").document(emailUser.email).get().then((value) {
-            /*try {
-              if(versionActuelle!=null)
-                if(!value.data.containsKey("version")){
-                  setState(() {
-                    maj=true;
-                  });
-                } else if(value.data["version"]!=versionActuelle)
-                  setState(() {
-                    maj=true;
-                  });
-            } catch (e){
-              print("Erreur");
-              setState(() {
-                validateInscription=false;
-              });
-              print(validateInscription);
-            }*/
             try {
               ajouter([
                 value.data["numero"],
@@ -140,7 +115,6 @@ class _FirstPageState extends State<FirstPage> {
               setState(() {
                 validateInscription=false;
               });
-              print(validateInscription);
             }
           });
 
@@ -162,7 +136,7 @@ class _FirstPageState extends State<FirstPage> {
 
   route (){
     if(currentUser && validateInscription){
-      if(_updateInfo.updateAvailable==false){
+      if(_updateInfo.updateAvailable==true){
            showUpdateDialog();
       } else
         Navigator.push(
@@ -189,7 +163,7 @@ class _FirstPageState extends State<FirstPage> {
               child: Column(
                 children: <Widget>[
                   FadeInDown(
-                    duration: Duration(seconds: 2),
+                    duration: Duration(seconds: 1),
                     child: Container(
                       margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(175.0, context),),
                       height: longueurPerCent(227.5, context),
@@ -217,33 +191,8 @@ class _FirstPageState extends State<FirstPage> {
                           textAlign: TextAlign.start,
                           alignment: AlignmentDirectional.topStart ,// or Alignment.topLeft
                           isRepeatingAnimation: false,
+                          speed: Duration(milliseconds: 30),
                       ),
-                      /*Text("S'habiller n'a jamais été aussi simple", style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "MonseraBold",
-                          color: Colors.white
-                      ),)FadeAnimatedTextKit(
-                        onTap: (){
-
-                        },
-                        text: [
-                          "",
-                          "S'habiller",
-                          "n'a jamais été",
-                          "aussi simple",
-                        ],
-                        textStyle: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "MonseraBold",
-                          color: Colors.white
-                        ),
-                        textAlign: TextAlign.start,
-                          alignment: AlignmentDirectional.topStart,
-                        isRepeatingAnimation: false,
-                        duration: Duration(milliseconds: 1000),
-                        pause: Duration(milliseconds: 1200),
-                      ),*/
-
                     ),
                   ),
                   SizedBox(height: longueurPerCent(40, context),),
@@ -251,7 +200,7 @@ class _FirstPageState extends State<FirstPage> {
                     margin: EdgeInsets.only(left: longueurPerCent(0, context),top: longueurPerCent(46.0, context),),
                     child: Center(
                       child: Text(
-                        "Version 1.0.2",
+                        "Version 1.0.3",
                         style: TextStyle(color: HexColor("##FFFFFF"), fontFamily: 'MontserratBold', fontSize: 12.0, fontWeight: FontWeight.bold ),
                       ),
                     ),

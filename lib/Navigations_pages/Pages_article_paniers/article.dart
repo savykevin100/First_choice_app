@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/appBar.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
@@ -18,6 +19,7 @@ import 'package:premierchoixapp/Models/panier_classe_sqflite.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:random_color/random_color.dart';
 import '../../checkConnexion.dart';
 import 'Panier1.dart';
 
@@ -292,7 +294,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                 ),
               ],
             ),
-            (id_produit!=null && etatIconeFavoris!=null)? mainImage():Center(child: CircularProgressIndicator()),
+            (id_produit!=null && etatIconeFavoris!=null)? mainImage():Center(child: SpinKitFadingCircle(
+              color: HexColor("#001c36"),
+              size: 30,)),
             SizedBox(height: longueurPerCent(20, context),),
             Padding(
               padding:  EdgeInsets.only(left: largeurPerCent(10, context)),
@@ -342,7 +346,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                       child: (id_produit!=null && etatIconeFavoris!=null)?Padding(
                         padding: EdgeInsets.only(right: largeurPerCent(50, context)),
                         child: (Icon((etatIconeFavoris == false)?Icons.favorite_border:Icons.favorite, color: Colors.red, size:30,)),
-                      ):CircularProgressIndicator())
+                      ):Text(""))
                 ],
               ),
             ),
@@ -462,6 +466,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
 
   }
 
+  RandomColor _randomColor = RandomColor();
+
+
   Widget pressImage(String image, bool indexSelector){
     return  (indexSelector)?Container(
       height: longueurPerCent(70, context),
@@ -481,8 +488,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
           ),
         ),
-        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-        ),
+        placeholder: (context, url) =>Container(color:_randomColor.randomColor(), height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
       ),
     ):Container(
       height: longueurPerCent(70, context),
@@ -502,8 +508,7 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
             ),
           ),
         ),
-        placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-        ),
+        placeholder: (context, url) => Container(color:_randomColor.randomColor(), height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
       ),
     );
   }
@@ -643,7 +648,9 @@ class _ArticleSansTailleState extends State<ArticleSansTaille> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HeroPhotoViewRouteWrapper(imageProvider:NetworkImage(imageSelect),
                               loadingBuilder: (BuildContext context, ImageChunkEvent loadingProgress){
-                                return Center(child: CircularProgressIndicator(),);
+                                return Center(child: SpinKitFadingCircle(
+                                  color: HexColor("#001c36"),
+                                  size: 30,));
                               },
                               ),),);
                             },

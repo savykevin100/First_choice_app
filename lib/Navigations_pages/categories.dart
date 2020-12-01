@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/InfoCategories.dart';
 import 'package:premierchoixapp/Navigations_pages/produits_categorie.dart';
+import 'package:random_color/random_color.dart';
 
 import '../checkConnexion.dart';
 
@@ -67,6 +68,7 @@ class _CategoriesState extends State<Categories> {
         false;
   }
 
+  RandomColor _randomColor = RandomColor();
 
 
 
@@ -204,9 +206,7 @@ class _CategoriesState extends State<Categories> {
                                           ),
                                         ),
                                       ),
-                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
-                                      ),
+                                      placeholder: (context, url) =>  Container(color:_randomColor.randomColor(), height: 180, width: largeurPerCent(210, context),),
 
                                     ),
                                     //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
@@ -294,9 +294,7 @@ class _CategoriesState extends State<Categories> {
                                           ),
                                         ),
                                       ),
-                                      placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-
-                                      ),
+                                      placeholder: (context, url) =>  Container(color:_randomColor.randomColor(), height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
                                     ),
                                     //FadeInImage(placeholder: AssetImage("assets/images/no_image_icon.png"), image: NetworkImage(categories.imagePath), fit: BoxFit.cover,),
                                   ),

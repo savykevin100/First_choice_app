@@ -14,6 +14,7 @@ import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/article.dart';
+import 'package:random_color/random_color.dart';
 
 // ignore: must_be_immutable
 class DisplaySearchResult extends StatefulWidget {
@@ -54,6 +55,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
       }
     }
   }
+  RandomColor _randomColor = RandomColor();
 
   int prixReduit(int prix, int pourcentageReduction){
     int resultat = ((1-pourcentageReduction/100)*prix).toInt();
@@ -156,8 +158,7 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) => LinearProgressIndicator(backgroundColor:HexColor("EFD807"),
-                              ),
+                              placeholder: (context, url) => Container(color:_randomColor.randomColor(), height: longueurPerCent(150, context), width: largeurPerCent(210, context),),
                             ),
                           ),
                         ),
@@ -299,14 +300,16 @@ class _DisplaySearchResultState extends State<DisplaySearchResult> {
 
                                   },
                                 ),
-                                /*Padding(
-                                  padding: EdgeInsets.only(right:10),
-                                  child: Text(widget.data[index]["taille"], style:TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 15,
-                                      fontFamily:
-                                      "MonseraBold"),),
-                                )*/
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                    widget.data[index]["categorie"]=="Hommes"?"H":"F",
+                                    style:TextStyle(
+                                        color:    widget.data[index]["categorie"] == "Hommes"?HexColor("#FFC30D"):Colors.pink,
+                                        fontSize: 15,
+                                        fontFamily: "MonseraBold"),
+                                  ),
+                                )
                               ],
                             )),
                         SizedBox(

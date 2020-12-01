@@ -120,7 +120,7 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                             child: CachedNetworkImage(
                               imageUrl: produit.image1,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Container(color:_color, height: longueurPerCent(110, context), width: largeurPerCent(210, context),),
+                              placeholder: (context, url) => Container(color:_color, height: longueurPerCent(150, context), width: largeurPerCent(210, context),),
                             ),
                           ),
                         ),
@@ -238,12 +238,14 @@ Widget product_grid_view(Stream<List<Produit>> askDb){
                                   },
                                 ),
                                 /*Padding(
-                                  padding: EdgeInsets.only(right:10),
-                                  child: Text(produit.taille, style:TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 15,
-                                      fontFamily:
-                                      "MonseraBold"),),
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(
+                                    produit.categorie=="Hommes"?"H":"F",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 15,
+                                        fontFamily: "MonseraBold"),
+                                  ),
                                 )*/
                               ],
                             )
