@@ -219,7 +219,7 @@ int taille;
                   )
               )
           ):Center(
-            child: elementsVides(context, Icons.remove_shopping_cart_sharp,
+            child: elementsVides(context, Icons.add,
                 "Pas de commandes effectuées"),
           ),
       );

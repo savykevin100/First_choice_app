@@ -32,7 +32,7 @@ class _AffichageCommandesState extends State<AffichageCommandes> {
                 print(snapshot.hasError.toString());
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.data.isEmpty) {
-                return elementsVides(context, Icons.remove_shopping_cart_sharp,
+                return elementsVides(context,Icons.shopping_basket,
                     "Pas de commandes effectuées");
               } else {
                 return Container(

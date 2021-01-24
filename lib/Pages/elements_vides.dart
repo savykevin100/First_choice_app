@@ -27,7 +27,8 @@ Widget elementsVides(BuildContext context, IconData icon, String text) {
         Center(
           child: Text(
            text,
-            style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
+            //style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
+            style: TextStyle(fontSize: 16, color:HexColor("#909090"),),
           ),
         ),
       ],

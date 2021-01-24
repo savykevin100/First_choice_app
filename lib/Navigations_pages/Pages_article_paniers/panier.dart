@@ -195,7 +195,7 @@ class _PanierState extends State<Panier> {
                                             color: HexColor(
                                                 "#909090"),
                                             fontSize: 15,
-                                            fontFamily: "Regular"),
+                                            ),
                                       ),
                                       SizedBox(
                                         height: longueurPerCent(
@@ -344,7 +344,7 @@ class _PanierState extends State<Panier> {
                 fontFamily: "MonseraBold"
             ),),
         ),
-        icon: Icon(Icons.dangerous,size: 100,color: HexColor("#001C36")),
+        icon: Icon(Icons.add,size: 100,color: HexColor("#001C36")),
       ),
     );
   }

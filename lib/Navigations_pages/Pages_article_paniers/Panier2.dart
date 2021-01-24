@@ -931,7 +931,7 @@ class _Panier2State extends State<Panier2> {
                     fontFamily: "MonseraBold"
                 ),),
             ),
-            icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
+            icon: Icon(Icons.add,size: 100,color: HexColor("#001C36")),
           ),
         );
 
@@ -982,7 +982,7 @@ class _Panier2State extends State<Panier2> {
                   fontFamily: "MonseraBold"
               ),),
           ),
-          icon: Icon(Icons.shopping_bag_rounded,size: 100,color: HexColor("#001C36")),
+          icon: Icon(Icons.shopping_basket,size: 100,color: HexColor("#001C36")),
         ),
       );
     }

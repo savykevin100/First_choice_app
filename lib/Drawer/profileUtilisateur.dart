@@ -40,7 +40,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
         children: <Widget>[
           creationHeader(widget.userCurrent),
           drawerItem(
@@ -72,7 +71,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     MaterialPageRoute(builder: (context) => Mensuration()));
               }),
           drawerItem(
-              icon: Icons.exit_to_app_outlined,
+              icon: Icons.add,
               text: "Deconnexion",
               onTap: () async {
                 await _auth.signOut();
@@ -156,7 +155,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
               style: TextStyle(
                   color: HexColor('#001C36'),
                   fontSize: 16.0,
-                  fontFamily: 'Regular'),
+                  ),
             ),
           )
         ],

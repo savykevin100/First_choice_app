@@ -1,11 +1,15 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -13,25 +17,34 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
+import 'package:premierchoixapp/Authentification/connexion.dart';
 import 'package:premierchoixapp/Authentification/renseignements.dart';
 import 'package:premierchoixapp/Composants/calcul.dart';
 import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Composants/priceWithDot.dart';
+import 'package:premierchoixapp/Drawer/APrpos.dart';
+import 'package:premierchoixapp/Drawer/Commande/mes_commandes.dart';
+import 'package:premierchoixapp/Drawer/ConditionsGenerales.dart';
+import 'package:premierchoixapp/Drawer/Mensuration.dart';
+import 'package:premierchoixapp/Drawer/profile.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/produit.dart';
 import 'package:premierchoixapp/Models/produits_favoris_user.dart';
 import 'package:premierchoixapp/Models/reduction.dart';
 import 'package:premierchoixapp/Models/utilisateurs.dart';
 import 'package:premierchoixapp/Navigations_pages/Pages_article_paniers/panier.dart';
+import 'package:premierchoixapp/Pages/drawer_ios.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 import 'package:premierchoixapp/Pages/search_filtre.dart';
 import 'package:random_color/random_color.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:show_drawer/show_drawer.dart';
 
 import '../checkConnexion.dart';
 import 'Pages_article_paniers/article.dart';
+import 'all_navigation_page.dart';
 
 class Accueil extends StatefulWidget {
   static String id = "Accueil";
@@ -52,6 +65,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   int nbrPasVertical = 16;
   int resteVertical = 0;
   int nbreDisplayVertical = 0;
+
+  final _auth = FirebaseAuth.instance;
+  Utilisateur donneesUtilisateurConnecte;
+  bool chargement=false;
 
   List<Map<String, dynamic>> produitsRecommandes = [];
   List<Map<String, dynamic>> toutLesProduits = [];
@@ -141,57 +158,10 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if ((imagesCarousel.length == 3 && Renseignements.userData.length == 5)) {
-      return Scaffold(
+      return (Platform.isAndroid)?Scaffold(
         key: _scaffoldKey,
         backgroundColor: HexColor("#F5F5F5"),
-        appBar: ScrollAppBar(
-          controller: controller,
-          backgroundColor: HexColor("#001c36"),
-          title: Image.asset(
-            "assets/images/1er choix-02.png",
-            height: 100,
-            width: 100,
-          ),
-          iconTheme: IconThemeData(color: Colors.white),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.search),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchFiltre()));
-                }),
-            Badge(
-              badgeContent: StreamBuilder(
-                  stream: FirestoreService().getUtilisateurs(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Utilisateur>> snapshot) {
-                    if (snapshot.hasError || !snapshot.hasData) {
-                      return Text("");
-                    } else {
-                      for (int i = 0; i < snapshot.data.length; i++) {
-                        if (snapshot.data[i].email ==
-                            Renseignements.emailUser) {
-                          nombreAjoutPanier = snapshot.data[i].nbAjoutPanier;
-                        }
-                      }
-                      return Text("$nombreAjoutPanier");
-                    }
-                  }),
-              toAnimate: true,
-              position: BadgePosition(top: 0, end: 0),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.local_grocery_store,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Panier()));
-                  }),
-            )
-          ],
-        ),
+        appBar:  appBarAndroid(),
         drawer: (Renseignements.userData.length == 5)
             ? ProfileSettings(
                 userCurrent: Renseignements.userData[1],
@@ -205,42 +175,286 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
             child: Test(
               displayContains: bodyAccueil(),
             )),
-        /*floatingActionButton: FloatingButton(
-        displayContains: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SearchFiltre ()));
-            },
-            child: Icon(
-              Icons.search,
-              color: HexColor("#001C36"),
-              size: 30,
-            ),
-            backgroundColor: HexColor("#FFC30D")
-        ),
-      )*/
+      ):CupertinoPageScaffold(
+        navigationBar: AppBarIos(context ,Renseignements.userData[2],Renseignements.emailUser,Renseignements.userData[2][0],nombreAjoutPanier, "Accueil"),
+        child: WillPopScope(
+            onWillPop: _onBackPressed,
+            child: Test(
+              displayContains: bodyAccueil(),
+            )),
       );
     } else {
-      return Scaffold(
-          appBar: AppBar(
-            title: Image.asset(
-              "assets/images/1er choix-02.png",
-              height: 100,
-              width: 100,
-            ),
-          ),
-          drawer: Drawer(),
-          body: Test(
-            displayContains: Center(
-                child: SpinKitFadingCircle(
-              color: HexColor("#001c36"),
-              size: 30,
-            )),
-          ));
+      return (Platform.isAndroid)
+          ? Scaffold(
+              appBar: AppBar(
+                title: Image.asset(
+                  "assets/images/1er choix-02.png",
+                  height: 100,
+                  width: 100,
+                ),
+              ),
+              drawer: Drawer(),
+              body: Test(
+                displayContains: Center(
+                    child: SpinKitFadingCircle(
+                  color: HexColor("#001c36"),
+                  size: 30,
+                )),
+              ))
+          : CupertinoPageScaffold(
+              navigationBar: CupertinoNavigationBar(
+                backgroundColor: Theme.of(context).primaryColor,
+                middle: Image.asset(
+                  "assets/images/1er choix-02.png",
+                  height: 100,
+                  width: 100,
+                ),
+              ),
+              child: Test(
+                displayContains: Center(
+                    child: SpinKitFadingCircle(
+                  color: HexColor("#001c36"),
+                  size: 30,
+                )),
+              ));
     }
+  }
+
+  Widget appBarAndroid(){
+    return ScrollAppBar(
+      controller: controller,
+      backgroundColor: HexColor("#001c36"),
+      title: Image.asset(
+        "assets/images/1er choix-02.png",
+        height: 100,
+        width: 100,
+      ),
+      iconTheme: IconThemeData(color: Colors.white),
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(Icons.search),
+            iconSize: 30,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchFiltre()));
+            }),
+        Badge(
+          badgeContent: StreamBuilder(
+              stream: FirestoreService().getUtilisateurs(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<Utilisateur>> snapshot) {
+                if (snapshot.hasError || !snapshot.hasData) {
+                  return Text("");
+                } else {
+                  for (int i = 0; i < snapshot.data.length; i++) {
+                    if (snapshot.data[i].email ==
+                        Renseignements.emailUser) {
+                      nombreAjoutPanier = snapshot.data[i].nbAjoutPanier;
+                    }
+                  }
+                  return Text("$nombreAjoutPanier");
+                }
+              }),
+          toAnimate: true,
+          position: BadgePosition(top: 0, end: 0),
+          child: IconButton(
+              icon: Icon(
+                Icons.local_grocery_store,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Panier()));
+              }),
+        )
+      ],
+    );
+  }
+
+  Widget appBarIos(){
+    return CupertinoNavigationBar(
+      leading: IconButton(icon: Icon(Icons.drag_handle, color: Colors.white,), onPressed: (){
+          showDrawer(
+            barrier: true,
+            context: context,
+            direction: DrawerDirection.topLeft,
+            barrierDismissible: true,
+            builder: (ctx, __, close) => Container(
+              width: 300,
+              height: MediaQuery.of(context).size.height,
+              child: Scaffold(
+                body: Container(
+                  child: new ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        color: HexColor("#001C36"),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: longueurPerCent(30.0, context) ,),
+                            Container(
+                              padding: EdgeInsets.only(left:longueurPerCent(20, context)),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Center(
+                                  child: Text(
+                                      Renseignements.userData[2][0],
+                                    style: TextStyle(color: HexColor("#001c36"), fontSize: 50,fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                radius: 50,
+                              ),
+                            ),
+                            SizedBox(height: longueurPerCent(10, context)),
+                            Container(
+                              padding: EdgeInsets.only(left:longueurPerCent(20, context)),
+                              child: Text(
+                                Renseignements.userData[2],
+                                style:TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'MontserratBold',
+                                  color: HexColor("#FFFFFF"),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: longueurPerCent(0.0, context)),
+                            Container(
+                              padding: EdgeInsets.only(left:longueurPerCent(20, context),bottom: longueurPerCent(20, context)),
+                              child: Text(
+                                Renseignements.emailUser,
+                                style:TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: 'Montserrat_Light',
+                                  color: HexColor("#FFFFFF"),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child:Column(
+                          children: <Widget>[
+                            drawerItem(
+                                icon: Icons.home,
+                                text: "Accueil",
+                                onTap: close
+                            ),
+                            drawerItem(
+                                icon: Icons.person,
+                                text: "Mon compte",
+                                onTap: () {
+                                  close();
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => UserProfil()));
+                                }),
+                            drawerItem(
+                                icon: Icons.local_grocery_store,
+                                text: "Mes commandes",
+                                onTap: () {
+                                  close();
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) =>MesCommandes()));
+                                }),
+                            drawerItem(
+                                icon: Icons.description,
+                                text: "Tableau des Mensurations",
+                                onTap: () {
+                                  close();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Mensuration()));
+                                }),
+                            drawerItem(
+                                icon: Icons.exit_to_app,
+                                text: "Deconnexion",
+                                onTap: () async {
+                                  close();
+                                  await _auth.signOut();
+                                  Navigator.pushNamed(context, Connexion.id);
+                                }),
+                            drawerItem(
+                                icon: Icons.share,
+                                text: "Partager l'application",
+                                onTap: () {
+                                  close();
+                                  _shareImageFromUrl();
+
+                                }),
+                            Divider(),
+                            drawerItem(
+                                icon: Icons.library_books,
+                                text: "Conditions Générales",
+                                onTap: () {
+                                  close();
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => ConditionGenerales()));
+                                }),
+                            drawerItem(
+                                icon: Icons.info,
+                                text: "À propos",
+                                onTap: () {
+                                  close();
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => APrpos()));
+                                }),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      backgroundColor: Theme.of(context).primaryColor,
+      trailing: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          IconButton(
+              icon: Icon(Icons.search),
+              iconSize: 30,
+              color: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchFiltre()));
+              }),
+          Badge(
+            badgeContent: StreamBuilder(
+                stream: FirestoreService().getUtilisateurs(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Utilisateur>> snapshot) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text("");
+                  } else {
+                    for (int i = 0; i < snapshot.data.length; i++) {
+                      if (snapshot.data[i].email ==
+                          Renseignements.emailUser) {
+                        nombreAjoutPanier = snapshot.data[i].nbAjoutPanier;
+                      }
+                    }
+                    return Text("$nombreAjoutPanier");
+                  }
+                }),
+            toAnimate: true,
+            position: BadgePosition(top: 0, end: 0),
+            child: IconButton(
+                icon: Icon(
+                  Icons.local_grocery_store,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Panier()));
+                }),
+          )
+        ],),
+    );
   }
 
   Snap bodyAccueil() {
@@ -374,8 +588,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
                                                   CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Container(
-                                                  height: longueurPerCent(
-                                                      110, context),
+                                                  height: 120,
                                                   width: largeurPerCent(
                                                       210, context),
                                                   decoration: BoxDecoration(
@@ -1051,6 +1264,33 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     return resultat;
   }
 
+  Widget drawerItem({IconData icon, String text, Function onTap}) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          (chargement && text=="Partager l'application")?CircularProgressIndicator():
+          Icon(
+            icon,
+            color:HexColor("#FFC30D"),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: HexColor('#001C36'),
+                fontSize: 16.0,
+              ),
+            ),
+          )
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+
+
   String key = "email_user";
 
   /*Cette fonction permet d'obtenir les valeurs à conserver dans le shared_preferences */
@@ -1065,7 +1305,7 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     }
   }
 
-  /* Fin de la fonction */
+    /* Fin de la fonction */
 
   /* Cette fonction permet d'ajouter les informations*/
 
@@ -1075,4 +1315,34 @@ class _AccueilState extends State<Accueil> with SingleTickerProviderStateMixin {
     await sharedPreferences.setStringList(key, Renseignements.userData);
     obtenir();
   }
+
+
+  Future<void> _shareImageFromUrl() async {
+    try {
+      setState(() {
+        chargement=true;
+      });
+      var request = await HttpClient().getUrl(Uri.parse(
+          "https://firebasestorage.googleapis.com/v0/b/marketeurfollomme.appspot.com/o/Untitled-2.jpg?alt=media&token=a1cbb03c-1e96-4fb7-b3e3-184f3c387f0e"));
+      var response = await request.close();
+      Uint8List bytes = await consolidateHttpClientResponseBytes(response);
+      await Share.file('Partager', 'amlog.jpg', bytes, 'image/jpg', text: "Hey! T'as déjà la nouvelle appli tendance de vente de vêtements de friperie? Sinon"
+          " Télécharge la shap shap: https://play.google.com/store/apps/details?id=com.followme.premierchoix");
+      setState(() {
+        chargement=false;
+      });
+    } catch (e) {
+      print('error: $e');
+    }
+
+  }
 }
+
+
+
+
+
+
+
+
+

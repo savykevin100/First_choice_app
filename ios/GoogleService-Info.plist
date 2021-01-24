@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>646831419626-6c4ak93kicqrvp5e1njbd77ch723r70k.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.646831419626-6c4ak93kicqrvp5e1njbd77ch723r70k</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>646831419626-hacu9i64im7uhjueokf4pes0ib69ued8.app.s.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAiqqWfHivrvHXw0NtudTg_tp6rLVEUnB8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>646831419626</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.premierchoixapp</string>
+	<key>PROJECT_ID</key>
+	<string>marketeurfollomme</string>
+	<key>STORAGE_BUCKET</key>
+	<string>marketeurfollomme.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:646831419626:ios:69ba4c919831a67ce12793</string>
+	<key>DATABASE_URL</key>
+	<string>https://marketeurfollomme.firebaseio.com</string>
+</dict>
+</plist>

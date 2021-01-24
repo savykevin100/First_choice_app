@@ -105,11 +105,11 @@ class _TestState extends State<Test> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.signal_cellular_connected_no_internet_4_bar_sharp, size: 50, color: Colors.red,),
+                  Icon(Icons.signal_cellular_connected_no_internet_4_bar, size: 50, color: Colors.red,),
                   SizedBox(height: longueurPerCent(40, context),),
                   Text(
                     "Veuillez vérifier votre connexion internet",
-                    style: TextStyle(color: HexColor("#909090"), fontFamily: 'Regular', fontSize: 16.0, ),
+                    style: TextStyle(color: HexColor("#909090"), fontFamily: 'MonseraLight', fontSize: 16.0, ),
                   ),              ],
               ),
             ),
@@ -137,7 +137,7 @@ class _TestState extends State<Test> {
         title: "Important",
         description:
         "Oups!!!! Veuillez vérifier votre connexion et réessayer",
-        icon: Icon(Icons.dangerous,size: 100,color: HexColor("#001C36")),
+        icon: Icon(Icons.add,size: 100,color: HexColor("#001C36")),
       ),
     );
   }
@@ -221,7 +221,7 @@ class _FloatingButtonState extends State<FloatingButton> {
         title: "Important",
         description:
         "Oups!!!! Veuillez vérifier votre connexion et réessayer",
-        icon: Icon(Icons.dangerous,size: 100,color: HexColor("#001C36")),
+        icon: Icon(Icons.add,size: 100,color: HexColor("#001C36")),
       ),
     );
   }

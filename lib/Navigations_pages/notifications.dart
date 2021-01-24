@@ -10,6 +10,7 @@ import 'package:premierchoixapp/Composants/firestore_service.dart';
 import 'package:premierchoixapp/Composants/hexadecimal.dart';
 import 'package:premierchoixapp/Drawer/profileUtilisateur.dart';
 import 'package:premierchoixapp/Models/notifications.dart';
+import 'package:premierchoixapp/Pages/drawer_ios.dart';
 import 'package:premierchoixapp/Pages/elements_vides.dart';
 
 import '../checkConnexion.dart';
@@ -72,7 +73,7 @@ class _NotificationsState extends State<Notifications> {
         context: context,
         controller: controller,
         nbAjoutPanier: nombreAjoutPanier);
-    return Scaffold(
+    return (Platform.isAndroid)?Scaffold(
       backgroundColor: HexColor("#F5F5F5"),
       appBar: _appBar.appBarFunctionStream(),
       drawer: (Renseignements.userData.length==5)?ProfileSettings(
@@ -81,94 +82,100 @@ class _NotificationsState extends State<Notifications> {
       ):ProfileSettings(
           userCurrent: "",
           firstLetter: ""),
-      body: Test(displayContains: WillPopScope(
-        onWillPop:_onBackPressed,
-        child:StreamBuilder(
-            stream: FirestoreService().getNotifications(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<InformationNotification>> snapshot) {
-              if (snapshot.hasError || !snapshot.hasData) {
-                return  Center(child: SpinKitFadingCircle(
-                  color: HexColor("#001c36"),
-                  size: 30,));
-              } else if(snapshot.data.isEmpty)
-                return elementsVides(context, Icons.notifications_none, "Pas de nouvelle notification");
-              else {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, i){
-                      InformationNotification notification = snapshot.data[i];
-                      return Container(
-                        margin: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context), bottom: longueurPerCent(10, context), top: longueurPerCent(10, context)),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(7.0),
-                          color: Colors.white,
-                          elevation: 3.0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 5, left: 8),
+      body: Body()
+    ):CupertinoPageScaffold(
+      navigationBar: AppBarIos(context, Renseignements.userData[2], Renseignements.emailUser,Renseignements.userData[2][0], nombreAjoutPanier, "Annonces"),
+      child:Body(),
+    );
+
+  }
+  Widget Body(){
+    return Test(displayContains: WillPopScope(
+      onWillPop:_onBackPressed,
+      child:StreamBuilder(
+          stream: FirestoreService().getNotifications(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<InformationNotification>> snapshot) {
+            if (snapshot.hasError || !snapshot.hasData) {
+              return  Center(child: SpinKitFadingCircle(
+                color: HexColor("#001c36"),
+                size: 30,));
+            } else if(snapshot.data.isEmpty)
+              return elementsVides(context, Icons.notifications_none, "Pas de nouvelle notification");
+            else {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, i){
+                    InformationNotification notification = snapshot.data[i];
+                    return Container(
+                      margin: EdgeInsets.only(left: longueurPerCent(10, context),right: longueurPerCent(10, context), bottom: longueurPerCent(10, context), top: longueurPerCent(10, context)),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(7.0),
+                        color: Colors.white,
+                        elevation: 3.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10, bottom: 5, left: 8),
+                                  child: Text(
+                                    notification.titre,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      color: HexColor("#001C36"),
+                                      fontSize: 12,
+                                      fontFamily: "MonseraBold",
+                                    ),
+                                  ),
+                                ),
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    maxWidth:
+                                    largeurPerCent(250, context),
+                                  ),
+                                  child:  Padding(
+                                    padding: EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
                                     child: Text(
-                                      notification.titre,
+                                      notification.description,
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: HexColor("#001C36"),
-                                        fontSize: 12,
-                                        fontFamily: "MonseraBold",
+                                        fontSize: 10,
+                                        fontFamily: "MonseraRegular",
                                       ),
                                     ),
-                                  ),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth:
-                                      largeurPerCent(250, context),
-                                    ),
-                                    child:  Padding(
-                                      padding: EdgeInsets.only(left: largeurPerCent(10, context), bottom: longueurPerCent(10, context)),
-                                      child: Text(
-                                        notification.description,
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: HexColor("#001C36"),
-                                          fontSize: 10,
-                                          fontFamily: "MonseraRegular",
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: longueurPerCent(10, context), right: largeurPerCent(10, context)),
-                                child: Text(
-                                  notification.created,
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    color: HexColor("#909090"),
-                                    fontSize: 8,
-                                    fontFamily: "MonseraRegular",
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
+
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: longueurPerCent(10, context), right: largeurPerCent(10, context)),
+                              child: Text(
+                                notification.created,
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: HexColor("#909090"),
+                                  fontSize: 8,
+                                  fontFamily: "MonseraRegular",
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    }
+                      ),
+                    );
+                  }
 
-                );
-              }
-            }),
-      ),)
-    );
-
+              );
+            }
+          }),
+    ),);
   }
 }

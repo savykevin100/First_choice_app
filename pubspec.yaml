@@ -77,6 +77,7 @@ dependencies:
   random_color: ^1.0.5
   in_app_update: ^1.1.14
   optimized_cached_image: ^1.0.0
+  show_drawer: ^1.0.0
 
 
 

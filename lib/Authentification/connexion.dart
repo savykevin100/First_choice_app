@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:premierchoixapp/Authentification/components/button_form.dart';
@@ -136,7 +137,13 @@ class _ConnexionState extends State<Connexion> {
                   SizedBox(height: longueurPerCent(50, context),),
                   FadeInRight(
                     child: button(HexColor("#001C36"), HexColor('#FFC30D'), context, "SE CONNECTER",  () async{
-                      if(_formKey.currentState.validate()) {
+                      if(EmailValidator.validate(emailAdresse) == false)
+                        displaySnackBarNom(context, "Entrer un email valide", Colors.white);
+                      else if(motDePasse.isEmpty || motDePasse.length<6)
+                        displaySnackBarNom(context, "Votre mot de passe doit contenir au moins 6 caractères", Colors.white);
+                      else if(EmailValidator.validate(emailAdresse)==false && (motDePasse.isEmpty || motDePasse.length<6) )
+                        displaySnackBarNom(context, "Email et mot de passe invalide. ", Colors.white);
+                      else {
                         setState(() {
                           chargement=true;
                         });
@@ -159,7 +166,7 @@ class _ConnexionState extends State<Connexion> {
                             showAlertDialog(context, "Veuillez vérifier votre connexion internet");
                           else  showAlertDialog(context, "Aucun email ne correspond à l'email entré");
                         }
-                      }
+                      } 
                     }),
                   ),
                   SizedBox(height: longueurPerCent(30, context),),
@@ -239,6 +246,7 @@ class _ConnexionState extends State<Connexion> {
 
 
   Widget email(){
+    //if(Platform.isAndroid)
     return TextFormField(
       style: TextStyle(
           color: HexColor("#001C36"),
@@ -262,11 +270,6 @@ class _ConnexionState extends State<Connexion> {
         emailAdresse = value;
       },
       // ignore: missing_return
-      validator: (String value) {
-        if (EmailValidator.validate(emailAdresse) == false) {
-          return ("Entrer un email valide");
-        }
-      },
     );
   }
   Widget password(){
@@ -302,14 +305,10 @@ class _ConnexionState extends State<Connexion> {
       onChanged: (value){
         motDePasse = value;
       },
-      // ignore: missing_return
-      validator: (String value) {
-        if(value.isEmpty) {
-          return ("Entrer un mot de passe valide");
-        } else if (value.length<6) {
-          return ("Le nombre de caractères doit être supérieur à 5");
-        }
+      onFieldSubmitted: (value){
+        motDePasse = value;
       },
+      // ignore: missing_return
     );
   }
 

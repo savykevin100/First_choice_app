@@ -27,6 +27,8 @@ import 'package:flutter/foundation.dart';
 
 import 'checkConnexion.dart';
 
+final bool android = Platform.isAndroid?true:false;
+
 void _enablePlatformOverrideForDesktop() {
   if (!kIsWeb && (Platform.isWindows || Platform.isLinux)) {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
