@@ -229,14 +229,14 @@ class _CategoriesState extends State<Categories> {
                                       gradient: LinearGradient(
                                           begin: FractionalOffset.topCenter,
                                           end: FractionalOffset.bottomCenter,
-                                          colors: [
+                                          /*colors: [
                                             Colors.grey.withOpacity(0.0),
                                             Colors.black.withOpacity(0.8),
                                           ],
                                           stops: [
                                             0.0,
                                             1.0
-                                          ])),
+                                          ]*/)),
                                 ),
                                 Align(
                                   alignment: Alignment.bottomCenter,

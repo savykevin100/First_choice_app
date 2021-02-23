@@ -747,7 +747,12 @@ class HeroPhotoViewRouteWrapper extends StatelessWidget {
           maxScale: maxScale,
           heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
         ),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()=>Navigator.pop(context),
+        backgroundColor: Colors.white,
+        child: Icon(Icons.arrow_back, color: Theme.of(context).primaryColor, size: 30,),
+      ),
     );
   }
 }
